@@ -19,15 +19,23 @@ SET(OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/")
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
 
 #### Add External Dependencies ####
+# SFML
 add_subdirectory("lib/sfml")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
+
+# ENGINE
+add_subdirectory("engine")
+set(ENGINE_INCS ${CMAKE_SOURCE_DIR})
+link_directories("${CMAKE_BINARY_DIR}/engine")
 
 #### BUILD/EXECUTABLE Setup ####
 file(GLOB_RECURSE SOURCES src/*.cpp src/*.h src/*.hpp)
 add_executable(SRC ${SOURCES})
 target_include_directories(SRC PRIVATE ${SFML_INCS})
 target_link_libraries(SRC sfml-graphics)
+target_include_directories(SRC PUBLIC ${ENGINE_INCS})
+target_link_libraries(SRC engine.lib)
 
 set_target_properties(SRC PROPERTIES 
 	VS_DEBUGGER_WORKING_DIRECTORY
@@ -42,3 +50,6 @@ add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
 )
 
 add_dependencies(SRC copy_resources)
+add_dependencies(SRC engine)
+
+# END OF GAME BUILD SETUP
