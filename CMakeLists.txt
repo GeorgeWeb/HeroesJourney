@@ -20,24 +20,23 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
 
 #### Add External Dependencies ####
 # SFML
-add_subdirectory("lib/sfml")
-set(SFML_INCS "lib/sfml/include")
-link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
+set(SFML_INCS "Engine/lib/sfml/include")
+link_directories("${CMAKE_BINARY_DIR}/Engine/lib/sfml/lib")
 
 # ENGINE
-add_subdirectory("engine")
-set(ENGINE_INCS ${CMAKE_SOURCE_DIR})
-link_directories("${CMAKE_BINARY_DIR}/engine")
+add_subdirectory("Engine")
+set(ENGINE_INCS ${CMAKE_SOURCE_DIR}/engine/src)
+link_directories("${CMAKE_BINARY_DIR}/engine/src")
 
 #### BUILD/EXECUTABLE Setup ####
 file(GLOB_RECURSE SOURCES src/*.cpp src/*.h src/*.hpp)
-add_executable(SRC ${SOURCES})
-target_include_directories(SRC PRIVATE ${SFML_INCS})
-target_link_libraries(SRC sfml-graphics)
-target_include_directories(SRC PUBLIC ${ENGINE_INCS})
-target_link_libraries(SRC engine.lib)
+add_executable(HEROES ${SOURCES})
+target_include_directories(HEROES PRIVATE ${SFML_INCS})
+target_link_libraries(HEROES sfml-graphics)
+target_include_directories(HEROES PUBLIC ${ENGINE_INCS})
+target_link_libraries(HEROES engine)
 
-set_target_properties(SRC PROPERTIES 
+set_target_properties(HEROES PROPERTIES 
 	VS_DEBUGGER_WORKING_DIRECTORY
 	${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
 )
@@ -49,7 +48,7 @@ add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
 	${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res
 )
 
-add_dependencies(SRC copy_resources)
-add_dependencies(SRC engine)
+add_dependencies(HEROES copy_resources)
+add_dependencies(HEROES engine)
 
 # END OF GAME BUILD SETUP
