@@ -10,18 +10,18 @@ namespace Engine { namespace SM {
 
 	using StateRef = std::unique_ptr<State>;
 
-	class StateMachine
+	class StateMachine final
 	{
 		public:
 			StateMachine() = default;
 			~StateMachine() = default;
 
 			void AddState(StateRef t_state, bool t_replacing = true);
-			void RemoveState();
+			inline void RemoveState();
 
 			void ProcessStateChanges();
 
-			StateRef& GetActiveState();
+			inline StateRef& GetActiveState() { return m_states.top(); }
 
 		private:
 			std::stack<StateRef> m_states;

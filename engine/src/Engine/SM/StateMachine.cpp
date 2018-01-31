@@ -9,7 +9,7 @@ namespace Engine { namespace SM {
 		m_newState = std::move(t_state); ///> moving the ownership of the state to a new one
 	}
 
-	void StateMachine::RemoveState()
+	inline void StateMachine::RemoveState()
 	{
 		m_isRemoving = true;
 	}
@@ -40,11 +40,6 @@ namespace Engine { namespace SM {
 			m_states.top()->Init();
 			m_isAdding = false;
 		}
-	}
-
-	StateRef& StateMachine::GetActiveState()
-	{
-		return m_states.top();
 	}
 
 } }

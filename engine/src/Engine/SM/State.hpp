@@ -11,7 +11,7 @@ namespace Engine { namespace SM {
 			// mandatory for managing the state
 			virtual void Init() = 0;
 			virtual void HandleInput() = 0;
-			virtual void Update() = 0;
+			virtual void Update(float t_deltaTime) = 0;
 			virtual void Draw(float t_deltaTime) = 0;
 
 			// Not neccessary, but useful
