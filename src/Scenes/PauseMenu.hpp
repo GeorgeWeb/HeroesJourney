@@ -1,5 +1,5 @@
-#ifndef MAIN_GAME_MAP_H
-#define MAIN_GAME_MAP_H
+#ifndef MAINMENU_H
+#define MAINMENU_H
 
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
@@ -8,10 +8,10 @@ namespace HJ {
 
 	using namespace Engine;
 
-	class MainGameMapScene final : public SM::State
+	class PauseMenuScene final : public SM::State
 	{
 	public:
-		MainGameMapScene(GameDataRef t_data);
+		PauseMenuScene(GameDataRef t_data);
 
 		void Init() override final;
 
@@ -22,9 +22,10 @@ namespace HJ {
 	private:
 		GameDataRef m_data;
 		sf::Clock m_clock;
-		sf::Sprite m_background;
-		std::string test;
+
+		sf::Color bgColor;
+		sf::Text m_titleText;
 	};
 }
 
-#endif // !MAIN_GAME_MAP_H
+#endif // !MAINMENU_H

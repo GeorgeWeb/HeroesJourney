@@ -1,10 +1,10 @@
 #include "MainGameMap.hpp"
-#include "../DEFINITIONS.hpp"
+#include "PauseMenu.hpp"
 
 #include <sstream>
 #include <iostream>
 
-namespace HeroesJourney {
+namespace HJ {
 
 	using namespace Engine;
 
@@ -32,6 +32,15 @@ namespace HeroesJourney {
 			// Switch scenes (to Main Menu) on startBtn left mouse click
 			if (m_data->input.isSpriteClicked(m_background, sf::Mouse::Left, m_data->window))
 				std::cout << "Oh, hi Mark!\n";
+
+			// Pause this screen and show Pause Screen
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			{
+				m_background.setTexture(m_data->assets.GetTexture("Main Menu Background"));
+				
+				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
+				m_data->machine.AddState(std::move(pauseMenuState), false);
+			}
 		}
 	}
 
@@ -42,9 +51,14 @@ namespace HeroesJourney {
 
 	void MainGameMapScene::Draw(float t_deltaTime)
 	{
-		m_data->window.clear();
+		m_data->window.clear(sf::Color::Black);
 
 		m_data->window.draw(m_background);
+
+		/* :Render external entities */
+		// e.g., m_data->window.draw(entityName.shape);
+
+		/* !Render external entities */
 
 		m_data->window.display();
 	}

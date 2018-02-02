@@ -1,21 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "DEFINITIONS.hpp"
 #include <Engine/Engine.hpp>
 
 #include <memory>
 #include <string>
 
-namespace HeroesJourney {
+namespace HJ {
 
 	using namespace Engine;
 
-	struct GameData
+	struct GameData 
 	{
 		SM::StateMachine machine;
 		sf::RenderWindow window;
 		Asset::AssetManager assets;
 		Input::InputManager input;
+		// only used for storing/retrieving shared (between scenes) entities
+		Entity::EntityManager gameObj = Entity::EntityManager::getInstance();
 	};
 
 	using GameDataRef = std::shared_ptr<GameData>;

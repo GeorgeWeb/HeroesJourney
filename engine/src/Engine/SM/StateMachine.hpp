@@ -17,7 +17,7 @@ namespace Engine { namespace SM {
 			~StateMachine() = default;
 
 			void AddState(StateRef t_state, bool t_replacing = true);
-			inline void RemoveState();
+			void RemoveState();
 
 			void ProcessStateChanges();
 

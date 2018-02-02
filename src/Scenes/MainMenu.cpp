@@ -1,12 +1,10 @@
 #include "MainMenu.hpp"
 #include "MainGameMap.hpp"
 
-#include "../DEFINITIONS.hpp"
-
 #include <sstream>
 #include <iostream>
 
-namespace HeroesJourney {
+namespace HJ {
 
 	using namespace Engine;
 

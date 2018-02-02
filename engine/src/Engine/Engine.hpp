@@ -1,12 +1,16 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "SFMLGraphics.hpp"
-#include "Maths/Vector2ul.hpp"
+// SFML Dependencies
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
+// Engine features
+#include "Maths/Vector2ul.hpp"
 #include "SM/StateMachine.hpp"
 #include "Asset/AssetManager.hpp"
 #include "Input/InputManager.hpp"
+#include "Entity/EntityManager.hpp"
 
 namespace Engine {
     // ...

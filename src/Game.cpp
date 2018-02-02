@@ -1,7 +1,7 @@
 #include "Game.hpp"
 #include "Scenes/Splash.hpp"
 
-namespace HeroesJourney {
+namespace HJ {
 
 	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title)
 	{

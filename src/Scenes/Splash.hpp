@@ -4,7 +4,7 @@
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
 
-namespace HeroesJourney {
+namespace HJ {
 
 	using namespace Engine;
 
