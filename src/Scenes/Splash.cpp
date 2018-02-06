@@ -7,6 +7,7 @@
 namespace HJ {
 
 	using namespace Engine;
+	using namespace System;
 
 	SplashScene::SplashScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -23,10 +24,10 @@ namespace HJ {
 	void SplashScene::HandleInput()
 	{
 		sf::Event event;
-		while (m_data->window.pollEvent(event))
+		while (Renderer::GetWin().pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
-				m_data->window.close();
+				Renderer::GetWin().close();
 		}
 	}
 
@@ -42,11 +43,7 @@ namespace HJ {
 
 	void SplashScene::Draw(float t_deltaTime)
 	{
-		m_data->window.clear(sf::Color::Black);
-
-		m_data->window.draw(m_background);
-
-		m_data->window.display();
+		Renderer::Queue(&m_background);
 	}
 
 }

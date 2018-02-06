@@ -11,6 +11,7 @@
 #include "Asset/AssetManager.hpp"
 #include "Input/InputManager.hpp"
 #include "Entity/EntityManager.hpp"
+#include "System/Renderer.hpp"
 
 namespace Engine {
     // ...

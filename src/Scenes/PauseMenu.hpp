@@ -23,7 +23,6 @@ namespace HJ {
 		GameDataRef m_data;
 		sf::Clock m_clock;
 
-		sf::Color bgColor;
 		sf::Text m_titleText;
 	};
 }

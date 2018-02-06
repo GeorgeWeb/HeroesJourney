@@ -3,10 +3,14 @@
 
 namespace HJ {
 
+	using namespace Engine;
+	using namespace System;
+
 	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title)
 	{
 		// init/create the game window
-		m_data->window.create(sf::VideoMode(t_width, t_height), t_title, sf::Style::Close | sf::Style::Titlebar);
+		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, sf::Style::Close | sf::Style::Titlebar);
+		Renderer::Initialize(win);
 
 		// add first state/screen
 		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));
@@ -22,7 +26,7 @@ namespace HJ {
 		float currentTime = m_clock.getElapsedTime().asSeconds();
 		float accumulator = 0.0f;
 
-		while (m_data->window.isOpen())
+		while (Renderer::GetWin().isOpen())
 		{
 			m_data->machine.ProcessStateChanges();
 
@@ -35,6 +39,7 @@ namespace HJ {
 			currentTime = newTime;
 			accumulator += frameTime;
 
+			// Integration -> movement and physics here:
 			while (accumulator >= m_deltaTime)
 			{
 				m_data->machine.GetActiveState()->HandleInput();
@@ -42,9 +47,23 @@ namespace HJ {
 				accumulator -= m_deltaTime;
 			}
 
+			// interpolate time for drawing
 			interpolation = accumulator / m_deltaTime;
+
+			// clear buffers (color)
+			Renderer::GetWin().clear(sf::Color::Black);
+			
+			// DO THE RENDERING FOR THE ACTIVE SCENE!
 			m_data->machine.GetActiveState()->Draw(interpolation);
+			
+			// flush screen
+			Renderer::Render();
+			// display the window
+			Renderer::GetWin().display();
 		}
+
+		// empty the Renderer queue
+		Renderer::Shutdown();
 	}
 
 }

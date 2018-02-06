@@ -7,6 +7,7 @@
 namespace HJ {
 
 	using namespace Engine;
+	using namespace System;
 
 	PauseMenuScene::PauseMenuScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -22,17 +23,15 @@ namespace HJ {
 		m_titleText.setCharacterSize(72);
 		m_titleText.setString("Heroes Journey");
 		m_titleText.setPosition((SCREEN_WIDTH * .5f) - (m_titleText.getGlobalBounds().width * .5f), 100.0f);
-
-		bgColor = sf::Color::Black;
 	}
 
 	void PauseMenuScene::HandleInput()
 	{
 		sf::Event event;
-		while (m_data->window.pollEvent(event))
+		while (Renderer::GetWin().pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
-				m_data->window.close();
+				Renderer::GetWin().close();
 
 			// Resume to the last Game Screen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
@@ -47,11 +46,7 @@ namespace HJ {
 
 	void PauseMenuScene::Draw(float t_deltaTime)
 	{
-		m_data->window.clear(bgColor);
-
-		m_data->window.draw(m_titleText);
-
-		m_data->window.display();
+		Renderer::Queue(&m_titleText);
 	}
 
 }

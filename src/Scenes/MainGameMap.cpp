@@ -7,6 +7,7 @@
 namespace HJ {
 
 	using namespace Engine;
+	using namespace System;
 	
 	MainGameMapScene::MainGameMapScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -24,10 +25,10 @@ namespace HJ {
 	void MainGameMapScene::HandleInput()
 	{
 		sf::Event event;
-		while (m_data->window.pollEvent(event))
+		while (Renderer::GetWin().pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
-				m_data->window.close();
+				Renderer::GetWin().close();
 
 			// Switch scenes (to Main Menu) on startBtn left mouse click
 			//if (m_data->input.isClicked(m_background, sf::Mouse::Left, m_data->window))
@@ -51,11 +52,7 @@ namespace HJ {
 
 	void MainGameMapScene::Draw(float t_deltaTime)
 	{
-		m_data->window.clear(sf::Color::Black);
-
-		m_data->window.draw(m_background);
-
-		m_data->window.display();
+		Renderer::Queue(&m_background);
 	}
 
 }
