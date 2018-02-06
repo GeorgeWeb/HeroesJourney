@@ -21,15 +21,16 @@ namespace Engine { namespace Entity {
 
 		public:
 			virtual void Update(const float t_deltaTime) { m_shape->setPosition(m_position); }
+			virtual void Render() const {} ///> Possible to remove actually. Re-designing!
+
+			inline const sf::Shape& GetShape() const { return *m_shape; }
+			inline const sf::Vector2f& GetPosition() const { return m_position; }
 
 			inline void SetPosition(const sf::Vector2f& t_position) { m_position = t_position; }
 			inline void Move(const sf::Vector2f& t_position) { m_position += t_position; }
+			inline void Scale(const sf::Vector2f& t_factor) { m_shape->scale(t_factor); }
 
-			void SetTexture(const sf::Texture& t_texture, const sf::IntRect t_rect = /*:default:*/sf::IntRect(10, 10, 100, 100));
-
-			// const accessors to the properties that can be used within the game window
-			const sf::Vector2f position = m_position;
-			const sf::Shape& shape = *m_shape; ///> used for easy drawing from the game data->window
+			void SetTexture(const sf::Texture& t_texture, const sf::IntRect t_rect = /*:default:=>*/sf::IntRect(10, 10, 100, 100));
 	};
 
 } }

@@ -18,7 +18,7 @@ namespace Engine { namespace SM {
 			virtual void Pause() {}
 			virtual void Resume() {}
 	};
-	
+
 } }
 
 #endif // !STATE_H

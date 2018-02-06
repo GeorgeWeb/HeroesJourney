@@ -3,10 +3,9 @@
 
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
+#include <Engine/GUI/GUIElement.hpp>
 
 namespace HJ {
-
-	using namespace Engine;
 
 	class MainMenuScene final : public SM::State
 	{
@@ -24,8 +23,8 @@ namespace HJ {
 			sf::Clock m_clock;
 			
 			sf::Sprite m_background;
-			sf::Sprite m_startBtn;
-			sf::Sprite m_quitBtn;
+			std::shared_ptr<GUI::GUIElement> m_startBtn;
+			std::shared_ptr<GUI::GUIElement> m_quitBtn;
 			
 			sf::Text m_titleText;
 	};

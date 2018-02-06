@@ -7,7 +7,7 @@
 namespace HJ {
 
 	using namespace Engine;
-
+	
 	MainGameMapScene::MainGameMapScene(GameDataRef t_data)
 		: m_data(t_data)
 	{
@@ -30,8 +30,8 @@ namespace HJ {
 				m_data->window.close();
 
 			// Switch scenes (to Main Menu) on startBtn left mouse click
-			if (m_data->input.isSpriteClicked(m_background, sf::Mouse::Left, m_data->window))
-				std::cout << "Oh, hi Mark!\n";
+			//if (m_data->input.isClicked(m_background, sf::Mouse::Left, m_data->window))
+				//std::cout << "Oh, hi Mark!\n";
 
 			// Pause this screen and show Pause Screen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -54,11 +54,6 @@ namespace HJ {
 		m_data->window.clear(sf::Color::Black);
 
 		m_data->window.draw(m_background);
-
-		/* :Render external entities */
-		// e.g., m_data->window.draw(entityName.shape);
-
-		/* !Render external entities */
 
 		m_data->window.display();
 	}

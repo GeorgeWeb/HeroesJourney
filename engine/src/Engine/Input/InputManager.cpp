@@ -2,14 +2,15 @@
 
 namespace Engine { namespace Input {
 
-	bool InputManager::isSpriteClicked(const sf::Sprite& t_object, sf::Mouse::Button t_button, sf::RenderWindow& t_window)
+	bool InputManager::isClicked(std::shared_ptr<Entity::Entity> t_entity, sf::Mouse::Button t_button, sf::RenderWindow& t_window)
 	{
 		if (m_pressDelay.getElapsedTime().asSeconds() > 1.0f)
 		{
 			if (sf::Mouse::isButtonPressed(t_button) && t_button == sf::Mouse::Left)
 			{
-				sf::IntRect rect(t_object.getPosition().x, t_object.getPosition().y, // position
-					t_object.getGlobalBounds().width, t_object.getGlobalBounds().height); // dimensions
+				auto pos = static_cast<sf::Vector2i>(t_entity->GetPosition());
+				auto size = sf::Vector2i(t_entity->GetShape().getGlobalBounds().width, t_entity->GetShape().getGlobalBounds().height);
+				sf::IntRect rect(pos, size);
 
 				if (rect.contains(sf::Mouse::getPosition(t_window)))
 				{
@@ -19,6 +20,11 @@ namespace Engine { namespace Input {
 			}
 		}
 
+		return false;
+	}
+
+	bool InputManager::isMouseOver(std::shared_ptr<Entity::Entity> t_entity, sf::Vector2i t_mousePos, sf::RenderWindow& t_window)
+	{
 		return false;
 	}
 
