@@ -18,8 +18,8 @@ namespace HJ {
 	void MainGameMapScene::Init()
 	{
 		// load & set background texture
-		m_data->assets.LoadTexture("Main Game Background", MAIN_GAME_SCENE_BACKGROUND);
-		m_background.setTexture(m_data->assets.GetTexture("Main Game Background"));
+		m_data->assets.LoadTexture("MainGameBG", MAIN_GAME_SCENE_BACKGROUND);
+		m_background.setTexture(m_data->assets.GetTexture("MainGameBG"));
 	}
 
 	void MainGameMapScene::HandleInput()
@@ -37,7 +37,7 @@ namespace HJ {
 			// Pause this screen and show Pause Screen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
-				m_background.setTexture(m_data->assets.GetTexture("Main Menu Background"));
+				m_background.setTexture(m_data->assets.GetTexture("MainMenuBG"));
 				
 				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
 				m_data->machine.AddState(std::move(pauseMenuState), false);
@@ -48,11 +48,13 @@ namespace HJ {
 	void MainGameMapScene::Update(float t_delatTime)
 	{
 		// Do sth (e.g. well... the game logic, bruh)
+		Entity::EntityManager::getInstance().Update(t_delatTime);
 	}
 
 	void MainGameMapScene::Draw(float t_deltaTime)
 	{
 		Renderer::Queue(&m_background);
+		Renderer::Queue(&GetEntity("StartBtn")->GetShape());
 	}
 
 }

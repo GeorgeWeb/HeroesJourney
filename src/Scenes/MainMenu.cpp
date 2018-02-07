@@ -46,7 +46,7 @@ namespace HJ {
 		m_titleText.setString("Heroes Journey");
 		m_titleText.setPosition((SCREEN_WIDTH * .5f) - (m_titleText.getGlobalBounds().width * .5f), 100.0f);
 
-		// Push to the local entities list
+		// Push to the scenes entities list
 		AddEntity("StartBtn", m_startBtn);
 		AddEntity("QuitBtn", m_quitBtn);
 	}
@@ -77,10 +77,7 @@ namespace HJ {
 
 	void MainMenuScene::Update(float t_delatTime)
 	{
-		// TODO: Add entities map in State class,
-		// so that I can loop through & update them!!
-		m_startBtn->Update(t_delatTime);
-		m_quitBtn->Update(t_delatTime);
+		Entity::EntityManager::getInstance().Update(t_delatTime);
 	}
 
 	void MainMenuScene::Draw(float t_deltaTime)

@@ -17,8 +17,8 @@ namespace HJ {
 
 	void SplashScene::Init()
 	{
-		m_data->assets.LoadTexture("Splash Background", SPLASH_SCENE_BACKGROUND);
-		m_background.setTexture(m_data->assets.GetTexture("Splash Background"));
+		m_data->assets.LoadTexture("SplashBG", SPLASH_SCENE_BACKGROUND);
+		m_background.setTexture(m_data->assets.GetTexture("SplashBG"));
 	}
 
 	void SplashScene::HandleInput()
@@ -39,6 +39,8 @@ namespace HJ {
 			auto mainMenuState = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
 			m_data->machine.AddState(std::move(mainMenuState));
 		}
+
+		Entity::EntityManager::getInstance().Update(t_delatTime);
 	}
 
 	void SplashScene::Draw(float t_deltaTime)

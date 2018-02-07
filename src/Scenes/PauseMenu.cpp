@@ -18,8 +18,8 @@ namespace HJ {
 	void PauseMenuScene::Init()
 	{
 		// load & set title font type
-		m_data->assets.LoadFont("Main Menu Title Font", MAINMENU_TITLE_FONT);
-		m_titleText.setFont(m_data->assets.GetFont("Main Menu Title Font"));
+		m_data->assets.LoadFont("MainMenuTitleFnt", MAINMENU_TITLE_FONT);
+		m_titleText.setFont(m_data->assets.GetFont("MainMenuTitleFnt"));
 		m_titleText.setCharacterSize(72);
 		m_titleText.setString("Heroes Journey");
 		m_titleText.setPosition((SCREEN_WIDTH * .5f) - (m_titleText.getGlobalBounds().width * .5f), 100.0f);
@@ -41,7 +41,7 @@ namespace HJ {
 
 	void PauseMenuScene::Update(float t_delatTime)
 	{
-		// Do sth (e.g. animations)
+		Entity::EntityManager::getInstance().Update(t_delatTime);
 	}
 
 	void PauseMenuScene::Draw(float t_deltaTime)

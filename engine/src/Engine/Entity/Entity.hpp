@@ -10,6 +10,8 @@ namespace Engine { namespace Entity {
 	// Entity class interface and base functionality
 	class Entity
 	{
+		// TODO: Implement scale like position is implemeented
+
 		protected:
 			std::unique_ptr<sf::Shape> m_shape;
 			sf::Vector2f m_position;
@@ -21,7 +23,6 @@ namespace Engine { namespace Entity {
 
 		public:
 			virtual void Update(const float t_deltaTime) { m_shape->setPosition(m_position); }
-			virtual void Render() const {} ///> Possible to remove actually. Re-designing!
 
 			inline const sf::Shape& GetShape() const { return *m_shape; }
 			inline const sf::Vector2f& GetPosition() const { return m_position; }

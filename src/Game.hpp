@@ -16,8 +16,6 @@ namespace HJ {
 		SM::StateMachine machine;
 		Asset::AssetManager assets;
 		Input::InputManager input;
-		// only used for storing/retrieving shared (between scenes) entities
-		Entity::EntityManager gameObj = Entity::EntityManager::getInstance();
 	};
 
 	using GameDataRef = std::shared_ptr<GameData>;
