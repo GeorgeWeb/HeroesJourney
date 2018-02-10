@@ -14,8 +14,9 @@ namespace HJ {
 	struct GameData 
 	{
 		SM::StateMachine machine;
-		Asset::AssetManager assets;
 		Input::InputManager input;
+		Asset::AssetManager assets;
+		ECM::EntityManager ents;
 	};
 
 	using GameDataRef = std::shared_ptr<GameData>;

@@ -21,9 +21,8 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
-			sf::Clock m_clock;
 
-			sf::Sprite m_background;
+			bool m_shouldFade = false;
 	};
 }
 

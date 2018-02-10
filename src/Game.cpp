@@ -9,7 +9,7 @@ namespace HJ {
 	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title)
 	{
 		// init/create the game window
-		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, sf::Style::Close | sf::Style::Titlebar);
+		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, sf::Style::Close | sf::Style::Resize | sf::Style::Titlebar);
 		Renderer::Initialize(win);
 
 		// add first state/screen

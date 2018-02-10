@@ -38,6 +38,7 @@ namespace Engine { namespace SM {
 
 			m_states.push(std::move(m_newState));
 			m_states.top()->Init();
+
 			m_isAdding = false;
 		}
 	}

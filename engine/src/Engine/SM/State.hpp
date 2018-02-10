@@ -1,10 +1,10 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "../Entity/Entity.hpp"
+#include "../ECM/ECM.hpp"
 
-#include <map>
 #include <memory>
+#include <map>
 
 namespace Engine { namespace SM {
 
@@ -23,11 +23,6 @@ namespace Engine { namespace SM {
 			// Not neccessary, but useful
 			virtual void Pause();
 			virtual void Resume();
-
-			// entity manager wrappers (helpers)
-			void AddEntity(const std::string& t_name, std::shared_ptr<Entity::Entity> t_entity);
-			std::shared_ptr<Entity::Entity> GetEntity(const std::string& t_name);
-
 	};
 
 } }
