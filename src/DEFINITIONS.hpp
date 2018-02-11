@@ -10,6 +10,7 @@
 
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash-bg.png"
+#define SPLASH_GAME_LOGO_SPRITESHEET "res/img/splash/game_logo_anim.png"
 
 // MainMenu state global definitions
 #define MAINMENU_SCENE_BACKGROUND "res/img/main-menu-bg.png"

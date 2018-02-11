@@ -22,9 +22,10 @@ namespace Engine { namespace ECM {
 
 		protected:
 			std::map<std::string, std::shared_ptr<Component>> m_components;
-			sf::Vector2f m_position;
-			
+			sf::Vector2f m_position;			
 			float m_rotation;
+			sf::Vector2f m_scale;
+
 			bool m_alive; ///> should be updated
 			bool m_visible; ///> should be rendered
 			bool m_forDeletion; ///> should be deleted
@@ -33,7 +34,7 @@ namespace Engine { namespace ECM {
 			Entity() = default;
 			virtual ~Entity() = default;
 
-			std::map<std::string, std::shared_ptr<Component>> GetCompsDictionary() { return m_components; }
+			std::map<std::string, std::shared_ptr<Component>> GetCompsDictionary();
 
 			virtual void Update(const float t_deltaTime);
 			virtual void Render();
@@ -44,7 +45,10 @@ namespace Engine { namespace ECM {
 			float GetRotation() const;
 			void SetRotation(float t_rotation);
 			
-			void Move(const sf::Vector2f& t_position, float t_rotation);
+			const sf::Vector2f& GetScale() const;
+			void SetScale(const sf::Vector2f& t_factor);
+
+			void Move(const sf::Vector2f& t_position, float t_rotation = 0);
 
 			bool IsAlive() const;
 			void SetAlive(bool t_alive);
@@ -85,11 +89,11 @@ namespace Engine { namespace ECM {
 
 			virtual void Update(float t_deltaTime) = 0;
 			virtual void Render() = 0;
+			
 			// Just need it too much atm! Will design it better later.
 			virtual sf::Shape& GetShape() { return sf::CircleShape(); }
 			virtual sf::Text& GetText() { return sf::Text(); };
 			virtual sf::Sprite& GetSprite() { sf::Sprite sp; return sp; }
-			virtual System::Animation& GetAnimation() { return System::Animation(); }
 
 			virtual ~Component();
 	};

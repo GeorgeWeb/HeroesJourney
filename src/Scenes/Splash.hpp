@@ -4,6 +4,9 @@
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
 
+#include "../Entities/Hero.hpp"
+#include "../Entities/AnimatedLogo.hpp"
+
 namespace HJ {
 
 	using namespace Engine;
@@ -21,8 +24,11 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
-
 			bool m_shouldFade = false;
+			
+			// Entities
+			std::shared_ptr<Entities::AnimatedLogo> m_logo;
+			std::shared_ptr<Entities::Hero> m_hero;
 	};
 }
 

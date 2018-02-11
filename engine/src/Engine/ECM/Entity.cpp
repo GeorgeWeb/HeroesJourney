@@ -1,7 +1,12 @@
 #include "ECM.hpp"
 
 namespace Engine { namespace ECM {
-
+	
+	std::map<std::string, std::shared_ptr<Component>> Entity::GetCompsDictionary()
+	{
+		return m_components;
+	}
+	
 	void Entity::Update(float t_deltaTime)
 	{ 
 		if (m_alive)
@@ -40,10 +45,19 @@ namespace Engine { namespace ECM {
 		m_rotation = t_rotation;
 	}
 
+	const sf::Vector2f& Entity::GetScale() const
+	{
+		return m_scale;
+	}
+
+	void Entity::SetScale(const sf::Vector2f& t_factor)
+	{
+		m_scale = t_factor;
+	}
+
 	void Entity::Move(const sf::Vector2f& t_position, float t_rotation)
 	{
 		m_position += t_position;
-		m_rotation += t_rotation;
 	}
 
 	bool Entity::IsAlive() const

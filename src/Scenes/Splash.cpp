@@ -3,8 +3,9 @@
 #include <sstream>
 #include <iostream>
 
-#include <Engine/ECM/BaseComponents/SpriteComponent.hpp>
-#include <Engine/ECM/BaseComponents/AnimatorComponent.hpp>
+#include <Engine/ECM/Components/ShapeComponent.hpp>
+#include <Engine/ECM/Components/SpriteComponent.hpp>
+#include <Engine/ECM/Components/AnimatorComponent.hpp>
 
 namespace HJ {
 
@@ -13,6 +14,7 @@ namespace HJ {
 	// engine/game component namespaces
 	using namespace Engine::Components;
 	//using namespace HJ::Components;
+	using namespace HJ::Entities;
 
 	SplashScene::SplashScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -25,6 +27,7 @@ namespace HJ {
 		// Load resources
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_HeroSheet", MAIN_HERO_SPRITESHEET);
+		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		m_data->assets.LoadFont("Font_GameTitle", GAME_TITLE_FONT);
 
 		// Restore entity manager to non-visible ents
@@ -39,32 +42,45 @@ namespace HJ {
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");
 		// define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SplashBG"));
-		bgSprite->GetSprite().setColor(sf::Color(128, 200, 128, 200));
-		bgSprite->GetSprite().setOrigin(bgSprite->GetSprite().getScale().x, bgSprite->GetSprite().getScale().y);
+		bgSprite->GetSprite().setColor(sf::Color(128, 128, 128, 200));
 		// set properties
+		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
 		// Hero
-		auto hero = std::make_shared<ECM::Entity>();
-		auto heroSprite = hero->AddComponent<SpriteComponent>("C_HeroSprite");
-		auto heroAnim = hero->AddComponent<AnimatorComponent>("C_HeroAnimator");
+		m_hero = std::make_shared<Hero>();
+		m_hero->SetSprite(m_data->assets.GetTexture("Tex_HeroSheet"), sf::IntRect(0, 0, 48, 48));
 		// define hero sprite
-		heroSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_HeroSheet"));
-		heroSprite->GetSprite().setOrigin(heroSprite->GetSprite().getScale().x, heroSprite->GetSprite().getScale().y);
-		heroSprite->GetSprite().setScale(sf::Vector2f(3.0f, 3.0f));
+		m_hero->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
+		m_hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		// define hero animation
-		heroAnim->SetAnimation(&m_data->assets.GetTexture("Tex_HeroSheet"), sf::Vector2u(4, 4), 0.3f);
+		m_hero->GetAnimatorComponent()->AddAnimation("Anim_HeroFull", Animation(&m_data->assets.GetTexture("Tex_HeroSheet"), sf::Vector2u(4, 4), 0.3f, true, false));
+		m_hero->GetAnimatorComponent()->GetAnimation("Anim_HeroFull").SetRow(0);
 		// set properties
-		hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - heroSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-									(SCREEN_HEIGHT - heroSprite->GetSprite().getGlobalBounds().height) * 0.5f));
-		hero->SetVisible(true);
-		hero->SetAlive(true);
+		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
+		m_hero->SetVisible(true);
+		m_hero->SetAlive(true);
 
-		// Add to ents (local) map		
+		// Logo
+		m_logo = std::make_shared<AnimatedLogo>();
+		m_logo->SetSprite(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
+		// define logo sprite
+		m_logo->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
+		m_logo->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		// define hero animation
+		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.1f, true, false));
+		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
+		// set properties
+		m_logo->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 50.0f));
+		m_logo->SetVisible(true);
+		m_logo->SetAlive(true);
+
+		// Add to ents (local) map
 		ents.insert_or_assign("E_SplashBG", bg);
-		ents.insert_or_assign("E_Hero", hero);
-		
+		ents.insert_or_assign("E_Hero", m_hero);
+		ents.insert_or_assign("E_GameLogo", m_logo);
+
 		// :if entity is not in the entity manager, then it will be added:
 		m_data->ents.PopulateEntsDictionary(ents);
 	}
@@ -81,11 +97,16 @@ namespace HJ {
 			auto bgSpriteComp = m_data->ents.Find("E_SplashBG")->GetComponent("C_SplashBGSprite");
 
 			// 'Press ANY key OR button to continue!' type of game
-			if (event.type == sf::Event::EventType::KeyPressed || 
+			if (event.type == sf::Event::EventType::KeyPressed ||
 				m_data->input.isClicked(bgSpriteComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				std::cout << "Wassup :P finally worked! :D\n";
 				m_shouldFade = true;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				m_hero->GetAnimatorComponent()->GetAnimation("Anim_HeroFull").SetRow(1);
 			}
 		}
 	}
@@ -96,30 +117,34 @@ namespace HJ {
 		if (m_shouldFade)
 		{
 			auto fadedColor = sf::Color(bgSpriteComp->GetSprite().getColor().r,
-										bgSpriteComp->GetSprite().getColor().g,
-										bgSpriteComp->GetSprite().getColor().b,
-										bgSpriteComp->GetSprite().getColor().a - t_delatTime);
+				bgSpriteComp->GetSprite().getColor().g,
+				bgSpriteComp->GetSprite().getColor().b,
+				bgSpriteComp->GetSprite().getColor().a - t_delatTime);
 
 			bgSpriteComp->GetSprite().setColor(fadedColor);
 
 			if (bgSpriteComp->GetSprite().getColor().a == 0)
 			{
 				m_shouldFade = false;
-				
+
 				// Switch scenes (to Main Menu)
 				//auto mainMenuState = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
 				//m_data->machine.AddState(std::move(mainMenuState));
 			}
 		}
 
-		m_data->ents.Update(t_delatTime);
+		// animate logo
+		m_logo->Animate();
+		// animate hero
+		m_hero->Animate();
 
-		m_data->ents.Find("E_Hero")->GetComponent("C_HeroSprite")->GetSprite().setTextureRect(
-			m_data->ents.Find("E_Hero")->GetComponent("C_HeroAnimator")->GetAnimation().uvRect);
+		// update all entities
+		m_data->ents.Update(t_delatTime);
 	}
 
 	void SplashScene::Draw(float t_deltaTime)
 	{
+		// render all entities
 		m_data->ents.Render();
 	}
 

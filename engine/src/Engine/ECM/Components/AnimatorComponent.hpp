@@ -9,7 +9,7 @@ namespace Engine { namespace Components {
 	class AnimatorComponent final : public ECM::Component
 	{
 		protected:
-			std::shared_ptr<System::Animation> m_animation;
+			std::map<std::string, std::shared_ptr<System::Animation>> m_animations;
 			
 		public:
 			AnimatorComponent() = delete;
@@ -18,9 +18,13 @@ namespace Engine { namespace Components {
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			void SetAnimation(sf::Texture* t_texture, sf::Vector2u t_imgCount, float t_switchTime);
+			std::shared_ptr<System::Animation> AddAnimation(const std::string& t_name, System::Animation t_animation);
 
-			System::Animation& GetAnimation() override;
+			sf::IntRect GetAnimUVRect(const std::string& t_name);
+
+			std::map<std::string, std::shared_ptr<System::Animation>> GetAnims();
+			
+			System::Animation& GetAnimation(const std::string& t_name);
 	};
 
 } }

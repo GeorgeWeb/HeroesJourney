@@ -13,7 +13,6 @@ namespace Engine { namespace Components {
 		if (m_parent->IsAlive())
 		{
 			m_shape->setPosition(m_parent->GetPosition());
-			m_shape->setRotation(m_parent->GetRotation());
 		}
 	}
 

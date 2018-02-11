@@ -53,11 +53,12 @@ namespace HJ {
 			// clear buffers (color)
 			Renderer::GetWin().clear(sf::Color::Black);
 			
-			// DO THE RENDERING FOR THE ACTIVE SCENE!
-			m_data->machine.GetActiveState()->Draw(interpolation);
-			
 			// flush screen
 			Renderer::Render();
+
+			// DO THE RENDERING FOR THE ACTIVE SCENE!
+			m_data->machine.GetActiveState()->Draw(interpolation);
+		
 			// display the window
 			Renderer::GetWin().display();
 		}
