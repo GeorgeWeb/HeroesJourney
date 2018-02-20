@@ -25,6 +25,13 @@ namespace HJ { namespace Entities {
 	void Hero::Update(float t_deltaTime)
 	{
 		Entity::Update(t_deltaTime);
+
+		//check if hero dies
+
+		if (m_health <= 0) 
+		{
+			//animate death
+		}
 	}
 
 	void Hero::Render()
