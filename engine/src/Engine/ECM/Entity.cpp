@@ -55,7 +55,7 @@ namespace Engine { namespace ECM {
 		m_scale = t_factor;
 	}
 
-	void Entity::Move(const sf::Vector2f& t_position, float t_rotation)
+	void Entity::Move(const sf::Vector2f& t_position)
 	{
 		m_position += t_position;
 	}

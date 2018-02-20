@@ -24,9 +24,9 @@ namespace HJ {
 	class Game final
 	{
 		private:
-			const float m_deltaTime = 1.0f / 60.0f;
+			const float m_deltaTime;
 			sf::Clock m_clock;
-			GameDataRef m_data = std::make_shared<GameData>();
+			GameDataRef m_data;
 
 			void Run();
 

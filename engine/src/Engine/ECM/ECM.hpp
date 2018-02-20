@@ -48,7 +48,7 @@ namespace Engine { namespace ECM {
 			const sf::Vector2f& GetScale() const;
 			void SetScale(const sf::Vector2f& t_factor);
 
-			void Move(const sf::Vector2f& t_position, float t_rotation = 0);
+			void Move(const sf::Vector2f& t_position);
 
 			bool IsAlive() const;
 			void SetAlive(bool t_alive);

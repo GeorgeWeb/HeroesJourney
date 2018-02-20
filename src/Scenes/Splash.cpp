@@ -26,7 +26,7 @@ namespace HJ {
 	{
 		// Load resources
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_HeroSheet", MAIN_HERO_SPRITESHEET);
+		m_data->assets.LoadTexture("Tex_KnightSheet", MAIN_HERO_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		m_data->assets.LoadFont("Font_GameTitle", GAME_TITLE_FONT);
 
@@ -49,13 +49,13 @@ namespace HJ {
 		bg->SetAlive(true);
 
 		// Hero
-		m_hero = std::make_shared<Hero>();
+		m_hero = std::make_shared<Knight>("C_KnightSprite", "C_KnightAnimator");
 		// initialize data
-		m_hero->Init(m_data->assets.GetTexture("Tex_HeroSheet"), sf::IntRect(0, 0, 32, 32));
+		m_hero->Init(m_data->assets.GetTexture("Tex_KnightSheet"), sf::IntRect(0, 0, 32, 32));
 		// set more properties
 		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
-		m_hero->GetAnimatorComponent()->AddAnimation("Anim_HeroFull", Animation(&m_data->assets.GetTexture("Tex_HeroSheet"), sf::Vector2u(4, 4), 0.3f, true, false));
-		m_hero->GetAnimatorComponent()->GetAnimation("Anim_HeroFull").SetRow(0);
+		m_hero->GetAnimatorComponent()->AddAnimation("Anim_KnightFull", Animation(&m_data->assets.GetTexture("Tex_KnightSheet"), sf::Vector2u(4, 4), 0.3f, true, false));
+		m_hero->GetAnimatorComponent()->GetAnimation("Anim_KnightFull").SetRow(0);
 
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();
@@ -68,7 +68,7 @@ namespace HJ {
 
 		// Add to ents (local) map
 		ents.insert_or_assign("E_SplashBG", bg);
-		ents.insert_or_assign("E_Hero", m_hero);
+		ents.insert_or_assign("E_Knight", m_hero);
 		ents.insert_or_assign("E_GameLogo", m_logo);
 
 		// :if entity is not in the entity manager, then it will be added:
@@ -115,7 +115,7 @@ namespace HJ {
 			if (bgSpriteComp->GetSprite().getColor().a == 0)
 			{
 				m_shouldFade = false;
-
+				
 				// Switch scenes (to Main Menu)
 				//auto mainMenuState = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
 				//m_data->machine.AddState(std::move(mainMenuState));

@@ -4,27 +4,11 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
 
+#include <functional>
+
 namespace HJ { namespace Entities {
 
-	enum class HeroAnimStates : char
-	{
-		FULL,
-		IDLE,
-		MOVE,
-		ATTACK,
-		VICTORY,
-		SPEAK,
-		DIE
-	};
-
-	enum class HeroAttackAnimStates : char
-	{
-		BASIC,
-		SKILL1,
-		SKILL2
-	};
-
-	class Hero final : public Engine::ECM::Entity
+	class Hero : public Engine::ECM::Entity
 	{
 		private:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
@@ -35,21 +19,21 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 
 		public:
-			Hero();
-			~Hero() = default;
+			Hero() = delete;
+			Hero(const std::string& t_sprite, const std::string& t_animator);
+			virtual ~Hero() = default;
 
-			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
+			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
+			virtual void Update(float t_deltaTime);
+			virtual void Render();
+
+			virtual void Attack(std::shared_ptr<Entity> t_entity) = 0;
+			virtual void Skill(const std::function<void(std::shared_ptr<Entity> t_entity)>& t_func);
+			virtual void Defend() = 0;
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
-
-			void Animate();
-
-			void Attack() {}
-			void TakeDamage() {}
-			void Die() {}
+			void Animate(const std::string& t_animationName);
 	};
 
 } }

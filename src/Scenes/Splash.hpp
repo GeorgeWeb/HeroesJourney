@@ -4,7 +4,7 @@
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
 
-#include "../Entities/Hero.hpp"
+#include "../Entities/Knight.hpp"
 #include "../Entities/AnimatedLogo.hpp"
 
 namespace HJ {
@@ -28,7 +28,7 @@ namespace HJ {
 			
 			// Entities
 			std::shared_ptr<Entities::AnimatedLogo> m_logo;
-			std::shared_ptr<Entities::Hero> m_hero;
+			std::shared_ptr<Entities::Knight> m_hero;
 	};
 }
 
