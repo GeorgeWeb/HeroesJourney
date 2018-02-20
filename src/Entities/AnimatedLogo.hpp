@@ -13,12 +13,14 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
 
 		public:
-			AnimatedLogo();
-			~AnimatedLogo() = default;
-
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 
+		public:
+			AnimatedLogo();
+			~AnimatedLogo() = default;
+
+			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Update(float t_deltaTime) override;
 			void Render() override;
 

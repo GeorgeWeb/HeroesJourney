@@ -21,6 +21,6 @@
 // Main Game state global definitions
 #define MAIN_GAME_SCENE_BACKGROUND "res/img/main-game-map-bg.jpg"
 
-#define MAIN_HERO_SPRITESHEET "res/img/characters/george.png"
+#define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 
 #endif // !DEFINITIONS_H

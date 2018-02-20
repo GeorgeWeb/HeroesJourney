@@ -9,16 +9,18 @@ namespace HJ { namespace Entities {
 	Hero::Hero() :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_HeroSprite")),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator"))
-	{ }
-
-	std::shared_ptr<Engine::Components::SpriteComponent> Hero::GetSpriteComponent()
 	{
-		return m_spriteComp;
+		// by default
+		SetVisible(true);
+		SetAlive(true);
 	}
 
-	std::shared_ptr<Engine::Components::AnimatorComponent> Hero::GetAnimatorComponent()
+	void Hero::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
-		return m_animatorComp;
+		m_spriteComp->GetSprite().setTexture(t_texture);
+		m_spriteComp->GetSprite().setTextureRect(t_texRect);
+		m_spriteComp->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
+		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 
 	void Hero::Update(float t_deltaTime)
@@ -41,6 +43,16 @@ namespace HJ { namespace Entities {
 	{
 		for (auto anim : m_animatorComp->GetAnims())
 			m_spriteComp->GetSprite().setTextureRect(m_animatorComp->GetAnimation(anim.first).uvRect);
+	}
+
+	std::shared_ptr<Engine::Components::SpriteComponent> Hero::GetSpriteComponent()
+	{
+		return m_spriteComp;
+	}
+
+	std::shared_ptr<Engine::Components::AnimatorComponent> Hero::GetAnimatorComponent()
+	{
+		return m_animatorComp;
 	}
 
 } }

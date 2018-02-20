@@ -50,31 +50,21 @@ namespace HJ {
 
 		// Hero
 		m_hero = std::make_shared<Hero>();
-		m_hero->SetSprite(m_data->assets.GetTexture("Tex_HeroSheet"), sf::IntRect(0, 0, 48, 48));
-		// define hero sprite
-		m_hero->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
-		m_hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		// define hero animation
+		// initialize data
+		m_hero->Init(m_data->assets.GetTexture("Tex_HeroSheet"), sf::IntRect(0, 0, 32, 32));
+		// set more properties
+		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
 		m_hero->GetAnimatorComponent()->AddAnimation("Anim_HeroFull", Animation(&m_data->assets.GetTexture("Tex_HeroSheet"), sf::Vector2u(4, 4), 0.3f, true, false));
 		m_hero->GetAnimatorComponent()->GetAnimation("Anim_HeroFull").SetRow(0);
-		// set properties
-		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
-		m_hero->SetVisible(true);
-		m_hero->SetAlive(true);
 
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();
-		m_logo->SetSprite(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
-		// define logo sprite
-		m_logo->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
-		m_logo->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		// define hero animation
-		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.1f, true, false));
-		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
-		// set properties
+		// initialize data
+		m_logo->Init(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
+		// set more properties
 		m_logo->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 50.0f));
-		m_logo->SetVisible(true);
-		m_logo->SetAlive(true);
+		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.05f, true, false));
+		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
 
 		// Add to ents (local) map
 		ents.insert_or_assign("E_SplashBG", bg);
@@ -100,7 +90,6 @@ namespace HJ {
 			if (event.type == sf::Event::EventType::KeyPressed ||
 				m_data->input.isClicked(bgSpriteComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				std::cout << "Wassup :P finally worked! :D\n";
 				m_shouldFade = true;
 			}
 
@@ -136,7 +125,7 @@ namespace HJ {
 		// animate logo
 		m_logo->Animate();
 		// animate hero
-		m_hero->Animate();
+		//m_hero->Animate();
 
 		// update all entities
 		m_data->ents.Update(t_delatTime);
