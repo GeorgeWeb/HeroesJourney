@@ -30,11 +30,11 @@ namespace HJ {namespace Entities {
 			Hero::Render();
 		}
 
-		void Sorceress::Attack(std::shared_ptr<Entity> t_entity)
+		void Sorceress::Attack()
 		{
 		}
 
-		void Sorceress::Skill(const std::function<void(std::shared_ptr<Entity>t_entity)>& t_func)
+		void Sorceress::Skill(std::function<void()> t_func)
 		{
 			Hero::Skill(t_func);
 		}

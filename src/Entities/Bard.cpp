@@ -1,4 +1,4 @@
-#include "Bard.h"
+#include "Bard.hpp"
 
 namespace HJ { namespace Entities {
 
@@ -32,12 +32,12 @@ namespace HJ { namespace Entities {
 		Hero::Render();
 	}
 
-	void Bard::Attack(std::shared_ptr<Entity> t_entity)
+	void Bard::Attack()
 	{
 		// todo
 	}
 
-	void Bard::Skill(const std::function<void(std::shared_ptr<Entity>t_entity)>& t_func)
+	void Bard::Skill(std::function<void()> t_func)
 	{
 		Hero::Skill(t_func);
 	}

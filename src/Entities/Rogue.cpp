@@ -32,12 +32,12 @@ namespace HJ {
 			Hero::Render();
 		}
 
-		void Rogue::Attack(std::shared_ptr<Entity> t_entity)
+		void Rogue::Attack()
 		{
 			// implement
 		}
 
-		void Rogue::Skill(const std::function<void(std::shared_ptr<Entity>t_entity)>& t_func)
+		void Rogue::Skill(std::function<void()> t_func)
 		{
 			Hero::Skill(t_func);
 		}

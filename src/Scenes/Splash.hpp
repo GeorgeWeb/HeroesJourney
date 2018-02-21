@@ -7,6 +7,8 @@
 #include "../Entities/Knight.hpp"
 #include "../Entities/AnimatedLogo.hpp"
 
+#include "MainMenu.hpp"
+
 namespace HJ {
 
 	using namespace Engine;

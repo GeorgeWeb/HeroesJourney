@@ -44,15 +44,17 @@ namespace HJ {
 		auto startSprite = start_btn->AddComponent<SpriteComponent>("C_StartSprite");
 		//define start button sprite
 		startSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Start"));
-		startSprite->GetSprite().setColor(sf::Color(128, 128, 128, 200));
+		startSprite->GetSprite().setColor(sf::Color(128, 128, 128, 500));
 		//properties
-		start_btn->SetPosition(sf::Vector2f(200.0f, 150.0f));
+		start_btn->SetPosition(sf::Vector2f((SCREEN_WIDTH - startSprite->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - startSprite->GetSprite().getGlobalBounds().height) * 0.7f));
+
 		start_btn->SetVisible(true);
 		start_btn->SetAlive(true);
 
 		//add to local ents map
+		ents.insert_or_assign("E_Start", start_btn);
 		ents.insert_or_assign("E_MainBG", bg);
-		ents._Insert_or_assign("E_Start", start_btn);
+		
 
 		//:if entity is not in the entity manager, then add
 		m_data->ents.PopulateEntsDictionary(ents);

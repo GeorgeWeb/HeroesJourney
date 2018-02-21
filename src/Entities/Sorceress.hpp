@@ -17,8 +17,8 @@ namespace HJ {
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			void Attack(std::shared_ptr<Entity> t_entity) override;
-			void Skill(const std::function<void(std::shared_ptr<Entity> t_entity)>& t_func) override;
+			void Attack() override;
+			void Skill(std::function<void()> t_func) override;
 			void Defend() override;
 
 		private:

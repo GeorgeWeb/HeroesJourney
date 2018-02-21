@@ -19,8 +19,9 @@
 #define MAINMENU_QUITGAME_BUTTON "res/img/main_menu/quit_btn.png"
 
 // Main Game state global definitions
-#define MAIN_GAME_SCENE_BACKGROUND "res/img/main-game-map-bg.jpg"
+#define MAIN_GAME_SCENE_BACKGROUND "res/img/game-map-bg.png"
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
+
 
 #endif // !DEFINITIONS_H

@@ -117,8 +117,8 @@ namespace HJ {
 				m_shouldFade = false;
 				
 				// Switch scenes (to Main Menu)
-				//auto mainMenuState = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
-				//m_data->machine.AddState(std::move(mainMenuState));
+				auto mainMenuState = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
+				m_data->machine.AddState(std::move(mainMenuState));
 			}
 		}
 
