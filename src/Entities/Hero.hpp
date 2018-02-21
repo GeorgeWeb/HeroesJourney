@@ -53,8 +53,8 @@ namespace HJ { namespace Entities {
 			virtual void Update(float t_deltaTime);
 			virtual void Render();
 
-			virtual void Attack(std::shared_ptr<EvilAI> t_hero) = 0;
-			virtual void Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func);
+			virtual void Attack() = 0;
+			virtual void Skill(std::function<void()> t_func);
 			virtual void Defend() = 0;
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);

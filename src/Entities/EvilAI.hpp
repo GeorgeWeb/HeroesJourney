@@ -4,8 +4,6 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
 
-#include "Hero.hpp"
-
 #include <functional>
 
 namespace HJ { namespace Entities {
@@ -13,9 +11,9 @@ namespace HJ { namespace Entities {
 	// base AI behaviour class
 	enum AIBehaviour
 	{
-		ATTACK,
-		DEFEND,
-		DIE
+		BASE_ATTACK,
+		BASE_DEFEND,
+		BASE_DIE
 	};
 
 	class EvilAI : public Engine::ECM::Entity
@@ -59,8 +57,8 @@ namespace HJ { namespace Entities {
 			virtual void Update(float t_deltaTime);
 			virtual void Render();
 
-			virtual void Attack(std::shared_ptr<Hero> t_hero) = 0;
-			virtual void Skill(std::function<void(std::shared_ptr<Hero>)> t_func);
+			virtual void Attack() = 0;
+			virtual void Skill(std::function<void()> t_func);
 			virtual void Defend() = 0;
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);

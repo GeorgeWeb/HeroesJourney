@@ -50,7 +50,7 @@ namespace HJ { namespace Entities {
 		m_spriteComp->GetSprite().setTextureRect(m_animatorComp->GetAnimation(t_animationName).uvRect);
 	}
 
-	void Hero::Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func)
+	void Hero::Skill(std::function<void()> t_func)
 	{
 		std::invoke([&]() { t_func; });
 	}

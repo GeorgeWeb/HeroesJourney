@@ -32,12 +32,12 @@ namespace HJ { namespace Entities {
 		Hero::Render();
 	}
 
-	void Knight::Attack(std::shared_ptr<EvilAI> t_enemy)
+	void Knight::Attack()
 	{
 		// implement
 	}
 
-	void Knight::Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func)
+	void Knight::Skill(std::function<void()> t_func)
 	{
 		Hero::Skill(t_func);
 	}
