@@ -1,16 +1,24 @@
-#ifndef HERO_ENTITY_H
-#define HERO_ENTITY_H
+#ifndef EVIL_AI_H
+#define EVIL_AI_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
 
-#include "EvilAI.hpp"
+#include "Hero.hpp"
 
 #include <functional>
 
 namespace HJ { namespace Entities {
 
-	class Hero : public Engine::ECM::Entity
+	// base AI behaviour class
+	enum AIBehaviour
+	{
+		ATTACK,
+		DEFEND,
+		DIE
+	};
+
+	class EvilAI : public Engine::ECM::Entity
 	{
 		private:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
@@ -27,7 +35,6 @@ namespace HJ { namespace Entities {
 			bool m_isStunned;
 			bool m_isFlaming;
 			bool m_isFrozen;
-			
 
 		public:
 			inline void SetHealth(const int t_health) { m_health = t_health; }
@@ -38,29 +45,27 @@ namespace HJ { namespace Entities {
 			inline void SetFrozen(const bool t_freeze) { m_isFrozen = t_freeze; }
 			inline bool IsFrozen()const { return m_isFrozen; }
 
-
 		public:
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 
 		public:
-			Hero() = delete;
-			Hero(const std::string& t_sprite, const std::string& t_animator);
-			virtual ~Hero() = default;
+			EvilAI() = delete;
+			EvilAI(const std::string& t_sprite, const std::string& t_animator);
+			virtual ~EvilAI() = default;
 
 			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 
 			virtual void Update(float t_deltaTime);
 			virtual void Render();
 
-			virtual void Attack(std::shared_ptr<EvilAI> t_hero) = 0;
-			virtual void Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func);
+			virtual void Attack(std::shared_ptr<Hero> t_hero) = 0;
+			virtual void Skill(std::function<void(std::shared_ptr<Hero>)> t_func);
 			virtual void Defend() = 0;
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);
 	};
-
 } }
 
-#endif // !HERO_ENTITY_H
+#endif // !EVIL_AI_H

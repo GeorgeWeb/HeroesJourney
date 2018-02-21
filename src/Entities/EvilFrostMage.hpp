@@ -1,5 +1,5 @@
-#ifndef HERO_ENTITY_H
-#define HERO_ENTITY_H
+#ifndef EVIL_FROST_MAGE_H
+#define EVIL_FROST_MAGE_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
@@ -10,8 +10,19 @@
 
 namespace HJ { namespace Entities {
 
-	class Hero : public Engine::ECM::Entity
-	{
+		enum EvilMageBehaviour
+		{
+			// derived
+			ATTACK = AIBehaviour::ATTACK,
+			DEFEND = AIBehaviour::DEFEND,
+			DIE = AIBehaviour::DIE,
+			// new
+			FROST_STORM,
+			ICY_BURST
+		};
+
+		class EvilFrostMage : public EvilAI
+		{
 		private:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
@@ -27,7 +38,6 @@ namespace HJ { namespace Entities {
 			bool m_isStunned;
 			bool m_isFlaming;
 			bool m_isFrozen;
-			
 
 		public:
 			inline void SetHealth(const int t_health) { m_health = t_health; }
@@ -38,29 +48,25 @@ namespace HJ { namespace Entities {
 			inline void SetFrozen(const bool t_freeze) { m_isFrozen = t_freeze; }
 			inline bool IsFrozen()const { return m_isFrozen; }
 
-
 		public:
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 
 		public:
-			Hero() = delete;
-			Hero(const std::string& t_sprite, const std::string& t_animator);
-			virtual ~Hero() = default;
+			EvilFrostMage();
+			EvilFrostMage(const std::string& t_sprite, const std::string& t_animator);
+			virtual ~EvilFrostMage() = default;
 
-			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
+			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
 
-			virtual void Update(float t_deltaTime);
-			virtual void Render();
+			void Update(float t_deltaTime) override;
+			void Render() override;
 
-			virtual void Attack(std::shared_ptr<EvilAI> t_hero) = 0;
-			virtual void Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func);
-			virtual void Defend() = 0;
+			void Attack(std::shared_ptr<Hero> t_hero) override;
+			void Skill(std::function<void(std::shared_ptr<Hero>)> t_func) override;
+			void Defend() override;
+		};
+	}
+}
 
-			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
-			void Animate(const std::string& t_animationName);
-	};
-
-} }
-
-#endif // !HERO_ENTITY_H
+#endif // !EVIL_FROST_MAGE_H

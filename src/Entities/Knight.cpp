@@ -1,4 +1,5 @@
 #include "Knight.hpp"
+#include "EvilAI.hpp"
 
 namespace HJ { namespace Entities {
 
@@ -31,12 +32,12 @@ namespace HJ { namespace Entities {
 		Hero::Render();
 	}
 
-	void Knight::Attack(std::shared_ptr<Entity> t_entity)
+	void Knight::Attack(std::shared_ptr<EvilAI> t_enemy)
 	{
 		// implement
 	}
 
-	void Knight::Skill(const std::function<void(std::shared_ptr<Entity>t_entity)>& t_func)
+	void Knight::Skill(std::function<void(std::shared_ptr<EvilAI>)> t_func)
 	{
 		Hero::Skill(t_func);
 	}
