@@ -23,6 +23,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_Mountains", MAIN_GAME_MOUNTAINS);
 		m_data->assets.LoadTexture("Tex_Sea", MAIN_GAME_SEA);
 		m_data->assets.LoadTexture("Tex_EvilCastle", MAIN_GAME_EVIL_CASTLE);
+		m_data->assets.LoadTexture("Tex_Frame", MAIN_GAME_UI_FRAME);
 
 		//Entity manager to non-visible ents
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
@@ -34,10 +35,10 @@ namespace HJ {
 		auto bg = std::make_shared<ECM::Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_MapBGSprite");
 		//define bg sprite
-		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SplashBG"));
-		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 100));
+		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_MapBG"));
+		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		bgSprite->GetSprite().scale(0.9f, 0.9f);
+		bgSprite->GetSprite().scale(0.9f, 0.85f);
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
@@ -49,7 +50,7 @@ namespace HJ {
 		castleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Castle"));
 		castleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f, (SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
+		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f, (SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
 		castle->SetVisible(true);
 		castle->SetAlive(true);
 
@@ -71,7 +72,7 @@ namespace HJ {
 		mountainsSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mountains"));
 		mountainsSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.6f, (SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.68f));
+		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
 		mountains->SetVisible(true);
 		mountains->SetAlive(true);
 
@@ -82,7 +83,7 @@ namespace HJ {
 		seaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Sea"));
 		seaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.9f, (SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.6f));
+		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f, (SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
 		sea->SetVisible(true);
 		sea->SetAlive(true);
 
@@ -97,13 +98,28 @@ namespace HJ {
 		evilCastle->SetVisible(true);
 		evilCastle->SetAlive(true);
 
+		//UI frame
+		auto frame = std::make_shared<ECM::Entity>();
+		auto frameSprite = frame->AddComponent<SpriteComponent>("C_Frame");
+		//define castle sprite
+		frameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Frame"));
+		frameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		//castle properties
+		frameSprite->GetSprite().scale(0.9f, 0.9f);
+		frame->SetPosition(sf::Vector2f((SCREEN_WIDTH - frameSprite->GetSprite().getGlobalBounds().width*2.4) , (SCREEN_HEIGHT - frameSprite->GetSprite().getGlobalBounds().height) ));
+		frame->SetVisible(true);
+		frame->SetAlive(true);
+		
+
 		//add to local ents map
-		ents.insert_or_assign("E_MapBG", bg);
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "z" for background "x" for UI
+		ents.insert_or_assign("E_zMapBG", bg);
 		ents.insert_or_assign("E_Castle", castle);
 		ents.insert_or_assign("E_Forest", forest);
 		ents.insert_or_assign("E_Mountains", mountains);
 		ents.insert_or_assign("E_Sea", sea);
 		ents.insert_or_assign("E_EvilCastle", evilCastle);
+		ents.insert_or_assign("E_xFrame", frame);
 		
 
 		//:if entity is not in the entity manager, then add

@@ -26,6 +26,7 @@
 #define MAIN_GAME_MOUNTAINS "res/img/mountains.png"
 #define MAIN_GAME_SEA "res/img/sea.png"
 #define MAIN_GAME_EVIL_CASTLE "res/img/evilcastle.png"
+#define MAIN_GAME_UI_FRAME "res/img/frame.png"
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 
