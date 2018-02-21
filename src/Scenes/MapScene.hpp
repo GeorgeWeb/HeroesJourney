@@ -1,5 +1,5 @@
 #ifndef MAPSCENE_H
-#define MAMAPSCENE_HINMENU_H
+#define MAPSCENE_H
 
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"

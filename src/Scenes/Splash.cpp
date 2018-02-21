@@ -54,7 +54,8 @@ namespace HJ {
 		// initialize data
 		m_hero->Init(m_data->assets.GetTexture("Tex_KnightSheet"), sf::IntRect(0, 0, 32, 32));
 		// set more properties
-		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
+		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 
+			(SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
 
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();

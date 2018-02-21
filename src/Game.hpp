@@ -7,9 +7,21 @@
 #include <memory>
 #include <string>
 
+#include <vector>
+
 namespace HJ {
 
 	using namespace Engine;
+
+	class GameManager
+	{
+		public:
+			// stores the amount of gold gathered
+			unsigned int gold;
+			// stores the unlocked encounters -> helps manage which heroes to use in a battle
+			// because every hero is related to the particular encounter
+			std::vector<std::string> unlockedEncounters;
+	};
 
 	struct GameData 
 	{
@@ -17,6 +29,7 @@ namespace HJ {
 		Input::InputManager input;
 		Asset::AssetManager assets;
 		ECM::EntityManager ents;
+		GameManager gm;
 	};
 
 	using GameDataRef = std::shared_ptr<GameData>;

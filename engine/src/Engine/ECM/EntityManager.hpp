@@ -43,7 +43,27 @@ namespace Engine { namespace ECM {
 			void Save(const std::string& t_name, std::shared_ptr<Entity> t_entity)
 			{
 				if (m_entities.find(t_name) == m_entities.end())
-					m_entities[t_name] = t_entity;
+				{
+					if (t_entity == nullptr)
+						throw("The entity you are trying to access is not initialised! ");
+					else
+						m_entities[t_name] = t_entity;
+				}
+			}
+
+			void Remove(const std::string& t_name)
+			{
+				if (m_entities.find(t_name) == m_entities.end())
+				{
+					throw("The entity you are trying to access does not exist! ");
+				}
+				else
+				{
+					if (m_entities[t_name] == nullptr)
+						throw("There's an error with this entity! ");
+					else
+						m_entities.erase(t_name);
+				}
 			}
 
 			void Render()
