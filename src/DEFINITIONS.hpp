@@ -20,6 +20,7 @@
 
 // Main Game state global definitions
 #define MAIN_GAME_SCENE_BACKGROUND "res/img/game-map-bg.png"
+#define MAIN_GAME_CASTLE "res/img/castle.png"
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 

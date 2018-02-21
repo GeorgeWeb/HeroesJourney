@@ -23,7 +23,7 @@ namespace HJ {
 
 	private:
 		GameDataRef m_data;
-
+		bool m_castleClick = false;
 
 		// Entities
 

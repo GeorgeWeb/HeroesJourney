@@ -108,7 +108,7 @@ namespace HJ {
 			auto fadedColor = sf::Color(bgSpriteComp->GetSprite().getColor().r,
 				bgSpriteComp->GetSprite().getColor().g,
 				bgSpriteComp->GetSprite().getColor().b,
-				bgSpriteComp->GetSprite().getColor().a - t_delatTime);
+				bgSpriteComp->GetSprite().getColor().a - t_delatTime*100.0f);
 
 			bgSpriteComp->GetSprite().setColor(fadedColor);
 
