@@ -23,8 +23,23 @@ namespace HJ {
 
 	private:
 		GameDataRef m_data;
-		bool m_castleClick = false;
 
+		//boolean click checks
+		bool m_castleClick = false;
+		bool m_forestClick = false;
+		bool m_mountainsClick = false;
+		bool m_seaClick = false;
+		bool m_evilCastleClick = false;
+
+		//unclick checks
+		bool m_castleUnClick = false;
+		bool m_forestUnClick = false;
+		bool m_mountainsUnClick = false;
+		bool m_seaUnClick = false;
+		bool m_evilCastleUnClick = false;
+
+		sf::Clock m_clock;
+		float m_time = 0.1f;
 		// Entities
 
 	};

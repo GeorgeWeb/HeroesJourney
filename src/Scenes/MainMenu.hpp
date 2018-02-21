@@ -23,6 +23,7 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
+		
 	};
 }
 

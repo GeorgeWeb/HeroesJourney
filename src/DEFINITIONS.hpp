@@ -21,6 +21,11 @@
 // Main Game state global definitions
 #define MAIN_GAME_SCENE_BACKGROUND "res/img/game-map-bg.png"
 #define MAIN_GAME_CASTLE "res/img/castle.png"
+#define MAIN_GAME_POPUP "res/img/popUp.png"
+#define MAIN_GAME_FOREST "res/img/forest.png"
+#define MAIN_GAME_MOUNTAINS "res/img/mountains.png"
+#define MAIN_GAME_SEA "res/img/sea.png"
+#define MAIN_GAME_EVIL_CASTLE "res/img/evilcastle.png"
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 
