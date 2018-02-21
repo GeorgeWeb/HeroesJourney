@@ -14,7 +14,7 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
 
-		private:
+		protected:
 			int m_health;
 			unsigned int m_mana;
 			unsigned int m_damage;

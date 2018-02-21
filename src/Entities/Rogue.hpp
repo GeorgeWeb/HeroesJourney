@@ -1,16 +1,17 @@
-#ifndef KNIGHT_ENTITY_H
-#define KNIGHT_ENTITY_H
+#ifndef ROGUE_ENTITY_H
+#define ROGUE_ENTITY_H
 
 #include "Hero.hpp"
 
-namespace HJ { namespace Entities {
+namespace HJ {
+	namespace Entities {
 
-	class Knight final : public Hero
-	{
+		class Rogue final : public Hero
+		{
 
 		public:
-			Knight(const std::string& t_sprite, const std::string& t_animator);
-			~Knight() = default;
+			Rogue(const std::string& t_sprite, const std::string& t_animator);
+			~Rogue() = default;
 
 			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
 
@@ -22,10 +23,11 @@ namespace HJ { namespace Entities {
 			void Defend() override;
 
 		private:
-			void HeroSlash();
-			void ShoulderBash();
-	};
+			void TrueMark();
+			void StormOfDaggers();
+		};
 
-} }
+	}
+}
 
-#endif // !KNIGHT_ENTITY_H
+#endif // !ROGUE_ENTITY_H
