@@ -38,10 +38,9 @@ namespace HJ { namespace Entities {
 			m_spriteComp->GetSprite().setTextureRect(t_texRect);
 		}
 
-		void AnimatedLogo::Animate()
+		void AnimatedLogo::Animate(const std::string& t_animationName)
 		{
-			for (auto anim : m_animatorComp->GetAnims())
-				m_spriteComp->GetSprite().setTextureRect(m_animatorComp->GetAnimation(anim.first).uvRect);
+			m_spriteComp->GetSprite().setTextureRect(m_animatorComp->GetAnimation(t_animationName).uvRect);
 		}
 
 		std::shared_ptr<Engine::Components::SpriteComponent> AnimatedLogo::GetSpriteComponent()

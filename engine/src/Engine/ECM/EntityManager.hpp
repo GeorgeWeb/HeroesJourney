@@ -51,6 +51,7 @@ namespace Engine { namespace ECM {
 				// Reversed traversal!!! (had issues with how they were rendered before)
 				// This is more like C++03/11 style, but does the job very well at the moment.
 				// TODO: Possibly.., optimize and clean to look neater, using more modern C++!
+				
 				auto entities = m_entities;
 				for (auto it1 = entities.rbegin(); it1 != entities.rend(); ++it1)
 				{

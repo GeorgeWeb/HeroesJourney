@@ -1,4 +1,5 @@
 #include "Splash.hpp"
+#include "MainMenu.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -28,7 +29,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_KnightSheet", MAIN_HERO_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
-		m_data->assets.LoadFont("Font_GameTitle", GAME_TITLE_FONT);
+		m_data->assets.LoadFont("DAFONT", GAME_TITLE_FONT);
 
 		// Restore entity manager to non-visible ents
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
@@ -42,7 +43,7 @@ namespace HJ {
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");
 		// define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SplashBG"));
-		bgSprite->GetSprite().setColor(sf::Color(128, 128, 128, 200));
+		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 155));
 		// set properties
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
@@ -54,8 +55,6 @@ namespace HJ {
 		m_hero->Init(m_data->assets.GetTexture("Tex_KnightSheet"), sf::IntRect(0, 0, 32, 32));
 		// set more properties
 		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, (SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
-		m_hero->GetAnimatorComponent()->AddAnimation("Anim_KnightFull", Animation(&m_data->assets.GetTexture("Tex_KnightSheet"), sf::Vector2u(4, 4), 0.3f, true, false));
-		m_hero->GetAnimatorComponent()->GetAnimation("Anim_KnightFull").SetRow(0);
 
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();
@@ -73,6 +72,8 @@ namespace HJ {
 
 		// :if entity is not in the entity manager, then it will be added:
 		m_data->ents.PopulateEntsDictionary(ents);
+
+		std::cout << m_data->ents.GetEntsDictionary().size() << std::endl;
 	}
 
 	void SplashScene::HandleInput()
@@ -84,18 +85,12 @@ namespace HJ {
 				Renderer::GetWin().close();
 
 			// Keyboard input
-			auto bgSpriteComp = m_data->ents.Find("E_SplashBG")->GetComponent("C_SplashBGSprite");
-
+			auto bgSprite = m_data->ents.Find("E_SplashBG")->GetComponent("C_SplashBGSprite");
 			// 'Press ANY key OR button to continue!' type of game
 			if (event.type == sf::Event::EventType::KeyPressed ||
-				m_data->input.isClicked(bgSpriteComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+				m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_shouldFade = true;
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				m_hero->GetAnimatorComponent()->GetAnimation("Anim_HeroFull").SetRow(1);
 			}
 		}
 	}
@@ -108,7 +103,7 @@ namespace HJ {
 			auto fadedColor = sf::Color(bgSpriteComp->GetSprite().getColor().r,
 				bgSpriteComp->GetSprite().getColor().g,
 				bgSpriteComp->GetSprite().getColor().b,
-				bgSpriteComp->GetSprite().getColor().a - t_delatTime*100.0f);
+				bgSpriteComp->GetSprite().getColor().a - t_delatTime * 100.0f);
 
 			bgSpriteComp->GetSprite().setColor(fadedColor);
 
@@ -123,9 +118,7 @@ namespace HJ {
 		}
 
 		// animate logo
-		m_logo->Animate();
-		// animate hero
-		//m_hero->Animate();
+		m_logo->Animate("Anim_GameLogo");
 
 		// update all entities
 		m_data->ents.Update(t_delatTime);
@@ -135,6 +128,8 @@ namespace HJ {
 	{
 		// render all entities
 		m_data->ents.Render();
+		//Renderer::GetWin().draw(m_data->ents.Find("E_Start")->GetComponent("C_StartSprite")->GetSprite());
+		//Renderer::Queue(&m_data->ents.Find("E_Start")->GetComponent("C_StartSprite")->GetSprite());
 	}
 
 }

@@ -1,8 +1,4 @@
 #include "Hero.hpp"
-#include "../DEFINITIONS.hpp"
-
-using namespace Engine::ECM;
-using namespace Engine::Components;
 
 namespace HJ { namespace Entities {
 
