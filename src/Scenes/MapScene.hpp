@@ -4,7 +4,7 @@
 #include <Engine/Engine.hpp>
 #include "../Game.hpp"
 #include <Engine/ECM/Components/SpriteComponent.hpp>
-
+#include "CastleInterior.hpp"
 
 namespace HJ {
 

@@ -29,7 +29,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_KnightSheet", MAIN_HERO_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
-		m_data->assets.LoadFont("DAFONT", GAME_TITLE_FONT);
 
 		// Restore entity manager to non-visible ents
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);

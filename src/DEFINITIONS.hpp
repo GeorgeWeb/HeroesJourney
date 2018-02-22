@@ -6,7 +6,7 @@
 #define SCREEN_HEIGHT 768
 
 // game title font
-#define GAME_TITLE_FONT "res/font/lady_radical.ttf"
+#define GAME_FONT "res/font/Pixel-Noir.ttf"
 
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash-bg.png"
@@ -27,6 +27,15 @@
 #define MAIN_GAME_SEA "res/img/sea.png"
 #define MAIN_GAME_EVIL_CASTLE "res/img/evilcastle.png"
 #define MAIN_GAME_UI_FRAME "res/img/frame.png"
+
+// Map screen state global definitions
+#define MAP_SCENE_BACKGROUD "res/img/castleinterior.png"
+#define MAP_SCENE_INFIRMARY "res/img/infirmary.png"
+#define MAP_SCENE_BLACKSMITH "res/img/blacksmith.png"
+#define MAP_SCENE_LIBRARY "res/img/library.png"
+#define MAP_SCENE_INN "res/img/inn.png"
+#define MAP_SCENE_GENERAL_STORE "res/img/generalstore.png"
+#define MAP_SCENE_BACK_ARROW "res/img/backarrow.png"
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 

@@ -247,9 +247,6 @@ namespace HJ {
 		}
 
 
-
-
-
 		if (m_castleUnClick || m_forestUnClick || m_mountainsUnClick || m_seaUnClick || m_evilCastleUnClick)
 		{
 			m_time -= t_delatTime;
@@ -264,6 +261,10 @@ namespace HJ {
 
 			m_time = 0.1f;
 			m_castleUnClick = false;
+
+			auto castleState = std::make_unique<CastleScene>(CastleScene(m_data));
+			m_data->machine.AddState(std::move(castleState));
+
 		}
 
 		if (m_time <0.0f && m_forestUnClick)
