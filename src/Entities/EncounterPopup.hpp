@@ -3,6 +3,7 @@
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/TextComponent.hpp>
+#include <Engine/Input/InputManager.hpp>
 
 #include <functional>
 
@@ -12,10 +13,13 @@ namespace HJ { namespace Entities {
 	{
 		private:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_bgSprite;
-			std::shared_ptr<Engine::Components::SpriteComponent> m_btnSprite;
+			std::shared_ptr<Engine::Components::SpriteComponent> m_closeBtnSprite;
+			std::shared_ptr<Engine::Components::SpriteComponent> m_playBtnSprite;
 			std::shared_ptr<Engine::Components::SpriteComponent> m_opponentSprite;
 			std::shared_ptr<Engine::Components::SpriteComponent> m_storySprite;
 			std::shared_ptr<Engine::Components::TextComponent> m_titleText;
+
+			Engine::Input::InputManager m_encInput;
 
 		public:
 			EncounterPopup();
@@ -28,16 +32,17 @@ namespace HJ { namespace Entities {
 
 			// setters
 			void SetBackgroundImage(const sf::Texture& t_texture);
-			void SetButtonImage(const sf::Texture& t_texture);
+			void SetCloseButtonImage(const sf::Texture& t_texture);
+			void SetPlayButtonImage(const sf::Texture& t_texture);
 			void SetOpponentImage(const sf::Texture& t_texture);
 			void SetStoryImage(const sf::Texture& t_texture);
 			void SetTitleText(const std::string& t_text, const sf::Font t_font);
 			
-			// move the whole panel
-			// void SetPosition(sf::Vector2f t_position);
+			// put together and position the whole panel
+			void Assemble(sf::Vector2f t_position);
 
 			// custom behaviour on creation
-			void OnCreate(std::function<void()> t_func);
+			void OnDisplay(std::function<void()> t_func);
 			// custom behaviour on closing
 			std::function<void()> OnClose;
 	};

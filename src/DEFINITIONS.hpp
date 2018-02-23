@@ -39,5 +39,11 @@
 
 #define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 
+// Encounter popup
+#define ENCOUNTER_POPUP_BACKGROUND "res/img/encounter_popup/bg_img.png"
+#define ENCOUNTER_POPUP_CLOSE_BTN "res/img/encounter_popup/close_btn.png"
+#define ENCOUNTER_POPUP_PLAY_BTN "res/img/encounter_popup/play_btn.png"
+#define ENCOUNTER_POPUP_OPPONENT "res/img/encounter_popup/opponent_img.png"
+#define ENCOUNTER_POPUP_STORY "res/img/encounter_popup/story_img.png"
 
 #endif // !DEFINITIONS_H

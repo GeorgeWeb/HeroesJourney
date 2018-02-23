@@ -9,7 +9,7 @@ namespace HJ {
 	using namespace HJ::Entities;
 
 	MapScene::MapScene(GameDataRef t_data)
-		:m_data(t_data)
+		: m_data(t_data)
 	{
 		//not used
 	}
@@ -23,6 +23,11 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_Sea", MAIN_GAME_SEA);
 		m_data->assets.LoadTexture("Tex_EvilCastle", MAIN_GAME_EVIL_CASTLE);
 		m_data->assets.LoadTexture("Tex_Frame", MAIN_GAME_UI_FRAME);
+		m_data->assets.LoadTexture("Tex_PopupBG", ENCOUNTER_POPUP_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_PopupCloseBtn", ENCOUNTER_POPUP_CLOSE_BTN);
+		m_data->assets.LoadTexture("Tex_PopupPlayBtn", ENCOUNTER_POPUP_PLAY_BTN);
+		m_data->assets.LoadTexture("Tex_PopupOpponent", ENCOUNTER_POPUP_OPPONENT);
+		m_data->assets.LoadTexture("Tex_PopupStory", ENCOUNTER_POPUP_STORY);
 
 		//Entity manager to non-visible ents
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
@@ -108,9 +113,16 @@ namespace HJ {
 		frame->SetPosition(sf::Vector2f((SCREEN_WIDTH - frameSprite->GetSprite().getGlobalBounds().width*2.4) , (SCREEN_HEIGHT - frameSprite->GetSprite().getGlobalBounds().height) ));
 		frame->SetVisible(true);
 		frame->SetAlive(true);
-		
 
-		//add to local ents map
+		// init the encounter popup
+		m_encounterPopup = std::make_shared<EncounterPopup>();
+		m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().scale(3.0f, 3.0f);
+		m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_PopupBG"));
+		m_encounterPopup->SetPosition(sf::Vector2f(
+			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
+			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+		));
+
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "z" for background "x" for UI
 		ents.insert_or_assign("E_zMapBG", bg);
 		ents.insert_or_assign("E_Castle", castle);
@@ -119,7 +131,7 @@ namespace HJ {
 		ents.insert_or_assign("E_Sea", sea);
 		ents.insert_or_assign("E_EvilCastle", evilCastle);
 		ents.insert_or_assign("E_xFrame", frame);
-		
+		ents.insert_or_assign("E_aEncounterPopup", m_encounterPopup);
 
 		//:if entity is not in the entity manager, then add
 		m_data->ents.PopulateEntsDictionary(ents);
@@ -142,31 +154,26 @@ namespace HJ {
 			auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
 			
 			//check for castle click
-			if (m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_castleClick = true;
 			}
 			
 			//check for forest click
-			if (m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_forestClick = true;
-				// show the encounter popup
-				m_encounterPopup = std::make_shared<EncounterPopup>();
-
+				
 				// SET CREATION BEHAVIOUR
-				m_encounterPopup->OnCreate([=]()
+				m_encounterPopup->OnDisplay([=]()
 				{
-					// set components
-					m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_Sea"));
-					m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().scale(3.0f, 2.0f);
-					// set panel position
-					m_encounterPopup->SetPosition(sf::Vector2f(
-						(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
-						(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
-					));
-					// add to entities
-					m_data->ents.Save("E_aEncounterPopup", m_encounterPopup);
+					// Show the encounter popup
+					m_encounterPopup->SetVisible(true);
+					m_encounterPopup->SetAlive(true);
+
+					// Change the textures of the popup
+					m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_PopupBG"));
+					//m_encounterPopup->SetCloseBtnImage(m_data->assets.GetTexture("Tex_PopupBG"));
 
 					// Fade Entities
 					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
@@ -178,12 +185,21 @@ namespace HJ {
 					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
 					
 					// Make Entities Unclickable
-					// TODO...
+					castleComp->SetClickable(false);
+					frameComp->SetClickable(false);
+					forestComp->SetClickable(false);
+					mountainsComp->SetClickable(false);
+					seaComp->SetClickable(false);
+					evilCastleComp->SetClickable(false);
 				});
 
 				// SET CLOSING BEHAVIOUR
 				m_encounterPopup->OnClose = [=]()
 				{
+					// Hide the encounter popup
+					m_encounterPopup->SetVisible(false);
+					m_encounterPopup->SetAlive(false);
+
 					// Unfade Entities
 					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
 					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
@@ -194,24 +210,29 @@ namespace HJ {
 					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
 
 					// Make Entities Clickable
-					// TODO...
+					castleComp->SetClickable(true);
+					frameComp->SetClickable(true);
+					forestComp->SetClickable(true);
+					mountainsComp->SetClickable(true);
+					seaComp->SetClickable(true);
+					evilCastleComp->SetClickable(true);
 				};
 			}
 
 			//check for mountains click
-			if (m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_mountainsClick = true;
 			}
 
 			//check for sea click
-			if (m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_seaClick = true;
 			}
 
 			//check for evil castle click
-			if (m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_evilCastleClick = true;
 			}
