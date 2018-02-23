@@ -6,7 +6,7 @@ namespace HJ {
 	using namespace System;
 	using namespace Engine::ECM;
 	using namespace Engine::Components;
-	// using namespace HJ::Entities;
+	using namespace HJ::Entities;
 
 	CastleScene::CastleScene(GameDataRef t_data)
 		:m_data(t_data)
@@ -31,7 +31,7 @@ namespace HJ {
 		auto bg = std::make_shared < ECM::Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_CastleBGSprite");
 		
-		// def
+		// define
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_CastleBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		
@@ -41,107 +41,84 @@ namespace HJ {
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
-		// infirmary
-		auto infirmary = std::make_shared<ECM::Entity>();
-		auto infirmarySprite = infirmary->AddComponent<SpriteComponent>("C_InfirmarySprite");
-		//define infirmary sprite
-		infirmarySprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Infirmary"));
-		infirmarySprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		
-		// infirmary properties
-		infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - infirmarySprite->GetSprite().getGlobalBounds().width) * 0.15, (SCREEN_HEIGHT - infirmarySprite->GetSprite().getGlobalBounds().height) * 0.7));
-		infirmary->SetVisible(true);
-		infirmary->SetAlive(true);
+		//infirmary
+		m_infirmary = std::make_shared<Infirmary>("C_InfirmarySprite");
+		//initialize data
+		m_infirmary->Init(m_data->assets.GetTexture("Tex_Infirmary"));
+		//more properties
+		m_infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().width) * 0.1f,
+			(SCREEN_HEIGHT - m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height) * 0.7));
 
-		// blacksmith
-		auto blacksmith = std::make_shared<ECM::Entity>();
-		auto blacksmithSprite = blacksmith->AddComponent<SpriteComponent>("C_BlacksmithSprite");
-		
-		// define blacksmith sprite
-		blacksmithSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Blacksmith"));
-		blacksmithSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		
-		// blacksmith properties
-		blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - blacksmithSprite->GetSprite().getGlobalBounds().width) * 0.1, (SCREEN_HEIGHT - blacksmithSprite->GetSprite().getGlobalBounds().height) * 0.35));
-		blacksmith->SetVisible(true);
-		blacksmith->SetAlive(true);
+		//Text
+		auto text = std::make_shared <Entity> ();
+		auto infTextFont = text->AddComponent<TextComponent>("C_Text");
+		//define
+		infTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		text->SetPosition(sf::Vector2f(m_infirmary->GetPosition().x, m_infirmary->GetPosition().y + m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height + 20.0f));
+		//Properties
+		text->SetVisible(false);
+		text->SetAlive(true);
+		text->GetComponent<TextComponent>("C_Text")->GetText().setString("CHOOSE A BUILDING!!!");
+		//blacksmith
+		m_blacksmith = std::make_shared<Blacksmith>("C_BlacksmithSprite");
+		//initialize data
+		m_blacksmith->Init(m_data->assets.GetTexture("Tex_Blacksmith"));
+		//more properties
+		m_blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().width) * 0.15f,
+			(SCREEN_HEIGHT - m_blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().height) * 0.35));
 
-		// library
-		auto library = std::make_shared<ECM::Entity>();
-		auto librarySprite = library->AddComponent<SpriteComponent>("C_Library");
-		
-		// define library sprite
-		librarySprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Library"));
-		librarySprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		
-		// library properties
-		library->SetPosition(sf::Vector2f((SCREEN_WIDTH - librarySprite->GetSprite().getGlobalBounds().width) * 0.5, (SCREEN_HEIGHT - librarySprite->GetSprite().getGlobalBounds().height) * 0.2));
-		library->SetVisible(true);
-		library->SetAlive(true);
+		//Library
+		m_library = std::make_shared<Library>("C_LibrarySprite");
+		//initialize data
+		m_library->Init(m_data->assets.GetTexture("Tex_Library"));
+		//more properties
+		m_library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - m_library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().height) * 0.2));
 
-		// inn
-		auto inn = std::make_shared<ECM::Entity>();
-		auto innSprite = inn->AddComponent<SpriteComponent>("C_Inn");
-		
-		// define inn sprite
-		innSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Inn"));
-		innSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		
-		// inn properties
-		inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - innSprite->GetSprite().getGlobalBounds().width) * 0.85, (SCREEN_HEIGHT - innSprite->GetSprite().getGlobalBounds().height) * 0.35));
-		inn->SetVisible(true);
-		inn->SetAlive(true);
+		//Inn
+		m_inn = std::make_shared<Inn>("C_InnSprite");
+		//initialize data
+		m_inn->Init(m_data->assets.GetTexture("Tex_Inn"));
+		//more properties
+		m_inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().width) * 0.8f,
+			(SCREEN_HEIGHT - m_inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().height) * 0.3));
 
-		//generalStore
-		auto generalStore = std::make_shared<ECM::Entity>();
-		auto generalStoreSprite = generalStore->AddComponent<SpriteComponent>("C_GeneralStore");
-		
-		// define generalStore sprite
-		generalStoreSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_GeneralStore"));
-		generalStoreSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		
-		// generalStore properties
-		generalStore->SetPosition(sf::Vector2f((SCREEN_WIDTH - generalStoreSprite->GetSprite().getGlobalBounds().width) * 0.95, (SCREEN_HEIGHT - generalStoreSprite->GetSprite().getGlobalBounds().height) * 0.7)); 
-		generalStore->SetVisible(true);
-		generalStore->SetAlive(true);
+		//General STore
+		m_generalStore = std::make_shared<GeneralStore>("C_GeneralStore");
+		//initialize data
+		m_generalStore->Init(m_data->assets.GetTexture("Tex_GeneralStore"));
+		//more properties
+		m_generalStore->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_generalStore->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().width) * 0.85f,
+			(SCREEN_HEIGHT - m_generalStore->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().height) * 0.6));
+
+
 
 		// backArrow
 		auto backArrow = std::make_shared<ECM::Entity>();
 		auto backArrowSprite = backArrow->AddComponent<SpriteComponent>("C_BackArrow");
 		
-		// define generalStore sprite
+		// define backArrow sprite
 		backArrowSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BackArrow"));
 		backArrowSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		
-		// generalStore properties
+		// backArrow properties
 		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.05, (SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.01));
 		backArrow->SetVisible(true);
 		backArrow->SetAlive(true);
 
-		// infirmary text
-		auto infText = std::make_shared<ECM::Entity>();
-		auto infTextFont = infText->AddComponent<TextComponent>("C_InfText");
 		
-		// define text font
-		infTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		
-		// text properties
-		infText->SetPosition(sf::Vector2f(infirmary->GetPosition().x, infirmary->GetPosition().y + infirmarySprite->GetSprite().getGlobalBounds().height + 20.0f));
-		infText->GetComponent<TextComponent>("C_InfText")->GetText().setString("INFIRMARY HAS BEEN CLICKED!!!");
-		infText->SetVisible(false);
-		infText->SetAlive(true);
 
 		// Local entities map container
 		std::map<std::string, std::shared_ptr<ECM::Entity>> ents;
 
 		ents.insert_or_assign("E_zCastleBG", bg);
-		ents.insert_or_assign("E_Infirmary", infirmary);
-		ents.insert_or_assign("E_Blacksmith", blacksmith);
-		ents.insert_or_assign("E_Library", library);
-		ents.insert_or_assign("E_Inn",inn);
-		ents.insert_or_assign("E_GeneralStore", generalStore);
 		ents.insert_or_assign("E_BackArrow", backArrow);
-		ents.insert_or_assign("E_aInfText", infText);
+		ents.insert_or_assign("E_Blacksmith", m_blacksmith);
+		ents.insert_or_assign("E_Infirmary", m_infirmary);
+		ents.insert_or_assign("E_Text", text);
+		ents.insert_or_assign("E_Library", m_library);
+		ents.insert_or_assign("E_Inn", m_inn);
+		ents.insert_or_assign("E_GeneralStore", m_generalStore);
 
 		//:if entity is not in the entity manager, then add
 		m_data->ents.PopulateEntsDictionary(ents);
@@ -156,11 +133,50 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			auto infComp = m_data->ents.Find<Entity>("E_Infirmary")->GetComponent<SpriteComponent>("C_InfirmarySprite");
+			//Check if infirmary is clicked
+			auto infComp = m_data->ents.Find<Infirmary>("E_Infirmary")->GetComponent<SpriteComponent>("C_InfirmarySprite");
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_infirmaryClick = true;
-			}
+				m_infirmary->isClicked = true;
+				m_data->ents.Find<Entity>("E_Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INFIRMARY HAS BEEN CLICKED!!!");
+				m_data->ents.Find<Entity>("E_Text")->SetVisible(true);
+			}
+			//Check if Blacksmith is clicked
+			auto blacksmithComp = m_data->ents.Find<Blacksmith>("E_Blacksmith")->GetComponent<SpriteComponent>("C_BlacksmithSprite");
+			if (m_data->input.isClicked(blacksmithComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			{
+				m_blacksmith->isClicked = true;
+				m_data->ents.Find<Entity>("E_Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("BLACKSMITH HAS BEEN CLICKED!!!");
+				m_data->ents.Find<Entity>("E_Text")->SetVisible(true);
+
+			}			//Check if Library is clicked
+			auto libraryComp = m_data->ents.Find<Library>("E_Library")->GetComponent<SpriteComponent>("C_LibrarySprite");
+			if (m_data->input.isClicked(libraryComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			{
+				m_library->isClicked = true;
+				m_data->ents.Find<Entity>("E_Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("LIBRARY HAS BEEN CLICKED!!!");
+				m_data->ents.Find<Entity>("E_Text")->SetVisible(true);
+
+			}			//Check if Inn is clicked
+			auto innComp = m_data->ents.Find<Inn>("E_Inn")->GetComponent<SpriteComponent>("C_InnSprite");
+			if (m_data->input.isClicked(innComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			{
+				m_inn->isClicked = true;
+				m_data->ents.Find<Entity>("E_Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INN HAS BEEN CLICKED!!!");
+				m_data->ents.Find<Entity>("E_Text")->SetVisible(true);
+
+			}			//Check if Library is clicked
+			auto genStoreComp = m_data->ents.Find<GeneralStore>("E_GeneralStore")->GetComponent<SpriteComponent>("C_GeneralStore");
+			if (m_data->input.isClicked(genStoreComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			{
+				m_generalStore->isClicked = true;
+				m_data->ents.Find<Entity>("E_Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("GENERAL STORE HAS BEEN CLICKED!!!");
+				m_data->ents.Find<Entity>("E_Text")->SetVisible(true);
+
+			}			//check if back arrow is clicked			auto arrowComp = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<SpriteComponent>("C_BackArrow");			if (m_data->input.isClicked(arrowComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			{
+				m_click = true;
+			}			
 		}
 	}
 
@@ -168,35 +184,35 @@ namespace HJ {
 	{
 		m_data->ents.Update(t_delatTime);
 
-		auto infComp = m_data->ents.Find<Entity>("E_Infirmary")->GetComponent<SpriteComponent>("C_InfirmarySprite");
-		if (m_infirmaryClick)
+		auto arrowComp = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<SpriteComponent>("C_BackArrow");
+		if (m_click && !m_unClick)
 		{
-			infComp->GetSprite().setColor(sf::Color(infComp->GetSprite().getColor().r - 100,
-				infComp->GetSprite().getColor().g - 100,
-				infComp->GetSprite().getColor().b - 100,
-				infComp->GetSprite().getColor().a));
-
-			m_infirmaryClick = false;
-			m_infirmaryUnClick = true;
+			arrowComp->GetSprite().setColor(sf::Color(arrowComp->GetSprite().getColor().r - 100,
+				arrowComp->GetSprite().getColor().g - 100,
+				arrowComp->GetSprite().getColor().b - 100,
+				arrowComp->GetSprite().getColor().a));
+			m_unClick = true;
 		}
 
-		if (m_infirmaryUnClick)
+		if (m_unClick)
 		{
 			m_time -= t_delatTime;
 		}
-
-		if (m_time <0.0f && m_infirmaryUnClick)
+		if (m_time <0.0f && m_unClick)
 		{
-			infComp->GetSprite().setColor(sf::Color(infComp->GetSprite().getColor().r + 100,
-				infComp->GetSprite().getColor().g + 100,
-				infComp->GetSprite().getColor().b + 100,
-				infComp->GetSprite().getColor().a));
+
+			arrowComp->GetSprite().setColor(sf::Color(arrowComp->GetSprite().getColor().r + 100,
+				arrowComp->GetSprite().getColor().g + 100,
+				arrowComp->GetSprite().getColor().b + 100,
+				arrowComp->GetSprite().getColor().a));
 
 			m_time = 0.1f;
-			m_infirmaryUnClick = false;
-
-			m_data->ents.Find<Entity>("E_aInfText")->SetVisible(true);
+			m_unClick = false;
+			m_click = false;
+			std::cout << "Works" << std::endl;
+			
 		}
+
 
 	}
 

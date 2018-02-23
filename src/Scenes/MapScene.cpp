@@ -325,7 +325,7 @@ namespace HJ {
 			m_castleUnClick = false;
 
 			auto castleState = std::make_unique<CastleScene>(CastleScene(m_data));
-			m_data->machine.AddState(std::move(castleState));
+			m_data->machine.AddState(std::move(castleState), false);
 
 		}
 

@@ -6,6 +6,11 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/TextComponent.hpp>
 
+#include "../Entities/Infirmary.hpp"
+#include "../Entities/Blacksmith.hpp"
+#include "../Entities/Library.hpp"
+#include "../Entities/Inn.hpp"
+#include "../Entities/GeneralStore.hpp"
 
 namespace HJ {
 
@@ -24,26 +29,17 @@ namespace HJ {
 
 	private:
 		GameDataRef m_data;
-
-		//boolean click checks
-		bool m_infirmaryClick = false;
-		bool m_blacksmithClick = false;
-		bool m_libraryClick = false;
-		bool m_innClick = false;
-		bool m_generalStore = false;
-		bool m_backClick = false;
-
-		//unclick checks
-		bool m_infirmaryUnClick = false;
-		bool m_blacksmithUnClick = false;
-		bool m_libraryUnClick = false;
-		bool m_innUnClick = false;
-		bool m_generalUnStore = false;
-		bool m_backUnClick = false;
+		bool m_click = false;
+		bool m_unClick = false;
 
 		sf::Clock m_clock;
 		float m_time = 0.1f;
 		// Entities
+		std::shared_ptr<Entities::Infirmary> m_infirmary;
+		std::shared_ptr < Entities::Blacksmith > m_blacksmith;
+		std::shared_ptr<Entities::Library> m_library;
+		std::shared_ptr<Entities::Inn> m_inn;
+		std::shared_ptr<Entities::GeneralStore> m_generalStore;
 
 	};
 }

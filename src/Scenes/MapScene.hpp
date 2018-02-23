@@ -8,6 +8,7 @@
 #include "../Game.hpp"
 #include "../Entities/EncounterPopup.hpp"
 
+
 namespace HJ {
 
 	using namespace Engine;
@@ -44,6 +45,7 @@ namespace HJ {
 		float m_time = 0.1f;
 
 		/* ENTITIES */
+
 
 		// Encounters popups
 		std::shared_ptr<Entities::EncounterPopup> m_encounterPopup;
