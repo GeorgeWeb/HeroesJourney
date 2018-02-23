@@ -8,6 +8,11 @@ namespace Engine { namespace Components {
 		Component(t_parent)
 	{ }
 
+	AnimatorComponent* AnimatorComponent::GetType()
+	{
+		return this;
+	}
+
 	void AnimatorComponent::Update(float t_deltaTime)
 	{
 		if (m_parent->IsAlive())

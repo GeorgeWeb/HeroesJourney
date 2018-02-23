@@ -8,6 +8,11 @@ namespace Engine { namespace Components {
 		m_shape(std::make_shared<sf::CircleShape>())
 	{ }
 
+	ShapeComponent* ShapeComponent::GetType()
+	{
+		return this;
+	}
+
 	void ShapeComponent::Update(float t_deltaTime)
 	{
 		if (m_parent->IsAlive())

@@ -52,6 +52,8 @@ namespace HJ { namespace Entities {
 			EvilAI(const std::string& t_sprite, const std::string& t_animator);
 			virtual ~EvilAI() = default;
 
+			EvilAI* GetType() override;
+
 			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 
 			virtual void Update(float t_deltaTime);

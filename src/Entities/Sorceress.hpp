@@ -8,22 +8,24 @@ namespace HJ {
 
 		class Sorceress final : public Hero
 		{
-		public:
-			Sorceress(const std::string& t_sprite, const std::string& t_animatior);
-			~Sorceress() = default;
+			public:
+				Sorceress(const std::string& t_sprite, const std::string& t_animatior);
+				~Sorceress() = default;
 
-			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
+				Sorceress* GetType() override;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
+				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
 
-			void Attack() override;
-			void Skill(std::function<void()> t_func) override;
-			void Defend() override;
+				void Update(float t_deltaTime) override;
+				void Render() override;
 
-		private:
-			void StreamOfFire();
-			void Ignite();
+				void Attack() override;
+				void Skill(std::function<void()> t_func) override;
+				void Defend() override;
+
+			private:
+				void StreamOfFire();
+				void Ignite();
 		};
 
 	}

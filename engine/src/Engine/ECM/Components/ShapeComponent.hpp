@@ -14,10 +14,12 @@ namespace Engine { namespace Components {
 			ShapeComponent() = delete;
 			explicit ShapeComponent(ECM::Entity* t_parent);
 
+			ShapeComponent* GetType() override;
+
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			sf::Shape& GetShape() override;
+			sf::Shape& GetShape();
 
 			template<class T, class... Targs>
 			void SetShape(Targs... t_params)

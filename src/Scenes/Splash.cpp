@@ -13,8 +13,8 @@ namespace HJ {
 	using namespace Engine;
 	using namespace System;
 	// engine/game component namespaces
+	using namespace Engine::ECM;
 	using namespace Engine::Components;
-	//using namespace HJ::Components;
 	using namespace HJ::Entities;
 
 	SplashScene::SplashScene(GameDataRef t_data)
@@ -67,7 +67,7 @@ namespace HJ {
 		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
 
 		// Add to ents (local) map
-		ents.insert_or_assign("E_SplashBG", bg);
+		ents.insert_or_assign("E_zSplashBG", bg);
 		ents.insert_or_assign("E_Knight", m_hero);
 		ents.insert_or_assign("E_GameLogo", m_logo);
 
@@ -84,7 +84,7 @@ namespace HJ {
 				Renderer::GetWin().close();
 
 			// Keyboard input
-			auto bgSprite = m_data->ents.Find("E_SplashBG")->GetComponent("C_SplashBGSprite");
+			auto bgSprite = m_data->ents.Find<Entity>("E_SplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 			// 'Press ANY key OR button to continue!' type of game
 			if (event.type == sf::Event::EventType::KeyPressed ||
 				m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
@@ -96,7 +96,7 @@ namespace HJ {
 
 	void SplashScene::Update(float t_delatTime)
 	{
-		auto bgSpriteComp = m_data->ents.Find("E_SplashBG")->GetComponent("C_SplashBGSprite");
+		auto bgSpriteComp = m_data->ents.Find<Entity>("E_SplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 		if (m_shouldFade)
 		{
 			auto fadedColor = sf::Color(bgSpriteComp->GetSprite().getColor().r,

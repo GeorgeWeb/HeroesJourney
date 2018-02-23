@@ -1,13 +1,15 @@
 #include "MainMenu.hpp"
-#include "../DEFINITIONS.hpp"
 #include "MapScene.hpp"
+#include "../DEFINITIONS.hpp"
 
 namespace HJ {
 
 	using namespace Engine;
 	using namespace System;
 	// engine/game component namespaces
+	using namespace Engine::ECM;
 	using namespace Engine::Components;
+	using namespace HJ::Entities;
 	
 	MainMenuScene::MainMenuScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -25,10 +27,10 @@ namespace HJ {
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
 
 		// Declare local entities map container
-		std::map<std::string, std::shared_ptr<ECM::Entity>> ents;
+		std::map<std::string, std::shared_ptr<Entity>> ents;
 
 		//Background
-		auto bg = std::make_shared<ECM::Entity>();
+		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_MainBGSprite");
 		//define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_MainBG"));
@@ -65,7 +67,7 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			auto btn = m_data->ents.Find("E_MBtn")->GetComponent("C_BtnSprite");
+			auto btn = m_data->ents.Find<Entity>("E_MBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
 			if (m_data->input.isClicked(btn->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				//switch to map

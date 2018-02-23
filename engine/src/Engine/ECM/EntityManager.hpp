@@ -25,9 +25,16 @@ namespace Engine { namespace ECM {
 					Save(ent.first, ent.second);
 			}
 			
-			// TODO: Convert 'Find' and 'Save' to generic/template functions!!!
+			template<class T>
+			T* GetComponent(const std::string t_name)
+			{
+				static_assert(std::is_base_of<Component, T>::value, "must be a component");
+				// ... checks
+				return dynamic_cast<T*>(m_components[t_name]->GetType());
+			}
 
-			std::shared_ptr<Entity> Find(const std::string& t_name)
+			template<class T>
+			T* Find(const std::string& t_name)
 			{
 				if (m_entities.find(t_name) == m_entities.end())
 				{
@@ -38,7 +45,7 @@ namespace Engine { namespace ECM {
 					if (m_entities[t_name] == nullptr)
 						throw("The entity you are trying to access is not initialised! ");
 					else
-						return m_entities[t_name];
+						return m_entities[t_name]->GetType();
 				}
 			}
 

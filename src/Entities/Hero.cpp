@@ -11,6 +11,11 @@ namespace HJ { namespace Entities {
 		SetAlive(true);
 	}
 
+	Hero* Hero::GetType()
+	{
+		return this;
+	}
+
 	void Hero::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
 		SetSprite(t_texture, t_texRect);

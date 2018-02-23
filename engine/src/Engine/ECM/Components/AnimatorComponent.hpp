@@ -15,6 +15,8 @@ namespace Engine { namespace Components {
 			AnimatorComponent() = delete;
 			explicit AnimatorComponent(ECM::Entity* t_parent);
 
+			AnimatorComponent* GetType() override;
+
 			void Update(float t_deltaTime) override;
 			void Render() override;
 

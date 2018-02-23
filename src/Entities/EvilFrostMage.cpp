@@ -16,6 +16,11 @@ namespace HJ { namespace Entities {
 		m_isStunned = false;
 	}
 
+	EvilFrostMage* EvilFrostMage::GetType()
+	{
+		return this;
+	}
+
 	void EvilFrostMage::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
 		EvilAI::Init(t_texture, t_texRect);

@@ -8,6 +8,11 @@ namespace Engine { namespace Components {
 		m_sprite(std::make_shared<sf::Sprite>())
 	{ }
 
+	SpriteComponent* SpriteComponent::GetType()
+	{
+		return this;
+	}
+
 	void SpriteComponent::Update(float t_deltaTime)
 	{
 		if (m_parent->IsAlive())

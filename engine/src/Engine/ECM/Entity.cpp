@@ -10,6 +10,11 @@ namespace Engine { namespace ECM {
 	{
 		return m_components;
 	}
+
+	Entity* Entity::GetType()
+	{
+		return this;
+	}
 	
 	void Entity::Update(float t_deltaTime)
 	{ 

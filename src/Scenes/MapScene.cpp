@@ -4,6 +4,7 @@ namespace HJ {
 
 	using namespace Engine;
 	using namespace System;
+	using namespace Engine::ECM;
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
@@ -132,13 +133,13 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			auto bgComp = m_data->ents.Find("E_zMapBG")->GetComponent("C_MapBGSprite");
-			auto frameComp = m_data->ents.Find("E_xFrame")->GetComponent("C_FrameSprite");
-			auto castleComp = m_data->ents.Find("E_Castle")->GetComponent("C_CastleSprite");
-			auto forestComp = m_data->ents.Find("E_Forest")->GetComponent("C_ForestSprite");
-			auto mountainsComp = m_data->ents.Find("E_Mountains")->GetComponent("C_MountainsSprite");
-			auto seaComp = m_data->ents.Find("E_Sea")->GetComponent("C_SeaSprite");
-			auto evilCastleComp = m_data->ents.Find("E_EvilCastle")->GetComponent("C_EvilCastleSprite");
+			auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
+			auto frameComp = m_data->ents.Find<Entity>("E_xFrame")->GetComponent<SpriteComponent>("C_FrameSprite");
+			auto castleComp = m_data->ents.Find<Entity>("E_Castle")->GetComponent<SpriteComponent>("C_CastleSprite");
+			auto forestComp = m_data->ents.Find<Entity>("E_Forest")->GetComponent<SpriteComponent>("C_ForestSprite");
+			auto mountainsComp = m_data->ents.Find<Entity>("E_Mountains")->GetComponent<SpriteComponent>("C_MountainsSprite");
+			auto seaComp = m_data->ents.Find<Entity>("E_Sea")->GetComponent<SpriteComponent>("C_SeaSprite");
+			auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
 			
 			//check for castle click
 			if (m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
@@ -158,11 +159,11 @@ namespace HJ {
 				{
 					// set components
 					m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_Sea"));
-					m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().scale(3.0f, 2.0f);
+					m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().scale(3.0f, 2.0f);
 					// set panel position
 					m_encounterPopup->SetPosition(sf::Vector2f(
-						(SCREEN_WIDTH - m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
-						(SCREEN_HEIGHT - m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+						(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
+						(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
 					));
 					// add to entities
 					m_data->ents.Save("E_aEncounterPopup", m_encounterPopup);
@@ -221,11 +222,11 @@ namespace HJ {
 	{
 		m_data->ents.Update(t_delatTime);
 
-		auto castleComp = m_data->ents.Find("E_Castle")->GetComponent("C_CastleSprite");
-		auto forestComp = m_data->ents.Find("E_Forest")->GetComponent("C_ForestSprite");
-		auto mountainsComp = m_data->ents.Find("E_Mountains")->GetComponent("C_MountainsSprite");
-		auto seaComp = m_data->ents.Find("E_Sea")->GetComponent("C_SeaSprite");
-		auto evilCastleComp = m_data->ents.Find("E_EvilCastle")->GetComponent("C_EvilCastleSprite");
+		auto castleComp = m_data->ents.Find<Entity>("E_Castle")->GetComponent<SpriteComponent>("C_CastleSprite");
+		auto forestComp = m_data->ents.Find<Entity>("E_Forest")->GetComponent<SpriteComponent>("C_ForestSprite");
+		auto mountainsComp = m_data->ents.Find<Entity>("E_Mountains")->GetComponent<SpriteComponent>("C_MountainsSprite");
+		auto seaComp = m_data->ents.Find<Entity>("E_Sea")->GetComponent<SpriteComponent>("C_SeaSprite");
+		auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
 
 		//show if castle is clicked
 		if (m_castleClick)

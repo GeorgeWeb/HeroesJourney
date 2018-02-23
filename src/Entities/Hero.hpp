@@ -28,7 +28,6 @@ namespace HJ { namespace Entities {
 			bool m_isFlaming;
 			bool m_isFrozen;
 			
-
 		public:
 			inline void SetHealth(const int t_health) { m_health = t_health; }
 			inline void SetStunned(const bool t_stun) { m_isStunned = t_stun; }
@@ -47,6 +46,8 @@ namespace HJ { namespace Entities {
 			Hero() = delete;
 			Hero(const std::string& t_sprite, const std::string& t_animator);
 			virtual ~Hero() = default;
+
+			Hero* GetType() override;
 
 			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 

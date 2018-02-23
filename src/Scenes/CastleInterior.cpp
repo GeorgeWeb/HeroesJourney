@@ -4,9 +4,11 @@ namespace HJ {
 
 	using namespace Engine;
 	using namespace System;
+	using namespace Engine::ECM;
 	using namespace Engine::Components;
+	// using namespace HJ::Entities;
 
-	HJ::CastleScene::CastleScene(GameDataRef t_data)
+	CastleScene::CastleScene(GameDataRef t_data)
 		:m_data(t_data)
 	{
 		//not used
@@ -125,7 +127,7 @@ namespace HJ {
 		
 		// text properties
 		infText->SetPosition(sf::Vector2f(infirmary->GetPosition().x, infirmary->GetPosition().y + infirmarySprite->GetSprite().getGlobalBounds().height + 20.0f));
-		infText->GetComponent("C_InfText")->GetText().setString("INFIRMARY HAS BEEN CLICKED!!!");
+		infText->GetComponent<TextComponent>("C_InfText")->GetText().setString("INFIRMARY HAS BEEN CLICKED!!!");
 		infText->SetVisible(false);
 		infText->SetAlive(true);
 
@@ -154,7 +156,7 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			auto infComp = m_data->ents.Find("E_Infirmary")->GetComponent("C_InfirmarySprite");
+			auto infComp = m_data->ents.Find<Entity>("E_Infirmary")->GetComponent<SpriteComponent>("C_InfirmarySprite");
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_infirmaryClick = true;
@@ -166,7 +168,7 @@ namespace HJ {
 	{
 		m_data->ents.Update(t_delatTime);
 
-		auto infComp = m_data->ents.Find("E_Infirmary")->GetComponent("C_InfirmarySprite");
+		auto infComp = m_data->ents.Find<Entity>("E_Infirmary")->GetComponent<SpriteComponent>("C_InfirmarySprite");
 		if (m_infirmaryClick)
 		{
 			infComp->GetSprite().setColor(sf::Color(infComp->GetSprite().getColor().r - 100,
@@ -193,7 +195,7 @@ namespace HJ {
 			m_time = 0.1f;
 			m_infirmaryUnClick = false;
 
-			m_data->ents.Find("E_aInfText")->SetVisible(true);
+			m_data->ents.Find<Entity>("E_aInfText")->SetVisible(true);
 		}
 
 	}

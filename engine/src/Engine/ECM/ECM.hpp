@@ -34,6 +34,8 @@ namespace Engine { namespace ECM {
 			Entity();
 			virtual ~Entity() = default;
 
+			virtual Entity* GetType();
+
 			std::map<std::string, std::shared_ptr<Component>> GetCompsDictionary();
 
 			virtual void Update(const float t_deltaTime);
@@ -68,13 +70,15 @@ namespace Engine { namespace ECM {
 				return comp;
 			}
 
-			std::shared_ptr<Component> GetComponent(const std::string t_name)
+			template<class T>
+			T* GetComponent(const std::string t_name)
 			{
-				//if ()
-				return m_components[t_name];
+				static_assert(std::is_base_of<Component, T>::value, "must be a component");
+				// ... checks
+				return dynamic_cast<T*>(m_components[t_name]->GetType());
 			}
 	};
-
+ 
 	class Component
 	{
 		protected:
@@ -86,15 +90,12 @@ namespace Engine { namespace ECM {
 		public:
 			Component() = delete;
 
+			virtual Component* GetType();
+
 			bool m_isForDeletion() const;
 
 			virtual void Update(float t_deltaTime) = 0;
 			virtual void Render() = 0;
-			
-			// Just need it too much atm! Will design it better later.
-			virtual sf::Shape& GetShape() { return sf::CircleShape(); }
-			virtual sf::Text& GetText() { return sf::Text(); };
-			virtual sf::Sprite& GetSprite() { sf::Sprite sp; return sp; }
 
 			virtual ~Component();
 	};

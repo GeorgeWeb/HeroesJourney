@@ -17,6 +17,11 @@ namespace HJ { namespace Entities {
 
 	}
 
+	Bard* Bard::GetType()
+	{
+		return this;
+	}
+
 	void Bard::Init(const sf::Texture & t_texture, sf::IntRect t_texRect)
 	{
 		Hero::Init(t_texture, t_texRect);

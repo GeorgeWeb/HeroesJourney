@@ -20,6 +20,8 @@ namespace HJ { namespace Entities {
 				AnimatedLogo();
 				~AnimatedLogo() = default;
 
+				AnimatedLogo* GetType() override;
+
 				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
 				void Update(float t_deltaTime) override;
 				void Render() override;

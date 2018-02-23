@@ -15,6 +15,11 @@ namespace HJ { namespace Entities {
 			SetAlive(true);
 		}
 
+		AnimatedLogo* AnimatedLogo::GetType()
+		{
+			return this;
+		}
+
 		void AnimatedLogo::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 		{
 			SetSprite(t_texture, t_texRect);

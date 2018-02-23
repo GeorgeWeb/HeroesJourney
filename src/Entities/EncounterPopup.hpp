@@ -21,6 +21,8 @@ namespace HJ { namespace Entities {
 			EncounterPopup();
 			~EncounterPopup() = default;
 
+			EncounterPopup* GetType() override;
+
 			void Update(float t_deltaTime) override;
 			void Render() override;
 

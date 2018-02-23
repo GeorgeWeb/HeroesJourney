@@ -11,6 +11,11 @@ namespace HJ { namespace Entities {
 		SetAlive(true);
 	}
 
+	EvilAI* EvilAI::GetType()
+	{
+		return this;
+	}
+
 	void EvilAI::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
 		SetSprite(t_texture, t_texRect);

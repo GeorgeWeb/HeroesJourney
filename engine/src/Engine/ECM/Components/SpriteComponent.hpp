@@ -14,10 +14,12 @@ namespace Engine { namespace Components {
 			SpriteComponent() = delete;
 			explicit SpriteComponent(ECM::Entity* t_parent);
 
+			SpriteComponent* GetType() override;
+
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			sf::Sprite& GetSprite() override;
+			sf::Sprite& GetSprite();
 	};
 
 } }

@@ -15,6 +15,11 @@ namespace HJ { namespace Entities {
 		SetAlive(true);
 	}
 
+	EncounterPopup* EncounterPopup::GetType()
+	{
+		return this;
+	}
+
 	void EncounterPopup::Update(float t_deltaTime)
 	{
 		Entity::Update(t_deltaTime);

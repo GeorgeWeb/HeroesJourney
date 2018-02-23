@@ -11,6 +11,8 @@ namespace HJ { namespace Entities {
 			Bard(const std::string& t_sprite, const std::string& t_animatior);
 			~Bard() = default;
 
+			Bard* GetType() override;
+
 			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
 
 			void Update(float t_deltaTime) override;

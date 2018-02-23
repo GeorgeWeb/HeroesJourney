@@ -9,6 +9,11 @@ namespace Engine { namespace ECM
 	Component::~Component()
 	{ }
 
+	Component* Component::GetType()
+	{
+		return this;
+	}
+
 	bool Component::m_isForDeletion() const
 	{
 		return m_forDeletion;

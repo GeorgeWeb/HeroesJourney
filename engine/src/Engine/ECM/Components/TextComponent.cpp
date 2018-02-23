@@ -8,6 +8,11 @@ namespace Engine { namespace Components {
 		m_text(std::make_shared<sf::Text>())
 	{ }
 
+	TextComponent* TextComponent::GetType()
+	{
+		return this;
+	}
+
 	void TextComponent::Update(float t_deltaTime)
 	{
 		if (m_parent->IsAlive())

@@ -17,6 +17,11 @@ namespace HJ { namespace Entities {
 		m_isStunned = false;
 	}
 
+	Knight* Knight::GetType()
+	{
+		return this;
+	}
+
 	void Knight::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
 		Hero::Init(t_texture, t_texRect);

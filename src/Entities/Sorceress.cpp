@@ -15,6 +15,11 @@ namespace HJ {namespace Entities {
 			m_isStunned = false;
 		}
 
+		Sorceress* Sorceress::GetType()
+		{
+			return this;
+		}
+
 		void Sorceress::Init(const sf::Texture & t_texture, sf::IntRect t_texRect)
 		{
 			Hero::Init(t_texture, t_texRect);

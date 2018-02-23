@@ -17,6 +17,11 @@ namespace HJ {
 			m_isStunned = false;
 		}
 
+		Rogue* Rogue::GetType()
+		{
+			return this;
+		}
+
 		void Rogue::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
 		{
 			Hero::Init(t_texture, t_texRect);

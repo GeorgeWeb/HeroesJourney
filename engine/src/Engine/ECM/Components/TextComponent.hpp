@@ -14,10 +14,12 @@ namespace Engine { namespace Components {
 			TextComponent() = delete;
 			explicit TextComponent(ECM::Entity* t_parent);
 
+			TextComponent* GetType() override;
+
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			sf::Text& GetText() override;
+			sf::Text& GetText();
 
 			void SetFont(const sf::Font& t_font)
 			{
