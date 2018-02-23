@@ -13,7 +13,6 @@ namespace Engine { namespace Components {
 		if (m_parent->IsAlive())
 		{
 			m_text->setPosition(m_parent->GetPosition());
-			m_text->setRotation(m_parent->GetRotation());
 		}
 	}
 

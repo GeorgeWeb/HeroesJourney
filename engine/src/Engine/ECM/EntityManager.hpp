@@ -24,6 +24,8 @@ namespace Engine { namespace ECM {
 				for (const auto& ent : t_ents)
 					Save(ent.first, ent.second);
 			}
+			
+			// TODO: Convert 'Find' and 'Save' to generic/template functions!!!
 
 			std::shared_ptr<Entity> Find(const std::string& t_name)
 			{
