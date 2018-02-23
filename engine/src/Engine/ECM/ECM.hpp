@@ -31,7 +31,7 @@ namespace Engine { namespace ECM {
 			bool m_forDeletion; ///> should be deleted
 		
 		public:
-			Entity() = default;
+			Entity();
 			virtual ~Entity() = default;
 
 			std::map<std::string, std::shared_ptr<Component>> GetCompsDictionary();
@@ -56,6 +56,7 @@ namespace Engine { namespace ECM {
 			bool IsVisible() const;
 			void SetVisible(bool t_visible);
 
+			bool IsForDeletion() const;
 			void SetForDelete();
 
 			template<class T, class... Targs>

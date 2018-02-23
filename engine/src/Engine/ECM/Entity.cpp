@@ -2,6 +2,10 @@
 
 namespace Engine { namespace ECM {
 	
+	Entity::Entity() :
+		m_forDeletion(false)
+	{ }
+
 	std::map<std::string, std::shared_ptr<Component>> Entity::GetCompsDictionary()
 	{
 		return m_components;
@@ -78,6 +82,11 @@ namespace Engine { namespace ECM {
 	void Entity::SetVisible(bool t_visible)
 	{
 		m_visible = t_visible;
+	}
+
+	bool Entity::IsForDeletion() const
+	{
+		return m_forDeletion;
 	}
 
 	void Entity::SetForDelete()

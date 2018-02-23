@@ -4,6 +4,8 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/TextComponent.hpp>
 
+#include <functional>
+
 namespace HJ { namespace Entities {
 
 	class EncounterPopup final : public Engine::ECM::Entity
@@ -28,8 +30,14 @@ namespace HJ { namespace Entities {
 			void SetOpponentImage(const sf::Texture& t_texture);
 			void SetStoryImage(const sf::Texture& t_texture);
 			void SetTitleText(const std::string& t_text, const sf::Font t_font);
+			
 			// move the whole panel
-			void SetPosition(sf::Vector2f t_position);
+			// void SetPosition(sf::Vector2f t_position);
+
+			// custom behaviour on creation
+			void OnCreate(std::function<void()> t_func);
+			// custom behaviour on closing
+			std::function<void()> OnClose;
 	};
 
 } }

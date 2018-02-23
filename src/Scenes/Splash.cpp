@@ -72,8 +72,6 @@ namespace HJ {
 
 		// :if entity is not in the entity manager, then it will be added:
 		m_data->ents.PopulateEntsDictionary(ents);
-
-		std::cout << m_data->ents.GetEntsDictionary().size() << std::endl;
 	}
 
 	void SplashScene::HandleInput()
@@ -128,8 +126,6 @@ namespace HJ {
 	{
 		// render all entities
 		m_data->ents.Render();
-		//Renderer::GetWin().draw(m_data->ents.Find("E_Start")->GetComponent("C_StartSprite")->GetSprite());
-		//Renderer::Queue(&m_data->ents.Find("E_Start")->GetComponent("C_StartSprite")->GetSprite());
 	}
 
 }

@@ -89,7 +89,12 @@ namespace Engine { namespace ECM {
 			void Update(float t_deltaTime)
 			{
 				for (const auto& ent : m_entities)
-					ent.second->Update(t_deltaTime);
+				{
+					if (ent.second->IsForDeletion())
+						Remove(ent.first);
+					else
+						ent.second->Update(t_deltaTime);
+				}
 			}
 
 		private:

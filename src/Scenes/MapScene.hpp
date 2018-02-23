@@ -2,9 +2,11 @@
 #define MAPSCENE_H
 
 #include <Engine/Engine.hpp>
-#include "../Game.hpp"
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include "CastleInterior.hpp"
+
+#include "../Game.hpp"
+#include "../Entities/EncounterPopup.hpp"
 
 namespace HJ {
 
@@ -40,8 +42,11 @@ namespace HJ {
 
 		sf::Clock m_clock;
 		float m_time = 0.1f;
-		// Entities
 
+		/* ENTITIES */
+
+		// Encounters popups
+		std::shared_ptr<Entities::EncounterPopup> m_encounterPopup;
 	};
 }
 

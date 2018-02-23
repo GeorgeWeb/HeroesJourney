@@ -22,8 +22,7 @@ namespace HJ {
 			void Draw(float t_deltaTime) override final;
 
 		private:
-			GameDataRef m_data;
-		
+			GameDataRef m_data;		
 	};
 }
 

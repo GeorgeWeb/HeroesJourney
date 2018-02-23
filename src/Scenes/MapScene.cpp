@@ -5,17 +5,15 @@ namespace HJ {
 	using namespace Engine;
 	using namespace System;
 	using namespace Engine::Components;
+	using namespace HJ::Entities;
 
-	
-	
-
-	HJ::MapScene::MapScene(GameDataRef t_data)
+	MapScene::MapScene(GameDataRef t_data)
 		:m_data(t_data)
 	{
 		//not used
 	}
 
-	void HJ::MapScene::Init()
+	void MapScene::Init()
 	{
 		m_data->assets.LoadTexture("Tex_MapBG", MAIN_GAME_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_Castle", MAIN_GAME_CASTLE);
@@ -100,7 +98,7 @@ namespace HJ {
 
 		//UI frame
 		auto frame = std::make_shared<ECM::Entity>();
-		auto frameSprite = frame->AddComponent<SpriteComponent>("C_Frame");
+		auto frameSprite = frame->AddComponent<SpriteComponent>("C_FrameSprite");
 		//define castle sprite
 		frameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Frame"));
 		frameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
@@ -124,10 +122,9 @@ namespace HJ {
 
 		//:if entity is not in the entity manager, then add
 		m_data->ents.PopulateEntsDictionary(ents);
-
 	}
 
-	void HJ::MapScene::HandleInput()
+	void MapScene::HandleInput()
 	{
 		sf::Event event;
 		while (Renderer::GetWin().pollEvent(event))
@@ -135,52 +132,93 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			//check for castle click
+			auto bgComp = m_data->ents.Find("E_zMapBG")->GetComponent("C_MapBGSprite");
+			auto frameComp = m_data->ents.Find("E_xFrame")->GetComponent("C_FrameSprite");
 			auto castleComp = m_data->ents.Find("E_Castle")->GetComponent("C_CastleSprite");
-
+			auto forestComp = m_data->ents.Find("E_Forest")->GetComponent("C_ForestSprite");
+			auto mountainsComp = m_data->ents.Find("E_Mountains")->GetComponent("C_MountainsSprite");
+			auto seaComp = m_data->ents.Find("E_Sea")->GetComponent("C_SeaSprite");
+			auto evilCastleComp = m_data->ents.Find("E_EvilCastle")->GetComponent("C_EvilCastleSprite");
+			
+			//check for castle click
 			if (m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_castleClick = true;
 			}
 			
 			//check for forest click
-			auto forestComp = m_data->ents.Find("E_Forest")->GetComponent("C_ForestSprite");
-
 			if (m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_forestClick = true;
+				// show the encounter popup
+				m_encounterPopup = std::make_shared<EncounterPopup>();
+
+				// SET CREATION BEHAVIOUR
+				m_encounterPopup->OnCreate([=]()
+				{
+					// set components
+					m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_Sea"));
+					m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().scale(3.0f, 2.0f);
+					// set panel position
+					m_encounterPopup->SetPosition(sf::Vector2f(
+						(SCREEN_WIDTH - m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
+						(SCREEN_HEIGHT - m_encounterPopup->GetComponent("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+					));
+					// add to entities
+					m_data->ents.Save("E_aEncounterPopup", m_encounterPopup);
+
+					// Fade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
+					
+					// Make Entities Unclickable
+					// TODO...
+				});
+
+				// SET CLOSING BEHAVIOUR
+				m_encounterPopup->OnClose = [=]()
+				{
+					// Unfade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
+
+					// Make Entities Clickable
+					// TODO...
+				};
 			}
 
 			//check for mountains click
-			auto mountainsComp = m_data->ents.Find("E_Mountains")->GetComponent("C_MountainsSprite");
-
 			if (m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_mountainsClick = true;
 			}
 
 			//check for sea click
-			auto seaComp = m_data->ents.Find("E_Sea")->GetComponent("C_SeaSprite");
-
 			if (m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_seaClick = true;
 			}
 
 			//check for evil castle click
-			auto evilCastleComp = m_data->ents.Find("E_EvilCastle")->GetComponent("C_EvilCastleSprite");
-
 			if (m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_evilCastleClick = true;
 			}
-
 		}
 	}
 
-	void HJ::MapScene::Update(float t_delatTime)
+	void MapScene::Update(float t_delatTime)
 	{
-		
 		m_data->ents.Update(t_delatTime);
 
 		auto castleComp = m_data->ents.Find("E_Castle")->GetComponent("C_CastleSprite");
@@ -190,7 +228,7 @@ namespace HJ {
 		auto evilCastleComp = m_data->ents.Find("E_EvilCastle")->GetComponent("C_EvilCastleSprite");
 
 		//show if castle is clicked
-		if (m_castleClick )
+		if (m_castleClick)
 		{
 			castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r - 100,
 				castleComp->GetSprite().getColor().g - 100,
@@ -199,8 +237,8 @@ namespace HJ {
 			
 			m_castleClick = false;
 			m_castleUnClick = true;
-
 		}
+
 		//show if forest is clicked
 		if (m_forestClick)
 		{
@@ -212,6 +250,7 @@ namespace HJ {
 			m_forestClick = false;
 			m_forestUnClick = true;
 		}
+
 		//show if mountains are clicked
 		if (m_mountainsClick)
 		{
@@ -223,6 +262,7 @@ namespace HJ {
 			m_mountainsClick = false;
 			m_mountainsUnClick = true;
 		}
+
 		//show if sea are clicked
 		if (m_seaClick)
 		{
@@ -234,6 +274,7 @@ namespace HJ {
 			m_seaClick = false;
 			m_seaUnClick = true;
 		}
+
 		//show if sea are clicked
 		if (m_evilCastleClick)
 		{
@@ -246,13 +287,12 @@ namespace HJ {
 			m_evilCastleUnClick = true;
 		}
 
-
 		if (m_castleUnClick || m_forestUnClick || m_mountainsUnClick || m_seaUnClick || m_evilCastleUnClick)
 		{
 			m_time -= t_delatTime;
 		}
 		
-		if ( m_time <0.0f && m_castleUnClick)
+		if (m_time < 0.0f && m_castleUnClick)
 		{
 			castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r + 100,
 				castleComp->GetSprite().getColor().g + 100,
@@ -267,7 +307,7 @@ namespace HJ {
 
 		}
 
-		if (m_time <0.0f && m_forestUnClick)
+		if (m_time < 0.0f && m_forestUnClick)
 		{
 			forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r + 100,
 				forestComp->GetSprite().getColor().g + 100,
@@ -278,7 +318,7 @@ namespace HJ {
 			m_forestUnClick = false;
 		}
 
-		if (m_time <0.0f && m_mountainsUnClick)
+		if (m_time < 0.0f && m_mountainsUnClick)
 		{
 			mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r + 100,
 				mountainsComp->GetSprite().getColor().g + 100,
@@ -288,7 +328,8 @@ namespace HJ {
 			m_time = 0.1f;
 			m_mountainsUnClick = false;
 		}
-		if (m_time <0.0f && m_seaUnClick)
+		
+		if (m_time < 0.0f && m_seaUnClick)
 		{
 			seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r + 100,
 				seaComp->GetSprite().getColor().g + 100,
@@ -298,7 +339,8 @@ namespace HJ {
 			m_time = 0.1f;
 			m_seaUnClick = false;
 		}
-		if (m_time <0.0f && m_evilCastleUnClick)
+		
+		if (m_time < 0.0f && m_evilCastleUnClick)
 		{
 			evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r + 100,
 				evilCastleComp->GetSprite().getColor().g + 100,
@@ -308,14 +350,10 @@ namespace HJ {
 			m_time = 0.1f;
 			m_evilCastleUnClick = false;
 		}
-
-		
-
 	}
 
-	void HJ::MapScene::Draw(float t_deltaTime)
+	void MapScene::Draw(float t_deltaTime)
 	{
 		m_data->ents.Render();
-
 	}
 }

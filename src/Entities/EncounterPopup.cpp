@@ -9,7 +9,7 @@ namespace HJ { namespace Entities {
 		m_opponentSprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupOpponentSprite")),
 		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupStorySprite")),
 		m_titleText(AddComponent<Engine::Components::TextComponent>("C_PopupTitleText"))
-	{
+	{ 
 		// by default
 		SetVisible(true);
 		SetAlive(true);
@@ -18,6 +18,12 @@ namespace HJ { namespace Entities {
 	void EncounterPopup::Update(float t_deltaTime)
 	{
 		Entity::Update(t_deltaTime);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		{
+			std::invoke(OnClose);
+			SetForDelete();
+		}
 	}
 
 	void EncounterPopup::Render()
@@ -55,6 +61,12 @@ namespace HJ { namespace Entities {
 		m_titleText->GetText().setCharacterSize(30);
 	}
 
+	void EncounterPopup::OnCreate(std::function<void()> t_func)
+	{
+		std::invoke(t_func);
+	}
+
+	/*
 	void EncounterPopup::SetPosition(sf::Vector2f t_position)
 	{
 		m_bgSprite->GetSprite().setPosition(t_position);
@@ -67,5 +79,6 @@ namespace HJ { namespace Entities {
 		m_titleText->GetText().setPosition(sf::Vector2f((t_position.x - m_titleText->GetSprite().getGlobalBounds().width) * 0.5f,
 			(t_position.y - m_titleText->GetSprite().getGlobalBounds().height) * 0.1f));
 	}
+	*/
 
 } }
