@@ -6,7 +6,9 @@ namespace Engine { namespace Components {
 	TextComponent::TextComponent(ECM::Entity* t_parent) :
 		Component(t_parent),
 		m_text(std::make_shared<sf::Text>())
-	{ }
+	{ 
+		SetClickable(true);
+	}
 
 	TextComponent* TextComponent::GetType()
 	{

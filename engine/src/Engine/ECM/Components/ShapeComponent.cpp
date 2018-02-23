@@ -6,7 +6,9 @@ namespace Engine { namespace Components {
 	ShapeComponent::ShapeComponent(ECM::Entity* t_parent) :
 		Component(t_parent), 
 		m_shape(std::make_shared<sf::CircleShape>())
-	{ }
+	{ 
+		SetClickable(true);
+	}
 
 	ShapeComponent* ShapeComponent::GetType()
 	{

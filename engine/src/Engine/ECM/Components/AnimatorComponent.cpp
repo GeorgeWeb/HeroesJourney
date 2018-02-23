@@ -6,7 +6,9 @@ namespace Engine { namespace Components {
 
 	AnimatorComponent::AnimatorComponent(ECM::Entity* t_parent) :
 		Component(t_parent)
-	{ }
+	{
+		SetClickable(false);
+	}
 
 	AnimatorComponent* AnimatorComponent::GetType()
 	{

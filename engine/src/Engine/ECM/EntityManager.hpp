@@ -36,6 +36,8 @@ namespace Engine { namespace ECM {
 			template<class T>
 			T* Find(const std::string& t_name)
 			{
+				static_assert(std::is_base_of<Entity, T>::value, "must be an entity");
+
 				if (m_entities.find(t_name) == m_entities.end())
 				{
 					throw("The entity you are trying to access does not exist! ");
@@ -45,7 +47,7 @@ namespace Engine { namespace ECM {
 					if (m_entities[t_name] == nullptr)
 						throw("The entity you are trying to access is not initialised! ");
 					else
-						return m_entities[t_name]->GetType();
+						return dynamic_cast<T*>(m_entities[t_name]->GetType());
 				}
 			}
 
@@ -58,6 +60,11 @@ namespace Engine { namespace ECM {
 					else
 						m_entities[t_name] = t_entity;
 				}
+			}
+			
+			bool Exists(const std::string& t_name)
+			{
+				return (m_entities.find(t_name) == m_entities.end());
 			}
 
 			void Remove(const std::string& t_name)
@@ -88,9 +95,14 @@ namespace Engine { namespace ECM {
 					auto& components = it1->second->GetCompsDictionary();
 					for (auto it2 = components.rbegin(); it2 != components.rend(); ++it2)
 					{
-						auto& componentName = it2->first;
-						auto& componentType = it2->second;
-						componentType->Render();
+						if (it2->second == nullptr)
+							throw("There's an error with this entity! ");
+						else
+						{
+							auto& componentName = it2->first;
+							auto& componentType = it2->second;
+							componentType->Render();
+						}
 					}
 				}
 			}
@@ -99,8 +111,8 @@ namespace Engine { namespace ECM {
 			{
 				for (const auto& ent : m_entities)
 				{
-					if (ent.second->IsForDeletion())
-						Remove(ent.first);
+					if (ent.second == nullptr)
+						throw("There's an error with this entity! ");
 					else
 						ent.second->Update(t_deltaTime);
 				}

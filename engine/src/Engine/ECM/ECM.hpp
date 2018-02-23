@@ -84,7 +84,8 @@ namespace Engine { namespace ECM {
 		protected:
 			Entity* const m_parent;
 			bool m_forDeletion;
-			
+			bool m_isClickable;
+
 			explicit Component(Entity *const t_parent);
 
 		public:
@@ -92,7 +93,10 @@ namespace Engine { namespace ECM {
 
 			virtual Component* GetType();
 
-			bool m_isForDeletion() const;
+			bool IsClickable() const;
+			void SetClickable(const bool t_clickable);
+
+			bool IsForDeletion() const;
 
 			virtual void Update(float t_deltaTime) = 0;
 			virtual void Render() = 0;

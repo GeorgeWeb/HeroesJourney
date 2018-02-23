@@ -17,7 +17,12 @@ namespace HJ {
 	{
 		public:
 			// stores the amount of gold gathered
-			unsigned int gold;
+			unsigned int gold = 100;
+			unsigned int healthPot = 1;
+			unsigned int manaPot = 1;
+			// storing these stats for fun / interesting purpose ;)
+			unsigned int deaths = 0;
+			unsigned int resigns = 0;
 			// stores the unlocked encounters -> helps manage which heroes to use in a battle
 			// because every hero is related to the particular encounter
 			std::vector<std::string> unlockedEncounters;

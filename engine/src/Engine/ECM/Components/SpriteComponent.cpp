@@ -6,7 +6,9 @@ namespace Engine { namespace Components {
 	SpriteComponent::SpriteComponent(ECM::Entity* t_parent) :
 		Component(t_parent),
 		m_sprite(std::make_shared<sf::Sprite>())
-	{ }
+	{ 
+		SetClickable(true);
+	}
 
 	SpriteComponent* SpriteComponent::GetType()
 	{
