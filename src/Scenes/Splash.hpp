@@ -26,9 +26,12 @@ namespace HJ {
 			GameDataRef m_data;
 			bool m_shouldFade = false;
 			
+			// temp
+			sf::Color bgColor;
+			sf::Text m_titleText;
+
 			// Entities
 			std::shared_ptr<Entities::AnimatedLogo> m_logo;
-			std::shared_ptr<Entities::Knight> m_hero;
 	};
 }
 

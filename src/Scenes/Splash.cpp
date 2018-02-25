@@ -1,5 +1,6 @@
 #include "Splash.hpp"
 #include "MainMenu.hpp"
+#include "PauseMenu.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -27,7 +28,6 @@ namespace HJ {
 	{
 		// Load resources
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_KnightSheet", MAIN_HERO_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 
@@ -35,11 +35,11 @@ namespace HJ {
 		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
 
 		// Declare local entities map container
-		std::map<std::string, std::shared_ptr<ECM::Entity>> ents;
+		std::map<std::string, std::shared_ptr<Entity>> ents;
 
 		// Create entities ...
 		// Background
-		auto bg = std::make_shared<ECM::Entity>();
+		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");
 		// define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SplashBG"));
@@ -48,14 +48,6 @@ namespace HJ {
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
-
-		// Hero
-		m_hero = std::make_shared<Knight>("C_KnightSprite", "C_KnightAnimator");
-		// initialize data
-		m_hero->Init(m_data->assets.GetTexture("Tex_KnightSheet"), sf::IntRect(0, 0, 32, 32));
-		// set more properties
-		m_hero->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 
-			(SCREEN_HEIGHT - m_hero->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7f));
 
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();
@@ -68,7 +60,6 @@ namespace HJ {
 
 		// Add to ents (local) map
 		ents.insert_or_assign("E_zSplashBG", bg);
-		ents.insert_or_assign("E_Knight", m_hero);
 		ents.insert_or_assign("E_GameLogo", m_logo);
 
 		// :if entity is not in the entity manager, then it will be added:
@@ -86,10 +77,17 @@ namespace HJ {
 			// Keyboard input
 			auto bgSprite = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 			// 'Press ANY key OR button to continue!' type of game
-			if (event.type == sf::Event::EventType::KeyPressed ||
+			if (/*event.type == sf::Event::EventType::KeyPressed*/ sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ||
 				m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_shouldFade = true;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			{
+				// Switch scenes (to Main Menu)
+				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
+				m_data->machine.AddState(std::move(pauseMenuState), false);
 			}
 		}
 	}

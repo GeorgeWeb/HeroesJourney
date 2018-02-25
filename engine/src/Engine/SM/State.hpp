@@ -23,6 +23,9 @@ namespace Engine { namespace SM {
 			// Not neccessary, but useful
 			virtual void Pause();
 			virtual void Resume();
+
+			// TODO:
+			// Add entities map
 	};
 
 } }

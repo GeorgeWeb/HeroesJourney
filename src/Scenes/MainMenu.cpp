@@ -75,6 +75,10 @@ namespace HJ {
 				m_data->machine.AddState(std::move(mapState));
 			}
 		}
+
+		// Resume to the last Game Screen
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			this->m_data->machine.RemoveState();
 	}
 
 	void MainMenuScene::Update(float t_delatTime)

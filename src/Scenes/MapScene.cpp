@@ -116,11 +116,17 @@ namespace HJ {
 
 		// init the encounter popup
 		m_encounterPopup = std::make_shared<EncounterPopup>();
-		m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().scale(3.0f, 3.0f);
+		m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().scale(1.0f, 1.0f);
 		m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_PopupBG"));
+		m_encounterPopup->SetCloseButtonImage(m_data->assets.GetTexture("Tex_PopupCloseBtn"));
+		m_encounterPopup->SetPlayButtonImage(m_data->assets.GetTexture("Tex_PopupPlayBtn"));
+		m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+		m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
+		m_encounterPopup->SetTitleText("ENCOUNTER TITLE", m_data->assets.GetFont("Font_Pixel"));
+		m_encounterPopup->GetComponent<TextComponent>("C_aPopupTitleText")->GetText().setPosition(sf::Vector2f(100.0f, 100.0f));
 		m_encounterPopup->SetPosition(sf::Vector2f(
-			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f,
-			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_PopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
 		));
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "z" for background "x" for UI
@@ -170,10 +176,12 @@ namespace HJ {
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
+					
+					// turn closing check on
+					m_encounterPopup->ToggleCloseBtnBehaviour();
 
 					// Change the textures of the popup
-					m_encounterPopup->SetBackgroundImage(m_data->assets.GetTexture("Tex_PopupBG"));
-					//m_encounterPopup->SetCloseBtnImage(m_data->assets.GetTexture("Tex_PopupBG"));
+					// TODO: ...
 
 					// Fade Entities
 					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
@@ -199,6 +207,9 @@ namespace HJ {
 					// Hide the encounter popup
 					m_encounterPopup->SetVisible(false);
 					m_encounterPopup->SetAlive(false);
+
+					// turn closing check off
+					m_encounterPopup->ToggleCloseBtnBehaviour();
 
 					// Unfade Entities
 					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));

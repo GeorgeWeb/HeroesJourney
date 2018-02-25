@@ -30,13 +30,14 @@ namespace HJ { namespace Entities {
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			// setters
+			void ToggleCloseBtnBehaviour() { m_closeBtnSprite->SetClickable(!m_closeBtnSprite->IsClickable()); }
+
 			void SetBackgroundImage(const sf::Texture& t_texture);
 			void SetCloseButtonImage(const sf::Texture& t_texture);
 			void SetPlayButtonImage(const sf::Texture& t_texture);
 			void SetOpponentImage(const sf::Texture& t_texture);
 			void SetStoryImage(const sf::Texture& t_texture);
-			void SetTitleText(const std::string& t_text, const sf::Font t_font);
+			void SetTitleText(const std::string& t_text, const sf::Font& t_font);
 			
 			// put together and position the whole panel
 			void Assemble(sf::Vector2f t_position);

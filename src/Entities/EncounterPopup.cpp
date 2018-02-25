@@ -9,16 +9,17 @@ namespace HJ { namespace Entities {
 	using namespace Engine::Input;
 
 	EncounterPopup::EncounterPopup() :
-		m_bgSprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupBGSprite")),
-		m_closeBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupCloseBtnSprite")),
-		m_playBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupPlayBtnSprite")),
-		m_opponentSprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupOpponentSprite")),
-		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_PopupStorySprite")),
-		m_titleText(AddComponent<Engine::Components::TextComponent>("C_PopupTitleText"))
+		m_bgSprite(AddComponent<Engine::Components::SpriteComponent>("C_zPopupBGSprite")),
+		m_closeBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupCloseBtnSprite")),
+		m_playBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupPlayBtnSprite")),
+		m_opponentSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupOpponentSprite")),
+		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupStorySprite")),
+		m_titleText(AddComponent<Engine::Components::TextComponent>("C_aPopupTitleText"))
 	{ 
 		// by default
 		SetVisible(false);
 		SetAlive(false);
+		m_closeBtnSprite->SetClickable(false);
 	}
 
 	EncounterPopup* EncounterPopup::GetType()
@@ -53,6 +54,8 @@ namespace HJ { namespace Entities {
 
 	void EncounterPopup::SetCloseButtonImage(const sf::Texture & t_texture)
 	{
+		m_closeBtnSprite->GetSprite().setTexture(t_texture);
+		m_closeBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 
 	void EncounterPopup::SetPlayButtonImage(const sf::Texture& t_texture)
@@ -73,8 +76,9 @@ namespace HJ { namespace Entities {
 		m_storySprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 
-	void EncounterPopup::SetTitleText(const std::string& t_text, const sf::Font t_font)
+	void EncounterPopup::SetTitleText(const std::string& t_text, const sf::Font& t_font)
 	{
+		m_titleText->SetFont(t_font);
 		m_titleText->GetText().setString(t_text);
 		m_titleText->GetText().setCharacterSize(30);
 	}

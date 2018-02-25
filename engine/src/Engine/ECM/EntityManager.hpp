@@ -10,6 +10,18 @@ namespace Engine { namespace ECM {
 	// A very simple, kinda like holder/storage class for entity objects
 	class EntityManager final
 	{
+
+		/** TODO: 
+		 ** 1. Remove PopulateEntsDictionary(...)
+		 ** 2. Add std::map of entities as a parameter to Update(...) and Render(...)
+		 ** 3. Create virtual AddEntity(...) in State and override in each derived Scene/State
+		 ** to Save(...) the entity to the global entities map that's in the EntityManager - (that should happen in the derived class)
+		 ** and also insert it in the local entities map for the Scene - (that should happen in the base class definition).
+		 
+		 ** On comparison everything that is not in the local map and is part of the global map will be set false for visible/alive
+		 ** Use the Exists() func. to avoid duplicating.
+		**/
+
 		public:
 			EntityManager() = default;
 			~EntityManager() = default;			
@@ -23,14 +35,6 @@ namespace Engine { namespace ECM {
 			{
 				for (const auto& ent : t_ents)
 					Save(ent.first, ent.second);
-			}
-			
-			template<class T>
-			T* GetComponent(const std::string t_name)
-			{
-				static_assert(std::is_base_of<Component, T>::value, "must be a component");
-				// ... checks
-				return dynamic_cast<T*>(m_components[t_name]->GetType());
 			}
 
 			template<class T>
@@ -95,14 +99,9 @@ namespace Engine { namespace ECM {
 					auto& components = it1->second->GetCompsDictionary();
 					for (auto it2 = components.rbegin(); it2 != components.rend(); ++it2)
 					{
-						if (it2->second == nullptr)
-							throw("There's an error with this entity! ");
-						else
-						{
-							auto& componentName = it2->first;
-							auto& componentType = it2->second;
-							componentType->Render();
-						}
+						auto& componentName = it2->first;
+						auto& componentType = it2->second;
+						componentType->Render();
 					}
 				}
 			}
