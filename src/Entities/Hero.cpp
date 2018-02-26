@@ -5,22 +5,20 @@ namespace HJ { namespace Entities {
 	Hero::Hero(const std::string& t_sprite, const std::string& t_animator) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))
-	{
-		// by default
-		SetVisible(true);
-		SetAlive(true);
-	}
+	{ }
 
 	Hero* Hero::GetType()
 	{
 		return this;
 	}
 
-	void Hero::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
+	void Hero::Init()
 	{
-		SetSprite(t_texture, t_texRect);
 		m_spriteComp->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
 		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+
+		SetVisible(true);
+		SetAlive(true);
 	}
 
 	void Hero::Update(float t_deltaTime)
@@ -28,10 +26,9 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		//check if hero dies
-
 		if (m_health <= 0) 
 		{
-			//animate death
+			// animate death
 		}
 	}
 

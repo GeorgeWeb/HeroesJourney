@@ -21,9 +21,9 @@ namespace HJ { namespace Entities {
 		return this;
 	}
 
-	void EvilFrostMage::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
+	void EvilFrostMage::Init()
 	{
-		EvilAI::Init(t_texture, t_texRect);
+		EvilAI::Init();
 	}
 
 	void EvilFrostMage::Update(float t_deltaTime)

@@ -1,6 +1,5 @@
 #include "Splash.hpp"
 #include "MainMenu.hpp"
-#include "PauseMenu.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -31,12 +30,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 
-		// Restore entity manager to non-visible ents
-		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
-
-		// Declare local entities map container
-		std::map<std::string, std::shared_ptr<Entity>> ents;
-
 		// Create entities ...
 		// Background
 		auto bg = std::make_shared<Entity>();
@@ -52,18 +45,16 @@ namespace HJ {
 		// Logo
 		m_logo = std::make_shared<AnimatedLogo>();
 		// initialize data
-		m_logo->Init(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
+		m_logo->SetSprite(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
 		// set more properties
 		m_logo->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 50.0f));
 		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.05f, true, false));
 		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
+		m_logo->Init();
 
 		// Add to ents (local) map
-		ents.insert_or_assign("E_zSplashBG", bg);
-		ents.insert_or_assign("E_GameLogo", m_logo);
-
-		// :if entity is not in the entity manager, then it will be added:
-		m_data->ents.PopulateEntsDictionary(ents);
+		AddEntity("E_zSplashBG", bg);
+		AddEntity("E_GameLogo", m_logo);
 	}
 
 	void SplashScene::HandleInput()
@@ -77,17 +68,10 @@ namespace HJ {
 			// Keyboard input
 			auto bgSprite = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 			// 'Press ANY key OR button to continue!' type of game
-			if (/*event.type == sf::Event::EventType::KeyPressed*/ sf::Keyboard::isKeyPressed(sf::Keyboard::Space) ||
+			if (event.type == sf::Event::EventType::KeyPressed ||
 				m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_shouldFade = true;
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			{
-				// Switch scenes (to Main Menu)
-				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
-				m_data->machine.AddState(std::move(pauseMenuState), false);
 			}
 		}
 	}
@@ -118,13 +102,20 @@ namespace HJ {
 		m_logo->Animate("Anim_GameLogo");
 
 		// update all entities
-		m_data->ents.Update(t_delatTime);
+		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
 	void SplashScene::Draw(float t_deltaTime)
 	{
 		// render all entities
-		m_data->ents.Render();
+		m_data->ents.Render(m_entities);
+	}
+
+	void SplashScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
+	{
+		State::AddEntity(t_name, t_entity);
+		// Add to global entities container
+		m_data->ents.Save(t_name, t_entity);
 	}
 
 }

@@ -21,8 +21,8 @@ namespace HJ {
 			void Update(float t_delatTime) override final;
 			void Draw(float t_deltaTime) override final;
 
-			// Declare local entities map container
-			std::map<std::string, std::shared_ptr<ECM::Entity>> ents;
+		protected:
+			void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity) override final;
 
 		private:
 			GameDataRef m_data;

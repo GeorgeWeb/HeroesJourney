@@ -3,32 +3,29 @@
 
 #include "Hero.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Sorceress final : public Hero
-		{
-			public:
-				Sorceress(const std::string& t_sprite, const std::string& t_animatior);
-				~Sorceress() = default;
+	class Sorceress final : public Hero
+	{
+		public:
+			Sorceress(const std::string& t_sprite, const std::string& t_animatior);
+			~Sorceress() = default;
 
-				Sorceress* GetType() override;
+			Sorceress* GetType() override final;
 
-				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
+			void Init() override final;
 
-				void Update(float t_deltaTime) override;
-				void Render() override;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-				void Attack() override;
-				void Skill(std::function<void()> t_func) override;
-				void Defend() override;
+			void Attack() override final;
+			void Skill(std::function<void()> t_func) override final;
+			void Defend() override final;
 
-			private:
-				void StreamOfFire();
-				void Ignite();
-		};
+		private:
+			void StreamOfFire();
+			void Ignite();
+	};
 
-	}
-}
-
+} }
 #endif // ! SORCERESS_ENTITY_H

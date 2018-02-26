@@ -23,12 +23,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_MainBG", MAINMENU_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_StartBtn", MAINMENU_STARTGAME_BUTTON);
 
-		// Restore entity manager to non-visible ents
-		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
-
-		// Declare local entities map container
-		std::map<std::string, std::shared_ptr<Entity>> ents;
-
 		//Background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_MainBGSprite");
@@ -52,11 +46,8 @@ namespace HJ {
 		mbtn->SetAlive(true);
 
 		//add to local ents map
-		ents.insert_or_assign("E_MainBG", bg);
-		ents.insert_or_assign("E_MBtn", mbtn);
-		
-		//:if entity is not in the entity manager, then add
-		m_data->ents.PopulateEntsDictionary(ents);
+		AddEntity("E_zMainBG", bg);
+		AddEntity("E_xBtn", mbtn);
 	}
 
 	void MainMenuScene::HandleInput()
@@ -67,7 +58,7 @@ namespace HJ {
 			if (event.type == sf::Event::Closed)
 				Renderer::GetWin().close();
 
-			auto btn = m_data->ents.Find<Entity>("E_MBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
+			auto btn = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
 			if (m_data->input.isClicked(btn->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				//switch to map
@@ -75,19 +66,22 @@ namespace HJ {
 				m_data->machine.AddState(std::move(mapState));
 			}
 		}
-
-		// Resume to the last Game Screen
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			this->m_data->machine.RemoveState();
 	}
 
 	void MainMenuScene::Update(float t_delatTime)
 	{
-		m_data->ents.Update(t_delatTime);
+		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
 	void MainMenuScene::Draw(float t_deltaTime)
 	{
-		m_data->ents.Render();
+		m_data->ents.Render(m_entities);
+	}
+
+	void MainMenuScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
+	{
+		State::AddEntity(t_name, t_entity);
+		// Add to global entities container
+		m_data->ents.Save(t_name, t_entity);
 	}
 }

@@ -25,12 +25,13 @@ namespace HJ { namespace Entities {
 			EncounterPopup();
 			~EncounterPopup() = default;
 
-			EncounterPopup* GetType() override;
+			EncounterPopup* GetType() override final;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-			void ToggleCloseBtnBehaviour() { m_closeBtnSprite->SetClickable(!m_closeBtnSprite->IsClickable()); }
+			void ToggleCloseBtnBehaviour();
 
 			void SetBackgroundImage(const sf::Texture& t_texture);
 			void SetCloseButtonImage(const sf::Texture& t_texture);

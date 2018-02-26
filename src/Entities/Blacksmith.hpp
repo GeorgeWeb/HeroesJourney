@@ -3,28 +3,23 @@
 
 #include "Building.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Blacksmith final : public Building
-		{
+	class Blacksmith final : public Building
+	{
 		public:
 			Blacksmith(const std::string& t_sprite);
 			~Blacksmith() = default;
 
-			Blacksmith* GetType() override;
+			Blacksmith* GetType() override final;
+			
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-			void Init(const sf::Texture& t_texture) override;
+			void Upgrade() override final;
+	};
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
-
-			void Upgrade();
-
-
-		};
-
-	}
-}
+} }
 
 #endif // !BLACKSMITH_BUILDING_H

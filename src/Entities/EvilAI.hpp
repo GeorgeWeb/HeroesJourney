@@ -41,7 +41,7 @@ namespace HJ { namespace Entities {
 			inline void SetFlaming(const bool t_flame) { m_isFlaming = t_flame; }
 			inline bool IsFlaming() const { return m_isFlaming; }
 			inline void SetFrozen(const bool t_freeze) { m_isFrozen = t_freeze; }
-			inline bool IsFrozen()const { return m_isFrozen; }
+			inline bool IsFrozen() const { return m_isFrozen; }
 
 		public:
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
@@ -54,10 +54,9 @@ namespace HJ { namespace Entities {
 
 			EvilAI* GetType() override;
 
-			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
-
-			virtual void Update(float t_deltaTime);
-			virtual void Render();
+			virtual void Init() override;
+			virtual void Update(float t_deltaTime) override;
+			virtual void Render() override;
 
 			virtual void Attack() = 0;
 			virtual void Skill(std::function<void()> t_func);
@@ -66,6 +65,7 @@ namespace HJ { namespace Entities {
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);
 	};
+
 } }
 
 #endif // !EVIL_AI_H

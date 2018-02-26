@@ -17,15 +17,18 @@ namespace Engine { namespace SM {
 			virtual void Init() = 0;
 			virtual void HandleInput() = 0;
 			virtual void Draw(float t_deltaTime) = 0;
-
 			virtual void Update(float t_deltaTime) = 0;
 
-			// Not neccessary, but useful
-			virtual void Pause();
-			virtual void Resume();
+			// non-virtual for the moment
+			void Pause();
+			void Resume();
 
-			// TODO:
-			// Add entities map
+		protected:
+			virtual void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity);
+
+		protected:
+			// Declare local entities map container
+			std::map<std::string, std::shared_ptr<ECM::Entity>> m_entities;
 	};
 
 } }

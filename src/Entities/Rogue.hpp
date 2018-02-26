@@ -3,32 +3,30 @@
 
 #include "Hero.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Rogue final : public Hero
-		{
-			public:
-				Rogue(const std::string& t_sprite, const std::string& t_animator);
-				~Rogue() = default;
+	class Rogue final : public Hero
+	{
+		public:
+			Rogue(const std::string& t_sprite, const std::string& t_animator);
+			~Rogue() = default;
 
-				Rogue* GetType() override;
+			Rogue* GetType() override final;
 			
-				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
+			void Init() override final;
 
-				void Update(float t_deltaTime) override;
-				void Render() override;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-				void Attack() override;
-				void Skill(std::function<void()> t_func) override;
-				void Defend() override;
+			void Attack() override final;
+			void Skill(std::function<void()> t_func) override final;
+			void Defend() override final;
 
-			private:
-				void TrueMark();
-				void StormOfDaggers();
-		};
+		private:
+			void TrueMark();
+			void StormOfDaggers();
+	};
 
-	}
-}
+} }
 
 #endif // !ROGUE_ENTITY_H

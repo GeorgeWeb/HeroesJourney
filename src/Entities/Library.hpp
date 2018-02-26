@@ -3,28 +3,22 @@
 
 #include "Building.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Library final : public Building
-		{
+	class Library final : public Building
+	{
 		public:
 			Library(const std::string& t_sprite);
 			~Library() = default;
 
-			Library* GetType() override;
+			Library* GetType() override final;
 
-			void Init(const sf::Texture& t_texture) override;
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
-
-			void Upgrade();
-
-
-		};
-
-	}
-}
+			void Upgrade() override final;
+	};
+} }
 
 #endif // !LIBRARY_BUILDING_H

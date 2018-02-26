@@ -22,7 +22,7 @@ namespace HJ { namespace Entities {
 
 				AnimatedLogo* GetType() override;
 
-				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
+				void Init() override;
 				void Update(float t_deltaTime) override;
 				void Render() override;
 

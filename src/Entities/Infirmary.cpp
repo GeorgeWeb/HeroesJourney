@@ -16,9 +16,9 @@ namespace HJ {	namespace Entities {
 		return this;
 	}
 
-	void Infirmary::Init(const sf::Texture& t_texture)
+	void Infirmary::Init()
 	{
-		Building::Init(t_texture);
+		Building::Init();
 	}
 
 	void Infirmary::Update(float t_deltaTime)
@@ -28,10 +28,13 @@ namespace HJ {	namespace Entities {
 
 		if (isClicked && !unClick)
 		{
-			infComp->GetSprite().setColor(sf::Color(infComp->GetSprite().getColor().r - 100,
+			infComp->GetSprite().setColor(sf::Color(
+				infComp->GetSprite().getColor().r - 100,
 				infComp->GetSprite().getColor().g - 100,
 				infComp->GetSprite().getColor().b - 100,
-				infComp->GetSprite().getColor().a));
+				infComp->GetSprite().getColor().a)
+			);
+			
 			unClick = true;
 		}
 
@@ -39,18 +42,20 @@ namespace HJ {	namespace Entities {
 		{
 			m_time -= t_deltaTime;
 		}
-		if (m_time <0.0f && unClick)
+
+		if (m_time < 0.0f && unClick)
 		{
-			infComp->GetSprite().setColor(sf::Color(infComp->GetSprite().getColor().r + 100,
+			infComp->GetSprite().setColor(sf::Color(
+				infComp->GetSprite().getColor().r + 100,
 				infComp->GetSprite().getColor().g + 100,
 				infComp->GetSprite().getColor().b + 100,
-				infComp->GetSprite().getColor().a));
+				infComp->GetSprite().getColor().a)
+			);
 
 			m_time = 0.1f;
 			unClick = false;
 			isClicked = false;
 		}
-
 	}
 
 	void Infirmary::Render()
@@ -62,7 +67,5 @@ namespace HJ {	namespace Entities {
 	{
 		Building::Upgrade();
 	}
-
-
 
 } }

@@ -11,16 +11,15 @@ namespace HJ { namespace Entities {
 			Bard(const std::string& t_sprite, const std::string& t_animatior);
 			~Bard() = default;
 
-			Bard* GetType() override;
+			Bard* GetType() override final;
 
-			void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
-
-			void Attack() override;
-			void Skill(std::function<void()> t_func) override;
-			void Defend() override;
+			void Attack() override final;
+			void Skill(std::function<void()> t_func) override final;
+			void Defend() override final;
 
 		private:
 			void SoothingSong();

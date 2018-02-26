@@ -5,22 +5,20 @@ namespace HJ { namespace Entities {
 	EvilAI::EvilAI(const std::string& t_sprite, const std::string& t_animator) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))
-	{
-		// by default
-		SetVisible(true);
-		SetAlive(true);
-	}
+	{ }
 
 	EvilAI* EvilAI::GetType()
 	{
 		return this;
 	}
 
-	void EvilAI::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
+	void EvilAI::Init()
 	{
-		SetSprite(t_texture, t_texRect);
 		m_spriteComp->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
 		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+
+		SetVisible(true);
+		SetAlive(true);
 	}
 
 	void EvilAI::Update(float t_deltaTime)

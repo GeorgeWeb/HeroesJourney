@@ -21,23 +21,21 @@ namespace HJ { namespace Entities {
 			ICY_BURST
 		};
 
-		class EvilFrostMage : public EvilAI
+		class EvilFrostMage final : public EvilAI
 		{	
 			public:
-				// EvilFrostMage();
 				EvilFrostMage(const std::string& t_sprite, const std::string& t_animator);
 				virtual ~EvilFrostMage() = default;
 
-				EvilFrostMage* GetType() override;
+				EvilFrostMage* GetType() override final;
 
-				void Init(const sf::Texture& t_texture, sf::IntRect t_texRect) override;
+				void Init() override final;
+				void Update(float t_deltaTime) override final;
+				void Render() override final;
 
-				void Update(float t_deltaTime) override;
-				void Render() override;
-
-				void Attack() override;
-				void Skill(std::function<void()> t_func) override;
-				void Defend() override;
+				void Attack() override final;
+				void Skill(std::function<void()> t_func) override final;
+				void Defend() override final;
 		};
 	}
 }

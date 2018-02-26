@@ -1,4 +1,3 @@
-
 #ifndef GENERALSTORE_BUILDING_H
 #define GENERALSTORE_BUILDING_H
 
@@ -6,23 +5,19 @@
 
 namespace HJ { namespace Entities {
 
-		class GeneralStore final : public Building
-		{
+	class GeneralStore final : public Building
+	{
 		public:
 			GeneralStore(const std::string& t_sprite);
 			~GeneralStore() = default;
 
-			GeneralStore* GetType() override;
+			GeneralStore* GetType() override final;
 
-			void Init(const sf::Texture& t_texture) override;
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
+	};
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
-
-
-
-		};
-
-	} }
+} }
 
 #endif // !GENERALSTORE_BUILDING_H

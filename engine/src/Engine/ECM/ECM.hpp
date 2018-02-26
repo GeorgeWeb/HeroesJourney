@@ -18,8 +18,6 @@ namespace Engine { namespace ECM {
 	// Entity class interface and base functionality
 	class Entity
 	{
-		// TODO: Implement scale like position is implemented!!!
-
 		protected:
 			std::map<std::string, std::shared_ptr<Component>> m_components;
 			sf::Vector2f m_position;			
@@ -31,13 +29,17 @@ namespace Engine { namespace ECM {
 			bool m_forDeletion; ///> should be deleted
 		
 		public:
-			Entity();
+			bool showOnCreate = true;
+
+		public:
+			Entity() = default;
 			virtual ~Entity() = default;
 
 			virtual Entity* GetType();
 
-			std::map<std::string, std::shared_ptr<Component>> GetCompsDictionary();
+			std::map<std::string, std::shared_ptr<Component>> GetComponents();
 
+			virtual void Init();
 			virtual void Update(const float t_deltaTime);
 			virtual void Render();
 
@@ -46,10 +48,7 @@ namespace Engine { namespace ECM {
 			
 			float GetRotation() const;
 			void SetRotation(float t_rotation);
-			
-			const sf::Vector2f& GetScale() const;
-			void SetScale(const sf::Vector2f& t_factor);
-
+		
 			void Move(const sf::Vector2f& t_position);
 
 			bool IsAlive() const;

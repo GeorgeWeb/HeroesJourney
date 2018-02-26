@@ -22,23 +22,7 @@ namespace HJ {
 	}
 
 	void PauseMenuScene::Init()
-	{
-		// Restore entity manager to non-visible ents
-		for (auto ent : m_data->ents.GetEntsDictionary()) ent.second->SetVisible(false);
-		
-		// load & set title font type
-		auto title = std::make_shared<Entity>();
-		auto titleComp = title->AddComponent<TextComponent>("C_PauseMenuText");
-		titleComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
-		titleComp->GetText().setCharacterSize(72);
-		titleComp->GetText().setString("PAUSE MENU");
-		title->SetPosition(sf::Vector2f(
-			(SCREEN_WIDTH * .5f) - (titleComp->GetText().getGlobalBounds().width * .5f),
-			100.0f));
-		title->SetAlive(true);
-		title->SetVisible(true);
-		
-
+	{		
 		// Create entities ...
 		// Background
 		auto bg = std::make_shared<Entity>();
@@ -51,11 +35,20 @@ namespace HJ {
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
-		ents.insert_or_assign("E_aPauseMenuBG", bg);
-		ents.insert_or_assign("E_aPauseMenuTitle", title);
+		// Title
+		auto title = std::make_shared<Entity>();
+		auto titleComp = title->AddComponent<TextComponent>("C_PauseMenuText");
+		titleComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		titleComp->GetText().setCharacterSize(72);
+		titleComp->GetText().setString("PAUSE MENU");
+		title->SetPosition(sf::Vector2f(
+			(SCREEN_WIDTH * .5f) - (titleComp->GetText().getGlobalBounds().width * .5f),
+			100.0f));
+		title->SetAlive(true);
+		title->SetVisible(true);
 
-		// :if entity is not in the entity manager, then it will be added:
-		m_data->ents.PopulateEntsDictionary(ents);
+		AddEntity("E_aPauseMenuBG", bg);
+		AddEntity("E_aPauseMenuTitle", title);
 	}
 
 	void PauseMenuScene::HandleInput()
@@ -67,7 +60,7 @@ namespace HJ {
 				System::Renderer::GetWin().close();
 
 			// Resume to the last Game Screen
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				// Restore entity manager to non-visible ents
 				m_data->machine.RemoveState();
@@ -77,12 +70,19 @@ namespace HJ {
 
 	void PauseMenuScene::Update(float t_delatTime)
 	{
-		m_data->ents.Update(t_delatTime);
+		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
 	void PauseMenuScene::Draw(float t_deltaTime)
 	{
-		m_data->ents.Render();
+		m_data->ents.Render(m_entities);
+	}
+
+	void PauseMenuScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
+	{
+		State::AddEntity(t_name, t_entity);
+		// Add to global entities container
+		m_data->ents.Save(t_name, t_entity);
 	}
 
 }

@@ -2,11 +2,7 @@
 
 namespace Engine { namespace ECM {
 	
-	Entity::Entity() :
-		m_forDeletion(false)
-	{ }
-
-	std::map<std::string, std::shared_ptr<Component>> Entity::GetCompsDictionary()
+	std::map<std::string, std::shared_ptr<Component>> Entity::GetComponents()
 	{
 		return m_components;
 	}
@@ -16,6 +12,11 @@ namespace Engine { namespace ECM {
 		return this;
 	}
 	
+	void Entity::Init()
+	{
+		m_forDeletion = false;
+	}
+
 	void Entity::Update(float t_deltaTime)
 	{ 
 		if (m_alive)
@@ -52,16 +53,6 @@ namespace Engine { namespace ECM {
 	void Entity::SetRotation(float t_rotation)
 	{
 		m_rotation = t_rotation;
-	}
-
-	const sf::Vector2f& Entity::GetScale() const
-	{
-		return m_scale;
-	}
-
-	void Entity::SetScale(const sf::Vector2f& t_factor)
-	{
-		m_scale = t_factor;
 	}
 
 	void Entity::Move(const sf::Vector2f& t_position)

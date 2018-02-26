@@ -16,10 +16,15 @@ namespace HJ { namespace Entities {
 		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupStorySprite")),
 		m_titleText(AddComponent<Engine::Components::TextComponent>("C_aPopupTitleText"))
 	{ 
-		// by default
-		SetVisible(false);
+		showOnCreate = false;
+	}
+
+	void EncounterPopup::Init()
+	{
+		// defaults
 		SetAlive(false);
-		m_closeBtnSprite->SetClickable(false);
+		SetVisible(false);
+		m_closeBtnSprite->SetClickable(false); ///> true by default
 	}
 
 	EncounterPopup* EncounterPopup::GetType()
@@ -32,8 +37,7 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		// check for key press or click for closing
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || 
-		   (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin())))
+		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 		{
 			SetAlive(false);
 			SetVisible(false);
@@ -44,6 +48,11 @@ namespace HJ { namespace Entities {
 	void EncounterPopup::Render()
 	{
 		Entity::Render();
+	}
+
+	void EncounterPopup::ToggleCloseBtnBehaviour()
+	{
+		m_closeBtnSprite->SetClickable(!m_closeBtnSprite->IsClickable());
 	}
 
 	void EncounterPopup::SetBackgroundImage(const sf::Texture& t_texture)

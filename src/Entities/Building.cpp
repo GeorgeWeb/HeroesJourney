@@ -2,30 +2,31 @@
 
 namespace HJ {	namespace Entities {
 
-	Building::Building(const std::string& t_sprite):
+	Building::Building(const std::string& t_sprite) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
-	{
-		SetVisible(true);
-		SetAlive(true);
-	}
+	{ }
+
 	Building* Building::GetType()
 	{
 		return this;
 	}
 
-	void Building::Init(const sf::Texture& t_texture)
+	void Building::Init()
 	{
-		SetSprite(t_texture);
 		m_spriteComp->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
 		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		m_time = 0.1f;
 
+		SetVisible(true);
+		SetAlive(true);
 	}
 
 	void Building::Update(float t_deltaTime)
 	{
 		Entity::Update(t_deltaTime);
-
-		//see if building is clicked and reackt to click
+		
+		// check if the building's sprite is clicked and react
+		// ...
 	}
 
 	void Building::Render()
@@ -40,6 +41,7 @@ namespace HJ {	namespace Entities {
 
 	void Building::Upgrade()
 	{
-		// todo upgrade change texture and bonus if upgraded
+		// TODO: upgrade change texture and bonus if upgraded
 	}
+
 } }

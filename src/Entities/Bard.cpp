@@ -2,7 +2,7 @@
 
 namespace HJ { namespace Entities {
 
-	Bard::Bard(const std::string & t_sprite, const std::string & t_animatior) :
+	Bard::Bard(const std::string& t_sprite, const std::string & t_animatior) :
 		Hero(t_sprite, t_animatior)
 	{
 		m_health = 100;
@@ -14,7 +14,6 @@ namespace HJ { namespace Entities {
 		m_critChance = 2;
 		m_isFlaming = false;
 		m_isStunned = false;
-
 	}
 
 	Bard* Bard::GetType()
@@ -22,9 +21,9 @@ namespace HJ { namespace Entities {
 		return this;
 	}
 
-	void Bard::Init(const sf::Texture & t_texture, sf::IntRect t_texRect)
+	void Bard::Init()
 	{
-		Hero::Init(t_texture, t_texRect);
+		Hero::Init();
 	}
 
 	void Bard::Update(float t_deltaTime)
@@ -39,7 +38,7 @@ namespace HJ { namespace Entities {
 
 	void Bard::Attack()
 	{
-		// todo
+		// implement
 	}
 
 	void Bard::Skill(std::function<void()> t_func)
@@ -49,12 +48,12 @@ namespace HJ { namespace Entities {
 
 	void Bard::Defend()
 	{
-		// todo
+		// implement
 	}
 
 	void Bard::SoothingSong()
 	{
-		// todo
+		// implement
 	}
 
 	void Bard::HymnOfCharge()

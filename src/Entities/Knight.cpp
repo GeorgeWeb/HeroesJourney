@@ -1,5 +1,4 @@
 #include "Knight.hpp"
-#include "EvilAI.hpp"
 
 namespace HJ { namespace Entities {
 
@@ -22,9 +21,9 @@ namespace HJ { namespace Entities {
 		return this;
 	}
 
-	void Knight::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
+	void Knight::Init()
 	{
-		Hero::Init(t_texture, t_texRect);
+		Hero::Init();
 	}
 
 	void Knight::Update(float t_deltaTime)
@@ -54,12 +53,12 @@ namespace HJ { namespace Entities {
 
 	void Knight::HeroSlash()
 	{
-		// todo
+		// implement
 	}
 
 	void Knight::ShoulderBash()
 	{
-		// todo
+		// implement
 	}
 
 } }

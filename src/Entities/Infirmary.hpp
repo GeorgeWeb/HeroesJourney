@@ -12,16 +12,13 @@ namespace HJ {
 			Infirmary(const std::string& t_sprite);
 			~Infirmary() = default;
 
-			Infirmary* GetType() override;
+			Infirmary* GetType() override final;
 
-			void Init(const sf::Texture& t_texture) override;
+			void Init() override final;
+			void Update(float t_deltaTime) override final;
+			void Render() override final;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
-
-			void Upgrade();
-
-		
+			void Upgrade() override final;
 		};
 
 	}

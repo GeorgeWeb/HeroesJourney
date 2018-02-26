@@ -9,22 +9,20 @@ namespace HJ { namespace Entities {
 		AnimatedLogo::AnimatedLogo() :
 			m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_AnimLogoSprite")),
 			m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_AnimLogoAnimator"))
-		{ 
-			// by default
-			SetVisible(true);
-			SetAlive(true);
-		}
+		{ }
 
 		AnimatedLogo* AnimatedLogo::GetType()
 		{
 			return this;
 		}
 
-		void AnimatedLogo::Init(const sf::Texture& t_texture, sf::IntRect t_texRect)
+		void AnimatedLogo::Init()
 		{
-			SetSprite(t_texture, t_texRect);
 			m_spriteComp->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
 			m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+
+			SetVisible(true);
+			SetAlive(true);
 		}
 
 		void AnimatedLogo::Update(float t_deltaTime)

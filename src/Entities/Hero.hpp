@@ -47,12 +47,11 @@ namespace HJ { namespace Entities {
 			Hero(const std::string& t_sprite, const std::string& t_animator);
 			virtual ~Hero() = default;
 
-			Hero* GetType() override;
+			virtual Hero* GetType() override;
 
-			virtual void Init(const sf::Texture& t_texture, sf::IntRect t_texRect);
-
-			virtual void Update(float t_deltaTime);
-			virtual void Render();
+			virtual void Init() override;
+			virtual void Update(float t_deltaTime) override;
+			virtual void Render() override;
 
 			virtual void Attack() = 0;
 			virtual void Skill(std::function<void()> t_func);
