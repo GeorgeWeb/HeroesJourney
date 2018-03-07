@@ -10,7 +10,7 @@ namespace Engine { namespace SM {
 
 	using StateRef = std::unique_ptr<State>;
 
-	class StateMachine
+	class StateMachine final
 	{
 		public:
 			StateMachine() = default;
@@ -21,7 +21,7 @@ namespace Engine { namespace SM {
 
 			void ProcessStateChanges();
 
-			StateRef& GetActiveState();
+			inline StateRef& GetActiveState() { return m_states.top(); }
 
 		private:
 			std::stack<StateRef> m_states;

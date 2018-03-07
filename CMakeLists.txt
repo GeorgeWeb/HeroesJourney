@@ -32,9 +32,8 @@ link_directories("${CMAKE_BINARY_DIR}/engine/src")
 file(GLOB_RECURSE SOURCES src/*.cpp src/*.h src/*.hpp)
 add_executable(HEROES ${SOURCES})
 target_include_directories(HEROES PRIVATE ${SFML_INCS})
-target_link_libraries(HEROES sfml-graphics)
 target_include_directories(HEROES PUBLIC ${ENGINE_INCS})
-target_link_libraries(HEROES engine)
+target_link_libraries(HEROES engine sfml-audio sfml-graphics)
 
 set_target_properties(HEROES PROPERTIES 
 	VS_DEBUGGER_WORKING_DIRECTORY

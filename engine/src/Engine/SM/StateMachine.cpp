@@ -38,13 +38,9 @@ namespace Engine { namespace SM {
 
 			m_states.push(std::move(m_newState));
 			m_states.top()->Init();
+
 			m_isAdding = false;
 		}
-	}
-
-	StateRef& StateMachine::GetActiveState()
-	{
-		return m_states.top();
 	}
 
 } }

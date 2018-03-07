@@ -30,4 +30,4 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 # Build Dependencies
 #add_executable(ENGINE ${SOURCES})
 include_directories(ENGINE PRIVATE ${SFML_INCS})
-link_libraries(ENGINE sfml-graphics)
+link_libraries(ENGINE sfml-audio sfml-graphics)
