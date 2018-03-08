@@ -17,10 +17,9 @@ namespace Engine { namespace Components {
 
 	void ShapeComponent::Update(float t_deltaTime)
 	{
-		if (m_parent->IsAlive())
-		{
+		// set pos to the parent's one for ONLY non-independent shape components
+		if (m_parent->IsAlive() && !independent)
 			m_shape->setPosition(m_parent->GetPosition());
-		}
 	}
 
 	void ShapeComponent::Render()

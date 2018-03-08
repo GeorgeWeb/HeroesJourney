@@ -17,10 +17,9 @@ namespace Engine { namespace Components {
 
 	void TextComponent::Update(float t_deltaTime)
 	{
-		if (m_parent->IsAlive())
-		{
+		// set pos to the parent's one for ONLY non-independent text components
+		if (m_parent->IsAlive() && !independent)
 			m_text->setPosition(m_parent->GetPosition());
-		}
 	}
 
 	void TextComponent::Render()

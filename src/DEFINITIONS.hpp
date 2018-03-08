@@ -14,14 +14,12 @@
 
 // MainMenu state global definitions
 #define MAINMENU_SCENE_BACKGROUND "res/img/main-menu-bg.png"
-// menu buttons
 #define MAINMENU_STARTGAME_BUTTON "res/img/main_menu/start_btn.png"
 #define MAINMENU_QUITGAME_BUTTON "res/img/main_menu/quit_btn.png"
 
 // Main Game state global definitions
 #define MAIN_GAME_SCENE_BACKGROUND "res/img/game-map-bg.png"
 #define MAIN_GAME_CASTLE "res/img/castle.png"
-#define MAIN_GAME_POPUP "res/img/popUp.png"
 #define MAIN_GAME_FOREST "res/img/forest.png"
 #define MAIN_GAME_MOUNTAINS "res/img/mountains.png"
 #define MAIN_GAME_SEA "res/img/sea.png"
@@ -37,13 +35,21 @@
 #define MAP_SCENE_GENERAL_STORE "res/img/generalstore.png"
 #define MAP_SCENE_BACK_ARROW "res/img/backarrow.png"
 
-#define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
-
-// Encounter popup
+// Encounter popup global definitions
 #define ENCOUNTER_POPUP_BACKGROUND "res/img/encounter_popup/bg_img.png"
 #define ENCOUNTER_POPUP_CLOSE_BTN "res/img/encounter_popup/close_btn.png"
 #define ENCOUNTER_POPUP_PLAY_BTN "res/img/encounter_popup/play_btn.png"
 #define ENCOUNTER_POPUP_OPPONENT "res/img/encounter_popup/opponent_img.png"
 #define ENCOUNTER_POPUP_STORY "res/img/encounter_popup/story_img.png"
+
+// StoryIntro screen global definitions
+#define STORY_INTRO_SCENE_BACKGROUND "res/img/game-map-bg.png"
+#define STORY_INTRO_SCENE_HERO "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
+
+// Heroes/Companions & Enemies global definitions
+#define MAIN_HERO_SPRITESHEET "res/img/characters/hero.png"
 
 #endif // !DEFINITIONS_H

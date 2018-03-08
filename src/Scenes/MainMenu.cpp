@@ -1,5 +1,5 @@
 #include "MainMenu.hpp"
-#include "MapScene.hpp"
+#include "StoryIntro.hpp"
 #include "../DEFINITIONS.hpp"
 
 namespace HJ {
@@ -61,9 +61,9 @@ namespace HJ {
 			auto btn = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
 			if (m_data->input.isClicked(btn->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				//switch to map
-				auto mapState = std::make_unique<MapScene>(MapScene(m_data));
-				m_data->machine.AddState(std::move(mapState));
+				//switch to story introduction
+				auto storyIntro = std::make_unique<StoryIntroScene>(StoryIntroScene(m_data));
+				m_data->machine.AddState(std::move(storyIntro));
 			}
 		}
 	}

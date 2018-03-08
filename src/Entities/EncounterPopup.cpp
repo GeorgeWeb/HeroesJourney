@@ -7,14 +7,16 @@ namespace HJ { namespace Entities {
 	
 	using namespace Engine::System;
 	using namespace Engine::Input;
+	using namespace Engine::ECM;
+	using namespace Engine::Components;
 
 	EncounterPopup::EncounterPopup() :
-		m_bgSprite(AddComponent<Engine::Components::SpriteComponent>("C_zPopupBGSprite")),
-		m_closeBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupCloseBtnSprite")),
-		m_playBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupPlayBtnSprite")),
-		m_opponentSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupOpponentSprite")),
-		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupStorySprite")),
-		m_titleText(AddComponent<Engine::Components::TextComponent>("C_aPopupTitleText"))
+		m_bgSprite(AddComponent<SpriteComponent>("C_zPopupBGSprite")),
+		m_closeBtnSprite(AddComponent<SpriteComponent>("C_xPopupCloseBtnSprite")),
+		m_playBtnSprite(AddComponent<SpriteComponent>("C_xPopupPlayBtnSprite")),
+		m_opponentSprite(AddComponent<SpriteComponent>("C_xPopupOpponentSprite")),
+		m_storySprite(AddComponent<SpriteComponent>("C_xPopupStorySprite")),
+		m_titleText(AddComponent<TextComponent>("C_aPopupTitleText"))
 	{ 
 		showOnCreate = false;
 	}

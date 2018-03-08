@@ -45,16 +45,6 @@ namespace Engine { namespace ECM {
 		m_position = t_position; 
 	}
 
-	float Entity::GetRotation() const
-	{
-		return m_rotation;
-	}
-
-	void Entity::SetRotation(float t_rotation)
-	{
-		m_rotation = t_rotation;
-	}
-
 	void Entity::Move(const sf::Vector2f& t_position)
 	{
 		m_position += t_position;

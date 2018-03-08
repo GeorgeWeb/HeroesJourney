@@ -26,8 +26,6 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
-			sf::Clock m_clock;
-			bool m_renderCheck = true;
 	};
 }
 
