@@ -1,6 +1,8 @@
 #ifndef VECTOR2UL_H
 #define VECTOR2UL_H
 
+#define _USE_MATH_DEFINES
+
 #include <SFML/System.hpp>
 #include <cmath>
 #include <iostream>
@@ -13,14 +15,21 @@ using Vector2ul = sf::Vector2<size_t>;
 template<class T>
 double length(const sf::Vector2<T>& t_vec)
 {
-    // TODO: ...
+	return powf(sqrt(v.x) + sqrt(v.y), 0.5f);
 }
 
 // returns a normalized sf::vector
 template<class T>
 sf::Vector2<T> normalize(const sf::Vector2<T>& t_vec)
 {
-    // TODO: ...
+	sf::Vector2<T> vector;
+	double l = length(t_vec);
+	if (l != 0) {
+		vector.x = vector.x / l;
+
+		vector.y = vector.y / l;
+	}
+	return vector;
 }
 
 // allow casting from one sf::vector internal type to another
@@ -34,7 +43,7 @@ sf::Vector2<T> Vcast(const sf::Vector2<U>& t_vec)
 template<class T>
 static double deg2rad(double t_degrees)
 {
-    // TODO: ...
+	return t_degrees * 0.0174532925;
 }
 
 // rotate a sf::vector by an angle(degrees)
