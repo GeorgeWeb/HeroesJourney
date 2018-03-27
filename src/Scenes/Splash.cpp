@@ -29,6 +29,17 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
+		// Building assets
+		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
+
+		// create serializable game entities
+		// buildings
+		m_data->gm.infirmary = std::make_shared<Infirmary>("C_InfirmarySprite");
+		m_data->gm.blacksmith = std::make_shared<Blacksmith>("C_BlacksmithSprite");
+		m_data->gm.library = std::make_shared<Library>("C_LibrarySprite");
+		m_data->gm.inn = std::make_shared<Inn>("C_InnSprite");
+		m_data->gm.store = std::make_shared<GeneralStore>("C_GeneralStore");
+		// heroes
 
 		// Background
 		auto bg = std::make_shared<Entity>();
@@ -74,9 +85,8 @@ namespace HJ {
 		AddEntity("E_GameLogo", m_logo);
 
 		// allow proceeding to after-loading 'stop-frame' animation
-		size_t ents_count = 3;
-		if (m_entities.size() == ents_count)
-			m_canDelay = true;
+		// not async, thread-safe logic this way but will fix it in the 'future' ;)
+		m_canDelay = true;
 	}
 
 	void SplashScene::HandleInput()

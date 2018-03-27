@@ -2,7 +2,6 @@
 #define BUILDING_ENTITY_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
-#include "../Game.hpp"
 
 namespace HJ {	namespace Entities {
 

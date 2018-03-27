@@ -3,11 +3,10 @@
 
 #include "Building.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Infirmary final : public Building
-		{
+	class Infirmary final : public Building
+	{
 		public:
 			Infirmary(const std::string& t_sprite);
 			~Infirmary() = default;
@@ -19,9 +18,8 @@ namespace HJ {
 			void Render() override final;
 
 			void Upgrade() override final;
-		};
+	};
 
-	}
-}
+} }
 
 #endif // !INFIRMARY_BUILDING_H

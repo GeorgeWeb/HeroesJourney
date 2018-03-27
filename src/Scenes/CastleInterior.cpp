@@ -55,49 +55,44 @@ namespace HJ {
 		fr->Init();
 
 		// infirmary
-		m_infirmary = std::make_shared<Infirmary>("C_InfirmarySprite");
 		// initialize data
-		m_infirmary->SetSprite(m_data->assets.GetTexture("Tex_Infirmary"));
+		m_data->gm.infirmary->SetSprite(m_data->assets.GetTexture("Tex_Infirmary"));
 		// more properties
-		m_infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height) * 0.7));
-		m_infirmary->Init();
+		m_data->gm.infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().width) * 0.1f,
+			(SCREEN_HEIGHT - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height) * 0.7));
+		m_data->gm.infirmary->Init();
 
 		// blacksmith
-		m_blacksmith = std::make_shared<Blacksmith>("C_BlacksmithSprite");
 		// initialize data
-		m_blacksmith->SetSprite(m_data->assets.GetTexture("Tex_Blacksmith"));
+		m_data->gm.blacksmith->SetSprite(m_data->assets.GetTexture("Tex_Blacksmith"));
 		// more properties
-		m_blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().width) * 0.15f,
-			(SCREEN_HEIGHT - m_blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().height) * 0.35));
-		m_blacksmith->Init();
+		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().width) * 0.15f,
+			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().height) * 0.35));
+		m_data->gm.blacksmith->Init();
 
 		// Library
-		m_library = std::make_shared<Library>("C_LibrarySprite");
 		// initialize data
-		m_library->SetSprite(m_data->assets.GetTexture("Tex_Library"));
+		m_data->gm.library->SetSprite(m_data->assets.GetTexture("Tex_Library"));
 		// more properties
-		m_library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - m_library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().height) * 0.2));
-		m_library->Init();
+		m_data->gm.library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().height) * 0.2));
+		m_data->gm.library->Init();
 
 		// Inn
-		m_inn = std::make_shared<Inn>("C_InnSprite");
 		// initialize data
-		m_inn->SetSprite(m_data->assets.GetTexture("Tex_Inn"));
+		m_data->gm.inn->SetSprite(m_data->assets.GetTexture("Tex_Inn"));
 		// more properties
-		m_inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().width) * 0.8f,
-			(SCREEN_HEIGHT - m_inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().height) * 0.3));
-		m_inn->Init();
+		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().width) * 0.8f,
+			(SCREEN_HEIGHT - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().height) * 0.3));
+		m_data->gm.inn->Init();
 
 		// General Store
-		m_generalStore = std::make_shared<GeneralStore>("C_GeneralStore");
 		// initialize data
-		m_generalStore->SetSprite(m_data->assets.GetTexture("Tex_GeneralStore"));
+		m_data->gm.store->SetSprite(m_data->assets.GetTexture("Tex_GeneralStore"));
 		// more properties
-		m_generalStore->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_generalStore->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().width) * 0.85f,
-			(SCREEN_HEIGHT - m_generalStore->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().height) * 0.6));
-		m_generalStore->Init();
+		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().width) * 0.85f,
+			(SCREEN_HEIGHT - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().height) * 0.6));
+		m_data->gm.store->Init();
 
 		// backArrow
 		auto backArrow = std::make_shared<Entity>();
@@ -218,7 +213,6 @@ namespace HJ {
 		//properties
 		healthBtn->SetVisible(false);
 		healthBtn->SetAlive(true);
-		
 
 		// Text
 		auto text = std::make_shared<Entity>();
@@ -285,14 +279,12 @@ namespace HJ {
 		text5->SetAlive(true);
 		text5->Init();
 		
-		
-
 		AddEntity("E_zCastleBG", bg);
-		AddEntity("E_Blacksmith", m_blacksmith);
-		AddEntity("E_Infirmary", m_infirmary);
-		AddEntity("E_Library", m_library);
-		AddEntity("E_Inn", m_inn);
-		AddEntity("E_GeneralStore", m_generalStore);
+		AddEntity("E_Blacksmith", m_data->gm.blacksmith);
+		AddEntity("E_Infirmary", m_data->gm.infirmary);
+		AddEntity("E_Library", m_data->gm.library);
+		AddEntity("E_Inn", m_data->gm.inn);
+		AddEntity("E_GeneralStore", m_data->gm.store);
 		AddEntity("E_BackArrow", backArrow);
 		AddEntity("E_00Text", text);
 		AddEntity("E_00Text2", text2);
@@ -329,10 +321,10 @@ namespace HJ {
 			}
 
 			//Check if infirmary is clicked
-			auto infComp = m_infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite");
+			auto infComp = m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite");
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_infirmary->isClicked = true;
+				m_data->gm.infirmary->isClicked = true;
 			
 
 				//set last clicked building as infirmary
@@ -340,34 +332,34 @@ namespace HJ {
 			}
 
 			//Check if Blacksmith is clicked
-			auto blacksmithComp = m_blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite");
+			auto blacksmithComp = m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite");
 			if (m_data->input.isClicked(blacksmithComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_blacksmith->isClicked = true;
+				m_data->gm.blacksmith->isClicked = true;
 				lastClicked = "blacksmith";
 			}
 
 			//Check if Library is clicked
-			auto libraryComp = m_library->GetComponent<SpriteComponent>("C_LibrarySprite");
+			auto libraryComp = m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite");
 			if (m_data->input.isClicked(libraryComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_library->isClicked = true;
+				m_data->gm.library->isClicked = true;
 				lastClicked = "library";
 			}
 
 			//Check if Inn is clicked
-			auto innComp = m_inn->GetComponent<SpriteComponent>("C_InnSprite");
+			auto innComp = m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite");
 			if (m_data->input.isClicked(innComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_inn->isClicked = true;
+				m_data->gm.inn->isClicked = true;
 				lastClicked = "inn";
 			}
 
 			//Check if GeneralStore is clicked
-			auto genStoreComp = m_generalStore->GetComponent<SpriteComponent>("C_GeneralStore");
+			auto genStoreComp = m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore");
 			if (m_data->input.isClicked(genStoreComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_generalStore->isClicked = true;
+				m_data->gm.store->isClicked = true;
 				lastClicked = "generalStore";
 			}
 
@@ -385,29 +377,29 @@ namespace HJ {
 				m_buttonClick = true;
 				if (lastClicked == "infirmary")
 				{
-					m_data->gm.gold -= 10 * m_infirmary->GetLevel();
-					m_infirmary->Upgrade();
+					m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
+					m_data->gm.infirmary->Upgrade();
 					std::cout << "Infirmary found!" << std::endl;
 				}
 
 				else if (lastClicked == "blacksmith")
 				{
-					m_data->gm.gold -= 10 * m_blacksmith->GetLevel();
-					m_blacksmith->Upgrade();
+					m_data->gm.gold -= 10 * m_data->gm.blacksmith->GetLevel();
+					m_data->gm.blacksmith->Upgrade();
 					std::cout << "Blacksmith found!" << std::endl;
 				}
 
 				else if (lastClicked == "library")
 				{
-					m_data->gm.gold -= 10 * m_library->GetLevel();
-					m_library->Upgrade();
+					m_data->gm.gold -= 10 * m_data->gm.library->GetLevel();
+					m_data->gm.library->Upgrade();
 					std::cout << "Library found!" << std::endl;
 				}
 
 				else if (lastClicked == "inn")
 				{
-					m_data->gm.gold -= 10 * m_inn->GetLevel();
-					m_inn->Upgrade();
+					m_data->gm.gold -= 10 * m_data->gm.inn->GetLevel();
+					m_data->gm.inn->Upgrade();
 					std::cout << "Inn found!" << std::endl;
 				}
 			}
@@ -586,16 +578,16 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
 
-			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_infirmary->GetLevel()));
+			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.infirmary->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus HP: " + std::to_string(m_infirmary->GetLevel() *10));
+			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus HP: " + std::to_string(m_data->gm.infirmary->GetLevel() *10));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_infirmary->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.infirmary->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_infirmary->GetLevel()*10)+ " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.infirmary->GetLevel()*10)+ " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
@@ -611,16 +603,16 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
 
-			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_blacksmith->GetLevel()));
+			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.blacksmith->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus ATK: " + std::to_string(m_blacksmith->GetBonus()));
+			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus ATK: " + std::to_string(m_data->gm.blacksmith->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_blacksmith->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.blacksmith->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_blacksmith->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.blacksmith->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
@@ -636,16 +628,16 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
 
-			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_library ->GetLevel()));
+			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.library ->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus MN: " + std::to_string(m_library->GetBonus()));
+			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus MN: " + std::to_string(m_data->gm.library->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_library->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.library->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_library->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.library->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
@@ -661,16 +653,16 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
 
-			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_inn->GetLevel()));
+			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.inn->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus Recovery : " + std::to_string(m_inn->GetBonus()));
+			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus Recovery : " + std::to_string(m_data->gm.inn->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_inn->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.inn->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_inn->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.inn->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);

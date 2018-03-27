@@ -18,11 +18,10 @@ namespace HJ {
 		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));
 		m_data->machine.AddState(std::move(initState));
 
-		// fire up the game !!! (#lit)
-		Run();
+		GameLoop();
 	}
 
-	void Game::Run()
+	void Game::GameLoop()
 	{
 		float newTime, frameTime, interpolation;
 		float currentTime = m_clock.getElapsedTime().asSeconds();
