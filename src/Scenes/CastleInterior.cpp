@@ -1,6 +1,8 @@
 #include "CastleInterior.hpp"
 #include "PauseMenu.hpp"
 
+#include <Engine/ECM/Components/ClickableComponent.hpp>
+
 namespace HJ {
 
 	using namespace Engine;
@@ -100,6 +102,9 @@ namespace HJ {
 		// define backArrow sprite
 		backArrowSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BackArrow"));
 		backArrowSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		// define clickable behaviour
+		auto backArrowBtn = backArrow->AddComponent<ClickableComponent>("C_BackArrowBtn");
+		backArrowBtn->SetSpriteTarget(backArrowSprite);
 		// backArrow properties
 		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.05, 
 			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.01));
@@ -300,8 +305,7 @@ namespace HJ {
 		AddEntity("E_MnText", textMn);
 		AddEntity("E_CoinText", textCoin);
 		AddEntity("E_00HealthBtn", healthBtn);
-		AddEntity("E_00ManaBtn", manaBtn);
-		
+		AddEntity("E_00ManaBtn", manaBtn);	
 	}
 
 	void CastleScene::HandleInput()
@@ -325,8 +329,6 @@ namespace HJ {
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_data->gm.infirmary->isClicked = true;
-			
-
 				//set last clicked building as infirmary
 				lastClicked = "infirmary";
 			}
@@ -365,9 +367,10 @@ namespace HJ {
 
 			//check if back arrow is clicked
 			auto arrowComp = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<SpriteComponent>("C_BackArrow");
+			auto backArrowBtn = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<ClickableComponent>("C_BackArrowBtn");
 			if (m_data->input.isClicked(arrowComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_arrowClick = true;
+				backArrowBtn->SetClicked(true);
 			}
 
 			//check if upgrade button is clicked
@@ -427,42 +430,17 @@ namespace HJ {
 
 	void CastleScene::Update(float t_delatTime)
 	{
-
 		UpdateText();
 
 		UpdateResourceText();
-		//Handle the back arrow click
-		auto arrowComp = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<SpriteComponent>("C_BackArrow");
 
-		if (m_arrowClick && !m_arrowUnClick)
+		auto backArrowBtn = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<ClickableComponent>("C_BackArrowBtn");
+		if (backArrowBtn->CanResolve())
 		{
-			arrowComp->GetSprite().setColor(sf::Color(arrowComp->GetSprite().getColor().r - 100,
-				arrowComp->GetSprite().getColor().g - 100,
-				arrowComp->GetSprite().getColor().b - 100,
-				arrowComp->GetSprite().getColor().a));
-			m_arrowUnClick = true;
-		}
-
-		if (m_arrowUnClick)
-		{
-			m_time -= t_delatTime;
+			m_data->machine.RemoveState();
+			backArrowBtn->SetResolve(false);
 		}
 		
-		if (m_time < 0.0f && m_arrowUnClick)
-		{
-			arrowComp->GetSprite().setColor(sf::Color(arrowComp->GetSprite().getColor().r + 100,
-				arrowComp->GetSprite().getColor().g + 100,
-				arrowComp->GetSprite().getColor().b + 100,
-				arrowComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			m_arrowUnClick = false;
-			m_arrowClick = false;
-
-			// go back to map scene
-			m_data->machine.RemoveState();
-		}
-
 		//Handle the Upgrade button click
 		auto upBtnComp = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn");
 		if (m_buttonClick && !m_buttonUnClick)
@@ -489,8 +467,6 @@ namespace HJ {
 			m_time = 0.1f;
 			m_buttonUnClick = false;
 			m_buttonClick = false;
-
-		
 		}
 
 		//Handle the ManaPotion button click
@@ -549,8 +525,6 @@ namespace HJ {
 			m_time = 0.1f;
 			m_buyHealthUn = false;
 			m_buyHealth = false;
-
-
 		}
 
 		m_data->ents.Update(m_entities, t_delatTime);
@@ -561,22 +535,12 @@ namespace HJ {
 		m_data->ents.Render(m_entities);
 	}
 
-	
-
-	void CastleScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
-	{
-		State::AddEntity(t_name, t_entity);
-		// Add to global entities container
-		m_data->ents.Save(t_name, t_entity);
-	}
-
 	void CastleScene::UpdateText()
 	{
 		if (lastClicked == "infirmary")
 		{
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INFIRMARY ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
-
 
 			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.infirmary->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
@@ -602,7 +566,6 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("BLACKSMITH ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
-
 			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.blacksmith->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
@@ -627,7 +590,6 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("LIBRARY ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
-
 			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.library ->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
@@ -651,7 +613,6 @@ namespace HJ {
 		{
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("Inn ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
-
 
 			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.inn->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
@@ -695,4 +656,10 @@ namespace HJ {
 		
 	}
 
+	void CastleScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
+	{
+		State::AddEntity(t_name, t_entity);
+		// Add to global entities container
+		m_data->ents.Save(t_name, t_entity);
+	}
 }
