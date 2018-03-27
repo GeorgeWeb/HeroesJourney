@@ -1,6 +1,8 @@
 #include "MapScene.hpp"
 #include "PauseMenu.hpp"
 
+#include "../Entities/AnimatedLogo.hpp"
+
 namespace HJ {
 
 	using namespace Engine;
@@ -122,14 +124,14 @@ namespace HJ {
 		m_encounterPopup->SetPlayButtonImage(m_data->assets.GetTexture("Tex_PopupPlayBtn"));
 		m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
 		m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
-		m_encounterPopup->SetTitleText("ENCOUNTER TITLE", m_data->assets.GetFont("Font_Pixel"));
+		m_encounterPopup->SetTitleText("ENCOUNTER #?" , m_data->assets.GetFont("Font_Pixel"));
 		// position
-		m_encounterPopup->GetComponent<TextComponent>("C_aPopupTitleText")->GetText().setPosition(sf::Vector2f(100.0f, 100.0f));
 		m_encounterPopup->SetPosition(sf::Vector2f(
 			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
 			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
 		));
 		m_encounterPopup->Init();
+		m_encounterPopup->Assemble(m_encounterPopup->GetPosition());
 
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "z" for background "x" for UI
 		AddEntity("E_zMapBG", bg);
@@ -140,6 +142,10 @@ namespace HJ {
 		AddEntity("E_EvilCastle", evilCastle);
 		AddEntity("E_xFrame", frame);
 		AddEntity("E_aEncounterPopup", m_encounterPopup);
+		
+		// WOW ... 3 hrs to get to that one right here :) Kinda easy to use now.
+		//m_data->ents.Find<AnimatedLogo>("E_GameLogo")->Init();
+		//AddEntity("E_GameLogo", m_data->ents.GetSharedEntity("E_GameLogo"));
 	}
 
 	void MapScene::HandleInput()
@@ -241,18 +247,195 @@ namespace HJ {
 			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_mountainsClick = true;
+
+				// SET CREATION BEHAVIOUR
+				m_encounterPopup->OnDisplay([=]()
+				{
+					// Show the encounter popup
+					m_encounterPopup->SetVisible(true);
+					m_encounterPopup->SetAlive(true);
+
+					// turn closing check on
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Change the textures of the popup
+					// TODO: ...
+
+					// Fade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
+
+					// Make Entities Unclickable
+					castleComp->SetClickable(false);
+					frameComp->SetClickable(false);
+					forestComp->SetClickable(false);
+					mountainsComp->SetClickable(false);
+					seaComp->SetClickable(false);
+					evilCastleComp->SetClickable(false);
+				});
+
+				// SET CLOSING BEHAVIOUR
+				m_encounterPopup->OnClose = [=]()
+				{
+					// Hide the encounter popup
+					m_encounterPopup->SetVisible(false);
+					m_encounterPopup->SetAlive(false);
+
+					// turn closing check off
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Unfade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
+
+					// Make Entities Clickable
+					castleComp->SetClickable(true);
+					frameComp->SetClickable(true);
+					forestComp->SetClickable(true);
+					mountainsComp->SetClickable(true);
+					seaComp->SetClickable(true);
+					evilCastleComp->SetClickable(true);
+				};
 			}
 
 			//check for sea click
 			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_seaClick = true;
+
+				// SET CREATION BEHAVIOUR
+				m_encounterPopup->OnDisplay([=]()
+				{
+					// Show the encounter popup
+					m_encounterPopup->SetVisible(true);
+					m_encounterPopup->SetAlive(true);
+
+					// turn closing check on
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Change the textures of the popup
+					// TODO: ...
+
+					// Fade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
+
+					// Make Entities Unclickable
+					castleComp->SetClickable(false);
+					frameComp->SetClickable(false);
+					forestComp->SetClickable(false);
+					mountainsComp->SetClickable(false);
+					seaComp->SetClickable(false);
+					evilCastleComp->SetClickable(false);
+				});
+
+				// SET CLOSING BEHAVIOUR
+				m_encounterPopup->OnClose = [=]()
+				{
+					// Hide the encounter popup
+					m_encounterPopup->SetVisible(false);
+					m_encounterPopup->SetAlive(false);
+
+					// turn closing check off
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Unfade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
+
+					// Make Entities Clickable
+					castleComp->SetClickable(true);
+					frameComp->SetClickable(true);
+					forestComp->SetClickable(true);
+					mountainsComp->SetClickable(true);
+					seaComp->SetClickable(true);
+					evilCastleComp->SetClickable(true);
+				};
 			}
 
 			//check for evil castle click
 			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				m_evilCastleClick = true;
+
+				// SET CREATION BEHAVIOUR
+				m_encounterPopup->OnDisplay([=]()
+				{
+					// Show the encounter popup
+					m_encounterPopup->SetVisible(true);
+					m_encounterPopup->SetAlive(true);
+
+					// turn closing check on
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Change the textures of the popup
+					// TODO: ...
+
+					// Fade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
+
+					// Make Entities Unclickable
+					castleComp->SetClickable(false);
+					frameComp->SetClickable(false);
+					forestComp->SetClickable(false);
+					mountainsComp->SetClickable(false);
+					seaComp->SetClickable(false);
+					evilCastleComp->SetClickable(false);
+				});
+
+				// SET CLOSING BEHAVIOUR
+				m_encounterPopup->OnClose = [=]()
+				{
+					// Hide the encounter popup
+					m_encounterPopup->SetVisible(false);
+					m_encounterPopup->SetAlive(false);
+
+					// turn closing check off
+					m_encounterPopup->ToggleCloseBtnBehaviour();
+
+					// Unfade Entities
+					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
+					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
+					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
+					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
+					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
+					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
+
+					// Make Entities Clickable
+					castleComp->SetClickable(true);
+					frameComp->SetClickable(true);
+					forestComp->SetClickable(true);
+					mountainsComp->SetClickable(true);
+					seaComp->SetClickable(true);
+					evilCastleComp->SetClickable(true);
+				};
 			}
 		}
 	}

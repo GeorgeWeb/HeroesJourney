@@ -24,6 +24,18 @@ namespace Engine { namespace ECM {
 				return m_entities.find(t_name) != m_entities.end();
 			}
 
+			std::shared_ptr<Entity> GetSharedEntity(const std::string& t_name)
+			{
+				if (!Exists(t_name))
+				{
+					throw("The entity you are trying to access does not exist! ");
+				}
+				else
+				{
+					return m_entities[t_name];
+				}
+			}
+
 			template<class T>
 			T* Find(const std::string& t_name)
 			{
@@ -46,8 +58,8 @@ namespace Engine { namespace ECM {
 			{
 				if (t_entity == nullptr)
 					throw("The entity you are trying to access is not initialised! ");
-				else ///> reset value or insert new
-					m_entities[t_name] = t_entity;
+				else ///> assigns new value to the mapped object or construct a new one
+					m_entities.insert_or_assign(t_name, t_entity);
 			}
 
 			void Remove(const std::string& t_name)

@@ -30,13 +30,10 @@ namespace Engine { namespace SM {
 
 	void State::AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity)
 	{
-		if (m_entities.find(t_name) == m_entities.end())
-		{
-			if (t_entity == nullptr)
-				throw("The entity you are trying to access is not initialised! ");
-			else
-				m_entities[t_name] = t_entity;
-		}
+		if (t_entity == nullptr)
+			throw("The entity you are trying to access is not initialised! ");
+		else
+			m_entities.insert_or_assign(t_name, t_entity);
 	}
 
 } }
