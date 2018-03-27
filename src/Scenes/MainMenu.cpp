@@ -42,7 +42,8 @@ namespace HJ {
 		mbtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StartBtn"));
 		mbtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		mbtn->SetPosition(sf::Vector2f(0.0f, 0.0f));
+		mbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - mbtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - mbtnSprite->GetSprite().getGlobalBounds().height) * 0.3f));
 		mbtn->SetVisible(true);
 		mbtn->SetAlive(true);
 

@@ -27,11 +27,13 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
-			bool m_shouldFade = false;
 			
-			// temp
-			sf::Color bgColor;
-			sf::Text m_titleText;
+			bool m_shouldFade = false;
+			bool m_canDelay = false;
+			bool m_canMove = false;
+			bool m_canInput = false;
+
+			sf::Clock m_pressDelay;
 
 			// Entities
 			std::shared_ptr<Entities::AnimatedLogo> m_logo;
