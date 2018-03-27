@@ -17,13 +17,13 @@ namespace HJ {
 
 	void MapScene::Init()
 	{
-		m_data->assets.LoadTexture("Tex_MapBG", MAIN_GAME_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_Castle", MAIN_GAME_CASTLE);
-		m_data->assets.LoadTexture("Tex_Forest", MAIN_GAME_FOREST);
-		m_data->assets.LoadTexture("Tex_Mountains", MAIN_GAME_MOUNTAINS);
-		m_data->assets.LoadTexture("Tex_Sea", MAIN_GAME_SEA);
-		m_data->assets.LoadTexture("Tex_EvilCastle", MAIN_GAME_EVIL_CASTLE);
-		m_data->assets.LoadTexture("Tex_Frame", MAIN_GAME_UI_FRAME);
+		m_data->assets.LoadTexture("Tex_MapBG", MAP_SCENE_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_Castle", MAP_SCENE_CASTLE);
+		m_data->assets.LoadTexture("Tex_Forest", MAP_SCENE_FOREST);
+		m_data->assets.LoadTexture("Tex_Mountains", MAP_SCENE_MOUNTAINS);
+		m_data->assets.LoadTexture("Tex_Sea", MAP_SCENE_SEA);
+		m_data->assets.LoadTexture("Tex_EvilCastle", MAP_SCENE_EVIL_CASTLE);
+		m_data->assets.LoadTexture("Tex_Frame", MAP_SCENE_UI_FRAME);
 		m_data->assets.LoadTexture("Tex_PopupBG", ENCOUNTER_POPUP_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_PopupCloseBtn", ENCOUNTER_POPUP_CLOSE_BTN);
 		m_data->assets.LoadTexture("Tex_PopupPlayBtn", ENCOUNTER_POPUP_PLAY_BTN);

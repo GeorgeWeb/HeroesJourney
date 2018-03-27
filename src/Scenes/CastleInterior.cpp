@@ -15,21 +15,20 @@ namespace HJ {
 
 	void CastleScene::Init()
 	{
-		m_data->assets.LoadTexture("Tex_CastleBG", MAP_SCENE_BACKGROUD);
-		m_data->assets.LoadTexture("Tex_Infirmary", MAP_SCENE_INFIRMARY);
-		m_data->assets.LoadTexture("Tex_Blacksmith", MAP_SCENE_BLACKSMITH);
-		m_data->assets.LoadTexture("Tex_Library", MAP_SCENE_LIBRARY);
-		m_data->assets.LoadTexture("Tex_Inn", MAP_SCENE_INN);
-		m_data->assets.LoadTexture("Tex_GeneralStore", MAP_SCENE_GENERAL_STORE);
-		m_data->assets.LoadTexture("Tex_BackArrow", MAP_SCENE_BACK_ARROW);
-		m_data->assets.LoadTexture("Tex_UiFrame", MAP_SCENE_UI_FRAME);
-		m_data->assets.LoadTexture("Tex_UpgradeBtn", MAP_SCENE_UPGRADE_BUTTON);
-		m_data->assets.LoadTexture("Tex_Health", MAP_SCENE_HEALTH);
-		m_data->assets.LoadTexture("Tex_Mana", MAP_SCENE_MANA);
-		m_data->assets.LoadTexture("Tex_Coin", MAP_SCENE_COIN);
-		m_data->assets.LoadTexture("Tex_ManaBtn", MAP_SCENE_MANABTN);
-		m_data->assets.LoadTexture("Tex_HealthBtn", MAP_SCENE_HEALTHBTN);
-
+		m_data->assets.LoadTexture("Tex_CastleBG", CASTLE_SCENE_BACKGROUD);
+		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
+		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
+		m_data->assets.LoadTexture("Tex_Library", CASTLE_SCENE_LIBRARY);
+		m_data->assets.LoadTexture("Tex_Inn", CASTLE_SCENE_INN);
+		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
+		m_data->assets.LoadTexture("Tex_BackArrow", CASTLE_SCENE_BACK_ARROW);
+		m_data->assets.LoadTexture("Tex_UiFrame", CASTLE_SCENE_UI_FRAME);
+		m_data->assets.LoadTexture("Tex_UpgradeBtn", CASTLE_SCENE_UPGRADE_BUTTON);
+		m_data->assets.LoadTexture("Tex_Health", HP_POT_ICON);
+		m_data->assets.LoadTexture("Tex_Mana", MANA_POT_ICON);
+		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
+		m_data->assets.LoadTexture("Tex_ManaBtn", CASTLE_SCENE_MANABTN);
+		m_data->assets.LoadTexture("Tex_HealthBtn", CASTLE_SCENE_HEALTHBTN);
 
 		// background
 		auto bg = std::make_shared<Entity>();
