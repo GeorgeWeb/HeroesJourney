@@ -22,7 +22,7 @@ namespace HJ { namespace Entities {
 		// defaults
 		SetAlive(true);
 		SetVisible(true);
-		m_background->independent = true;
+		m_background->independent = false;
 		m_lCharacter->independent = true;
 		m_rCharacter->independent = true;
 	}
@@ -71,7 +71,7 @@ namespace HJ { namespace Entities {
 			m_conversation.reserve(t_lines);
 			for (unsigned int i = 1; i <= t_lines; i++)
 			{
-				auto text = AddComponent<TextComponent>("aDialogConvoText" + i);
+				auto text = AddComponent<TextComponent>("C_aDialogConvoText" + i);
 				text->independent = true;
 				m_conversation.push_back(text);
 			}

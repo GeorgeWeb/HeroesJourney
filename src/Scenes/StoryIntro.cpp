@@ -32,7 +32,7 @@ namespace HJ {
 
 		// create entities
 		m_dialog = std::make_shared<Dialog>();
-		m_dialog->AddConversation(1);
+		m_dialog->AddConversation(2);
 		m_dialog->SetBackgroundImage(m_data->assets.GetTexture("Tex_StoryIntroBG"));
 		m_dialog->SetLeftCharacterImage(m_data->assets.GetTexture("Tex_StoryMainHero"));
 		m_dialog->SetRightCharacterImage(m_data->assets.GetTexture("Tex_StoryCaptain"));
@@ -48,15 +48,19 @@ namespace HJ {
 		text1->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		text1->GetText().setString("Test conversation line.");
 		text1->GetText().setPosition(sf::Vector2f(300.0f, 400.0f));
+		//text1->independent = true;
 		// Initialise stuff
 		m_dialog->Init();
-
+		
 		std::cout << m_dialog->GetConversation().size() << std::endl;
 		std::cout << text1->GetText().getPosition().x << " , " << text1->GetText().getPosition().y << std::endl;
-		std::cout << text1->independent << std::endl;
-
+		std::cout << "Independent? " << text1->independent << std::endl;
+		
+		std::string txt = text1->GetText().getString();
+		std::cout << txt << std::endl;
+		
 		// populate the entities container
-		AddEntity("E_StoryIntroDialog", m_dialog);
+		AddEntity("E_mStoryIntroDialog", m_dialog);
 	}
 
 	void StoryIntroScene::HandleInput()
