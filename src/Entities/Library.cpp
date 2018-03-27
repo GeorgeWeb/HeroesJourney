@@ -61,7 +61,8 @@ namespace HJ {	namespace Entities {
 
 	void Library::Upgrade()
 	{
-		Building::Upgrade();
+		m_bonus = m_level * 10;
+		m_level += 1;
 	}
 
 } }
