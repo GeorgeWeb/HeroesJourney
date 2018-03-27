@@ -65,7 +65,8 @@ namespace HJ {	namespace Entities {
 
 	void Infirmary::Upgrade()
 	{
-		Building::Upgrade();
+		m_bonus = m_level * 10;
+		m_level += 1;
 	}
 
 } }

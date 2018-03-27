@@ -9,8 +9,8 @@ namespace HJ {	namespace Entities {
 	class Building : public Engine::ECM::Entity 
 	{
 		protected:
-			int m_bonus;
-			int m_level;
+			int m_bonus = 0;
+			int m_level = 1;
 			sf::Clock m_clock;
 			float m_time;
 
@@ -22,7 +22,9 @@ namespace HJ {	namespace Entities {
 			virtual ~Building() = default;
 
 			virtual Building* GetType() override;
-
+			
+			virtual inline int GetLevel() { return m_level; }
+			virtual inline int GetBonus() { return m_bonus; }
 			virtual void Init() override;
 			virtual void Update(float t_deltaTime) override;
 			virtual void Render() override;
