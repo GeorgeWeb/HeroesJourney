@@ -1,13 +1,18 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "DEFINITIONS.hpp"
-#include <Engine/Engine.hpp>
-
 #include <memory>
 #include <string>
-
 #include <vector>
+#include <utility>
+
+#include "DEFINITIONS.hpp"
+#include <Engine/Engine.hpp>
+#include "Entities/Knight.hpp"
+#include "Entities/Bard.hpp"
+#include "Entities/Sorceress.hpp"
+#include "Entities/Rogue.hpp"
+#include "Entities/EvilFrostMage.hpp"
 
 namespace HJ {
 
@@ -16,16 +21,26 @@ namespace HJ {
 	class GameManager
 	{
 		public:
-			// stores the amount of gold gathered
+			// amount of gold gathered
 			unsigned int gold = 100;
+			
+			// amount of potions acquired/bought
 			unsigned int healthPot = 1;
 			unsigned int manaPot = 1;
-			// storing these stats for fun / interesting purpose ;)
-			unsigned int deaths = 0;
-			unsigned int resigns = 0;
-			// stores the unlocked encounters -> helps manage which heroes to use in a battle
-			// because every hero is related to the particular encounter
-			std::vector<std::string> unlockedEncounters;
+			
+			// unlocked encounters + the number of times each one is completed.
+			// this helps manage which heroes are available for the battle,
+			// because every hero is related to a particular encounter
+			std::vector<std::pair<std::string, unsigned int>> unlockedEncounters;
+			
+			// good/heroes characters
+			std::shared_ptr<Entities::Knight> hKnight;
+			std::shared_ptr<Entities::Bard> hBard;
+			std::shared_ptr<Entities::Sorceress> hSorceress;
+			std::shared_ptr<Entities::Rogue> hRogue;
+
+			// evil/enemies characters
+			std::shared_ptr<Entities::EvilFrostMage> eFrostMage;
 	};
 
 	struct GameData 
