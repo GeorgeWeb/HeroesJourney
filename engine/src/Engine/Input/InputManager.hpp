@@ -12,6 +12,7 @@ namespace Engine { namespace Input {
 			~InputManager() = default;
 
 			sf::Vector2i GetMousePosition(sf::RenderWindow& t_window) const;
+			sf::Vector2f GetMousePositionToWorld(sf::RenderWindow& t_window) const;
 
 			template<class T>
 			bool isClicked(const T& t_object, sf::Mouse::Button t_button, sf::RenderWindow& t_window)
@@ -22,14 +23,10 @@ namespace Engine { namespace Input {
 				{
 					if (sf::Mouse::isButtonPressed(t_button) && t_button == sf::Mouse::Left)
 					{
-						// TODO: Change to use DEFAULTS when implemented in Settings class.
-						float offsetX = Engine2D::GetWin().getSize().x / static_cast<float>(1366);
-						float offsetY = Engine2D::GetWin().getSize().y / static_cast<float>(768);
-						auto pos = static_cast<sf::Vector2i>(t_object.getPosition() * sf::Vector2f(offsetX, offsetY));
-						auto size = sf::Vector2i(t_object.getGlobalBounds().width, t_object.getGlobalBounds().height);
-						sf::IntRect rect(pos, size);
-
-						if (rect.contains(GetMousePosition(t_window)))
+						auto mouse = GetMousePositionToWorld(t_window);
+						auto bounds = t_object.getGlobalBounds();
+						sf::FloatRect rect(bounds);
+						if (rect.contains(mouse))
 						{
 							m_pressDelay.restart();
 							return true;
@@ -40,7 +37,7 @@ namespace Engine { namespace Input {
 				return false;
 			}
 
-			//bool isMouseOver(std::shared_ptr<ECM::Entity> t_entity, sf::Vector2i t_mousePos, sf::RenderWindow& t_window);
+			//bool IsMouseOver(std::shared_ptr<ECM::Entity> t_entity, sf::Vector2i t_mousePos, sf::RenderWindow& t_window);
 			
 		private:
 			sf::Clock m_pressDelay;

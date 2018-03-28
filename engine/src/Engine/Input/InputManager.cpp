@@ -7,4 +7,10 @@ namespace Engine { namespace Input {
 		return sf::Mouse::getPosition(t_window);
 	}
 
+	sf::Vector2f InputManager::GetMousePositionToWorld(sf::RenderWindow& t_window) const
+	{
+		auto mouse = GetMousePosition(t_window);
+		return t_window.mapPixelToCoords(mouse);
+	}
+
 } }
