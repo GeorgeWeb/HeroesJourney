@@ -23,7 +23,7 @@ namespace Engine { namespace Components {
 
 			ClickableComponent* GetType() override;
 
-			void SetSpriteTarget(std::shared_ptr<SpriteComponent> t_sprite);
+			void SetSpriteTarget(SpriteComponent* t_sprite);
 
 			void Update(float t_deltaTime) override;
 			void Render() override {}

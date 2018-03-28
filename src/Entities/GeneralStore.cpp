@@ -7,8 +7,6 @@ namespace HJ { namespace Entities {
 	{
 		m_level = 1;
 		m_bonus = 1;
-		isClicked = false;
-		unClick = false;
 	}
 
 	GeneralStore* GeneralStore::GetType()
@@ -27,35 +25,7 @@ namespace HJ { namespace Entities {
 
 		auto genStoreComp = m_spriteComp;
 
-		if (isClicked && !unClick)
-		{
-			genStoreComp->GetSprite().setColor(sf::Color(
-				genStoreComp->GetSprite().getColor().r - 100,
-				genStoreComp->GetSprite().getColor().g - 100,
-				genStoreComp->GetSprite().getColor().b - 100,
-				genStoreComp->GetSprite().getColor().a)
-			);
-			
-			unClick = true;
-		}
-
-		if (unClick)
-		{
-			m_time -= t_deltaTime;
-		}
-		if (m_time < 0.0f && unClick)
-		{
-			genStoreComp->GetSprite().setColor(sf::Color(
-				genStoreComp->GetSprite().getColor().r + 100,
-				genStoreComp->GetSprite().getColor().g + 100,
-				genStoreComp->GetSprite().getColor().b + 100,
-				genStoreComp->GetSprite().getColor().a)
-			);
-
-			m_time = 0.1f;
-			unClick = false;
-			isClicked = false;
-		}
+	
 	}
 
 	void GeneralStore::Render()

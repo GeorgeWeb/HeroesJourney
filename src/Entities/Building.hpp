@@ -32,9 +32,7 @@ namespace HJ {	namespace Entities {
 			
 			void SetSprite(const sf::Texture& t_texture);
 
-		public:
-			bool isClicked;
-			bool unClick;
+		
 	};
 
 } }

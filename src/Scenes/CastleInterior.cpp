@@ -63,6 +63,8 @@ namespace HJ {
 		m_data->gm.infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height) * 0.7));
 		m_data->gm.infirmary->Init();
+		auto infBtn = m_data->gm.infirmary->AddComponent<ClickableComponent>("C_InfirmaryBtn");
+		infBtn->SetSpriteTarget(m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite"));
 
 		// blacksmith
 		// initialize data
@@ -71,6 +73,8 @@ namespace HJ {
 		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().width) * 0.15f,
 			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().height) * 0.35));
 		m_data->gm.blacksmith->Init();
+		auto blackBtn = m_data->gm.blacksmith->AddComponent<ClickableComponent>("C_BlacksmithBtn");
+		blackBtn->SetSpriteTarget(m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite"));
 
 		// Library
 		// initialize data
@@ -79,6 +83,8 @@ namespace HJ {
 		m_data->gm.library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().width) * 0.5f,
 			(SCREEN_HEIGHT - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().height) * 0.2));
 		m_data->gm.library->Init();
+		auto libBtn = m_data->gm.library->AddComponent<ClickableComponent>("C_LibraryBtn");
+		libBtn->SetSpriteTarget(m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite"));
 
 		// Inn
 		// initialize data
@@ -87,6 +93,8 @@ namespace HJ {
 		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().width) * 0.8f,
 			(SCREEN_HEIGHT - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().height) * 0.3));
 		m_data->gm.inn->Init();
+		auto innBtn = m_data->gm.inn->AddComponent<ClickableComponent>("C_InnBtn");
+		innBtn->SetSpriteTarget(m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite"));
 
 		// General Store
 		// initialize data
@@ -95,6 +103,8 @@ namespace HJ {
 		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().width) * 0.85f,
 			(SCREEN_HEIGHT - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().height) * 0.6));
 		m_data->gm.store->Init();
+		auto genBtn = m_data->gm.store->AddComponent<ClickableComponent>("C_GeneralStoreBtn");
+		genBtn->SetSpriteTarget(m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore"));
 
 		// backArrow
 		auto backArrow = std::make_shared<Entity>();
@@ -104,7 +114,7 @@ namespace HJ {
 		backArrowSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		// define clickable behaviour
 		auto backArrowBtn = backArrow->AddComponent<ClickableComponent>("C_BackArrowBtn");
-		backArrowBtn->SetSpriteTarget(backArrowSprite);
+		backArrowBtn->SetSpriteTarget(backArrowSprite.get());
 		// backArrow properties
 		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.05, 
 			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.01));
@@ -121,6 +131,8 @@ namespace HJ {
 		//properties
 		upgradeBtn->SetVisible(false);
 		upgradeBtn->SetAlive(false);
+		auto upgradeClick = upgradeBtn->AddComponent<ClickableComponent>("C_UpgradeBtnBtn");
+		upgradeClick->SetSpriteTarget(upgradeBtnSprite.get());
 
 		//Health potion sprite
 		auto health = std::make_shared<Entity>();
@@ -207,6 +219,8 @@ namespace HJ {
 		//properties
 		manaBtn->SetVisible(false);
 		manaBtn->SetAlive(true);
+		auto manaClick = manaBtn->AddComponent<ClickableComponent>("C_ManaBtnBtn");
+		manaClick->SetSpriteTarget(manaBtnSprite.get());
 
 		//health button texture
 		auto healthBtn = std::make_shared<Entity>();
@@ -218,6 +232,8 @@ namespace HJ {
 		//properties
 		healthBtn->SetVisible(false);
 		healthBtn->SetAlive(true);
+		auto healthClick = healthBtn->AddComponent<ClickableComponent>("C_HealthBtnBtn");
+		healthClick->SetSpriteTarget(healthBtnSprite.get());
 
 		// Text
 		auto text = std::make_shared<Entity>();
@@ -326,42 +342,47 @@ namespace HJ {
 
 			//Check if infirmary is clicked
 			auto infComp = m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite");
+			auto infClick = m_data->gm.infirmary->GetComponent<ClickableComponent>("C_InfirmaryBtn");
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_data->gm.infirmary->isClicked = true;
+				infClick->SetClicked(true);
 				//set last clicked building as infirmary
 				lastClicked = "infirmary";
 			}
 
 			//Check if Blacksmith is clicked
 			auto blacksmithComp = m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite");
+			auto blackClick = m_data->gm.blacksmith->GetComponent<ClickableComponent>("C_BlacksmithBtn");
 			if (m_data->input.isClicked(blacksmithComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_data->gm.blacksmith->isClicked = true;
+				blackClick->SetClicked(true);
 				lastClicked = "blacksmith";
 			}
 
 			//Check if Library is clicked
 			auto libraryComp = m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite");
+			auto libraryClick = m_data->gm.library->GetComponent<ClickableComponent>("C_LibraryBtn");
 			if (m_data->input.isClicked(libraryComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_data->gm.library->isClicked = true;
+				libraryClick->SetClicked(true);
 				lastClicked = "library";
 			}
 
 			//Check if Inn is clicked
 			auto innComp = m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite");
+			auto innClick = m_data->gm.inn->GetComponent<ClickableComponent>("C_InnBtn");
 			if (m_data->input.isClicked(innComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_data->gm.inn->isClicked = true;
+				innClick->SetClicked(true);
 				lastClicked = "inn";
 			}
 
 			//Check if GeneralStore is clicked
 			auto genStoreComp = m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore");
+			auto genStoreClick = m_data->gm.store->GetComponent < ClickableComponent>("C_GeneralStoreBtn");
 			if (m_data->input.isClicked(genStoreComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_data->gm.store->isClicked = true;
+				genStoreClick->SetClicked(true);
 				lastClicked = "generalStore";
 			}
 
@@ -375,9 +396,10 @@ namespace HJ {
 
 			//check if upgrade button is clicked
 			auto upBtnComp = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn");
+			auto upBtnClick = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<ClickableComponent>("C_UpgradeBtnBtn");
 			if (m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_buttonClick = true;
+				upBtnClick->SetClicked(true);
 				if (lastClicked == "infirmary")
 				{
 					m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
@@ -409,18 +431,22 @@ namespace HJ {
 
 			// check if mana button has been clicked
 			auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < SpriteComponent>("C_ManaBtnSprite");
+			auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < ClickableComponent>("C_ManaBtnBtn");
 			if (m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_buyMana = true;
+				manaClick->SetClicked(true);
+
 				m_data->gm.gold -= 10 ;
 				m_data->gm.manaPot += 1;
 			}
 
 			//check if health button has been clicked
 			auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < SpriteComponent>("C_HealthBtnSprite");
+			auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < ClickableComponent>("C_HealthBtnBtn");
 			if (m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
-				m_buyHealth = true;
+				healthClick->SetClicked(true);
+
 				m_data->gm.gold -= 10;
 				m_data->gm.healthPot += 1;
 			}
@@ -441,91 +467,67 @@ namespace HJ {
 			backArrowBtn->SetResolve(false);
 		}
 		
+		//Handle Infirmary click
+		auto infClick = m_data->gm.infirmary->GetComponent<ClickableComponent>("C_InfirmaryBtn");
+		if (infClick->CanResolve())
+		{
+			infClick->SetResolve(false);
+		}
+
+		//Handle Blacksmith click
+		auto blackClick = m_data->gm.blacksmith->GetComponent<ClickableComponent>("C_BlacksmithBtn");
+		if (blackClick->CanResolve())
+		{
+			blackClick->SetResolve(false);
+		}
+
+		//Handle Library click
+		auto libraryClick = m_data->gm.library->GetComponent<ClickableComponent>("C_LibraryBtn");
+		if (libraryClick->CanResolve())
+		{
+			libraryClick->SetResolve(false);
+		}
+
+		//Handle Inn click
+		auto innClick = m_data->gm.inn->GetComponent<ClickableComponent>("C_InnBtn");
+		if (innClick->CanResolve())
+		{
+			innClick->SetResolve(false);
+		}
+
+		//Handle GenStore click
+		auto genStoreClick = m_data->gm.store->GetComponent <ClickableComponent>("C_GeneralStoreBtn");
+		if (genStoreClick->CanResolve())
+		{
+			genStoreClick->SetResolve(false);
+		}
+
+
 		//Handle the Upgrade button click
-		auto upBtnComp = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn");
-		if (m_buttonClick && !m_buttonUnClick)
+		auto upBtnClick = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<ClickableComponent>("C_UpgradeBtnBtn");
+		if (upBtnClick->CanResolve())
 		{
-			upBtnComp->GetSprite().setColor(sf::Color(upBtnComp->GetSprite().getColor().r - 100,
-				upBtnComp->GetSprite().getColor().g - 100,
-				upBtnComp->GetSprite().getColor().b - 100,
-				upBtnComp->GetSprite().getColor().a));
-			m_buttonUnClick  = true;
+			upBtnClick->SetResolve(false);
 		}
 
-		if (m_buttonUnClick)
-		{
-			m_time -= t_delatTime;
-		}
-
-		if (m_time < 0.0f && m_buttonUnClick)
-		{
-			upBtnComp->GetSprite().setColor(sf::Color(upBtnComp->GetSprite().getColor().r + 100,
-				upBtnComp->GetSprite().getColor().g + 100,
-				upBtnComp->GetSprite().getColor().b + 100,
-				upBtnComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			m_buttonUnClick = false;
-			m_buttonClick = false;
-		}
+	
 
 		//Handle the ManaPotion button click
-		auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < SpriteComponent>("C_ManaBtnSprite");
-		if (m_buyMana && !m_buyManaUn)
+		auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < ClickableComponent>("C_ManaBtnBtn");
+		if(manaClick->CanResolve())
 		{
-			manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r - 100,
-				manaComp->GetSprite().getColor().g - 100,
-				manaComp->GetSprite().getColor().b - 100,
-				manaComp->GetSprite().getColor().a));
-			m_buyManaUn = true;
+			manaClick->SetResolve(false);
 		}
 
-		if (m_buyManaUn)
-		{
-			m_time -= t_delatTime;
-		}
-
-		if (m_time < 0.0f && m_buyManaUn)
-		{
-			manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r + 100,
-				manaComp->GetSprite().getColor().g + 100,
-				manaComp->GetSprite().getColor().b + 100,
-				manaComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			m_buyManaUn = false;
-			m_buyMana = false;
-
-
-		}
+		
 
 		//Handle the Health Potion button click
-		auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < SpriteComponent>("C_HealthBtnSprite");
-		if (m_buyHealth && !m_buyHealthUn)
+		auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < ClickableComponent>("C_HealthBtnBtn");
+		if (healthClick->CanResolve())
 		{
-			healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r - 100,
-				healthComp->GetSprite().getColor().g - 100,
-				healthComp->GetSprite().getColor().b - 100,
-				upBtnComp->GetSprite().getColor().a));
-			m_buyHealthUn = true;
+			healthClick->SetResolve(false);
 		}
 
-		if (m_buyHealthUn)
-		{
-			m_time -= t_delatTime;
-		}
-
-		if (m_time < 0.0f && m_buyHealthUn)
-		{
-			healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r + 100,
-				healthComp->GetSprite().getColor().g + 100,
-				healthComp->GetSprite().getColor().b + 100,
-				healthComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			m_buyHealthUn = false;
-			m_buyHealth = false;
-		}
 
 		m_data->ents.Update(m_entities, t_delatTime);
 	}

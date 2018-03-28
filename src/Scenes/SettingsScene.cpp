@@ -52,7 +52,7 @@ namespace HJ {
 		uncheck1->SetVisible(true);
 		uncheck1->SetAlive(true);
 		auto uncheck1Btn = uncheck1->AddComponent<ClickableComponent>("C_UnCheck1Btn"); 
-		uncheck1Btn->SetSpriteTarget(uncheck1Sprite);
+		uncheck1Btn->SetSpriteTarget(uncheck1Sprite.get());
 
 		//Unchecked buttons2
 		auto uncheck2 = std::make_shared<Entity>();
@@ -65,7 +65,7 @@ namespace HJ {
 		uncheck2->SetAlive(true);
 		//clickable component
 		auto uncheck2Btn = uncheck2->AddComponent<ClickableComponent>("C_UnCheck2Btn");
-		uncheck2Btn->SetSpriteTarget(uncheck2Sprite);
+		uncheck2Btn->SetSpriteTarget(uncheck2Sprite.get());
 
 		//Unchecked buttons3
 		auto uncheck3 = std::make_shared<Entity>();
@@ -78,7 +78,7 @@ namespace HJ {
 		uncheck3->SetAlive(true);
 		//clickabe component
 		auto uncheck3Btn = uncheck3->AddComponent<ClickableComponent>("C_UnCheck3Btn");
-		uncheck3Btn->SetSpriteTarget(uncheck3Sprite);
+		uncheck3Btn->SetSpriteTarget(uncheck3Sprite.get());
 		//Unchecked buttons 4
 		auto uncheck4 = std::make_shared<Entity>();
 		auto uncheck4Sprite = uncheck4->AddComponent<SpriteComponent>("C_UnCheck4Sprite");
@@ -90,7 +90,7 @@ namespace HJ {
 		uncheck4->SetAlive(true);
 		//clickabe component
 		auto uncheck4Btn = uncheck4->AddComponent<ClickableComponent>("C_UnCheck4Btn");
-		uncheck4Btn->SetSpriteTarget(uncheck4Sprite);
+		uncheck4Btn->SetSpriteTarget(uncheck4Sprite.get());
 
 		//Unchecked buttons 5- VSYNC
 		auto uncheck5 = std::make_shared<Entity>();
@@ -103,7 +103,7 @@ namespace HJ {
 		uncheck5->SetAlive(true);
 		//clickabe component
 		auto uncheck5Btn = uncheck5->AddComponent<ClickableComponent>("C_UnCheck5Btn");
-		uncheck5Btn->SetSpriteTarget(uncheck5Sprite);
+		uncheck5Btn->SetSpriteTarget(uncheck5Sprite.get());
 
 		//Checked button
 		auto check = std::make_shared<Entity>();
@@ -135,7 +135,7 @@ namespace HJ {
 		upBtn1->SetVisible(true);
 		upBtn1->SetAlive(true);
 		auto upBtn1Click = upBtn1->AddComponent<ClickableComponent>("C_upBtnBtn1");
-		upBtn1Click->SetSpriteTarget(upBtnSprite1);
+		upBtn1Click->SetSpriteTarget(upBtnSprite1.get());
 
 		//Down Button Master
 		auto downBtn1 = std::make_shared<Entity>();
@@ -147,7 +147,7 @@ namespace HJ {
 		downBtn1->SetVisible(true);
 		downBtn1->SetAlive(true);
 		auto downBtn1Click = downBtn1->AddComponent<ClickableComponent>("C_downBtnBtn1");
-		downBtn1Click->SetSpriteTarget(downBtnSprite1);
+		downBtn1Click->SetSpriteTarget(downBtnSprite1.get());
 
 		//TextBox2
 		auto textBox2 = std::make_shared<Entity>();
@@ -169,7 +169,7 @@ namespace HJ {
 		upBtn2->SetVisible(true);
 		upBtn2->SetAlive(true);
 		auto upBtn2Click = upBtn2->AddComponent<ClickableComponent>("C_upBtnBtn2");
-		upBtn2Click->SetSpriteTarget(upBtnSprite2);
+		upBtn2Click->SetSpriteTarget(upBtnSprite2.get());
 
 		//Down Button Master
 		auto downBtn2 = std::make_shared<Entity>();
@@ -181,7 +181,7 @@ namespace HJ {
 		downBtn2->SetVisible(true);
 		downBtn2->SetAlive(true);
 		auto downBtn2Click = downBtn2->AddComponent<ClickableComponent>("C_downBtnBtn2");
-		downBtn2Click->SetSpriteTarget(downBtnSprite2);
+		downBtn2Click->SetSpriteTarget(downBtnSprite2.get());
 
 		//TextBox3
 		auto textBox3 = std::make_shared<Entity>();
@@ -203,7 +203,7 @@ namespace HJ {
 		upBtn3->SetVisible(true);
 		upBtn3->SetAlive(true);
 		auto upBtn3Click = upBtn3->AddComponent<ClickableComponent>("C_upBtnBtn3");
-		upBtn3Click->SetSpriteTarget(upBtnSprite3);
+		upBtn3Click->SetSpriteTarget(upBtnSprite3.get());
 
 		//Down Button Master
 		auto downBtn3 = std::make_shared<Entity>();
@@ -215,7 +215,7 @@ namespace HJ {
 		downBtn3->SetVisible(true);
 		downBtn3->SetAlive(true);
 		auto downBtn3Click = downBtn3->AddComponent<ClickableComponent>("C_downBtnBtn3");
-		downBtn3Click->SetSpriteTarget(downBtnSprite3);
+		downBtn3Click->SetSpriteTarget(downBtnSprite3.get());
 
 		//Save button
 		auto save = std::make_shared<Entity>();
@@ -227,7 +227,7 @@ namespace HJ {
 		save->SetVisible(true);
 		save->SetAlive(true);
 		auto saveBtn = save->AddComponent<ClickableComponent>("C_SaveBtn");
-		saveBtn->SetSpriteTarget(saveSprite);
+		saveBtn->SetSpriteTarget(saveSprite.get());
 
 		//Back button
 		auto back = std::make_shared<Entity>();
@@ -240,7 +240,7 @@ namespace HJ {
 		back->SetAlive(true);
 		//add button component
 		auto backBtn = back->AddComponent<ClickableComponent>("C_BackBtnBtn");
-		backBtn->SetSpriteTarget(backSprite);
+		backBtn->SetSpriteTarget(backSprite.get());
 
 		//add to local ents map
 		AddEntity("E_zSetBG", bg);

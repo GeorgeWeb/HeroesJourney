@@ -3,7 +3,8 @@
 #include "../DEFINITIONS.hpp"
 #include "MapScene.hpp"
 #include "SettingsScene.hpp"
-#include <Engine/ECM/Components/ClickableComponent.hpp>
+#include <Engine/ECM/Components/ClickableComponent.hpp>
+
 
 namespace HJ {
 
@@ -52,7 +53,7 @@ namespace HJ {
 		mbtn->SetAlive(true);
 		//click component
 		auto startBtn = mbtn->AddComponent<ClickableComponent>("C_MBtnBtn");
-		startBtn->SetSpriteTarget(mbtnSprite);
+		startBtn->SetSpriteTarget(mbtnSprite.get());
 		
 
 		//Settings Button
@@ -67,7 +68,7 @@ namespace HJ {
 		setbtn->SetVisible(true);
 		setbtn->SetAlive(true);
 		auto setClick = setbtn->AddComponent<ClickableComponent>("C_SetBtnBtn");
-		setClick->SetSpriteTarget(setBtnSprite);
+		setClick->SetSpriteTarget(setBtnSprite.get());
 		
 
 		//Quit Button
@@ -82,7 +83,7 @@ namespace HJ {
 		qbtn->SetVisible(true);
 		qbtn->SetAlive(true);
 		auto qClick = qbtn->AddComponent<ClickableComponent>("C_QBtn");
-		qClick->SetSpriteTarget(qbtnSprite);
+		qClick->SetSpriteTarget(qbtnSprite.get());
 
 		//add to local ents map
 		AddEntity("E_zMainBG", bg);
@@ -104,7 +105,8 @@ namespace HJ {
 			if (m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
 			{
 				startBtn->SetClicked(true);
-			}
+			}
+
 
 			auto setComp = m_data->ents.Find<Entity>("E_xSetBtn")->GetComponent<SpriteComponent>("C_SetBtnSprite");
 			auto setBtn = m_data->ents.Find<Entity>("E_xSetBtn")->GetComponent<ClickableComponent>("C_SetBtnBtn");

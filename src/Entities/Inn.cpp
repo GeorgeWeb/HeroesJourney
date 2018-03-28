@@ -7,8 +7,7 @@ namespace HJ { namespace Entities {
 	{
 		m_level = 1;
 		m_bonus = m_level * 10;
-		isClicked = false;
-		unClick = false;
+		
 	}
 
 	Inn* Inn::GetType()
@@ -27,30 +26,7 @@ namespace HJ { namespace Entities {
 
 		auto innComp = m_spriteComp;
 
-		if (isClicked && !unClick)
-		{
-			innComp->GetSprite().setColor(sf::Color(innComp->GetSprite().getColor().r - 100,
-				innComp->GetSprite().getColor().g - 100,
-				innComp->GetSprite().getColor().b - 100,
-				innComp->GetSprite().getColor().a));
-			unClick = true;
-		}
-
-		if (unClick)
-		{
-			m_time -= t_deltaTime;
-		}
-		if (m_time <0.0f && unClick)
-		{
-			innComp->GetSprite().setColor(sf::Color(innComp->GetSprite().getColor().r + 100,
-				innComp->GetSprite().getColor().g + 100,
-				innComp->GetSprite().getColor().b + 100,
-				innComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			unClick = false;
-			isClicked = false;
-		}
+		
 	}
 
 	void Inn::Render()

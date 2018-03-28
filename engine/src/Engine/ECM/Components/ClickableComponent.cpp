@@ -21,9 +21,9 @@ namespace Engine { namespace Components {
 		return this;
 	}
 
-	void ClickableComponent::SetSpriteTarget(std::shared_ptr<SpriteComponent> t_sprite)
+	void ClickableComponent::SetSpriteTarget(SpriteComponent* t_sprite)
 	{
-		m_spriteComponent = std::move(t_sprite);
+		m_spriteComponent = std::move(std::make_shared<SpriteComponent>(*t_sprite));
 	}
 
 	void ClickableComponent::Update(float t_deltaTime)

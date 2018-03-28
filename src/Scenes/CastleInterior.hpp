@@ -33,21 +33,8 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
-			//back arrow click
-			bool m_arrowClick = false;
-			bool m_arrowUnClick = false;
-			//Upgrade button click
-			bool m_buttonClick = false;
-			bool m_buttonUnClick = false;
-			//buy health pot
-			bool m_buyHealth = false;
-			bool m_buyHealthUn = false;
-			//buy mana pot
-			bool m_buyMana = false;
-			bool m_buyManaUn = false;
-
-			sf::Clock m_clock;
-			float m_time = 0.1f;
+			
+			
 			// Entities
 			std::shared_ptr<Entities::Infirmary> m_infirmary;
 			std::shared_ptr<Entities::Blacksmith > m_blacksmith;
