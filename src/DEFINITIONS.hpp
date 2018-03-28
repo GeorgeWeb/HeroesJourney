@@ -12,10 +12,23 @@
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
 #define SPLASH_GAME_LOGO_SPRITESHEET "res/img/splash/logo-animated.png"
 
+
 // MainMenu state global definitions
 #define MAINMENU_SCENE_BACKGROUND "res/img/main_menu/main-menu-bg.png"
-#define MAINMENU_STARTGAME_BUTTON "res/img/main_menu/start_btn.png"
-#define MAINMENU_QUITGAME_BUTTON "res/img/main_menu/quit_btn.png"
+#define MAINMENU_STARTGAME_BUTTON "res/img/main_menu/startbtn.png"
+#define MAINMENU_QUITGAME_BUTTON "res/img/main_menu/exitbtn.png"
+#define MAINMENU_SETTINGS_BUTTON "res/img/main_menu/settingsbtn.png"
+
+//Settins state global definitions
+#define SETTING_SCENE_BACKGROUND "res/img/settings/settingscene.png"
+#define SETTING_SCENE_BACKBTN "res/img/settings/backbtn.png"
+#define SETTING_SCENE_SAVEBTN "res/img/settings/savebtn.png"
+#define SETTING_SCENE_UPBTN "res/img/settings/upbtn.png"
+#define SETTING_SCENE_DOWNBTN "res/img/settings/downbtn.png"
+#define SETTING_SCENE_SELECTEDBTN "res/img/settings/selectedset.png"
+#define SETTING_SCENE_UNSELECTEDBTN "res/img/settings/unselectedset.png"
+#define SETTING_SCENE_TEXTBOX "res/img/settings/textbox.png"
+
 
 // Main Game / Map screen state global definitions
 #define MAP_SCENE_BACKGROUND "res/img/map/game-map-bg.png"
