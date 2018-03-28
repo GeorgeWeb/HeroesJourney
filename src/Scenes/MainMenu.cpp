@@ -14,11 +14,11 @@ namespace HJ {
 	using namespace Engine::ECM;
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
-	
+
 	MainMenuScene::MainMenuScene(GameDataRef t_data)
 		: m_data(t_data)
 	{
-		// Will not be used for more initialization
+		InitSceneView();
 	}
 
 	void MainMenuScene::Init()
@@ -39,7 +39,7 @@ namespace HJ {
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
-		
+
 		//Start Button
 		auto mbtn = std::make_shared<ECM::Entity>();
 		auto mbtnSprite = mbtn->AddComponent<SpriteComponent>("C_BtnSprite");
@@ -54,7 +54,7 @@ namespace HJ {
 		//click component
 		auto startBtn = mbtn->AddComponent<ClickableComponent>("C_MBtnBtn");
 		startBtn->SetSpriteTarget(mbtnSprite.get());
-		
+
 
 		//Settings Button
 		auto setbtn = std::make_shared<ECM::Entity>();
@@ -69,7 +69,7 @@ namespace HJ {
 		setbtn->SetAlive(true);
 		auto setClick = setbtn->AddComponent<ClickableComponent>("C_SetBtnBtn");
 		setClick->SetSpriteTarget(setBtnSprite.get());
-		
+
 
 		//Quit Button
 		auto qbtn = std::make_shared<ECM::Entity>();
@@ -95,14 +95,18 @@ namespace HJ {
 	void MainMenuScene::HandleInput()
 	{
 		sf::Event event;
-		while (Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				Renderer::GetWin().close();
+				Engine2D::GetWin().close();
+
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView();
+
 			//check if start is clicked
 			auto startComp = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
 			auto startBtn = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<ClickableComponent>("C_MBtnBtn");
-			if (m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				startBtn->SetClicked(true);
 			}
@@ -110,7 +114,7 @@ namespace HJ {
 
 			auto setComp = m_data->ents.Find<Entity>("E_xSetBtn")->GetComponent<SpriteComponent>("C_SetBtnSprite");
 			auto setBtn = m_data->ents.Find<Entity>("E_xSetBtn")->GetComponent<ClickableComponent>("C_SetBtnBtn");
-			if (m_data->input.isClicked(setComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (m_data->input.isClicked(setComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				std::cout << "button has been clicked" << std::endl;
 				setBtn->SetClicked(true);
@@ -118,7 +122,7 @@ namespace HJ {
 
 			auto quitComp = m_data->ents.Find<Entity>("E_xQBtn")->GetComponent<SpriteComponent>("C_QuitBtnSprite");
 			auto quitBtn = m_data->ents.Find<Entity>("E_xQBtn")->GetComponent<ClickableComponent>("C_QBtn");
-			if (m_data->input.isClicked(quitComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (m_data->input.isClicked(quitComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				quitBtn->SetClicked(true);
 			}
@@ -151,8 +155,8 @@ namespace HJ {
 		auto quitBtn = m_data->ents.Find<Entity>("E_xQBtn")->GetComponent<ClickableComponent>("C_QBtn");
 		if (quitBtn->CanResolve())
 		{
-			Renderer::GetWin().close();
-			
+			Engine2D::GetWin().close();
+
 			quitBtn->SetResolve(false);
 		}
 

@@ -1,10 +1,11 @@
 #include "EncounterPopup.hpp"
 #include "../DEFINITIONS.hpp"
 
-#include <Engine/System/Renderer.hpp>
+#include <Engine/Engine.hpp>
 
 namespace HJ { namespace Entities {
 	
+	using namespace Engine;
 	using namespace Engine::System;
 	using namespace Engine::Input;
 	using namespace Engine::ECM;
@@ -46,7 +47,7 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		// check for key press or click for closing
-		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 		{
 			SetAlive(false);
 			SetVisible(false);

@@ -19,7 +19,9 @@ namespace HJ {
 
 	StoryIntroScene::StoryIntroScene(GameDataRef t_data)
 		: m_data(t_data)
-	{ }
+	{
+		InitSceneView();
+	}
 
 	void StoryIntroScene::Init()
 	{
@@ -66,10 +68,13 @@ namespace HJ {
 	void StoryIntroScene::HandleInput()
 	{
 		sf::Event event;
-		while (System::Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
-				System::Renderer::GetWin().close();
+				Engine2D::GetWin().close();
+
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView();
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{

@@ -17,10 +17,9 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	SplashScene::SplashScene(GameDataRef t_data)
-		: m_data(t_data)
+	SplashScene::SplashScene(GameDataRef t_data) : m_data(t_data)
 	{
-		// Won't use for more initialization, hence I will use the Init() func
+		InitSceneView();
 	}
 
 	void SplashScene::Init()
@@ -92,10 +91,13 @@ namespace HJ {
 	void SplashScene::HandleInput()
 	{
 		sf::Event event;
-		while (Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				Renderer::GetWin().close();
+				Engine2D::GetWin().close();
+
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView();
 
 			if (m_canInput)
 			{
@@ -103,7 +105,7 @@ namespace HJ {
 				auto bgSprite = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 				// 'Press ANY key OR button to continue!' type of game
 				if (event.type == sf::Event::EventType::KeyPressed ||
-					m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+					m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 				{
 					m_shouldFade = true;
 				}
@@ -115,7 +117,7 @@ namespace HJ {
 	{
 		if (m_canDelay)
 		{
-			if (m_pressDelay.getElapsedTime().asSeconds() > 4.0f)
+			if (m_pressDelay.getElapsedTime().asSeconds() > 1.0f)
 			{
 				m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").ExitLoop();
 				m_canMove = true;
@@ -161,6 +163,9 @@ namespace HJ {
 
 		// animate logo
 		m_logo->Animate("Anim_GameLogo");
+
+		// manage screen's scene view on fixed time
+		Engine2D::GetWin().setView(m_data->machine.GetActiveState()->GetSceneView());
 
 		// update all entities
 		m_data->ents.Update(m_entities, t_delatTime);

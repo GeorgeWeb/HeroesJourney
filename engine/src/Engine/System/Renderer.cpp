@@ -4,18 +4,13 @@
 namespace Engine { namespace System {
 
 	static std::queue<const sf::Drawable*> sprites;
-	static sf::RenderWindow* window;
+	static sf::RenderWindow* rw;
 
 	namespace Renderer
 	{
 		void Initialize(sf::RenderWindow& t_rw)
 		{
-			window = &t_rw;
-		}
-
-		sf::RenderWindow& GetWin()
-		{
-			return *window;
+			rw = &t_rw;
 		}
 
 		void Shutdown()
@@ -26,11 +21,11 @@ namespace Engine { namespace System {
 
 		void Render()
 		{
-			if (!window) throw("No render window set! ");
+			if (!rw) throw("No render window set! ");
 
 			while (!sprites.empty())
 			{
-				window->draw(*sprites.front());
+				rw->draw(*sprites.front());
 				sprites.pop();
 			}
 		}

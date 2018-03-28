@@ -24,7 +24,6 @@
 #include "Entities/Inn.hpp"
 #include "Entities/GeneralStore.hpp"
 
-
 namespace HJ {
 
 	using namespace Engine;

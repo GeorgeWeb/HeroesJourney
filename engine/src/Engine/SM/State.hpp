@@ -23,12 +23,18 @@ namespace Engine { namespace SM {
 			void Pause();
 			void Resume();
 
+			void InitSceneView();
+			void ResizeSceneView();
+
+			sf::View GetSceneView();
+
 		protected:
 			virtual void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity);
 
 		protected:
 			// Declare local entities map container
 			std::map<std::string, std::shared_ptr<ECM::Entity>> m_entities;
+			sf::View m_view;
 	};
 
 } }

@@ -1,68 +1,84 @@
 #ifndef VECTOR2UL_H
 #define VECTOR2UL_H
 
-#define _USE_MATH_DEFINES
-
 #include <SFML/System.hpp>
 #include <cmath>
-#include <iostream>
+#include <iomanip>  // std::setprecision
+#include <iostream> // std::cout, std::fixed
+#include <sstream>
 #include <vector>
 
-// create a definition for a sf::vector using size_t types
-using Vector2ul = sf::Vector2<size_t>;
+namespace sf {
 
-// returns the length of a sf::vector
-template<class T>
-double length(const sf::Vector2<T>& t_vec)
-{
-	return powf(sqrt(v.x) + sqrt(v.y), 0.5f);
-}
+	typedef Vector2<size_t> Vector2ul;
 
-// returns a normalized sf::vector
-template<class T>
-sf::Vector2<T> normalize(const sf::Vector2<T>& t_vec)
-{
-	sf::Vector2<T> vector;
-	double l = length(t_vec);
-	if (l != 0) {
-		vector.x = vector.x / l;
-
-		vector.y = vector.y / l;
+	// Returns the length of the vector
+	template <typename T> double length(const Vector2<T>& v) {
+		return sqrt(v.x * v.x + v.y * v.y);
 	}
-	return vector;
+
+	// Normalizes the vector
+	template <typename T> Vector2<T> normalize(const Vector2<T>& v) {
+		Vector2<T> vector;
+		double l = length(v);
+
+		if (l != 0) {
+			vector.x = v.x / l;
+			vector.y = v.y / l;
+		}
+
+		return vector;
+	}
+
+	template <typename T>
+	Vector2<T> operator*(const Vector2<T>& left, const Vector2<T>& right) {
+		Vector2<T> r = left;
+		r.x *= right.x;
+		r.y *= right.y;
+		return r;
+	}
+
+	template <typename T>
+	std::ostream& operator<<(std::ostream& os, const Vector2<T>& v) {
+		os << '(' << v.x << ',' << v.y << ')';
+		return os;
+	}
+
+	template <typename T, typename U> Vector2<T> Vcast(const Vector2<U>& v) {
+		return Vector2<T>(static_cast<T>(v.x), static_cast<T>(v.y));
+	};
+
+	static double deg2rad(double degrees) {
+		return degrees * 4.0 * atan(1.0) / 180.0;
+	}
+
+	template <typename T>
+	Vector2<T> rotate(const Vector2<T>& v, const double degrees) {
+		const double theta = deg2rad(degrees);
+
+		const double cs = cos(theta);
+		const double sn = sin(theta);
+
+		return { (T)(v.x * cs - v.y * sn), (T)(v.x * sn + v.y * cs) };
+	}
+
+} // namespace sf
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
+	os << "vec[";
+	for (const auto& a : v) {
+		os << a << ',';
+	}
+	os << ']';
+	return os;
 }
 
-// allow casting from one sf::vector internal type to another
-template<class T, class U>
-sf::Vector2<T> Vcast(const sf::Vector2<U>& t_vec)
-{
-    return sf::Vector2<T>(static_cast<T>(t_vec.x), static_cast<T>(t_vec.y));
-}
-
-// converts from degrees to radians
-template<class T>
-static double deg2rad(double t_degrees)
-{
-	return t_degrees * 0.0174532925;
-}
-
-// rotate a sf::vector by an angle(degrees)
-template<class T>
-sf::Vector2<T> rotate(const sf::Vector2<T>& t_vec, const double degrees)
-{
-    const double theta = deg2rad(degrees);
-    const double cs = cos(theta);
-    const double sn = sin(theta);
-
-    return {static_cast<T>(t_vec.x * cs - t_vec.y * sn), static_cast<T>(t_vec.x * sn + t_vec.y * cs)};
-}
-
-// allow sf::vectors to be printed to the stdout
-template<class T>
-std::ostream& operator<<(std::ostream& t_os, const sf::Vector2<T> t_vec)
-{
-    t_os << '<' << t_vec.x << ', ' << t_vec.y << '>';
-    return os;
+template <typename T>
+std::string toStrDecPt(const uint16_t& dp, const T& i) {
+	std::stringstream stream;
+	stream << std::fixed << std::setprecision(dp) << i;
+	return stream.str();
 }
 
 #endif !VECTOR2UL_H

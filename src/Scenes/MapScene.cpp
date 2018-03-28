@@ -11,12 +11,28 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	MapScene::MapScene(GameDataRef t_data)
-		: m_data(t_data)
+	MapScene::MapScene(GameDataRef t_data) :
+		m_data(t_data)
 	{ }
 
 	void MapScene::Init()
 	{
+		// SET VIEWPORT TO THE MOST RECENT SCALE OFFSETS AND RESIZE WINDOW
+		if ((float)Engine2D::GetWin().getSize().x > 1366.f && (float)Engine2D::GetWin().getSize().y > 768.f)
+		{
+			std::cout << "AM BIGGER\n";
+			m_view.setViewport(sf::FloatRect(0.0f, 0.0f, 0.88f, 1.0f));
+			m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
+			Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
+		}
+		else
+		{
+			std::cout << "Am not bigger\n";
+			m_view.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+			m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
+			Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
+		}
+
 		m_data->assets.LoadTexture("Tex_MapBG", MAP_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_Castle", MAP_SCENE_CASTLE);
 		m_data->assets.LoadTexture("Tex_Forest", MAP_SCENE_FOREST);
@@ -29,6 +45,8 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_PopupPlayBtn", ENCOUNTER_POPUP_PLAY_BTN);
 		m_data->assets.LoadTexture("Tex_PopupOpponent", ENCOUNTER_POPUP_OPPONENT);
 		m_data->assets.LoadTexture("Tex_PopupStory", ENCOUNTER_POPUP_STORY);
+
+		m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -49,8 +67,8 @@ namespace HJ {
 		castleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Castle"));
 		castleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f, 
-			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
+		castle->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f,
+			(Engine2D::GetWinSize().y - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
 		castle->SetVisible(true);
 		castle->SetAlive(true);
 
@@ -61,8 +79,8 @@ namespace HJ {
 		forestSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Forest"));
 		forestSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		forest->SetPosition(sf::Vector2f((SCREEN_WIDTH - forestSprite->GetSprite().getGlobalBounds().width) * 0.35f, 
-			(SCREEN_HEIGHT - forestSprite->GetSprite().getGlobalBounds().height) * 0.5f));
+		forest->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - castleSprite->GetSprite().getGlobalBounds().width) * 0.35f,
+			(Engine2D::GetWinSize().y - castleSprite->GetSprite().getGlobalBounds().height) * 0.5f));
 		forest->SetVisible(true);
 		forest->SetAlive(true);
 		
@@ -73,8 +91,8 @@ namespace HJ {
 		mountainsSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mountains"));
 		mountainsSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f, 
-			(SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
+		mountains->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f,
+			(Engine2D::GetWinSize().y - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
 		mountains->SetVisible(true);
 		mountains->SetAlive(true);
 
@@ -85,8 +103,8 @@ namespace HJ {
 		seaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Sea"));
 		seaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f, 
-			(SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
+		sea->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f,
+			(Engine2D::GetWinSize().y - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
 		sea->SetVisible(true);
 		sea->SetAlive(true);
 
@@ -97,8 +115,8 @@ namespace HJ {
 		evilCastleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_EvilCastle"));
 		evilCastleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		evilCastle->SetPosition(sf::Vector2f((SCREEN_WIDTH - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.7f, 
-			(SCREEN_HEIGHT - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
+		evilCastle->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.7f,
+			(Engine2D::GetWinSize().y - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
 		evilCastle->SetVisible(true);
 		evilCastle->SetAlive(true);
 
@@ -110,8 +128,8 @@ namespace HJ {
 		frameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
 		frameSprite->GetSprite().scale(0.9f, 0.9f);
-		frame->SetPosition(sf::Vector2f((SCREEN_WIDTH - frameSprite->GetSprite().getGlobalBounds().width * 2.4f), 
-			(SCREEN_HEIGHT - frameSprite->GetSprite().getGlobalBounds().height)));
+		frame->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - frameSprite->GetSprite().getGlobalBounds().width * 2.4f),
+			(Engine2D::GetWinSize().y - frameSprite->GetSprite().getGlobalBounds().height)));
 		frame->SetVisible(true);
 		frame->SetAlive(true);
 
@@ -127,8 +145,8 @@ namespace HJ {
 		m_encounterPopup->SetTitleText("ENCOUNTER #?" , m_data->assets.GetFont("Font_Pixel"));
 		// position
 		m_encounterPopup->SetPosition(sf::Vector2f(
-			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+			(Engine2D::GetWinSize().x - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
+			(Engine2D::GetWinSize().y - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
 		));
 		m_encounterPopup->Init();
 		m_encounterPopup->Assemble(m_encounterPopup->GetPosition());
@@ -150,11 +168,24 @@ namespace HJ {
 
 	void MapScene::HandleInput()
 	{
+		auto bg = m_data->ents.Find<Entity>("E_zMapBG");
+		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
+		auto frame = m_data->ents.Find<Entity>("E_xFrame");
+		auto frameComp = m_data->ents.Find<Entity>("E_xFrame")->GetComponent<SpriteComponent>("C_FrameSprite");
+		auto castleComp = m_data->ents.Find<Entity>("E_Castle")->GetComponent<SpriteComponent>("C_CastleSprite");
+		auto forestComp = m_data->ents.Find<Entity>("E_Forest")->GetComponent<SpriteComponent>("C_ForestSprite");
+		auto mountainsComp = m_data->ents.Find<Entity>("E_Mountains")->GetComponent<SpriteComponent>("C_MountainsSprite");
+		auto seaComp = m_data->ents.Find<Entity>("E_Sea")->GetComponent<SpriteComponent>("C_SeaSprite");
+		auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
+
 		sf::Event event;
-		while (Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				Renderer::GetWin().close();
+				Engine2D::GetWin().close();
+
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView();
 
 			// Pause menu
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -164,22 +195,14 @@ namespace HJ {
 				m_data->machine.AddState(std::move(pauseMenuState), false);
 			}
 
-			auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
-			auto frameComp = m_data->ents.Find<Entity>("E_xFrame")->GetComponent<SpriteComponent>("C_FrameSprite");
-			auto castleComp = m_data->ents.Find<Entity>("E_Castle")->GetComponent<SpriteComponent>("C_CastleSprite");
-			auto forestComp = m_data->ents.Find<Entity>("E_Forest")->GetComponent<SpriteComponent>("C_ForestSprite");
-			auto mountainsComp = m_data->ents.Find<Entity>("E_Mountains")->GetComponent<SpriteComponent>("C_MountainsSprite");
-			auto seaComp = m_data->ents.Find<Entity>("E_Sea")->GetComponent<SpriteComponent>("C_SeaSprite");
-			auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
-
 			//check for castle click
-			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				m_castleClick = true;
 			}
 			
 			//check for forest click
-			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				m_forestClick = true;
 				
@@ -244,7 +267,7 @@ namespace HJ {
 			}
 
 			//check for mountains click
-			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				m_mountainsClick = true;
 
@@ -309,7 +332,7 @@ namespace HJ {
 			}
 
 			//check for sea click
-			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				m_seaClick = true;
 
@@ -374,7 +397,7 @@ namespace HJ {
 			}
 
 			//check for evil castle click
-			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				m_evilCastleClick = true;
 
@@ -570,6 +593,9 @@ namespace HJ {
 			m_time = 0.1f;
 			m_evilCastleUnClick = false;
 		}
+
+		// manage screen's scene view on fixed time
+		Engine2D::GetWin().setView(m_data->machine.GetActiveState()->GetSceneView());
 
 		m_data->ents.Update(m_entities, t_delatTime);
 	}

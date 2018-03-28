@@ -10,7 +10,6 @@
 namespace HJ {
 
 	using namespace Engine;
-	using namespace System;
 	// engine/game component namespaces
 	using namespace Engine::ECM;
 	using namespace Engine::Components;
@@ -18,12 +17,11 @@ namespace HJ {
 	PauseMenuScene::PauseMenuScene(GameDataRef t_data)
 		: m_data(t_data)
 	{
-		// Won't use for more initialization, hence I will use the Init() func
+		InitSceneView();
 	}
 
 	void PauseMenuScene::Init()
-	{		
-		// Create entities ...
+	{
 		// Background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_PauseBGSprite");
@@ -54,22 +52,25 @@ namespace HJ {
 	void PauseMenuScene::HandleInput()
 	{
 		sf::Event event;
-		while (System::Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (sf::Event::Closed == event.type)
-				System::Renderer::GetWin().close();
+				Engine2D::GetWin().close();
+
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView();
 
 			// Resume to the last Game Screen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			{
-				// Restore entity manager to non-visible ents
 				m_data->machine.RemoveState();
-			}
 		}
 	}
 
 	void PauseMenuScene::Update(float t_delatTime)
 	{
+		// manage screen's scene view on fixed time
+		ResizeSceneView();
+
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
