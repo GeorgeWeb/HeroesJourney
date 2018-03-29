@@ -16,7 +16,7 @@ namespace HJ {
 
 	PauseMenuScene::PauseMenuScene(GameDataRef t_data)
 		: m_data(t_data)
-	{
+	{ 
 		InitSceneView();
 	}
 
@@ -58,7 +58,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			// Resume to the last Game Screen
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -68,9 +68,6 @@ namespace HJ {
 
 	void PauseMenuScene::Update(float t_delatTime)
 	{
-		// manage screen's scene view on fixed time
-		ResizeSceneView();
-
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 

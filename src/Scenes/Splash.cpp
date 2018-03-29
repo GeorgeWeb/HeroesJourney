@@ -97,7 +97,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			if (m_canInput)
 			{
@@ -163,9 +163,6 @@ namespace HJ {
 
 		// animate logo
 		m_logo->Animate("Anim_GameLogo");
-
-		// manage screen's scene view on fixed time
-		Engine2D::GetWin().setView(m_data->machine.GetActiveState()->GetSceneView());
 
 		// update all entities
 		m_data->ents.Update(m_entities, t_delatTime);

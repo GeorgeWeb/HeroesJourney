@@ -40,37 +40,14 @@ namespace Engine { namespace SM {
 	// Both functions below need rework!
 	void State::InitSceneView()
 	{
-		ResizeSceneView();
+		m_view.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+		m_view.setSize(Engine2D::GetWin().getSize().x, Engine2D::GetWin().getSize().y);
 	}
 
-	void State::ResizeSceneView()
+	void State::ResizeSceneView(unsigned int t_width, unsigned int t_height)
 	{
-		// TODO: Change to use DEFAULTS when implemented in Settings class.
-		float newScaleX = Engine2D::GetWin().getSize().x / static_cast<float>(1366);
-		float newScaleY = Engine2D::GetWin().getSize().y / static_cast<float>(768);
-
-		// SET VIEWPORT TO THE MOST RECENT SCALE OFFSETS AND RESIZE WINDOW
-		m_view.setViewport(sf::FloatRect(0.0f, 0.0f, newScaleX, newScaleY));
-		m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
-		Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
-
-		// CALCULATE THE NEW SCALE OFFSET
-		newScaleX = Engine2D::GetWin().getSize().x / static_cast<float>(1366);
-		newScaleY = Engine2D::GetWin().getSize().y / static_cast<float>(768);
-
-		// CHECK FOR A LESS THAN DEFAULT RESOLUTION RESIZING (& reset to scale offset 1.0f)
-		if (newScaleX < 1.0f) newScaleX = 1.0f;
-		if (newScaleY < 1.0f) newScaleY = 1.0f;
-		
-		// SET VIEWPORT TO THE MOST RECENT SCALE OFFSETS AND RESIZE WINDOW
-		m_view.setViewport(sf::FloatRect(0.0f, 0.0f, newScaleX, newScaleY));
-		m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
-		Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
-
-		/** NOTE: 
-		 ** Works fine and is the only way I could come up with for half a night. 
-		 ** No more time to loose on it, doe it's not perfect (unlaggy).
-		 **/
+		sf::FloatRect visibleArea(0, 0, t_width, t_height);
+		m_view.reset(visibleArea);
 	}
 
 	sf::View State::GetSceneView()

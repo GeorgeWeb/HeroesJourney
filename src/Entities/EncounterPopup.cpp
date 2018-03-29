@@ -111,22 +111,18 @@ namespace HJ { namespace Entities {
 	{
 		m_bgSprite->GetSprite().setPosition(t_position);
 
-		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f((t_position.x + (t_position.x / 2.0f) + (m_playBtnSprite->GetSprite().getGlobalBounds().width) / 1.5f),
-			(t_position.y + m_playBtnSprite->GetSprite().getGlobalBounds().height * 4.0f)));
+		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 5.0f));
 
-		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(((t_position.x * 3.0f) - (m_closeBtnSprite->GetSprite().getGlobalBounds().width / 3.25f)),
-			(t_position.y + (m_closeBtnSprite->GetSprite().getGlobalBounds().height / 3.5f))));
 		m_closeBtnSprite->GetSprite().scale(0.5f, 0.5f);
+		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.975f, t_position.y));
 
-		m_opponentSprite->GetSprite().setPosition(sf::Vector2f((t_position.x + ((t_position.x / 2.0f) + (m_playBtnSprite->GetSprite().getGlobalBounds().width) / 1.5f)),
-			(t_position.y + (m_opponentSprite->GetSprite().getGlobalBounds().height) / 2.0f)));
 		m_opponentSprite->GetSprite().scale(1.65f, 1.65f);
+		m_opponentSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 1.55f));
 
-		m_storySprite->GetSprite().setPosition(sf::Vector2f((t_position.x + m_storySprite->GetSprite().getGlobalBounds().width),
-			(t_position.y + m_storySprite->GetSprite().getGlobalBounds().height)));
+		m_storySprite->GetSprite().scale(1.1f, 2.6f);
+		m_storySprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 1.1f, t_position.y * 1.55f));
 
-		m_titleText->GetText().setPosition(sf::Vector2f((SCREEN_WIDTH - (t_position.x * 2.0f) - (m_titleText->GetText().getGlobalBounds().width / 2.0f)) ,
-			(t_position.y + m_titleText->GetText().getGlobalBounds().height)));
+		m_titleText->GetText().setPosition(sf::Vector2f(t_position.x * 1.65f, t_position.y * 1.15f));
 	}
 
 } }

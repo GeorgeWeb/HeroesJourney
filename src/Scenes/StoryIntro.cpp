@@ -19,7 +19,7 @@ namespace HJ {
 
 	StoryIntroScene::StoryIntroScene(GameDataRef t_data)
 		: m_data(t_data)
-	{
+	{ 
 		InitSceneView();
 	}
 
@@ -74,7 +74,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{

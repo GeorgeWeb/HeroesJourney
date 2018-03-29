@@ -13,7 +13,7 @@ namespace HJ {
 
 	CastleScene::CastleScene(GameDataRef t_data) : 
 		m_data(t_data)
-	{
+	{ 
 		InitSceneView();
 	}
 
@@ -336,7 +336,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
@@ -532,10 +532,6 @@ namespace HJ {
 		{
 			healthClick->SetResolve(false);
 		}
-
-
-		ResizeSceneView();
-		// manage screen's scene view on fixed time
 
 		m_data->ents.Update(m_entities, t_delatTime);
 	}

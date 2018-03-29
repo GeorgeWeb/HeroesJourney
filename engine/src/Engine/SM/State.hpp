@@ -24,7 +24,7 @@ namespace Engine { namespace SM {
 			void Resume();
 
 			void InitSceneView();
-			void ResizeSceneView();
+			void ResizeSceneView(unsigned int t_width, unsigned int t_height);
 
 			sf::View GetSceneView();
 

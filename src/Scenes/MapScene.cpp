@@ -13,26 +13,12 @@ namespace HJ {
 
 	MapScene::MapScene(GameDataRef t_data) :
 		m_data(t_data)
-	{ }
+	{
+		InitSceneView();
+	}
 
 	void MapScene::Init()
 	{
-		// SET VIEWPORT TO THE MOST RECENT SCALE OFFSETS AND RESIZE WINDOW
-		if ((float)Engine2D::GetWin().getSize().x > 1366.f && (float)Engine2D::GetWin().getSize().y > 768.f)
-		{
-			std::cout << "AM BIGGER\n";
-			m_view.setViewport(sf::FloatRect(0.0f, 0.0f, 0.88f, 1.0f));
-			m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
-			Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
-		}
-		else
-		{
-			std::cout << "Am not bigger\n";
-			m_view.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
-			m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
-			Engine2D::GetWin().setSize(sf::Vector2u(m_view.getSize()));
-		}
-
 		m_data->assets.LoadTexture("Tex_MapBG", MAP_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_Castle", MAP_SCENE_CASTLE);
 		m_data->assets.LoadTexture("Tex_Forest", MAP_SCENE_FOREST);
@@ -45,8 +31,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_PopupPlayBtn", ENCOUNTER_POPUP_PLAY_BTN);
 		m_data->assets.LoadTexture("Tex_PopupOpponent", ENCOUNTER_POPUP_OPPONENT);
 		m_data->assets.LoadTexture("Tex_PopupStory", ENCOUNTER_POPUP_STORY);
-
-		m_view.reset(sf::FloatRect(0.0f, 0.0f, (float)Engine2D::GetWin().getSize().x, (float)Engine2D::GetWin().getSize().y));
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -67,8 +51,8 @@ namespace HJ {
 		castleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Castle"));
 		castleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		castle->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f,
-			(Engine2D::GetWinSize().y - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
+		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f,
+			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
 		castle->SetVisible(true);
 		castle->SetAlive(true);
 
@@ -79,11 +63,11 @@ namespace HJ {
 		forestSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Forest"));
 		forestSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		forest->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - castleSprite->GetSprite().getGlobalBounds().width) * 0.35f,
-			(Engine2D::GetWinSize().y - castleSprite->GetSprite().getGlobalBounds().height) * 0.5f));
+		forest->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.35f,
+			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.5f));
 		forest->SetVisible(true);
 		forest->SetAlive(true);
-		
+
 		//Mountains
 		auto mountains = std::make_shared<ECM::Entity>();
 		auto mountainsSprite = mountains->AddComponent<SpriteComponent>("C_MountainsSprite");
@@ -91,8 +75,8 @@ namespace HJ {
 		mountainsSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mountains"));
 		mountainsSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		mountains->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(Engine2D::GetWinSize().y - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
+		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
 		mountains->SetVisible(true);
 		mountains->SetAlive(true);
 
@@ -103,8 +87,8 @@ namespace HJ {
 		seaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Sea"));
 		seaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		sea->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f,
-			(Engine2D::GetWinSize().y - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
+		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f,
+			(SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
 		sea->SetVisible(true);
 		sea->SetAlive(true);
 
@@ -115,8 +99,8 @@ namespace HJ {
 		evilCastleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_EvilCastle"));
 		evilCastleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		evilCastle->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.7f,
-			(Engine2D::GetWinSize().y - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
+		evilCastle->SetPosition(sf::Vector2f((SCREEN_WIDTH - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.7f,
+			(SCREEN_HEIGHT - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
 		evilCastle->SetVisible(true);
 		evilCastle->SetAlive(true);
 
@@ -128,8 +112,8 @@ namespace HJ {
 		frameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
 		frameSprite->GetSprite().scale(0.9f, 0.9f);
-		frame->SetPosition(sf::Vector2f((Engine2D::GetWinSize().x - frameSprite->GetSprite().getGlobalBounds().width * 2.4f),
-			(Engine2D::GetWinSize().y - frameSprite->GetSprite().getGlobalBounds().height)));
+		frame->SetPosition(sf::Vector2f((SCREEN_WIDTH - frameSprite->GetSprite().getGlobalBounds().width * 2.4f),
+			(SCREEN_HEIGHT - frameSprite->GetSprite().getGlobalBounds().height)));
 		frame->SetVisible(true);
 		frame->SetAlive(true);
 
@@ -142,11 +126,11 @@ namespace HJ {
 		m_encounterPopup->SetPlayButtonImage(m_data->assets.GetTexture("Tex_PopupPlayBtn"));
 		m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
 		m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
-		m_encounterPopup->SetTitleText("ENCOUNTER #?" , m_data->assets.GetFont("Font_Pixel"));
+		m_encounterPopup->SetTitleText("ENCOUNTER #?", m_data->assets.GetFont("Font_Pixel"));
 		// position
 		m_encounterPopup->SetPosition(sf::Vector2f(
-			(Engine2D::GetWinSize().x - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
-			(Engine2D::GetWinSize().y - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
+			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().height) * 0.5f
 		));
 		m_encounterPopup->Init();
 		m_encounterPopup->Assemble(m_encounterPopup->GetPosition());
@@ -160,7 +144,7 @@ namespace HJ {
 		AddEntity("E_EvilCastle", evilCastle);
 		AddEntity("E_xFrame", frame);
 		AddEntity("E_aEncounterPopup", m_encounterPopup);
-		
+
 		// WOW ... 3 hrs to get to that one right here :) Kinda easy to use now.
 		//m_data->ents.Find<AnimatedLogo>("E_GameLogo")->Init();
 		//AddEntity("E_GameLogo", m_data->ents.GetSharedEntity("E_GameLogo"));
@@ -185,7 +169,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			// Pause menu
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -593,9 +577,6 @@ namespace HJ {
 			m_time = 0.1f;
 			m_evilCastleUnClick = false;
 		}
-
-		// manage screen's scene view on fixed time
-		Engine2D::GetWin().setView(m_data->machine.GetActiveState()->GetSceneView());
 
 		m_data->ents.Update(m_entities, t_delatTime);
 	}

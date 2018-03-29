@@ -17,7 +17,7 @@ namespace HJ {
 
 	MainMenuScene::MainMenuScene(GameDataRef t_data)
 		: m_data(t_data)
-	{
+	{ 
 		InitSceneView();
 	}
 
@@ -101,7 +101,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-				ResizeSceneView();
+				ResizeSceneView(event.size.width, event.size.height);
 
 			//check if start is clicked
 			auto startComp = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<SpriteComponent>("C_BtnSprite");
@@ -135,29 +135,27 @@ namespace HJ {
 		auto startBtn = m_data->ents.Find<Entity>("E_xBtn")->GetComponent<ClickableComponent>("C_MBtnBtn");
 		if (startBtn->CanResolve())
 		{
+			startBtn->SetResolve(false);
+			// change scene to Story intro
 			auto storyIntro = std::make_unique<StoryIntroScene>(StoryIntroScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));
-
-			startBtn->SetResolve(false);
 		}
 
 		auto setBtn = m_data->ents.Find<Entity>("E_xSetBtn")->GetComponent<ClickableComponent>("C_SetBtnBtn");
 		if (setBtn->CanResolve())
 		{
-			std::cout << "button responds!" << std::endl;
+			setBtn->SetResolve(false);
+			// change scene to Settings
 			auto SettingsScreen = std::make_unique<SettingsScene>(SettingsScene(m_data));
 			m_data->machine.AddState(std::move(SettingsScreen), false);
-
-			setBtn->SetResolve(false);
-			std::cout << "button set to false" << std::endl;
 		}
 
 		auto quitBtn = m_data->ents.Find<Entity>("E_xQBtn")->GetComponent<ClickableComponent>("C_QBtn");
 		if (quitBtn->CanResolve())
 		{
-			Engine2D::GetWin().close();
-
 			quitBtn->SetResolve(false);
+			// exit game (window)
+			Engine2D::GetWin().close();
 		}
 
 	}
