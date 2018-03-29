@@ -8,6 +8,7 @@ namespace HJ { namespace Entities {
 	class Rogue final : public Hero
 	{
 		public:
+			Rogue(const std::string& t_sprite);
 			Rogue(const std::string& t_sprite, const std::string& t_animator);
 			~Rogue() = default;
 

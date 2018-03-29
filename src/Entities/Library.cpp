@@ -41,4 +41,22 @@ namespace HJ {	namespace Entities {
 		m_level += 1;
 	}
 
+	void Library::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			if (hero->GetMana() == hero->GetMaxMana())
+			{
+				hero->SetMaxMana(hero->GetMaxMana() + m_bonus);
+				hero->SetMana(hero->GetMaxMana());
+			}
+			else
+			{
+				hero->SetMaxMana(hero->GetMaxMana() + m_bonus);
+			}
+			
+		}
+		
+	}
+
 } }

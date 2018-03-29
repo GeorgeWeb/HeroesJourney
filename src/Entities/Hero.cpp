@@ -2,6 +2,10 @@
 
 namespace HJ { namespace Entities {
 
+	Hero::Hero(const std::string& t_sprite) :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
+	{ }
+
 	Hero::Hero(const std::string& t_sprite, const std::string& t_animator) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))

@@ -40,4 +40,12 @@ namespace HJ { namespace Entities {
 		m_level += 1;
 	}
 
+	void Blacksmith::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			hero->SetDmg(hero->GetDmg() + m_bonus);
+		}
+	}
+
 } }

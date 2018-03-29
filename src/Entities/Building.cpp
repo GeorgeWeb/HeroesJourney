@@ -44,4 +44,9 @@ namespace HJ {	namespace Entities {
 		// TODO: upgrade change texture and bonus if upgraded
 	}
 
+	void Building::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		//
+	}
+
 } }

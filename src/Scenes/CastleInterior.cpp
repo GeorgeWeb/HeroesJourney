@@ -133,6 +133,7 @@ namespace HJ {
 		//properties
 		upgradeBtn->SetVisible(false);
 		upgradeBtn->SetAlive(false);
+		upgradeBtnSprite->SetClickable(false);
 		auto upgradeClick = upgradeBtn->AddComponent<ClickableComponent>("C_UpgradeBtnBtn");
 		upgradeClick->SetSpriteTarget(upgradeBtnSprite.get());
 
@@ -221,8 +222,11 @@ namespace HJ {
 		//properties
 		manaBtn->SetVisible(false);
 		manaBtn->SetAlive(true);
+		manaBtnSprite->SetClickable(false);
 		auto manaClick = manaBtn->AddComponent<ClickableComponent>("C_ManaBtnBtn");
 		manaClick->SetSpriteTarget(manaBtnSprite.get());
+		
+
 
 		//health button texture
 		auto healthBtn = std::make_shared<Entity>();
@@ -234,6 +238,7 @@ namespace HJ {
 		//properties
 		healthBtn->SetVisible(false);
 		healthBtn->SetAlive(true);
+		healthBtnSprite->SetClickable(false);
 		auto healthClick = healthBtn->AddComponent<ClickableComponent>("C_HealthBtnBtn");
 		healthClick->SetSpriteTarget(healthBtnSprite.get());
 
@@ -323,7 +328,7 @@ namespace HJ {
 		AddEntity("E_MnText", textMn);
 		AddEntity("E_CoinText", textCoin);
 		AddEntity("E_00HealthBtn", healthBtn);
-		AddEntity("E_00ManaBtn", manaBtn);	
+		AddEntity("E_00ManaBtn", manaBtn);
 	}
 
 	void CastleScene::HandleInput()
@@ -353,6 +358,10 @@ namespace HJ {
 				infClick->SetClicked(true);
 				//set last clicked building as infirmary
 				lastClicked = "infirmary";
+				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
+				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
+
 			}
 
 			//Check if Blacksmith is clicked
@@ -362,6 +371,9 @@ namespace HJ {
 			{
 				blackClick->SetClicked(true);
 				lastClicked = "blacksmith";
+				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
+				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
 			}
 
 			//Check if Library is clicked
@@ -371,6 +383,9 @@ namespace HJ {
 			{
 				libraryClick->SetClicked(true);
 				lastClicked = "library";
+				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
+				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
 			}
 
 			//Check if Inn is clicked
@@ -380,6 +395,9 @@ namespace HJ {
 			{
 				innClick->SetClicked(true);
 				lastClicked = "inn";
+				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
+				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
 			}
 
 			//Check if GeneralStore is clicked
@@ -389,6 +407,9 @@ namespace HJ {
 			{
 				genStoreClick->SetClicked(true);
 				lastClicked = "generalStore";
+				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(false);
+				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(true);
+				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(true);
 			}
 
 			//check if back arrow is clicked
@@ -402,7 +423,7 @@ namespace HJ {
 			//check if upgrade button is clicked
 			auto upBtnComp = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn");
 			auto upBtnClick = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<ClickableComponent>("C_UpgradeBtnBtn");
-			if (m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (upBtnComp->IsClickable() && m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				upBtnClick->SetClicked(true);
 				if (lastClicked == "infirmary")
@@ -410,6 +431,8 @@ namespace HJ {
 					m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
 					m_data->gm.infirmary->Upgrade();
 					std::cout << "Infirmary found!" << std::endl;
+					
+					m_data->gm.infirmary->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 				}
 
 				else if (lastClicked == "blacksmith")
@@ -417,6 +440,7 @@ namespace HJ {
 					m_data->gm.gold -= 10 * m_data->gm.blacksmith->GetLevel();
 					m_data->gm.blacksmith->Upgrade();
 					std::cout << "Blacksmith found!" << std::endl;
+					m_data->gm.blacksmith->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 				}
 
 				else if (lastClicked == "library")
@@ -424,6 +448,7 @@ namespace HJ {
 					m_data->gm.gold -= 10 * m_data->gm.library->GetLevel();
 					m_data->gm.library->Upgrade();
 					std::cout << "Library found!" << std::endl;
+					m_data->gm.library->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 				}
 
 				else if (lastClicked == "inn")
@@ -431,13 +456,15 @@ namespace HJ {
 					m_data->gm.gold -= 10 * m_data->gm.inn->GetLevel();
 					m_data->gm.inn->Upgrade();
 					std::cout << "Inn found!" << std::endl;
+					m_data->gm.inn->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 				}
 			}
 
 			// check if mana button has been clicked
 			auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < SpriteComponent>("C_ManaBtnSprite");
 			auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < ClickableComponent>("C_ManaBtnBtn");
-			if (m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			
+			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				manaClick->SetClicked(true);
 
@@ -448,7 +475,7 @@ namespace HJ {
 			//check if health button has been clicked
 			auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < SpriteComponent>("C_HealthBtnSprite");
 			auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < ClickableComponent>("C_HealthBtnBtn");
-			if (m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				healthClick->SetClicked(true);
 

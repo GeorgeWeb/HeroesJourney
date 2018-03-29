@@ -39,4 +39,22 @@ namespace HJ {	namespace Entities {
 		m_level += 1;
 	}
 
+	void Infirmary::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			if (hero->GetHealth() == hero->GetMaxHealth())
+			{
+				hero->SetMaxHealth(hero->GetMaxHealth() + m_bonus);
+				hero->SetHealth(hero->GetMaxHealth());
+			}
+			else 
+			{
+				hero->SetMaxHealth(hero->GetMaxHealth() + m_bonus);
+			}
+			
+			
+		}
+	}
+
 } }

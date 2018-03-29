@@ -37,6 +37,10 @@
 #define MAP_SCENE_MOUNTAINS "res/img/map/mountains.png"
 #define MAP_SCENE_SEA "res/img/map/sea.png"
 #define MAP_SCENE_EVIL_CASTLE "res/img/map/evilcastle.png"
+#define MAP_SCENE_KNIGHT_ICON "res/img/map/knighticon.png"
+#define MAP_SCENE_SORC_ICON "res/img/map/sorcicon.png"
+#define MAP_SCENE_BARD_ICON "res/img/map/bardicon.png"
+#define MAP_SCENE_ROUGE_ICON "res/img/map/archericon.png"
 #define MAP_SCENE_UI_FRAME "res/img/map/frame.png"
 
 // Castle screen state global definitions

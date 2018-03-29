@@ -2,6 +2,7 @@
 #define BUILDING_ENTITY_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
+#include "Hero.hpp"
 
 namespace HJ {	namespace Entities {
 
@@ -29,6 +30,7 @@ namespace HJ {	namespace Entities {
 			virtual void Render() override;
 
 			virtual void Upgrade();
+			virtual void ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes);
 			
 			void SetSprite(const sf::Texture& t_texture);
 

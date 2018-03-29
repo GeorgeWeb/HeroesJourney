@@ -18,6 +18,7 @@ namespace HJ { namespace Entities {
 			void Render() override final;
 
 			void Upgrade() override final;
+			virtual void ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes) override final;
 	};
 
 } }

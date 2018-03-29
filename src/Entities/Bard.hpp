@@ -8,6 +8,7 @@ namespace HJ { namespace Entities {
 	class Bard final : public Hero
 	{
 		public:
+			Bard(const std::string& t_sprite);
 			Bard(const std::string& t_sprite, const std::string& t_animatior);
 			~Bard() = default;
 

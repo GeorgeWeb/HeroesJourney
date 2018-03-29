@@ -8,6 +8,7 @@ namespace HJ { namespace Entities {
 	class Sorceress final : public Hero
 	{
 		public:
+			Sorceress(const std::string& t_sprite);
 			Sorceress(const std::string& t_sprite, const std::string& t_animatior);
 			~Sorceress() = default;
 

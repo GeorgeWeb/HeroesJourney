@@ -39,7 +39,10 @@ namespace HJ {
 		m_data->gm.inn = std::make_shared<Inn>("C_InnSprite");
 		m_data->gm.store = std::make_shared<GeneralStore>("C_GeneralStore");
 		// heroes
-
+		m_data->gm.hKnight = std::make_shared<Knight>("C_KnightSprite");
+		m_data->gm.hBard = std::make_shared<Bard>("C_BardSprite");
+		m_data->gm.hSorceress = std::make_shared<Sorceress>("C_SorcSprite");
+		m_data->gm.hRogue = std::make_shared<Rogue>("C_RogueSprite");
 		// Background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");

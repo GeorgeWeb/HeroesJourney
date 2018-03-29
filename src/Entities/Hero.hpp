@@ -18,7 +18,9 @@ namespace HJ { namespace Entities {
 
 		protected:
 			int m_health;
+			int m_maxHealth;
 			unsigned int m_mana;
+			unsigned int m_maxMana;
 			unsigned int m_damage;
 			unsigned int m_armour;
 			unsigned int m_critChance;
@@ -29,7 +31,21 @@ namespace HJ { namespace Entities {
 			bool m_isFrozen;
 			
 		public:
+			inline int GetHealth() { return m_health; }
 			inline void SetHealth(const int t_health) { m_health = t_health; }
+			inline int GetMaxHealth() { return m_maxHealth; }
+			inline void SetMaxHealth(const int t_maxHealth) { m_maxHealth = t_maxHealth; }
+			inline int GetMana() { return m_mana; }
+			inline void SetMana(const int t_mana) { m_mana = t_mana; }
+			inline int GetMaxMana() { return m_maxMana; }
+			inline void SetMaxMana(const int t_maxMana) { m_maxMana = t_maxMana; }
+			inline int GetDmg() { return m_damage; }
+			inline void SetDmg(const int t_damage) { m_damage = t_damage; }
+			inline int GetCrit() { return m_critChance; }
+			inline int GetArmour() { return m_armour; }
+			inline int GetDodge() { return m_dodgeChance; }
+
+
 			inline void SetStunned(const bool t_stun) { m_isStunned = t_stun; }
 			inline bool IsStunned() const { return m_isStunned; }
 			inline void SetFlaming(const bool t_flame) { m_isFlaming = t_flame; }
@@ -44,6 +60,7 @@ namespace HJ { namespace Entities {
 
 		public:
 			Hero() = delete;
+			Hero(const std::string& t_sprite);
 			Hero(const std::string& t_sprite, const std::string& t_animator);
 			virtual ~Hero() = default;
 

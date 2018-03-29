@@ -40,4 +40,28 @@ namespace HJ { namespace Entities {
 		m_level += 1;
 	}
 
+	void Inn::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			if (hero->GetHealth() + m_bonus > hero->GetMaxHealth())
+			{
+				hero->SetHealth(hero->GetMaxHealth());
+			}
+			else if (hero->GetHealth() + m_bonus <= hero->GetMaxHealth())
+			{
+				hero->SetHealth(hero->GetHealth() + m_bonus);
+			}
+
+			if (hero->GetMana() + m_bonus > hero->GetMaxMana())
+			{
+				hero->SetMana(hero->GetMaxMana());
+			}
+			else if (hero->GetMana() + m_bonus <= hero->GetMaxMana())
+			{
+				hero->SetMana(hero->GetMana() + m_bonus);
+			}
+		}
+	}
+
 } }
