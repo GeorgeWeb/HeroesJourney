@@ -28,9 +28,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_BackArrow", CASTLE_SCENE_BACK_ARROW);
 		m_data->assets.LoadTexture("Tex_UiFrame", CASTLE_SCENE_UI_FRAME);
 		m_data->assets.LoadTexture("Tex_UpgradeBtn", CASTLE_SCENE_UPGRADE_BUTTON);
-		m_data->assets.LoadTexture("Tex_Health", HP_POT_ICON);
-		m_data->assets.LoadTexture("Tex_Mana", MANA_POT_ICON);
-		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
 		m_data->assets.LoadTexture("Tex_ManaBtn", CASTLE_SCENE_MANABTN);
 		m_data->assets.LoadTexture("Tex_HealthBtn", CASTLE_SCENE_HEALTHBTN);
 
