@@ -19,7 +19,9 @@ namespace Engine { namespace Components {
 	{
 		// set pos to the parent's one for ONLY non-independent sprite components
 		if (m_parent->IsAlive() && !independent)
+		{
 			m_sprite->setPosition(m_parent->GetPosition());
+		}
 	}
 
 	void SpriteComponent::Render()

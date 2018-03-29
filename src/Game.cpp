@@ -6,22 +6,28 @@ namespace HJ {
 	using namespace Engine;
 	using namespace System;
 
-	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title) : 
+	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, bool t_vsync) : 
 		m_data(std::make_shared<GameData>()),
 		m_deltaTime(1.0f / 60.0f)
 	{	
 		// create the game window
-		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title,
-			sf::Style::Close | sf::Style::Resize | sf::Style::Titlebar);
-
+		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, sf::Style::Default);
 		// set game title
 		Engine2D::title = t_title;
-
 		// set game window
 		Engine2D::window = &win;
+		// set window v-sync default(OFF)
+		Engine2D::SetVsync(t_vsync);
 
 		// init. renderer
 		Renderer::Initialize(win);
+
+		// init. game settigns
+		m_data->settings.SetResolution(t_width, t_height);
+		m_data->settings.SetScreenMode(SCREEN_MODE::WINDOWED);
+		m_data->settings.SetVSync(t_vsync);
+		// save the initialized game settings
+		m_data->settings.Save();
 
 		// add first state/screen
 		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));

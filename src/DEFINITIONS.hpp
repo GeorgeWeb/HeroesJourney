@@ -1,7 +1,6 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-// HD Dimensions by default
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 

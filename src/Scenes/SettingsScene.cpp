@@ -1,7 +1,7 @@
 #include "SettingsScene.hpp"
 #include "../DEFINITIONS.hpp"
 #include <Engine/ECM/Components/ClickableComponent.hpp>
-
+#include "MainMenu.hpp"
 
 namespace HJ {
 
@@ -38,7 +38,8 @@ namespace HJ {
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SettingsBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		bg->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.5 , 0.0f));
+		bg->SetPosition(sf::Vector2f(((SCREEN_WIDTH - bgSprite->GetSprite().getGlobalBounds().width) * 0.5f), 0.0f));
+		//bgSprite->GetSprite().scale(newScaleX, newScaleY);
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
@@ -48,7 +49,7 @@ namespace HJ {
 		//define sprite
 		uncheck1Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck1Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck1->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.45, bgSprite->GetSprite().getGlobalBounds().height * 0.1));
+		uncheck1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.45, bgSprite->GetSprite().getGlobalBounds().height * 0.1));
 		uncheck1->SetVisible(true);
 		uncheck1->SetAlive(true);
 		auto uncheck1Btn = uncheck1->AddComponent<ClickableComponent>("C_UnCheck1Btn"); 
@@ -60,7 +61,7 @@ namespace HJ {
 		//define sprite
 		uncheck2Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck2Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck2->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.25, bgSprite->GetSprite().getGlobalBounds().height * 0.1));
+		uncheck2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.25, bgSprite->GetSprite().getGlobalBounds().height * 0.1f));
 		uncheck2->SetVisible(true);
 		uncheck2->SetAlive(true);
 		//clickable component
@@ -73,7 +74,7 @@ namespace HJ {
 		//define sprite
 		uncheck3Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck3Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck3->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.005, bgSprite->GetSprite().getGlobalBounds().height * 0.1));
+		uncheck3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.005f, bgSprite->GetSprite().getGlobalBounds().height * 0.1f));
 		uncheck3->SetVisible(true);
 		uncheck3->SetAlive(true);
 		//clickabe component
@@ -85,7 +86,7 @@ namespace HJ {
 		//define sprite
 		uncheck4Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck4Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck4->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.25, bgSprite->GetSprite().getGlobalBounds().height * 0.1));
+		uncheck4->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.25f, bgSprite->GetSprite().getGlobalBounds().height * 0.1f));
 		uncheck4->SetVisible(true);
 		uncheck4->SetAlive(true);
 		//clickabe component
@@ -98,7 +99,7 @@ namespace HJ {
 		//define sprite
 		uncheck5Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck5Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck5->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.25, bgSprite->GetSprite().getGlobalBounds().height * 0.23));
+		uncheck5->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.25f, bgSprite->GetSprite().getGlobalBounds().height * 0.23f));
 		uncheck5->SetVisible(true);
 		uncheck5->SetAlive(true);
 		//clickabe component
@@ -111,7 +112,7 @@ namespace HJ {
 		//define sprite
 		checkSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 		checkSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		check->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.5, 0.0f));
+		check->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.5, 0.0f));
 		check->SetVisible(false);
 		check->SetAlive(true);
 
@@ -121,7 +122,7 @@ namespace HJ {
 		//define sprite
 		textBoxSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
 		textBoxSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox1->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05, bgSprite->GetSprite().getGlobalBounds().height * 0.36));
+		textBox1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.36));
 		textBox1->SetVisible(true);
 		textBox1->SetAlive(true);
 
@@ -131,7 +132,7 @@ namespace HJ {
 		//define sprite
 		upBtnSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
 		upBtnSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 - upBtnSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36));
+		upBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36f));
 		upBtn1->SetVisible(true);
 		upBtn1->SetAlive(true);
 		auto upBtn1Click = upBtn1->AddComponent<ClickableComponent>("C_upBtnBtn1");
@@ -143,7 +144,7 @@ namespace HJ {
 		//define sprite
 		downBtnSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
 		downBtnSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 + textBoxSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36));
+		downBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f + textBoxSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36f));
 		downBtn1->SetVisible(true);
 		downBtn1->SetAlive(true);
 		auto downBtn1Click = downBtn1->AddComponent<ClickableComponent>("C_downBtnBtn1");
@@ -155,7 +156,7 @@ namespace HJ {
 		//define sprite
 		textBoxSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
 		textBoxSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox2->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05, bgSprite->GetSprite().getGlobalBounds().height * 0.44));
+		textBox2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
 		textBox2->SetVisible(true);
 		textBox2->SetAlive(true);
 
@@ -165,7 +166,7 @@ namespace HJ {
 		//define sprite
 		upBtnSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
 		upBtnSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 - upBtnSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44));
+		upBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
 		upBtn2->SetVisible(true);
 		upBtn2->SetAlive(true);
 		auto upBtn2Click = upBtn2->AddComponent<ClickableComponent>("C_upBtnBtn2");
@@ -177,7 +178,7 @@ namespace HJ {
 		//define sprite
 		downBtnSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
 		downBtnSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 + textBoxSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44));
+		downBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05 + textBoxSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
 		downBtn2->SetVisible(true);
 		downBtn2->SetAlive(true);
 		auto downBtn2Click = downBtn2->AddComponent<ClickableComponent>("C_downBtnBtn2");
@@ -189,7 +190,7 @@ namespace HJ {
 		//define sprite
 		textBoxSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
 		textBoxSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox3->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05, bgSprite->GetSprite().getGlobalBounds().height * 0.52));
+		textBox3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
 		textBox3->SetVisible(true);
 		textBox3->SetAlive(true);
 
@@ -199,7 +200,7 @@ namespace HJ {
 		//define sprite
 		upBtnSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
 		upBtnSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 - upBtnSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52));
+		upBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
 		upBtn3->SetVisible(true);
 		upBtn3->SetAlive(true);
 		auto upBtn3Click = upBtn3->AddComponent<ClickableComponent>("C_upBtnBtn3");
@@ -211,7 +212,7 @@ namespace HJ {
 		//define sprite
 		downBtnSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
 		downBtnSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.05 + textBoxSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52));
+		downBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f + textBoxSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
 		downBtn3->SetVisible(true);
 		downBtn3->SetAlive(true);
 		auto downBtn3Click = downBtn3->AddComponent<ClickableComponent>("C_downBtnBtn3");
@@ -223,7 +224,7 @@ namespace HJ {
 		//define sprite
 		saveSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SaveBtn"));
 		saveSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		save->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 + bgSprite->GetSprite().getGlobalBounds().width * 0.2 , bgSprite->GetSprite().getGlobalBounds().height * 0.8));
+		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
 		save->SetVisible(true);
 		save->SetAlive(true);
 		auto saveBtn = save->AddComponent<ClickableComponent>("C_SaveBtn");
@@ -235,7 +236,7 @@ namespace HJ {
 		//define sprite
 		backSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BackBtn"));
 		backSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		back->SetPosition(sf::Vector2f(SCREEN_WIDTH*0.5 - bgSprite->GetSprite().getGlobalBounds().width * 0.2, bgSprite->GetSprite().getGlobalBounds().height * 0.8));
+		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
 		back->SetVisible(true);
 		back->SetAlive(true);
 		//add button component
@@ -389,7 +390,9 @@ namespace HJ {
 		auto backClick = m_data->ents.Find<Entity>("E_Back")->GetComponent<ClickableComponent>("C_BackBtnBtn");
 		if (backClick->CanResolve())
 		{
+			// change scene to Settings
 			m_data->machine.RemoveState();
+			
 			backClick->SetResolve(false);
 		}
 
@@ -398,7 +401,9 @@ namespace HJ {
 		if (saveClick->CanResolve())
 		{
 			//ADD LOGIC FOR SAVING THE CHANGES HERE...
+			m_data->settings.Save();
 
+			// change scene to Settings
 			m_data->machine.RemoveState();
 			saveClick->SetResolve(false);
 		}
@@ -408,7 +413,8 @@ namespace HJ {
 		if (uncheck1Click->CanResolve())
 		{
 			//LOGIC FOR RESOLUTION HERE...
-			
+			m_data->settings.SetResolution(1024, 768);
+			//ResizeSceneView(1024, 768);
 			m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 
 			m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<SpriteComponent>("C_UnCheck2Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
@@ -423,6 +429,7 @@ namespace HJ {
 		if (uncheck2Click->CanResolve())
 		{
 			//LOGIC FOR RESOLUTION HERE...
+			m_data->settings.SetResolution(1366, 768);
 
 			m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<SpriteComponent>("C_UnCheck2Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 
@@ -438,7 +445,8 @@ namespace HJ {
 		if (uncheck3Click->CanResolve())
 		{
 			//LOGIC FOR RESOLUTION HERE...
-
+			m_data->settings.SetResolution(1600, 900);
+			
 			m_data->ents.Find<Entity>("E_Uncheck3")->GetComponent<SpriteComponent>("C_UnCheck3Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 
 			m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
@@ -453,7 +461,8 @@ namespace HJ {
 		if (uncheck4Click->CanResolve())
 		{
 			//LOGIC FOR RESOLUTION HERE...
-
+			m_data->settings.SetResolution(1920, 1080);
+			
 			m_data->ents.Find<Entity>("E_Uncheck4")->GetComponent<SpriteComponent>("C_UnCheck4Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 
 			m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
@@ -468,6 +477,9 @@ namespace HJ {
 		if (uncheck5Click->CanResolve())
 		{
 			//LOGIC FOR Vsync HERE...
+			m_data->settings.SetVSync(true);
+			//m_data->settings.SetScreenMode(SCREEN_MODE::FULLSCREEN);
+
 			m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 			
 			uncheck5Click->SetResolve(false);

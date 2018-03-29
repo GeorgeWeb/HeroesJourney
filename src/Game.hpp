@@ -68,6 +68,7 @@ namespace HJ {
 
 	struct GameData final
 	{
+		System::Settings settings;
 		SM::StateMachine machine;
 		Input::InputManager input;
 		Asset::AssetManager assets;
@@ -85,7 +86,7 @@ namespace HJ {
 			GameDataRef m_data;
 
 		public:
-			Game(unsigned int t_width, unsigned int t_height, const std::string& t_title);
+			Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, bool t_vsync = true);
 			~Game() = default;
 		
 		private:

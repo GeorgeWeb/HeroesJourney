@@ -49,6 +49,7 @@ namespace HJ {
 		//properties
 		mbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - mbtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
 			(SCREEN_HEIGHT - mbtnSprite->GetSprite().getGlobalBounds().height) * 0.4f));
+		//mbtnSprite->GetSprite().scale(0.75f, 1.0f);
 		mbtn->SetVisible(true);
 		mbtn->SetAlive(true);
 		//click component
@@ -65,6 +66,7 @@ namespace HJ {
 		//properties
 		setbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - setBtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
 			(SCREEN_HEIGHT - setBtnSprite->GetSprite().getGlobalBounds().height) * 0.6f));
+		//setBtnSprite->GetSprite().scale(0.75f, 1.0f);
 		setbtn->SetVisible(true);
 		setbtn->SetAlive(true);
 		auto setClick = setbtn->AddComponent<ClickableComponent>("C_SetBtnBtn");
@@ -80,6 +82,7 @@ namespace HJ {
 		//properties
 		qbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - qbtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
 			(SCREEN_HEIGHT - qbtnSprite->GetSprite().getGlobalBounds().height) * 0.8f));
+		//qbtnSprite->GetSprite().scale(0.75f, 1.0f);
 		qbtn->SetVisible(true);
 		qbtn->SetAlive(true);
 		auto qClick = qbtn->AddComponent<ClickableComponent>("C_QBtn");

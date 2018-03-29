@@ -1,9 +1,11 @@
 #ifndef SETTINGS_SCENE_H
 #define SETTINGS_SCENE_H
 
-#include <Engine/Engine.hpp>
 #include "../Game.hpp"
-#include <Engine\ECM\Components\SpriteComponent.hpp>
+#include <Engine/Engine.hpp>
+#include <Engine/ECM/Components/SpriteComponent.hpp>
+
+#include <Engine/System/Settings.hpp>
 
 namespace HJ {
 

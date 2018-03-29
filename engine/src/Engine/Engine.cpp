@@ -16,6 +16,11 @@ namespace Engine {
 		Renderer::Render();
 	}
 
+	void Engine2D::Update()
+	{
+
+	}
+
 	sf::Vector2u Engine2D::GetWinSize()
 	{
 		return window->getSize();

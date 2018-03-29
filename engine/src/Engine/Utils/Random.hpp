@@ -3,6 +3,7 @@
 
 namespace Engine { namespace Utils {
 
+	// make it static
 	class Random final
 	{
 		public:

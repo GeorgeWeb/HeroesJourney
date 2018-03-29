@@ -45,7 +45,7 @@ namespace Engine { namespace ECM {
 
 			const sf::Vector2f& GetPosition() const;
 			void SetPosition(const sf::Vector2f& t_position);
-		
+					
 			void Move(const sf::Vector2f& t_position);
 
 			bool IsAlive() const;

@@ -12,6 +12,7 @@
 #include "Input/InputManager.hpp"
 #include "ECM/EntityManager.hpp"
 #include "System/Renderer.hpp"
+#include "System/Settings.hpp""
 
 namespace Engine {
 
@@ -23,20 +24,25 @@ namespace Engine {
 
 		public:
 			Engine2D() = delete;
+			
 			static void Render();
 			static void Update();
+
 			static void DisplayFPS();
+
 			static sf::RenderWindow& GetWin();
 			static sf::Vector2u GetWinSize();
+
 			static void SetVsync(bool t_vsync);
 	};
 
-	namespace Timing {
+	namespace Timing
+	{
 		// Return time since Epoc
 		long long Now();
 		// Return time since last() was last called.
 		long long Last();
-	} // namespace timing
+	}
 
 }
 

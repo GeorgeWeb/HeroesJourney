@@ -53,7 +53,7 @@ namespace HJ {
 		//text1->independent = true;
 		// Initialise stuff
 		m_dialog->Init();
-		
+		//m_dialog->GetComponent<SpriteComponent>("")
 		std::cout << m_dialog->GetConversation().size() << std::endl;
 		std::cout << text1->GetText().getPosition().x << " , " << text1->GetText().getPosition().y << std::endl;
 		std::cout << "Independent? " << text1->independent << std::endl;

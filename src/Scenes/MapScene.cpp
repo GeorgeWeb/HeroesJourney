@@ -321,7 +321,10 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
+			{
+				std::cout << event.size.width << std::endl;
 				ResizeSceneView(event.size.width, event.size.height);
+			}
 
 			// Pause menu
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))

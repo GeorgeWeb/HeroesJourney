@@ -50,6 +50,7 @@ namespace Engine { namespace ECM {
 		m_position += t_position;
 	}
 
+
 	bool Entity::IsAlive() const
 	{
 		return m_alive;
