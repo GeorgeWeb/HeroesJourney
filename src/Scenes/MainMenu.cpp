@@ -56,7 +56,6 @@ namespace HJ {
 		auto startBtn = mbtn->AddComponent<ClickableComponent>("C_MBtnBtn");
 		startBtn->SetSpriteTarget(mbtnSprite.get());
 
-
 		//Settings Button
 		auto setbtn = std::make_shared<ECM::Entity>();
 		auto setBtnSprite = setbtn->AddComponent<SpriteComponent>("C_SetBtnSprite");

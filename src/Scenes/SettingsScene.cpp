@@ -106,18 +106,6 @@ namespace HJ {
 		auto uncheck5Btn = uncheck5->AddComponent<ClickableComponent>("C_UnCheck5Btn");
 		uncheck5Btn->SetSpriteTarget(uncheck5Sprite.get());
 
-		//Fullscreeen UnChecked button
-		auto fscheck = std::make_shared<Entity>();
-		auto fscheckSprite = fscheck->AddComponent<SpriteComponent>("C_FSUnCheck1Sprite");
-		//define sprite
-		fscheckSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
-		fscheckSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		fscheck->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.25f, bgSprite->GetSprite().getGlobalBounds().height * 0.23f));
-		fscheck->SetVisible(true);
-		fscheck->SetAlive(true);
-		auto fscheckBtn = fscheck->AddComponent<ClickableComponent>("C_FSUnCheck1Btn");
-		fscheckBtn->SetSpriteTarget(fscheckSprite.get());
-
 		//TextBox1
 		auto textBox1 = std::make_shared<Entity>();
 		auto textBoxSprite1 = textBox1->AddComponent<SpriteComponent>("C_TextBoxSprite1");
@@ -252,7 +240,6 @@ namespace HJ {
 		AddEntity("E_Uncheck3", uncheck3);
 		AddEntity("E_Uncheck4", uncheck4);
 		AddEntity("E_Uncheck5", uncheck5);
-		AddEntity("E_FScheck", fscheck);
 		AddEntity("E_TextBox1", textBox1);
 		AddEntity("E_UpBtn1", upBtn1);
 		AddEntity("E_DownBtn1", downBtn1);
@@ -281,13 +268,6 @@ namespace HJ {
 			if (event.type == sf::Event::Resized)
 				ResizeSceneView(event.size.width, event.size.height);
 
-			
-			auto fsComp = m_data->ents.Find<Entity>("E_FScheck")->GetComponent<SpriteComponent>("C_FSUnCheck1Sprite");
-			auto fsBtn = m_data->ents.Find<Entity>("E_FScheck")->GetComponent<ClickableComponent>("C_FSUnCheck1Btn");
-			if (m_data->input.isClicked(fsComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				fsBtn->SetClicked(true);
-			}
 			//check if back button is clicked
 			auto backComp = m_data->ents.Find<Entity>("E_Back")->GetComponent<SpriteComponent>("C_BackSprite");
 			auto backClick = m_data->ents.Find<Entity>("E_Back")->GetComponent<ClickableComponent>("C_BackBtnBtn");
@@ -478,7 +458,6 @@ namespace HJ {
 			m_data->settings.SetResolution(1920, 1080);
 			
 			m_data->ents.Find<Entity>("E_Uncheck4")->GetComponent<SpriteComponent>("C_UnCheck4Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
-
 			m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 			m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<SpriteComponent>("C_UnCheck2Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 			m_data->ents.Find<Entity>("E_Uncheck3")->GetComponent<SpriteComponent>("C_UnCheck3Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
@@ -494,24 +473,17 @@ namespace HJ {
 			//m_data->settings.SetScreenMode(SCREEN_MODE::FULLSCREEN);
 			if (m_data->settings.HasVSync())
 			{
-				m_data->settings.SetVSync(false);
+				m_data->settings.SetVSyncOn(false);
 				m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 			}
 			else
 			{
-				m_data->settings.SetVSync(true);
+				m_data->settings.SetVSyncOn(true);
 				m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 			}
 			
 			
 			uncheck5Click->SetResolve(false);
-		}
-
-		//resolve fullscreen click
-		auto fsBtn = m_data->ents.Find<Entity>("E_FScheck")->GetComponent<ClickableComponent>("C_FSUnCheck1Btn");
-		if (fsBtn->CanResolve())
-		{
-			fsBtn->SetResolve(false);
 		}
 
 		//resolve first up button click

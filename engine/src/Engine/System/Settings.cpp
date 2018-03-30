@@ -29,7 +29,7 @@ namespace Engine { namespace System {
 		#endif
 	}
 
-	void Settings::SetVSync(bool t_vsync)
+	void Settings::SetVSyncOn(bool t_vsync)
 	{
 		m_hasVsync = t_vsync;
 		#if NDEBUG
@@ -42,25 +42,18 @@ namespace Engine { namespace System {
 		m_screenWidth = t_width;
 		m_screenHeight = t_height;
 		#if NDEBUG
-		std::cout << "Resolution: (" << m_screenWidth << ", " << m_screenHeight << ")" << std::endl;
+		std::cout << "Resolution from settings: (" << m_screenWidth << ", " << m_screenHeight << ")" << std::endl;
 		#endif
 	}
 
 	void Settings::SaveScreenOpts()
 	{
-		switch (m_screenMode)
-		{
-			default:
-			case SCREEN_MODE::WINDOWED:
-				Engine2D::GetWin().setSize(sf::Vector2u(m_screenWidth, m_screenHeight));
-				Engine2D::SetVsync(m_hasVsync);
-				break;
+		// screen resolution
+		if (m_screenMode == SCREEN_MODE::WINDOWED)
+			Engine2D::GetWin().setSize(sf::Vector2u(m_screenWidth, m_screenHeight));
 
-			case SCREEN_MODE::FULLSCREEN:
-				Engine2D::GetWin().setSize(sf::Vector2u(m_screenWidth, m_screenHeight));
-				Engine2D::SetVsync(m_hasVsync);
-				break;
-		}
+		// v-sync on?
+		Engine2D::SetVsync(m_hasVsync);
 	}
 
 } }

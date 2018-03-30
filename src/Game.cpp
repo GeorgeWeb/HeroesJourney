@@ -11,7 +11,8 @@ namespace HJ {
 		m_deltaTime(1.0f / 60.0f)
 	{	
 		// create the game window
-		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, sf::Style::Default);
+		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, 
+			sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
 		// set game title
 		Engine2D::title = t_title;
 		// set game window
@@ -25,7 +26,7 @@ namespace HJ {
 		// init. game settigns
 		m_data->settings.SetResolution(t_width, t_height);
 		m_data->settings.SetScreenMode(SCREEN_MODE::WINDOWED);
-		m_data->settings.SetVSync(t_vsync);
+		m_data->settings.SetVSyncOn(t_vsync);
 		// save the initialized game settings
 		m_data->settings.Save();
 

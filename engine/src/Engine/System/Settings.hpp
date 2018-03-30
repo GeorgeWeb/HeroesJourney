@@ -1,6 +1,8 @@
 #ifndef SETTINGS
 #define SETTINGS
 
+#include <SFML/Graphics.hpp>
+
 namespace Engine { namespace System {
 
 	enum SCREEN_MODE
@@ -20,8 +22,9 @@ namespace Engine { namespace System {
 			inline SCREEN_MODE GetScreenMode() const { return m_screenMode; };
 			void SetScreenMode(const SCREEN_MODE& t_mode);
 
-			void SetVSync(bool t_vsync);
-			inline bool HasVSync() { return m_hasVsync; }
+			inline bool HasVSync() const { return m_hasVsync; }
+			void SetVSyncOn(bool t_vsync);
+
 			void SetResolution(unsigned int t_width, unsigned int t_height);
 
 		private:
@@ -30,7 +33,6 @@ namespace Engine { namespace System {
 		private:
 			// decision handlers
 			bool m_hasVsync;
-			bool m_changedResolution;
 			// resolution dimensions
 			unsigned int m_screenWidth;
 			unsigned int m_screenHeight;
@@ -41,3 +43,4 @@ namespace Engine { namespace System {
 } }
 
 #endif // !SETTINGS
+ 
