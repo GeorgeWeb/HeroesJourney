@@ -443,7 +443,8 @@ namespace HJ {
 				auto CastleInterior = std::make_unique<CastleScene>(CastleScene(m_data));
 				m_data->machine.AddState(std::move(CastleInterior), false);
 			}
-			//
+			
+			//check if the play button is clicked
 			if (fightComp->IsClickable() && m_data->input.isClicked(fightComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()));
 			{
 				fightBtn->SetClicked(true);

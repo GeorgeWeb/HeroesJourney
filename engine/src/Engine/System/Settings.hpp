@@ -21,6 +21,7 @@ namespace Engine { namespace System {
 			void SetScreenMode(const SCREEN_MODE& t_mode);
 
 			void SetVSync(bool t_vsync);
+			inline bool HasVSync() { return m_hasVsync; }
 			void SetResolution(unsigned int t_width, unsigned int t_height);
 
 		private:

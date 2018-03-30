@@ -20,6 +20,7 @@ namespace HJ {
 
 			void HandleInput() override final;
 			void Update(float t_deltaTime) override final;
+			void UpdateSettings();
 			void Draw(float t_deltaTime) override final;
 
 		protected:

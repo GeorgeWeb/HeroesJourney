@@ -28,6 +28,7 @@ namespace HJ { namespace Entities {
 		SetAlive(false);
 		SetVisible(false);
 		m_closeBtnSprite->SetClickable(false); ///> true by default
+		m_playBtnSprite->SetClickable(false);
 
 		m_bgSprite->independent = true;
 		m_closeBtnSprite->independent = true;
