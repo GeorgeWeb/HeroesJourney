@@ -10,6 +10,7 @@ namespace Engine {
 
 	std::string Engine2D::title;
 	sf::RenderWindow* Engine2D::window;
+	sf::Sprite Engine2D::cursor;
 
 	void Engine2D::Render()
 	{

@@ -4,13 +4,15 @@
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 
+// custom cursor
+#define CUSTOM_CURSOR_IMG "res/img/misc/cursor.png"
+
 // game title font
 #define GAME_FONT "res/font/Pixel-Noir.ttf"
 
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
 #define SPLASH_GAME_LOGO_SPRITESHEET "res/img/splash/logo-animated.png"
-
 
 // MainMenu state global definitions
 #define MAINMENU_SCENE_BACKGROUND "res/img/main_menu/main-menu-bg.png"

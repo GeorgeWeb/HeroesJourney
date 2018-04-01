@@ -22,6 +22,8 @@ namespace Engine {
 			static sf::RenderWindow* window;
 			static std::string title;
 
+			static sf::Sprite cursor;
+
 		public:
 			Engine2D() = delete;
 			
