@@ -254,7 +254,6 @@ namespace HJ {
 
 		//prepopulate the settings
 		UpdateSettings();
-
 	}
 
 	void SettingsScene::HandleInput()
@@ -271,7 +270,7 @@ namespace HJ {
 			//check if back button is clicked
 			auto backComp = m_data->ents.Find<Entity>("E_Back")->GetComponent<SpriteComponent>("C_BackSprite");
 			auto backClick = m_data->ents.Find<Entity>("E_Back")->GetComponent<ClickableComponent>("C_BackBtnBtn");
-			if (m_data->input.isClicked(backComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (backComp->IsClickable() && m_data->input.isClicked(backComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				backClick->SetClicked(true);
 			}
@@ -279,7 +278,7 @@ namespace HJ {
 			//check if save button is clicked
 			auto saveComp = m_data->ents.Find<Entity>("E_Save")->GetComponent<SpriteComponent>("C_SaveSprite");
 			auto saveClick = m_data->ents.Find<Entity>("E_Save")->GetComponent<ClickableComponent>("C_SaveBtn");
-			if (m_data->input.isClicked(saveComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (saveComp->IsClickable() &&  m_data->input.isClicked(saveComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				saveClick->SetClicked(true);
 			}
@@ -287,7 +286,7 @@ namespace HJ {
 			//check if first circle is clicked
 			auto uncheck1Comp = m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite");
 			auto uncheck1Click = m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<ClickableComponent>("C_UnCheck1Btn");
-			if (m_data->input.isClicked(uncheck1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck1Comp->IsClickable() &&  m_data->input.isClicked(uncheck1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck1Click->SetClicked(true);
 			}
@@ -295,7 +294,7 @@ namespace HJ {
 			//check if second circle is clicked
 			auto uncheck2Comp = m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<SpriteComponent>("C_UnCheck2Sprite");
 			auto uncheck2Click = m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<ClickableComponent>("C_UnCheck2Btn");
-			if (m_data->input.isClicked(uncheck2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck2Comp->IsClickable() &&  m_data->input.isClicked(uncheck2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck2Click->SetClicked(true);
 			}
@@ -303,7 +302,7 @@ namespace HJ {
 			//check if third circle is clicked
 			auto uncheck3Comp = m_data->ents.Find<Entity>("E_Uncheck3")->GetComponent<SpriteComponent>("C_UnCheck3Sprite");
 			auto uncheck3Click = m_data->ents.Find<Entity>("E_Uncheck3")->GetComponent<ClickableComponent>("C_UnCheck3Btn");
-			if (m_data->input.isClicked(uncheck3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck3Comp->IsClickable() &&  m_data->input.isClicked(uncheck3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck3Click->SetClicked(true);
 			}
@@ -311,7 +310,7 @@ namespace HJ {
 			//check if forth circle is clicked
 			auto uncheck4Comp = m_data->ents.Find<Entity>("E_Uncheck4")->GetComponent<SpriteComponent>("C_UnCheck4Sprite");
 			auto uncheck4Click = m_data->ents.Find<Entity>("E_Uncheck4")->GetComponent<ClickableComponent>("C_UnCheck4Btn");
-			if (m_data->input.isClicked(uncheck4Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck4Comp->IsClickable() &&  m_data->input.isClicked(uncheck4Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck4Click->SetClicked(true);
 			}
@@ -319,7 +318,7 @@ namespace HJ {
 			//check if fifth circle is clicked
 			auto uncheck5Comp = m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite");
 			auto uncheck5Click = m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<ClickableComponent>("C_UnCheck5Btn");
-			if (m_data->input.isClicked(uncheck5Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck5Comp->IsClickable() &&  m_data->input.isClicked(uncheck5Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck5Click->SetClicked(true);
 			}
@@ -327,7 +326,7 @@ namespace HJ {
 			//check if the first up button is clicked
 			auto up1Comp = m_data->ents.Find<Entity>("E_UpBtn1")->GetComponent<SpriteComponent>("C_upBtnSprite1");
 			auto up1Click = m_data->ents.Find<Entity>("E_UpBtn1")->GetComponent <ClickableComponent>("C_upBtnBtn1");
-			if (m_data->input.isClicked(up1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (up1Comp->IsClickable() &&  m_data->input.isClicked(up1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				up1Click->SetClicked(true);
 			}
@@ -335,7 +334,7 @@ namespace HJ {
 			//check if the first down button is clicked
 			auto down1Comp = m_data->ents.Find<Entity>("E_DownBtn1")->GetComponent<SpriteComponent>("C_downBtnSprite1");
 			auto down1Click = m_data->ents.Find<Entity>("E_DownBtn1")->GetComponent <ClickableComponent>("C_downBtnBtn1");
-			if (m_data->input.isClicked(down1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (down1Comp->IsClickable() &&  m_data->input.isClicked(down1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				down1Click->SetClicked(true);
 			}
@@ -343,7 +342,7 @@ namespace HJ {
 			//check if the second up button is clicked
 			auto up2Comp = m_data->ents.Find<Entity>("E_UpBtn2")->GetComponent<SpriteComponent>("C_upBtnSprite2");
 			auto up2Click = m_data->ents.Find<Entity>("E_UpBtn2")->GetComponent <ClickableComponent>("C_upBtnBtn2");
-			if (m_data->input.isClicked(up2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (up2Comp->IsClickable() &&  m_data->input.isClicked(up2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				up2Click->SetClicked(true);
 			}
@@ -351,7 +350,7 @@ namespace HJ {
 			//check if the second down button is clicked
 			auto down2Comp = m_data->ents.Find<Entity>("E_DownBtn2")->GetComponent<SpriteComponent>("C_downBtnSprite2");
 			auto down2Click = m_data->ents.Find<Entity>("E_DownBtn2")->GetComponent <ClickableComponent>("C_downBtnBtn2");
-			if (m_data->input.isClicked(down2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (down2Comp->IsClickable() &&  m_data->input.isClicked(down2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				down2Click->SetClicked(true);
 
@@ -360,7 +359,7 @@ namespace HJ {
 			//check if the thrid up button is clicked
 			auto up3Comp = m_data->ents.Find<Entity>("E_UpBtn3")->GetComponent<SpriteComponent>("C_upBtnSprite3");
 			auto up3Click = m_data->ents.Find<Entity>("E_UpBtn3")->GetComponent <ClickableComponent>("C_upBtnBtn3");
-			if (m_data->input.isClicked(up3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (up3Comp->IsClickable() &&  m_data->input.isClicked(up3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				up3Click->SetClicked(true);
 			}
@@ -368,7 +367,7 @@ namespace HJ {
 			//check if the thrid down button is clicked
 			auto down3Comp = m_data->ents.Find<Entity>("E_DownBtn3")->GetComponent<SpriteComponent>("C_downBtnSprite3");
 			auto down3Click = m_data->ents.Find<Entity>("E_DownBtn3")->GetComponent <ClickableComponent>("C_downBtnBtn3");
-			if (m_data->input.isClicked(down3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (down3Comp->IsClickable() &&  m_data->input.isClicked(down3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				down3Click->SetClicked(true);
 

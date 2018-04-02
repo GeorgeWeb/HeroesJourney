@@ -26,11 +26,16 @@ namespace HJ {
 			void HandleInput() override final;
 			void Update(float t_delatTime) override final;
 			void Draw(float t_deltaTime) override final;
-			void UpdateText();
-			void UpdateResources();
 
 		protected:
 			void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity) override final;
+
+		private:
+			void UpdateText();
+			void UpdateResources();
+			void HideEntsOnDisplay(std::vector<ECM::Entity*> t_entsToHide, std::vector<Components::SpriteComponent*> t_compsToFade, std::vector<Components::SpriteComponent*> t_compsToBlock);
+			void ShowEntsOnClose(std::vector<ECM::Entity*> t_entsToShow, std::vector<Components::SpriteComponent*> t_compsToUnfade, std::vector<Components::SpriteComponent*> t_compsToUnblock);
+
 
 		private:
 			GameDataRef m_data;

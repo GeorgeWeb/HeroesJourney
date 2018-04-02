@@ -54,6 +54,11 @@ namespace HJ { namespace Entities {
 			SetVisible(false);
 			std::invoke(OnClose);
 		}
+
+		if (m_playBtnSprite->IsClickable() && m_encInput.isClicked(m_playBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+		{
+			std::invoke(OnPlay);
+		}
 	}
 
 	void EncounterPopup::Render()
@@ -61,9 +66,10 @@ namespace HJ { namespace Entities {
 		Entity::Render();
 	}
 
-	void EncounterPopup::ToggleCloseBtnBehaviour()
+	void EncounterPopup::ToggleButtonsBehaviour()
 	{
 		m_closeBtnSprite->SetClickable(!m_closeBtnSprite->IsClickable());
+		m_playBtnSprite->SetClickable(!m_playBtnSprite->IsClickable());
 	}
 
 	void EncounterPopup::SetBackgroundImage(const sf::Texture& t_texture)

@@ -73,6 +73,11 @@ namespace Engine { namespace ECM {
 				// ... checks
 				return dynamic_cast<T*>(m_components[t_name]->GetType());
 			}
+			
+			void DeleteComponent(const std::string t_name)
+			{
+				m_components.erase(t_name);
+			}
 	};
  
 	class Component

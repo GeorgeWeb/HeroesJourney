@@ -143,7 +143,7 @@ namespace HJ {
 		knightIconSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_KnightIcon"));
 		knightIconSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//more properties
-		knightIcon->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.73));
+		knightIcon->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.04f, SCREEN_HEIGHT * 0.73f));
 		knightIcon->SetVisible(true);
 		knightIcon->SetAlive(true);
 		knightIconSprite->GetSprite().scale(2.5, 2.5);
@@ -157,7 +157,7 @@ namespace HJ {
 		sorcIconSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SorcIcon"));
 		sorcIconSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//more properties
-		sorcIcon->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.16, SCREEN_HEIGHT * 0.73));
+		sorcIcon->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.16f, SCREEN_HEIGHT * 0.73f));
 		sorcIcon->SetVisible(true);
 		sorcIcon->SetAlive(true);
 		sorcIconSprite->GetSprite().scale(2.5, 2.5);
@@ -209,13 +209,12 @@ namespace HJ {
 		));
 		m_encounterPopup->Init();
 		m_encounterPopup->Assemble(m_encounterPopup->GetPosition());
-		//clickable comp
+		// clickable comp
 		auto m_encounterPopupFight = m_encounterPopup->AddComponent<ClickableComponent>("C_xPopupFightBtn");
 		m_encounterPopupFight->SetSpriteTarget(m_encounterPopup->GetComponent<SpriteComponent>("C_xPopupPlayBtnSprite"));
 		auto m_encounterPopupClose = m_encounterPopup->AddComponent<ClickableComponent>("C_xPopupCloseBtnBtn");
 		m_encounterPopupClose->SetSpriteTarget(m_encounterPopup->GetComponent<SpriteComponent>("C_xPopupCloseBtnSprite"));
 		
-
 		//Texts for the charachter UI
 		// Text
 		auto text = std::make_shared<Entity>();
@@ -223,7 +222,7 @@ namespace HJ {
 		// define
 		infTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont->GetText().setCharacterSize(12);
-		text->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26, SCREEN_HEIGHT * 0.75));
+		text->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.75f));
 		// properties
 		text->showOnCreate = false;
 		text->SetVisible(false);
@@ -236,7 +235,7 @@ namespace HJ {
 		// define
 		infTextFont2->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont2->GetText().setCharacterSize(12);
-		text2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26, SCREEN_HEIGHT * 0.80));
+		text2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.80f));
 		// properties
 		text2->showOnCreate = false;
 		text2->SetVisible(false);
@@ -249,7 +248,7 @@ namespace HJ {
 		// define
 		infTextFont3->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont3->GetText().setCharacterSize(12);
-		text3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26, SCREEN_HEIGHT * 0.87));
+		text3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.87f));
 		// properties
 		text3->showOnCreate = false;
 		text3->SetVisible(false);
@@ -262,7 +261,7 @@ namespace HJ {
 		// define
 		infTextFont4->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont4->GetText().setCharacterSize(12);
-		text4->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26, SCREEN_HEIGHT * 0.92));
+		text4->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.92f));
 		// properties
 		text4->showOnCreate = false;
 		text4->SetVisible(false);
@@ -276,7 +275,7 @@ namespace HJ {
 		//sprite define
 		healthSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Health"));
 		healthSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		health->SetPosition(sf::Vector2f(SCREEN_WIDTH *0.02,  SCREEN_HEIGHT * 0.65));
+		health->SetPosition(sf::Vector2f(SCREEN_WIDTH *0.02f,  SCREEN_HEIGHT * 0.65f));
 		//properties
 		health->SetVisible(true);
 		health->SetAlive(true);
@@ -287,7 +286,7 @@ namespace HJ {
 		// define
 		hpTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		hpTextFont->GetText().setCharacterSize(14);
-		textHp->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.04, SCREEN_HEIGHT * 0.67));
+		textHp->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.04f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textHp->showOnCreate = true;
 		textHp->SetVisible(true);
@@ -301,7 +300,7 @@ namespace HJ {
 		//sprite define
 		manaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mana"));
 		manaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		mana->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.07, SCREEN_HEIGHT * 0.65));
+		mana->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.07f, SCREEN_HEIGHT * 0.65f));
 		//properties
 		mana->SetVisible(true);
 		mana->SetAlive(true);
@@ -312,7 +311,7 @@ namespace HJ {
 		// define
 		mnTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		mnTextFont->GetText().setCharacterSize(14);
-		textMn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.09, SCREEN_HEIGHT * 0.67));
+		textMn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.09f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textMn->showOnCreate = true;
 		textMn->SetVisible(true);
@@ -326,7 +325,7 @@ namespace HJ {
 		//sprite define
 		coinSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Coin"));
 		coinSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		coin->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.12, SCREEN_HEIGHT * 0.66));
+		coin->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.12f, SCREEN_HEIGHT * 0.66f));
 		//properties
 		coin->SetVisible(true);
 		coin->SetAlive(true);
@@ -337,7 +336,7 @@ namespace HJ {
 		// define
 		coinTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		coinTextFont->GetText().setCharacterSize(14);
-		textCoin->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.15, SCREEN_HEIGHT * 0.67));
+		textCoin->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.15f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textCoin->showOnCreate = true;
 		textCoin->SetVisible(true);
@@ -377,6 +376,7 @@ namespace HJ {
 
 	void MapScene::HandleInput()
 	{
+		#pragma region Ents & Comps to for checks
 		auto bg = m_data->ents.Find<Entity>("E_zMapBG");
 		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
 		auto frame = m_data->ents.Find<Entity>("E_xFrame");
@@ -413,8 +413,13 @@ namespace HJ {
 		auto hpTextComp = m_data->ents.Find<Entity>("E_0HpText");
 		auto mnTextComp = m_data->ents.Find<Entity>("E_0MnText");
 		auto coinTextComp = m_data->ents.Find<Entity>("E_0CoinText");
+		#pragma endregion
 
-		
+		std::vector<Entity*> entsVisibile({ text, text2, text3, text3, hpTextComp, mnTextComp, coinTextComp });
+		std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
+			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp, healthComp, healthComp, manaComp, coinComp });
+		std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
+			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp });
 
 		sf::Event event;
 		while (Engine2D::GetWin().pollEvent(event))
@@ -423,10 +428,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-			{
-				std::cout << event.size.width << std::endl;
 				ResizeSceneView(event.size.width, event.size.height);
-			}
 
 			// Pause menu
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
@@ -444,11 +446,13 @@ namespace HJ {
 				m_data->machine.AddState(std::move(CastleInterior), false);
 			}
 			
+			/*
 			//check if the play button is clicked
 			if (fightComp->IsClickable() && m_data->input.isClicked(fightComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()));
 			{
 				fightBtn->SetClicked(true);
 			}
+			*/
 			//check for forest click
 			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
@@ -465,48 +469,13 @@ namespace HJ {
 					
 
 					// turn closing check on
-					m_encounterPopup->ToggleCloseBtnBehaviour();
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Change the textures of the popup
+					// Change the textures of the popup based on the actual Encounter we're in.
 					// TODO: ...
 
-					// Fade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
-					knightComp->GetSprite().setColor(sf::Color(knightComp->GetSprite().getColor().r, knightComp->GetSprite().getColor().g, knightComp->GetSprite().getColor().b, 10.0f));
-					sorcComp->GetSprite().setColor(sf::Color(sorcComp->GetSprite().getColor().r, sorcComp->GetSprite().getColor().g, sorcComp->GetSprite().getColor().b, 10.0f));
-					rogueComp->GetSprite().setColor(sf::Color(rogueComp->GetSprite().getColor().r, rogueComp->GetSprite().getColor().g, rogueComp->GetSprite().getColor().b, 10.0f));
-					bardComp->GetSprite().setColor(sf::Color(bardComp->GetSprite().getColor().r, bardComp->GetSprite().getColor().g, bardComp->GetSprite().getColor().b, 10.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 10.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 10.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 10.0f));
-
-					// Make Entities Unclickable
-					castleComp->SetClickable(false);
-					frameComp->SetClickable(false);
-					forestComp->SetClickable(false);
-					mountainsComp->SetClickable(false);
-					seaComp->SetClickable(false);
-					evilCastleComp->SetClickable(false);
-					knightComp->SetClickable(false);
-					sorcComp->SetClickable(false);
-					rogueComp->SetClickable(false);
-					bardComp->SetClickable(false);
-
-					//hide text
-					text->SetVisible(false);
-					text2->SetVisible(false);
-					text3->SetVisible(false);
-					text4->SetVisible(false);
-					hpTextComp->SetVisible(false);
-					mnTextComp->SetVisible(false);
-					coinTextComp->SetVisible(false);
-
+					// Fade Entities/Components
+					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
 				});
 
 				// SET CLOSING BEHAVIOUR
@@ -517,45 +486,19 @@ namespace HJ {
 					m_encounterPopup->SetAlive(false);
 
 					// turn closing check off
-					m_encounterPopup->ToggleCloseBtnBehaviour();
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Unfade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
-					knightComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					sorcComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					rogueComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					bardComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 255.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 255.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 255.0f));
+					// Unfade Entities/Components
+					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
+				};
 
-					// Make Entities Clickable
-					castleComp->SetClickable(true);
-					frameComp->SetClickable(true);
-					forestComp->SetClickable(true);
-					mountainsComp->SetClickable(true);
-					seaComp->SetClickable(true);
-					evilCastleComp->SetClickable(true);
-					knightComp->SetClickable(true);
-					sorcComp->SetClickable(true);
-					rogueComp->SetClickable(true);
-					bardComp->SetClickable(true);
+				// SET PLAY CLICKED BEHAVIOUR
+				m_encounterPopup->OnPlay = [=]()
+				{
+					//std::invoke(m_encounterPopup->OnClose);
 
-					//show text
-					text->SetVisible(true);
-					text2->SetVisible(true);
-					text3->SetVisible(true);
-					text4->SetVisible(true);
-					hpTextComp->SetVisible(true);
-					mnTextComp->SetVisible(true);
-					coinTextComp->SetVisible(true);
-
+					// TODO: Play logic.
+					std::cout << "Clicked!\n";
 				};
 			}
 
@@ -571,52 +514,17 @@ namespace HJ {
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					//check if fight button is clicked
-
-
-					// turn closing check on
-					m_encounterPopup->ToggleCloseBtnBehaviour();
-
-					// Change the textures of the popup
+					// check if fight button is clicked
 					// TODO: ...
 
-					// Fade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
-					knightComp->GetSprite().setColor(sf::Color(knightComp->GetSprite().getColor().r, knightComp->GetSprite().getColor().g, knightComp->GetSprite().getColor().b, 10.0f));
-					sorcComp->GetSprite().setColor(sf::Color(sorcComp->GetSprite().getColor().r, sorcComp->GetSprite().getColor().g, sorcComp->GetSprite().getColor().b, 10.0f));
-					rogueComp->GetSprite().setColor(sf::Color(rogueComp->GetSprite().getColor().r, rogueComp->GetSprite().getColor().g, rogueComp->GetSprite().getColor().b, 10.0f));
-					bardComp->GetSprite().setColor(sf::Color(bardComp->GetSprite().getColor().r, bardComp->GetSprite().getColor().g, bardComp->GetSprite().getColor().b, 10.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 10.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 10.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 10.0f));
+					// turn closing check on
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Make Entities Unclickable
-					castleComp->SetClickable(false);
-					frameComp->SetClickable(false);
-					forestComp->SetClickable(false);
-					mountainsComp->SetClickable(false);
-					seaComp->SetClickable(false);
-					evilCastleComp->SetClickable(false);
-					knightComp->SetClickable(false);
-					sorcComp->SetClickable(false);
-					rogueComp->SetClickable(false);
-					bardComp->SetClickable(false);
-
-					//hide text
-					text->SetVisible(false);
-					text2->SetVisible(false);
-					text3->SetVisible(false);
-					text4->SetVisible(false);
-					hpTextComp->SetVisible(false);
-					mnTextComp->SetVisible(false);
-					coinTextComp->SetVisible(false);
-
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
+					
+					// Fade Entities/Components
+					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
 				});
 
 				// SET CLOSING BEHAVIOUR
@@ -627,45 +535,10 @@ namespace HJ {
 					m_encounterPopup->SetAlive(false);
 
 					// turn closing check off
-					m_encounterPopup->ToggleCloseBtnBehaviour();
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Unfade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
-					knightComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					sorcComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					rogueComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					bardComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 255.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 255.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 255.0f));
-
-					// Make Entities Clickable
-					castleComp->SetClickable(true);
-					frameComp->SetClickable(true);
-					forestComp->SetClickable(true);
-					mountainsComp->SetClickable(true);
-					seaComp->SetClickable(true);
-					evilCastleComp->SetClickable(true);
-					knightComp->SetClickable(true);
-					sorcComp->SetClickable(true);
-					rogueComp->SetClickable(true);
-					bardComp->SetClickable(true);
-
-					//show text
-					text->SetVisible(true);
-					text2->SetVisible(true);
-					text3->SetVisible(true);
-					text4->SetVisible(true);
-					hpTextComp->SetVisible(true);
-					mnTextComp->SetVisible(true);
-					coinTextComp->SetVisible(true);
-
+					// Unfade Entities/Components
+					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
 				};
 			}
 
@@ -680,52 +553,17 @@ namespace HJ {
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					//check if fight button is clicked
-
-
-					// turn closing check on
-					m_encounterPopup->ToggleCloseBtnBehaviour();
-
-					// Change the textures of the popup
+					// check if fight button is clicked
 					// TODO: ...
 
-					// Fade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
-					knightComp->GetSprite().setColor(sf::Color(knightComp->GetSprite().getColor().r, knightComp->GetSprite().getColor().g, knightComp->GetSprite().getColor().b, 10.0f));
-					sorcComp->GetSprite().setColor(sf::Color(sorcComp->GetSprite().getColor().r, sorcComp->GetSprite().getColor().g, sorcComp->GetSprite().getColor().b, 10.0f));
-					rogueComp->GetSprite().setColor(sf::Color(rogueComp->GetSprite().getColor().r, rogueComp->GetSprite().getColor().g, rogueComp->GetSprite().getColor().b, 10.0f));
-					bardComp->GetSprite().setColor(sf::Color(bardComp->GetSprite().getColor().r, bardComp->GetSprite().getColor().g, bardComp->GetSprite().getColor().b, 10.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 10.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 10.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 10.0f));
+					// turn closing check on
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Make Entities Unclickable
-					castleComp->SetClickable(false);
-					frameComp->SetClickable(false);
-					forestComp->SetClickable(false);
-					mountainsComp->SetClickable(false);
-					seaComp->SetClickable(false);
-					evilCastleComp->SetClickable(false);
-					knightComp->SetClickable(false);
-					sorcComp->SetClickable(false);
-					rogueComp->SetClickable(false);
-					bardComp->SetClickable(false);
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
 
-					//hide text
-					text->SetVisible(false);
-					text2->SetVisible(false);
-					text3->SetVisible(false);
-					text4->SetVisible(false);
-					hpTextComp->SetVisible(false);
-					mnTextComp->SetVisible(false);
-					coinTextComp->SetVisible(false);
-
+					// Fade Entities/Components
+					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
 				});
 
 				// SET CLOSING BEHAVIOUR
@@ -736,45 +574,10 @@ namespace HJ {
 					m_encounterPopup->SetAlive(false);
 
 					// turn closing check off
-					m_encounterPopup->ToggleCloseBtnBehaviour();
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Unfade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
-					knightComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					sorcComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					rogueComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					bardComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 255.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 255.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 255.0f));
-
-					// Make Entities Clickable
-					castleComp->SetClickable(true);
-					frameComp->SetClickable(true);
-					forestComp->SetClickable(true);
-					mountainsComp->SetClickable(true);
-					seaComp->SetClickable(true);
-					evilCastleComp->SetClickable(true);
-					knightComp->SetClickable(true);
-					sorcComp->SetClickable(true);
-					rogueComp->SetClickable(true);
-					bardComp->SetClickable(true);
-
-					//show text
-					text->SetVisible(true);
-					text2->SetVisible(true);
-					text3->SetVisible(true);
-					text4->SetVisible(true);
-					hpTextComp->SetVisible(true);
-					mnTextComp->SetVisible(true);
-					coinTextComp->SetVisible(true);
-
+					// Unfade Entities/Components
+					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
 				};
 			}
 
@@ -789,52 +592,17 @@ namespace HJ {
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					//check if fight button is clicked
-
-
-					// turn closing check on
-					m_encounterPopup->ToggleCloseBtnBehaviour();
-
-					// Change the textures of the popup
+					// Check if fight button is clicked
 					// TODO: ...
 
-					// Fade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 10.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 10.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 10.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 10.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 10.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 10.0f));
-					knightComp->GetSprite().setColor(sf::Color(knightComp->GetSprite().getColor().r, knightComp->GetSprite().getColor().g, knightComp->GetSprite().getColor().b, 10.0f));
-					sorcComp->GetSprite().setColor(sf::Color(sorcComp->GetSprite().getColor().r, sorcComp->GetSprite().getColor().g, sorcComp->GetSprite().getColor().b, 10.0f));
-					rogueComp->GetSprite().setColor(sf::Color(rogueComp->GetSprite().getColor().r, rogueComp->GetSprite().getColor().g, rogueComp->GetSprite().getColor().b, 10.0f));
-					bardComp->GetSprite().setColor(sf::Color(bardComp->GetSprite().getColor().r, bardComp->GetSprite().getColor().g, bardComp->GetSprite().getColor().b, 10.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 10.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 10.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 10.0f));
+					// turn closing check on
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Make Entities Unclickable
-					castleComp->SetClickable(false);
-					frameComp->SetClickable(false);
-					forestComp->SetClickable(false);
-					mountainsComp->SetClickable(false);
-					seaComp->SetClickable(false);
-					evilCastleComp->SetClickable(false);
-					knightComp->SetClickable(false);
-					sorcComp->SetClickable(false);
-					rogueComp->SetClickable(false);
-					bardComp->SetClickable(false);
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
 
-					//hide text
-					text->SetVisible(false);
-					text2->SetVisible(false);
-					text3->SetVisible(false);
-					text4->SetVisible(false);
-					hpTextComp->SetVisible(false);
-					mnTextComp->SetVisible(false);
-					coinTextComp->SetVisible(false);
-
+					// Fade Entities/Components
+					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
 				});
 
 				// SET CLOSING BEHAVIOUR
@@ -845,45 +613,10 @@ namespace HJ {
 					m_encounterPopup->SetAlive(false);
 
 					// turn closing check off
-					m_encounterPopup->ToggleCloseBtnBehaviour();
+					m_encounterPopup->ToggleButtonsBehaviour();
 
-					// Unfade Entities
-					bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
-					frameComp->GetSprite().setColor(sf::Color(frameComp->GetSprite().getColor().r, frameComp->GetSprite().getColor().g, frameComp->GetSprite().getColor().b, 255.0f));
-					castleComp->GetSprite().setColor(sf::Color(castleComp->GetSprite().getColor().r, castleComp->GetSprite().getColor().g, castleComp->GetSprite().getColor().b, 255.0f));
-					forestComp->GetSprite().setColor(sf::Color(forestComp->GetSprite().getColor().r, forestComp->GetSprite().getColor().g, forestComp->GetSprite().getColor().b, 255.0f));
-					mountainsComp->GetSprite().setColor(sf::Color(mountainsComp->GetSprite().getColor().r, mountainsComp->GetSprite().getColor().g, mountainsComp->GetSprite().getColor().b, 255.0f));
-					seaComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					evilCastleComp->GetSprite().setColor(sf::Color(evilCastleComp->GetSprite().getColor().r, evilCastleComp->GetSprite().getColor().g, evilCastleComp->GetSprite().getColor().b, 255.0f));
-					knightComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					sorcComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					rogueComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					bardComp->GetSprite().setColor(sf::Color(seaComp->GetSprite().getColor().r, seaComp->GetSprite().getColor().g, seaComp->GetSprite().getColor().b, 255.0f));
-					healthComp->GetSprite().setColor(sf::Color(healthComp->GetSprite().getColor().r, healthComp->GetSprite().getColor().g, healthComp->GetSprite().getColor().b, 255.0f));
-					manaComp->GetSprite().setColor(sf::Color(manaComp->GetSprite().getColor().r, manaComp->GetSprite().getColor().g, manaComp->GetSprite().getColor().b, 255.0f));
-					coinComp->GetSprite().setColor(sf::Color(coinComp->GetSprite().getColor().r, coinComp->GetSprite().getColor().g, coinComp->GetSprite().getColor().b, 255.0f));
-
-					// Make Entities Clickable
-					castleComp->SetClickable(true);
-					frameComp->SetClickable(true);
-					forestComp->SetClickable(true);
-					mountainsComp->SetClickable(true);
-					seaComp->SetClickable(true);
-					evilCastleComp->SetClickable(true);
-					knightComp->SetClickable(true);
-					sorcComp->SetClickable(true);
-					rogueComp->SetClickable(true);
-					bardComp->SetClickable(true);
-
-					//show text
-					text->SetVisible(true);
-					text2->SetVisible(true);
-					text3->SetVisible(true);
-					text4->SetVisible(true);
-					hpTextComp->SetVisible(true);
-					mnTextComp->SetVisible(true);
-					coinTextComp->SetVisible(true);
-
+					// Unfade Entities/Components
+					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
 				};
 			}
 
@@ -902,7 +635,7 @@ namespace HJ {
 			{
 				rogueBtn->SetClicked(true);
 
-				lastClicked = "rouge";
+				lastClicked = "rogue";
 				m_data->ents.Find<Entity>("E_0Text4")->SetVisible(true);
 				m_data->ents.Find<Entity>("E_0Text3")->SetVisible(true);
 				m_data->ents.Find<Entity>("E_0Text2")->SetVisible(true);
@@ -930,7 +663,6 @@ namespace HJ {
 				m_data->ents.Find<Entity>("E_0Text2")->SetVisible(true);
 				m_data->ents.Find<Entity>("E_0Text")->SetVisible(true);
 			}
-
 		}
 	}
 
@@ -1005,12 +737,6 @@ namespace HJ {
 		{
 			knightBtn->SetResolve(false);
 		}
-
-		//show if fight button is clicked
-		if (fightBtn->CanResolve())
-		{
-			fightBtn->SetResolve(false);
-		}
 	
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
@@ -1025,61 +751,71 @@ namespace HJ {
 		if (lastClicked == "knight")
 		{
 			m_data->ents.Find<Entity>("E_0Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("HP: "+ std::to_string(m_data->gm.hKnight->GetHealth()) + "/" + std::to_string(m_data->gm.hKnight->GetMaxHealth()));
-
 			m_data->ents.Find<Entity>("E_0Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" MN: " + std::to_string(m_data->gm.hKnight->GetMana()) + "/" + std::to_string(m_data->gm.hKnight->GetMaxMana()));
-
 			m_data->ents.Find<Entity>("E_0Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString("DMG: " + std::to_string(m_data->gm.hKnight->GetDmg())+" ("+ std::to_string(m_data->gm.hKnight->GetCrit()) +" % crit)");
-
 			m_data->ents.Find<Entity>("E_0Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString("ARM: " + std::to_string(m_data->gm.hKnight->GetArmour())+"  Dodge: " + std::to_string(m_data->gm.hKnight->GetDodge()));
-
-			
 		}
 
-		if (lastClicked == "rouge")
+		if (lastClicked == "rogue")
 		{
 			m_data->ents.Find<Entity>("E_0Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("HP: " + std::to_string(m_data->gm.hRogue->GetHealth()) + "/" + std::to_string(m_data->gm.hRogue->GetMaxHealth()));
-
 			m_data->ents.Find<Entity>("E_0Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" MN: " + std::to_string(m_data->gm.hRogue->GetMana()) + "/" + std::to_string(m_data->gm.hRogue->GetMaxMana()));
-
 			m_data->ents.Find<Entity>("E_0Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString("DMG: " + std::to_string(m_data->gm.hRogue->GetDmg()) + " (" + std::to_string(m_data->gm.hRogue->GetCrit()) + " % crit)");
-
 			m_data->ents.Find<Entity>("E_0Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString("ARM: " + std::to_string(m_data->gm.hRogue->GetArmour()) + "  Dodge: " + std::to_string(m_data->gm.hRogue->GetDodge()));
 		}
 
 		if (lastClicked == "bard")
 		{
 			m_data->ents.Find<Entity>("E_0Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("HP: " + std::to_string(m_data->gm.hBard->GetHealth()) + "/" + std::to_string(m_data->gm.hBard->GetMaxHealth()));
-
 			m_data->ents.Find<Entity>("E_0Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" MN: " + std::to_string(m_data->gm.hBard->GetMana()) + "/" + std::to_string(m_data->gm.hBard->GetMaxMana()));
-
 			m_data->ents.Find<Entity>("E_0Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString("DMG: " + std::to_string(m_data->gm.hBard->GetDmg()) + " (" + std::to_string(m_data->gm.hBard->GetCrit()) + " % crit)");
-
 			m_data->ents.Find<Entity>("E_0Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString("ARM: " + std::to_string(m_data->gm.hBard->GetArmour()) + "  Dodge: " + std::to_string(m_data->gm.hBard->GetDodge()));
 		}
 
 		if (lastClicked == "sorc")
 		{
 			m_data->ents.Find<Entity>("E_0Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("HP: " + std::to_string(m_data->gm.hSorceress->GetHealth()) + "/" + std::to_string(m_data->gm.hSorceress->GetMaxHealth()));
-			
 			m_data->ents.Find<Entity>("E_0Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" MN: " + std::to_string(m_data->gm.hSorceress->GetMana()) + "/" + std::to_string(m_data->gm.hSorceress->GetMaxMana()));
-			
 			m_data->ents.Find<Entity>("E_0Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString("DMG: " + std::to_string(m_data->gm.hSorceress->GetDmg()) + " (" + std::to_string(m_data->gm.hSorceress->GetCrit()) + " % crit)");
-			
 			m_data->ents.Find<Entity>("E_0Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString("ARM: " + std::to_string(m_data->gm.hSorceress->GetArmour()) + "  Dodge: " + std::to_string(m_data->gm.hSorceress->GetDodge()));
-
 		}
-
-		
 	}
 
 	void MapScene::UpdateResources()
 	{
-	
 		m_data->ents.Find<Entity>("E_0HpText")->GetComponent<TextComponent>("C_HpText")->GetText().setString("X " + std::to_string(m_data->gm.healthPot));
 		m_data->ents.Find<Entity>("E_0MnText")->GetComponent<TextComponent>("C_MnText")->GetText().setString("X " + std::to_string(m_data->gm.manaPot));
-		m_data->ents.Find<Entity>("E_0CoinText")->GetComponent<TextComponent>("C_CoinText")->GetText().setString("X " + std::to_string(m_data->gm.gold));
-		
+		m_data->ents.Find<Entity>("E_0CoinText")->GetComponent<TextComponent>("C_CoinText")->GetText().setString("X " + std::to_string(m_data->gm.gold));	
+	}
+
+	void MapScene::HideEntsOnDisplay(std::vector<Entity*> t_entsToHide, std::vector<SpriteComponent*> t_compsToFade, std::vector<SpriteComponent*> t_compsToBlock)
+	{
+		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
+		bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
 	
+		for (auto& ent : t_entsToHide)
+			ent->SetVisible(false);
+
+		for (auto& cmpToFade : t_compsToFade)
+			cmpToFade->GetSprite().setColor(sf::Color(cmpToFade->GetSprite().getColor().r, cmpToFade->GetSprite().getColor().g, cmpToFade->GetSprite().getColor().b, 10.0f));
+
+		for (auto& cmpToBlock : t_compsToBlock)
+			cmpToBlock->SetClickable(false);
+	}
+
+	void MapScene::ShowEntsOnClose(std::vector<Entity*> t_entsToShow, std::vector<SpriteComponent*> t_compsToUnfade, std::vector<SpriteComponent*> t_compsToUnblock)
+	{
+		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
+		bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+
+		for (auto& ent : t_entsToShow)
+			ent->SetVisible(true);
+
+		for (auto& cmpToFade : t_compsToUnfade)
+			cmpToFade->GetSprite().setColor(sf::Color(cmpToFade->GetSprite().getColor().r, cmpToFade->GetSprite().getColor().g, cmpToFade->GetSprite().getColor().b, 255.0f));
+
+		for (auto& cmpToBlock : t_compsToUnblock)
+			cmpToBlock->SetClickable(true);
 	}
 
 	void MapScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
