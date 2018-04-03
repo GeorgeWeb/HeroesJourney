@@ -28,34 +28,37 @@ namespace Engine { namespace Components {
 
 	void ClickableComponent::Update(float t_deltaTime)
 	{			
-		if (m_isClicked && !m_unClicked)
+		if (m_parent->IsAlive())
 		{
-			m_spriteComponent->GetSprite().setColor(sf::Color(
-				m_spriteComponent->GetSprite().getColor().r - 100,
-				m_spriteComponent->GetSprite().getColor().g - 100,
-				m_spriteComponent->GetSprite().getColor().b - 100,
-				m_spriteComponent->GetSprite().getColor().a));
-				
-			m_unClicked = true;
-		}
+			if (m_isClicked && !m_unClicked)
+			{
+				m_spriteComponent->GetSprite().setColor(sf::Color(
+					m_spriteComponent->GetSprite().getColor().r - 100,
+					m_spriteComponent->GetSprite().getColor().g - 100,
+					m_spriteComponent->GetSprite().getColor().b - 100,
+					m_spriteComponent->GetSprite().getColor().a));
 
-		if (m_unClicked)
-		{
-			m_timer -= t_deltaTime;
-		}
+				m_unClicked = true;
+			}
 
-		if (m_timer < 0.0f && m_unClicked)
-		{
-			m_spriteComponent->GetSprite().setColor(sf::Color(
-				m_spriteComponent->GetSprite().getColor().r + 100,
-				m_spriteComponent->GetSprite().getColor().g + 100,
-				m_spriteComponent->GetSprite().getColor().b + 100,
-				m_spriteComponent->GetSprite().getColor().a));
+			if (m_unClicked)
+			{
+				m_timer -= t_deltaTime;
+			}
 
-			m_timer = 0.1f;
-			m_unClicked = false;
-			m_isClicked = false;
-			m_canResolve = true;
+			if (m_timer < 0.0f && m_unClicked)
+			{
+				m_spriteComponent->GetSprite().setColor(sf::Color(
+					m_spriteComponent->GetSprite().getColor().r + 100,
+					m_spriteComponent->GetSprite().getColor().g + 100,
+					m_spriteComponent->GetSprite().getColor().b + 100,
+					m_spriteComponent->GetSprite().getColor().a));
+
+				m_timer = 0.1f;
+				m_unClicked = false;
+				m_isClicked = false;
+				m_canResolve = true;
+			}
 		}
 	}
 

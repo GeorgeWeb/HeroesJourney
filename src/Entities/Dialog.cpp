@@ -8,7 +8,8 @@ namespace HJ { namespace Entities {
 	
 	Dialog::Dialog() :
 		m_lCharacter(AddComponent<SpriteComponent>("C_DialogLCharacterSprite")),
-		m_rCharacter(AddComponent<SpriteComponent>("C_DialogRCharacterSprite"))
+		m_rCharacter(AddComponent<SpriteComponent>("C_DialogRCharacterSprite")),
+		m_finished(false)
 	{ }
 
 	Dialog* Dialog::GetType()
@@ -39,13 +40,13 @@ namespace HJ { namespace Entities {
 	void Dialog::SetLeftCharacterImage(const sf::Texture& t_texture)
 	{
 		m_lCharacter->GetSprite().setTexture(t_texture);
-		m_lCharacter->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		m_lCharacter->GetSprite().setColor(sf::Color::White);
 	}
 
 	void Dialog::SetRightCharacterImage(const sf::Texture& t_texture)
 	{
 		m_rCharacter->GetSprite().setTexture(t_texture);
-		m_rCharacter->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		m_rCharacter->GetSprite().setColor(sf::Color::White);
 	}
 
 	void Dialog::AddConversation(std::vector<std::string> t_texts)
@@ -69,38 +70,33 @@ namespace HJ { namespace Entities {
 
 	void Dialog::DisplayConvo(int t_start, int t_end, const sf::Font& t_font)
 	{
-		// CHECK
-		if (t_start > m_conversation.size() ||
-			t_start >= m_conversation.size() && t_end > m_conversation.size() ||
-			t_start > t_end)
+		if (t_start > m_conversation.size()
+		|| t_start >= m_conversation.size() && t_end > m_conversation.size()
+		|| t_start > t_end) m_finished = true;
+		else
 		{
-			std::cout << "Finished!\n";
-			t_start = t_end = m_conversation.size();
-		}
+			// hide convo txt
+			for (auto convo : m_conversation) 
+				convo->GetText().setColor(sf::Color(255, 255, 255, 0));
 
-		for (auto convo : m_conversation)
-		{
-			// hide
-			convo->GetText().setColor(sf::Color(255, 255, 255, 0));
-		}
-
-		// SHOW
-		auto count = 0;
-		for (int i = t_start; i < t_end; i++)
-		{
-			auto& convo = m_conversation.at(i);
+			// show convo txt
+			auto count = 0;
+			for (int i = t_start; i < t_end; i++)
+			{
+				auto& convo = m_conversation.at(i);
 			
-			// show
-			convo->GetText().setColor(sf::Color(255, 255, 255, 255));
+				// show
+				convo->GetText().setColor(sf::Color::White);
 
-			/* < Display Logic */
-			convo->SetFont(t_font);
-			convo->GetText().setString(m_texts.at(i));
-			convo->GetText().setCharacterSize(24);
-			unsigned int offsetY = count * 50;
-			convo->GetText().setPosition(sf::Vector2f(500.0f, 500.0f + offsetY));
-			/* /> Display Logic */
-			count++;
+				/* < Display Logic */
+				convo->SetFont(t_font);
+				convo->GetText().setString(m_texts.at(i));
+				convo->GetText().setCharacterSize(24);
+				unsigned int offsetY = count * 50;
+				convo->GetText().setPosition(sf::Vector2f(500.0f, 650.0f + offsetY));
+				/* /> Display Logic */
+				count++;
+			}
 		}
 	}
 

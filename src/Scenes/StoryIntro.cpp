@@ -1,5 +1,5 @@
 #include "PauseMenu.hpp"
-#include "MapScene.hpp"
+#include "Encounters/Tutorial.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -19,7 +19,7 @@ namespace HJ {
 
 	StoryIntroScene::StoryIntroScene(GameDataRef t_data) : 
 		m_data(t_data), 
-		m_turn(static_cast<DIALOG_TURN>(0))
+		m_turn(DIALOG_TURN::LEFT)
 	{ 
 		InitSceneView();
 	}
@@ -50,20 +50,23 @@ namespace HJ {
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
 		m_dialog->AddConversation({ 
-			"Test line #1", "Test line #2", 
-			"Test line #3", "Test line #4", 
-			"Test line #5", "Test line #6" 
+			"Hero: Test line #1", "- Test line #2", // LEFT CHAR
+			"Captain: Test line #3", "- Test line #4", // RIGHT CHAR
+			"Hero: Test line #5", "- Test line #6", // LEFT CHAR
+			"Captain: Test line #7", "- Test line #8"  // RIGHT CHAR
 		});
+		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
+		m_offset += 2;
 		// dialog characters
 		m_dialog->SetLeftCharacterImage(m_data->assets.GetTexture("Tex_StoryMainHero"));
 		m_dialog->SetRightCharacterImage(m_data->assets.GetTexture("Tex_StoryCaptain"));
 		// sprites settings
 		auto hero = m_dialog->GetComponent<SpriteComponent>("C_DialogLCharacterSprite");
-		hero->GetSprite().setPosition(sf::Vector2f(500.0f, 250.0f));
+		hero->GetSprite().setPosition(sf::Vector2f(500.0f, 350.0f));
 		hero->GetSprite().scale(3.0f, 3.0f);
 		auto captain = m_dialog->GetComponent<SpriteComponent>("C_DialogRCharacterSprite");
 		captain->GetSprite().scale(3.0f, 3.0f);
-		captain->GetSprite().setPosition(sf::Vector2f(700.0f, 250.0f));
+		captain->GetSprite().setPosition(sf::Vector2f(700.0f, 350.0f));
 		// Initialise dialog properties
 		m_dialog->Init();
 		
@@ -85,9 +88,9 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				//switch to map
-				auto gameMap = std::make_unique<MapScene>(MapScene(m_data));
-				m_data->machine.AddState(std::move(gameMap));
+				//switch to tutorial scene
+				auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+				m_data->machine.AddState(std::move(tutorial));
 			}
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
@@ -95,29 +98,44 @@ namespace HJ {
 			{
 				std::cout << m_offset << std::endl;
 				// Conversation
-				std::cout << "Cliked..\n";
 				m_dialog->DisplayConvo(0 + m_offset, 2 + m_offset, m_data->assets.GetFont("Font_Pixel"));
 				m_offset += 2;
+
+				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
+					
 			}
 		}
 	}
 
 	void StoryIntroScene::Update(float t_delatTime)
 	{
-		// TODO: Timers and stuff...
-		switch (m_turn)
+		if (m_dialog->HasFinished())
 		{
-			case DIALOG_TURN::LEFT:
-				// Conversation
-				// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
-				break;
-			case DIALOG_TURN::RIGHT:
-				// Conversation
-				// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
-				break;
-			default:
-				break;
+			//switch to tutorial scene
+			auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			m_data->machine.AddState(std::move(tutorial));
 		}
+		else
+		{
+			switch (m_turn)
+			{
+				case DIALOG_TURN::LEFT:
+					// Conversation
+					// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
+					m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::Green);
+					m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::White);
+					break;
+				case DIALOG_TURN::RIGHT:
+					// Conversation
+					// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
+					m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::Green);
+					m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::White);
+					break;
+				default:
+					break;
+			}
+		}
+		
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 

@@ -24,8 +24,6 @@ namespace HJ { namespace Entities {
 		Building::Update(t_deltaTime);
 
 		auto genStoreComp = m_spriteComp;
-
-	
 	}
 
 	void GeneralStore::Render()

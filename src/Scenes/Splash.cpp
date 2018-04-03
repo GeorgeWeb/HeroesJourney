@@ -24,12 +24,21 @@ namespace HJ {
 
 	void SplashScene::Init()
 	{
-		// Load resources
-		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
+		/* < GLOBAL PRE-LOAD */
+
+		// Load resources (to be used repeatingly)
+		// Font assets
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 		// Building assets
 		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
+		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
+		m_data->assets.LoadTexture("Tex_Library", CASTLE_SCENE_LIBRARY);
+		m_data->assets.LoadTexture("Tex_Inn", CASTLE_SCENE_INN);
+		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
+		// Hero assets
+		m_data->assets.LoadTexture("Tex_HeroKnight", HERO_KNIGHT_SPRITE);
+		// Evil assets
+		// ...
 
 		// create serializable game entities
 		// buildings
@@ -43,6 +52,14 @@ namespace HJ {
 		m_data->gm.hBard = std::make_shared<Bard>("C_BardSprite");
 		m_data->gm.hSorceress = std::make_shared<Sorceress>("C_SorcSprite");
 		m_data->gm.hRogue = std::make_shared<Rogue>("C_RogueSprite");
+		
+		/* /> GLOBAL PRE-LOAD */
+
+		// Load Splash screen assets
+		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
+
+		// Splash screen entities
 		// Background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");
@@ -130,6 +147,7 @@ namespace HJ {
 
 		if (m_canMove && m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").GetRow() >= 6)
 			m_logo->Move(sf::Vector2f(0.0f, -1.0f));
+
 		if (m_logo->GetPosition().y <= (SCREEN_HEIGHT - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f)
 		{
 			m_data->ents.Find<Entity>("E_xSplashText")->SetVisible(true);

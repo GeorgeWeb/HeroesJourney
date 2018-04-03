@@ -10,6 +10,9 @@
 // game title font
 #define GAME_FONT "res/font/Pixel-Noir.ttf"
 
+// Heroes/Companions & Enemies global definitions
+#define HERO_KNIGHT_SPRITE "res/img/characters/heroes/hero.png"
+
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
 #define SPLASH_GAME_LOGO_SPRITESHEET "res/img/splash/logo-animated.png"
@@ -29,7 +32,6 @@
 #define SETTING_SCENE_SELECTEDBTN "res/img/settings/selectedset.png"
 #define SETTING_SCENE_UNSELECTEDBTN "res/img/settings/unselectedset.png"
 #define SETTING_SCENE_TEXTBOX "res/img/settings/textbox.png"
-
 
 // Main Game / Map screen state global definitions
 #define MAP_SCENE_BACKGROUND "res/img/map/game-map-bg.png"
@@ -76,7 +78,7 @@
 #define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
 #define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
 
-// Heroes/Companions & Enemies global definitions
-#define MAIN_HERO_SPRITESHEET "res/img/characters/heroes/hero.png"
+// Tutorial global definitions
+#define TUTORIAL_ENCOUNTER "res/img/main_menu/main-menu-bg.png"
 
 #endif // !DEFINITIONS_H

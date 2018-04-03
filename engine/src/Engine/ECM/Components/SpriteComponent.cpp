@@ -33,7 +33,7 @@ namespace Engine { namespace Components {
 	void SpriteComponent::Render()
 	{
 		if (m_parent->IsVisible())
-			Engine::System::Renderer::Queue(&(*m_sprite));
+			System::Renderer::Queue(&(*m_sprite));
 	}
 
 	sf::Sprite& SpriteComponent::GetSprite()

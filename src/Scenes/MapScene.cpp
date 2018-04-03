@@ -368,8 +368,7 @@ namespace HJ {
 		AddEntity("E_0MnText", textMn);
 		AddEntity("E_0CoinText", textCoin);
 
-		
-		// WOW ... 3 hrs to get to that one right here :) Kinda easy to use now.
+		// If you wanna re-use an entity from another scene that already exists in the global ents. mngr.
 		//m_data->ents.Find<AnimatedLogo>("E_GameLogo")->Init();
 		//AddEntity("E_GameLogo", m_data->ents.GetSharedEntity("E_GameLogo"));
 	}
@@ -415,7 +414,7 @@ namespace HJ {
 		auto coinTextComp = m_data->ents.Find<Entity>("E_0CoinText");
 		#pragma endregion
 
-		std::vector<Entity*> entsVisibile({ text, text2, text3, text3, hpTextComp, mnTextComp, coinTextComp });
+		std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
 		std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
 			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp, healthComp, healthComp, manaComp, coinComp });
 		std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
@@ -446,13 +445,6 @@ namespace HJ {
 				m_data->machine.AddState(std::move(CastleInterior), false);
 			}
 			
-			/*
-			//check if the play button is clicked
-			if (fightComp->IsClickable() && m_data->input.isClicked(fightComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()));
-			{
-				fightBtn->SetClicked(true);
-			}
-			*/
 			//check for forest click
 			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
@@ -461,18 +453,15 @@ namespace HJ {
 				// SET CREATION BEHAVIOUR
 				m_encounterPopup->OnDisplay([=]()
 				{
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
+
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
-					
-					//check if fight button is clicked
-					
 
 					// turn closing check on
 					m_encounterPopup->ToggleButtonsBehaviour();
-
-					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
 
 					// Fade Entities/Components
 					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
@@ -495,10 +484,8 @@ namespace HJ {
 				// SET PLAY CLICKED BEHAVIOUR
 				m_encounterPopup->OnPlay = [=]()
 				{
-					//std::invoke(m_encounterPopup->OnClose);
-
 					// TODO: Play logic.
-					std::cout << "Clicked!\n";
+					std::cout << "Clicked Play!!!\n";
 				};
 			}
 
@@ -510,18 +497,15 @@ namespace HJ {
 				// SET CREATION BEHAVIOUR
 				m_encounterPopup->OnDisplay([=]()
 				{
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
+
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					// check if fight button is clicked
-					// TODO: ...
-
 					// turn closing check on
 					m_encounterPopup->ToggleButtonsBehaviour();
-
-					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
 					
 					// Fade Entities/Components
 					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
@@ -540,6 +524,13 @@ namespace HJ {
 					// Unfade Entities/Components
 					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
 				};
+
+				// SET PLAY CLICKED BEHAVIOUR
+				m_encounterPopup->OnPlay = [=]()
+				{
+					// TODO: Play logic.
+					std::cout << "Clicked Play!!!\n";
+				};
 			}
 
 			//check for sea click
@@ -549,18 +540,15 @@ namespace HJ {
 				// SET CREATION BEHAVIOUR
 				m_encounterPopup->OnDisplay([=]()
 				{
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
+
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					// check if fight button is clicked
-					// TODO: ...
-
 					// turn closing check on
 					m_encounterPopup->ToggleButtonsBehaviour();
-
-					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
 
 					// Fade Entities/Components
 					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
@@ -579,6 +567,13 @@ namespace HJ {
 					// Unfade Entities/Components
 					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
 				};
+
+				// SET PLAY CLICKED BEHAVIOUR
+				m_encounterPopup->OnPlay = [=]()
+				{
+					// TODO: Play logic.
+					std::cout << "Clicked Play!!!\n";
+				};
 			}
 
 			//check for evil castle click
@@ -588,18 +583,15 @@ namespace HJ {
 				// SET CREATION BEHAVIOUR
 				m_encounterPopup->OnDisplay([=]()
 				{
+					// Change the textures of the popup based on the actual Encounter we're in.
+					// TODO: ...
+
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
 					m_encounterPopup->SetAlive(true);
 
-					// Check if fight button is clicked
-					// TODO: ...
-
 					// turn closing check on
 					m_encounterPopup->ToggleButtonsBehaviour();
-
-					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
 
 					// Fade Entities/Components
 					HideEntsOnDisplay(entsVisibile, compsVisibile, compsClickable);
@@ -617,6 +609,13 @@ namespace HJ {
 
 					// Unfade Entities/Components
 					ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
+				};
+
+				// SET PLAY CLICKED BEHAVIOUR
+				m_encounterPopup->OnPlay = [=]()
+				{
+					// TODO: Play logic.
+					std::cout << "Clicked Play!!!\n";
 				};
 			}
 

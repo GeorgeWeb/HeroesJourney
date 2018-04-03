@@ -22,6 +22,9 @@ namespace HJ {
 			std::shared_ptr<Engine::Components::SpriteComponent> m_lCharacter;
 			std::shared_ptr<Engine::Components::SpriteComponent> m_rCharacter;		
 			std::vector<std::string> m_texts;
+
+			bool m_finished;
+
 		public:
 			Dialog();
 			~Dialog() = default;
@@ -31,14 +34,18 @@ namespace HJ {
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
+			inline std::shared_ptr<Engine::Components::SpriteComponent> GetLeftCharacter() { return m_lCharacter; }
+			inline std::shared_ptr<Engine::Components::SpriteComponent> GetRightCharacter() { return m_rCharacter; }
 			void SetLeftCharacterImage(const sf::Texture& t_texture);
 			void SetRightCharacterImage(const sf::Texture& t_texture);
 
-			void AddConversation(std::vector<std::string> t_texts);
 			std::vector<std::shared_ptr<Engine::Components::TextComponent>>& GetConversation();
-			std::vector<std::string> GetTexts() { return m_texts; }
+			inline std::vector<std::string> GetTexts() const { return m_texts; }
+			void AddConversation(std::vector<std::string> t_texts);
 
 			void DisplayConvo(int t_start, int t_end, const sf::Font& t_font);
+
+			inline bool HasFinished() const { return m_finished; }
 	};
 
 } }

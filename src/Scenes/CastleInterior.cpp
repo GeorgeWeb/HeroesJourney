@@ -20,11 +20,6 @@ namespace HJ {
 	void CastleScene::Init()
 	{
 		m_data->assets.LoadTexture("Tex_CastleBG", CASTLE_SCENE_BACKGROUD);
-		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
-		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
-		m_data->assets.LoadTexture("Tex_Library", CASTLE_SCENE_LIBRARY);
-		m_data->assets.LoadTexture("Tex_Inn", CASTLE_SCENE_INN);
-		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
 		m_data->assets.LoadTexture("Tex_BackArrow", CASTLE_SCENE_BACK_ARROW);
 		m_data->assets.LoadTexture("Tex_UiFrame", CASTLE_SCENE_UI_FRAME);
 		m_data->assets.LoadTexture("Tex_UpgradeBtn", CASTLE_SCENE_UPGRADE_BUTTON);
@@ -428,35 +423,63 @@ namespace HJ {
 				upBtnClick->SetClicked(true);
 				if (lastClicked == "infirmary")
 				{
-					m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
-					m_data->gm.infirmary->Upgrade();
-					std::cout << "Infirmary found!" << std::endl;
+					if (m_data->gm.gold >= 10 * m_data->gm.infirmary->GetLevel())
+					{
+						m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
+						m_data->gm.infirmary->Upgrade();
+						std::cout << "Infirmary found!" << std::endl;
 					
-					m_data->gm.infirmary->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+						m_data->gm.infirmary->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					}
+					else
+					{
+						// TODO: ...
+					}
 				}
 
 				else if (lastClicked == "blacksmith")
 				{
-					m_data->gm.gold -= 10 * m_data->gm.blacksmith->GetLevel();
-					m_data->gm.blacksmith->Upgrade();
-					std::cout << "Blacksmith found!" << std::endl;
-					m_data->gm.blacksmith->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					if (m_data->gm.gold >= 10 * m_data->gm.blacksmith->GetLevel())
+					{
+						m_data->gm.gold -= 10 * m_data->gm.blacksmith->GetLevel();
+						m_data->gm.blacksmith->Upgrade();
+						std::cout << "Blacksmith found!" << std::endl;
+						m_data->gm.blacksmith->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					}
+					else
+					{
+						// TODO: ...
+					}
 				}
 
 				else if (lastClicked == "library")
 				{
-					m_data->gm.gold -= 10 * m_data->gm.library->GetLevel();
-					m_data->gm.library->Upgrade();
-					std::cout << "Library found!" << std::endl;
-					m_data->gm.library->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					if (m_data->gm.gold >= 10 * m_data->gm.library->GetLevel())
+					{
+						m_data->gm.gold -= 10 * m_data->gm.library->GetLevel();
+						m_data->gm.library->Upgrade();
+						std::cout << "Library found!" << std::endl;
+						m_data->gm.library->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					}
+					else
+					{
+						// TODO: ...
+					}
 				}
 
 				else if (lastClicked == "inn")
 				{
-					m_data->gm.gold -= 10 * m_data->gm.inn->GetLevel();
-					m_data->gm.inn->Upgrade();
-					std::cout << "Inn found!" << std::endl;
-					m_data->gm.inn->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					if (m_data->gm.gold >= 10 * m_data->gm.inn->GetLevel())
+					{
+						m_data->gm.gold -= 10 * m_data->gm.inn->GetLevel();
+						m_data->gm.inn->Upgrade();
+						std::cout << "Inn found!" << std::endl;
+						m_data->gm.inn->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
+					}
+					else
+					{
+						// TODO: ...
+					}
 				}
 			}
 
@@ -467,9 +490,15 @@ namespace HJ {
 			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				manaClick->SetClicked(true);
-
-				m_data->gm.gold -= 10 ;
-				m_data->gm.manaPot += 1;
+				if (m_data->gm.gold >= 10)
+				{
+					m_data->gm.gold -= 10;
+					m_data->gm.manaPot += 1;
+				}
+				else
+				{
+					// TODO: ...
+				}
 			}
 
 			//check if health button has been clicked
@@ -478,9 +507,15 @@ namespace HJ {
 			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				healthClick->SetClicked(true);
-
-				m_data->gm.gold -= 10;
-				m_data->gm.healthPot += 1;
+				if (m_data->gm.gold >= 10)
+				{
+					m_data->gm.gold -= 10;
+					m_data->gm.healthPot += 1;
+				}
+				else
+				{
+					// TODO: ...
+				}
 			}
 
 		}
@@ -684,9 +719,22 @@ namespace HJ {
 	void CastleScene::UpdateResourceText()
 	{ 
 		m_data->ents.Find<Entity>("E_HpText")->GetComponent<TextComponent>("C_HpText")->GetText().setString("X " + std::to_string(m_data->gm.healthPot));
+		if (m_data->gm.healthPot <= 0)
+			m_data->ents.Find<Entity>("E_HpText")->GetComponent<TextComponent>("C_HpText")->GetText().setColor(sf::Color::Red);
+		else
+			m_data->ents.Find<Entity>("E_HpText")->GetComponent<TextComponent>("C_HpText")->GetText().setColor(sf::Color::White);
+
 		m_data->ents.Find<Entity>("E_MnText")->GetComponent<TextComponent>("C_MnText")->GetText().setString("X " + std::to_string(m_data->gm.manaPot));
+		if (m_data->gm.manaPot <= 0)
+			m_data->ents.Find<Entity>("E_MnText")->GetComponent<TextComponent>("C_MnText")->GetText().setColor(sf::Color::Red);
+		else
+			m_data->ents.Find<Entity>("E_MnText")->GetComponent<TextComponent>("C_MnText")->GetText().setColor(sf::Color::White);
+
 		m_data->ents.Find<Entity>("E_CoinText")->GetComponent<TextComponent>("C_CoinText")->GetText().setString("X " + std::to_string(m_data->gm.gold));
-		
+		if (m_data->gm.gold <= 0)
+			m_data->ents.Find<Entity>("E_CoinText")->GetComponent<TextComponent>("C_CoinText")->GetText().setColor(sf::Color::Red);
+		else
+			m_data->ents.Find<Entity>("E_CoinText")->GetComponent<TextComponent>("C_CoinText")->GetText().setColor(sf::Color::White);
 	}
 
 	void CastleScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)
