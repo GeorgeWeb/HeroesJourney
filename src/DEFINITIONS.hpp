@@ -10,8 +10,15 @@
 // game title font
 #define GAME_FONT "res/font/Pixel-Noir.ttf"
 
-// Heroes/Companions & Enemies global definitions
+// Heroes global definitions
 #define HERO_KNIGHT_SPRITE "res/img/characters/heroes/hero.png"
+#define HERO_BARD_SPRITE "res/img/characters/heroes/hero.png"
+#define HERO_SORC_SPRITE "res/img/characters/heroes/hero.png"
+#define HERO_ROGUE_SPRITE "res/img/characters/heroes/hero.png"
+
+// Enemies global definitions
+#define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/enemy.png"
+#define EVIL_FROST_MAGE_SPRITE "res/img/characters/evils/enemy.png"
 
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
@@ -78,7 +85,20 @@
 #define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
 #define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
 
+// Re-usable encounter assets global definitions
+#define BASIC_ATTACK_BTN "res/img/encounter/attackbtn.png"
+#define CONCEDE_BTN "res/img/encounter/concedebtn.png"
+#define DEFFEND_BTN "res/img/encounter/deffendbtn.png"
+#define PAUSE_BTN "res/img/encounter/pausebtn.png"
+#define USE_HP_BTN "res/img/encounter/healthbtn.png"
+#define USE_MP_BTN "res/img/encounter/manabtn.png"
+#define ENCOUNTER_UI_FRAME "res/img/encounter/uiframe.png"
+
 // Tutorial global definitions
 #define TUTORIAL_ENCOUNTER "res/img/main_menu/main-menu-bg.png"
+
+// Heroes Skills global definitions
+#define TEST_SKILL1_BTN "res/img/encounter/skill1.png"
+#define TEST_SKILL2_BTN "res/img/encounter/skill2.png"
 
 #endif // !DEFINITIONS_H

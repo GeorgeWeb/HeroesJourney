@@ -102,7 +102,6 @@ namespace HJ {
 				m_offset += 2;
 
 				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
-					
 			}
 		}
 	}

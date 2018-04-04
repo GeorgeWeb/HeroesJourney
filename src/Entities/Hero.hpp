@@ -19,8 +19,8 @@ namespace HJ { namespace Entities {
 		protected:
 			int m_health;
 			int m_maxHealth;
-			unsigned int m_mana;
-			unsigned int m_maxMana;
+			int m_mana;
+			int m_maxMana;
 			unsigned int m_damage;
 			unsigned int m_armour;
 			unsigned int m_critChance;
@@ -70,9 +70,17 @@ namespace HJ { namespace Entities {
 			virtual void Update(float t_deltaTime) override;
 			virtual void Render() override;
 
-			virtual void Attack() = 0;
-			virtual void Skill(std::function<void()> t_func);
+			virtual void Attack(std::shared_ptr<EvilAI> t_enemy) = 0;
 			virtual void Defend() = 0;
+
+			// can be applied to enemies
+			virtual void UseSkill1(std::shared_ptr<EvilAI> t_enemy) {};
+			// can be applied to party members (used from Bard)
+			virtual void UseSkill1(std::vector<std::shared_ptr<Hero>> t_heroes) {};
+			// can be applied to enemies
+			virtual void UseSkill2(std::shared_ptr<EvilAI> t_enemy) {};
+			// can be applied to party members (used from Bard)
+			virtual void UseSkill2(std::vector<std::shared_ptr<Hero>> t_heroes) {};
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);

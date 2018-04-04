@@ -252,7 +252,7 @@ namespace HJ {
 		AddEntity("E_Save", save);
 		AddEntity("E_Back", back);
 
-		//prepopulate the settings
+		// pre-populate the settings
 		UpdateSettings();
 	}
 

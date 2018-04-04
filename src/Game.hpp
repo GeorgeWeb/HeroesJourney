@@ -39,11 +39,12 @@ namespace HJ {
 			unsigned int healthPot = 1;
 			unsigned int manaPot = 1;
 			
-			// unlocked encounters + the number of times each one is completed.
+			// encounter's name + the number of times each one is completed.
+			std::vector<std::pair<std::string, unsigned int>> unlockedEncounters;
 			// this helps manage which heroes are available for the battle,
 			// because every hero is related to a particular encounter
-			std::vector<std::pair<std::string, unsigned int>> unlockedEncounters;
-			
+			std::vector<std::shared_ptr<Entities::Hero>> unlockedHeroes;
+
 			// resources entities
 			std::shared_ptr<ECM::Entity> cHealthPot;
 			std::shared_ptr<ECM::Entity> cManaPot;
@@ -56,6 +57,7 @@ namespace HJ {
 			std::shared_ptr<Entities::Rogue> hRogue;
 
 			// evil/enemies characters
+			std::shared_ptr<Entities::EvilFrostMage> eFrostGolem;
 			std::shared_ptr<Entities::EvilFrostMage> eFrostMage;
 
 			// inside-castle buildings
@@ -92,6 +94,12 @@ namespace HJ {
 		private:
 			// fires up the game :P (LinkStart ref.: SwordArtsOnline)
 			void GameLoop();
+	};
+
+	enum class BATTLE_TURN : int
+	{
+		HERO = 0,
+		EVIL = 1
 	};
 
 }

@@ -24,6 +24,7 @@ namespace HJ { namespace Entities {
 		class EvilFrostMage final : public EvilAI
 		{	
 			public:
+				EvilFrostMage(const std::string& t_sprite);
 				EvilFrostMage(const std::string& t_sprite, const std::string& t_animator);
 				virtual ~EvilFrostMage() = default;
 

@@ -25,7 +25,15 @@ namespace HJ { namespace Encounters {
 		void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity) override final;
 
 	private:
+		void DisableUIButtons(std::vector<Components::SpriteComponent*> t_buttons);
+		void EnableUIButtons(std::vector<Components::SpriteComponent*> t_buttons);
+
+	private:
 		GameDataRef m_data;
+		BATTLE_TURN m_turn;
+
+		unsigned int m_hCount;
+		bool m_won = false;
 	};
 } }
 

@@ -2,6 +2,10 @@
 
 namespace HJ { namespace Entities {
 
+	EvilAI::EvilAI(const std::string& t_sprite) :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
+	{ }
+
 	EvilAI::EvilAI(const std::string& t_sprite, const std::string& t_animator) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))

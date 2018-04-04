@@ -24,7 +24,9 @@ namespace HJ { namespace Entities {
 
 		protected:
 			int m_health;
-			unsigned int m_mana;
+			int m_maxHealth;
+			int m_mana;
+			int m_maxMana;
 			unsigned int m_damage;
 			unsigned int m_armour;
 			unsigned int m_critChance;
@@ -49,6 +51,7 @@ namespace HJ { namespace Entities {
 
 		public:
 			EvilAI() = delete;
+			EvilAI(const std::string& t_sprite);
 			EvilAI(const std::string& t_sprite, const std::string& t_animator);
 			virtual ~EvilAI() = default;
 

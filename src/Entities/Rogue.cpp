@@ -54,14 +54,9 @@ namespace HJ { namespace Entities {
 		Hero::Render();
 	}
 
-	void Rogue::Attack()
+	void Rogue::Attack(std::shared_ptr<EvilAI> t_enemy)
 	{
 		// implement
-	}
-
-	void Rogue::Skill(std::function<void()> t_func)
-	{
-		Hero::Skill(t_func);
 	}
 
 	void Rogue::Defend()
@@ -69,12 +64,12 @@ namespace HJ { namespace Entities {
 		// implement
 	}
 
-	void Rogue::TrueMark()
+	void Rogue::UseSkill1(std::shared_ptr<EvilAI> t_enemy)
 	{
 		// implement
 	}
 
-	void Rogue::StormOfDaggers()
+	void Rogue::UseSkill2(std::shared_ptr<EvilAI> t_enemy)
 	{
 		// implement
 	}

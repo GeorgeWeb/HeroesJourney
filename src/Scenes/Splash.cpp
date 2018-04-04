@@ -37,8 +37,20 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
 		// Hero assets
 		m_data->assets.LoadTexture("Tex_HeroKnight", HERO_KNIGHT_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroSorc", HERO_SORC_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroRogue", HERO_ROGUE_SPRITE);
 		// Evil assets
-		// ...
+		m_data->assets.LoadTexture("Tex_EvilFrostGolem", EVIL_FROST_GOLEM_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilFrostMage", EVIL_FROST_MAGE_SPRITE);
+		// Encounter assets
+		m_data->assets.LoadTexture("Tex_EncounterUIFrame", ENCOUNTER_UI_FRAME);
+		m_data->assets.LoadTexture("Tex_BasicAttackBtn", BASIC_ATTACK_BTN);
+		m_data->assets.LoadTexture("Tex_ConcedeBtn", CONCEDE_BTN);
+		m_data->assets.LoadTexture("Tex_DefendBtn", DEFFEND_BTN);
+		m_data->assets.LoadTexture("Tex_PauseBtn", PAUSE_BTN);
+		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
+		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
 
 		// create serializable game entities
 		// buildings
@@ -52,7 +64,7 @@ namespace HJ {
 		m_data->gm.hBard = std::make_shared<Bard>("C_BardSprite");
 		m_data->gm.hSorceress = std::make_shared<Sorceress>("C_SorcSprite");
 		m_data->gm.hRogue = std::make_shared<Rogue>("C_RogueSprite");
-		
+
 		/* /> GLOBAL PRE-LOAD */
 
 		// Load Splash screen assets

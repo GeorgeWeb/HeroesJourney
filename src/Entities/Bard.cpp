@@ -18,7 +18,7 @@ namespace HJ { namespace Entities {
 		m_isStunned = false;
 	}
 
-	Bard::Bard(const std::string& t_sprite, const std::string & t_animatior) :
+	Bard::Bard(const std::string& t_sprite, const std::string& t_animatior) :
 		Hero(t_sprite, t_animatior)
 	{
 		m_health = 100;
@@ -54,14 +54,9 @@ namespace HJ { namespace Entities {
 		Hero::Render();
 	}
 
-	void Bard::Attack()
+	void Bard::Attack(std::shared_ptr<EvilAI> t_enemy)
 	{
 		// implement
-	}
-
-	void Bard::Skill(std::function<void()> t_func)
-	{
-		Hero::Skill(t_func);
 	}
 
 	void Bard::Defend()
@@ -69,14 +64,14 @@ namespace HJ { namespace Entities {
 		// implement
 	}
 
-	void Bard::SoothingSong()
+	void Bard::UseSkill1(std::vector<std::shared_ptr<Hero>> t_heroes)
 	{
 		// implement
 	}
 
-	void Bard::HymnOfCharge()
+	void Bard::UseSkill2(std::vector<std::shared_ptr<Hero>> t_heroes)
 	{
-		// todo
+		// implement
 	}
 
 } }
