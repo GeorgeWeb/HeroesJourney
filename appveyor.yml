@@ -29,7 +29,7 @@ build:
   
 after_build:
 - cmd: >-
-    7z a Heroes_Journey_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/Astral_Insanity_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
+    7z a Heroes_Journey_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/Heroes_Journey_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
     
     cd ../build/installer/
     
