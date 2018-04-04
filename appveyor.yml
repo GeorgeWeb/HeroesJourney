@@ -3,6 +3,7 @@ branches:
   only:
   - master
   - dev
+  - CI-fix
 
 image: Visual Studio 2017
 
