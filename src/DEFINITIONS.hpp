@@ -1,6 +1,8 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
+//#define NDEBUG
+
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 
