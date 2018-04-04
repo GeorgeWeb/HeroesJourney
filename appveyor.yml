@@ -1,8 +1,4 @@
 version: 1.0.{build}
-branches:
-  only:
-  - master
-  - dev
 
 image: Visual Studio 2017
 
@@ -10,37 +6,18 @@ configuration:
 - Release
 - Debug
 
-cache:
-- build/lib -> appveyor.yml
+platform: x64
+
+clone_folder: c:\projects\heroes_journey
+
+install:
+- git submodule update --init --recursive
 
 before_build:
-- cmd: >-
-    git submodule update --init --recursive
-    
-    if not exist build\ mkdir build
-    cd build
-    
-    cmake -G "Visual Studio 15 2017 Win64" ../
-    
+- cmake -G "Visual Studio 15 2017 Win64"
+
 build:
-  project: build/HEROES.vcxproj
-  parallel: true
+  project: Heroes_Journey.sln
   verbosity: minimal
-  
-after_build:
-- cmd: >-
-    7z a Heroes_Journey_%CONFIGURATION%_win64.zip %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/Heroes_Journey_main.exe %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/*.dll  %APPVEYOR_BUILD_FOLDER%/build/bin/%CONFIGURATION%/**/*
-    
-    cd ../build/installer/
-    
-    dir
-    
-    for %%a in (*.exe) do ren "%%~a" "%%~na_%CONFIGURATION%_win64%%~xa"
-    
-    dir
 
 test: off
-    
-artifacts:
-  - path: build/*.zip
-    name: Heroes_Journey_zip
