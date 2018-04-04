@@ -1,5 +1,5 @@
-#ifndef STATE_MACHINE_H
-#define STATE_MACHINE_H
+#ifndef SCENE_MANAGER_H
+#define SCENE_MANAGER_H
 
 #include "State.hpp"
 
@@ -33,4 +33,4 @@ namespace Engine { namespace SM {
 	};
 
 } }
-#endif // !STATE_MACHINE_H
+#endif // !SCENE_MANAGER_H

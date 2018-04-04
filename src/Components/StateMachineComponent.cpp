@@ -4,6 +4,7 @@ namespace HJ { namespace Components {
 
 	using namespace Engine;
 	using namespace ECM;
+	using namespace States;
 
 	StateMachineComponent::StateMachineComponent(Entity* t_parent) : 
 		m_currentState(nullptr), 
@@ -18,7 +19,7 @@ namespace HJ { namespace Components {
 
 	void StateMachineComponent::AddState(const std::string& t_name, std::shared_ptr<State> t_state)
 	{
-		m_states[t_name] = t_state;
+		m_states.insert_or_assign(t_name, t_state);
 	}
 
 	std::shared_ptr<State> StateMachineComponent::GetState(const std::string& t_name) const

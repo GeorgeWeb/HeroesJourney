@@ -42,14 +42,19 @@ namespace HJ { namespace Encounters {
 		m_data->gm.hKnight->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 		m_data->gm.hKnight->Init();
+		// Add TakeDmgComponent
+		// TODO: ...
 
 		// tutorial's evil ai - frost golem
-		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>("C_FrostGolemSprite"));
+		m_data->gm.eFrostGolem.reset();
+		m_data->gm.eFrostGolem = std::make_shared<EvilFrostMage>("C_FrostGolemSprite");
 		m_data->gm.eFrostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
 		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .2f));
 		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f, 
 			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35f));
 		m_data->gm.eFrostGolem->Init();
+		// Add TakeDmgComponent
+		// TODO: ...
 
 		// ui frame
 		auto uiFrame = std::make_shared<ECM::Entity>();

@@ -1,5 +1,5 @@
-#ifndef STATE_H
-#define STATE_H
+#ifndef SCENE_H
+#define SCENE_H
 
 #include "../ECM/ECM.hpp"
 
@@ -39,4 +39,4 @@ namespace Engine { namespace SM {
 
 } }
 
-#endif // !STATE_H
+#endif // !SCENE_H
