@@ -33,6 +33,9 @@ namespace HJ {
 		// init. renderer
 		Renderer::Initialize(win);
 
+		// init. controls
+		Controls::Init();
+
 		// init. game settigns
 		m_data->settings.SetResolution(t_width, t_height);
 		m_data->settings.SetScreenMode(SCREEN_MODE::WINDOWED);

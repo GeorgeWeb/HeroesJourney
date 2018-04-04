@@ -24,6 +24,9 @@
 #include "Entities/Inn.hpp"
 #include "Entities/GeneralStore.hpp"
 
+// game controls
+#include "Controls.hpp"
+
 namespace HJ {
 
 	using namespace Engine;
