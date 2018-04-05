@@ -36,17 +36,14 @@ namespace HJ {
 	{
 		public:
 			// amount of gold gathered
-			unsigned int gold = 100;
+			unsigned int gold = 0;
 			
 			// amount of potions acquired/bought
-			unsigned int healthPot = 1;
-			unsigned int manaPot = 1;
+			unsigned int healthPot = 0;
+			unsigned int manaPot = 0;
 			
 			// encounter's name + the number of times each one is completed.
 			std::vector<std::pair<std::string, unsigned int>> unlockedEncounters;
-			// this helps manage which heroes are available for the battle,
-			// because every hero is related to a particular encounter
-			std::vector<std::shared_ptr<Entities::Hero>> unlockedHeroes;
 
 			// resources entities
 			std::shared_ptr<ECM::Entity> cHealthPot;
@@ -103,6 +100,13 @@ namespace HJ {
 	{
 		HERO = 0,
 		EVIL = 1
+	};
+
+	enum class BATTLE_STATUS : int
+	{
+		PLAYING = 0,
+		WON     = 1,
+		LOST    = 2
 	};
 
 }

@@ -1,7 +1,9 @@
 #include "Tutorial.hpp"
 #include "../PauseMenu.hpp"
+#include "../MapScene.hpp"
 
 #include <Engine/ECM/Components/ClickableComponent.hpp>
+#include "../../States/AIStates.hpp"
 
 namespace HJ { namespace Encounters {
 
@@ -24,6 +26,12 @@ namespace HJ { namespace Encounters {
 		m_data->assets.LoadTexture("Tex_TestSkill1Btn", TEST_SKILL1_BTN);
 		m_data->assets.LoadTexture("Tex_TestSkill2Btn", TEST_SKILL2_BTN);
 
+		// populate the active heroes list with the currently unlocked ones before the battle starts
+		m_activeHeroes.push_back(m_data->gm.hBard);
+		m_activeHeroes.push_back(m_data->gm.hKnight);
+		// set the turn count to the size of all active heroes
+		m_hTurnCount = m_activeHeroes.size();
+
 		// Background
 		auto bg = std::make_shared<ECM::Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_TutorialBGSprite");
@@ -42,18 +50,31 @@ namespace HJ { namespace Encounters {
 		m_data->gm.hKnight->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 		m_data->gm.hKnight->Init();
-		// Add TakeDmgComponent
+		// Add HP/MP UI Component
+		// TODO: ...
+
+		// no unlocked heroes apart from the main character - the Knight
+		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
+		m_data->gm.hBard->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
+			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
+		m_data->gm.hBard->Init();
+		// Add HP/MP UI Component
 		// TODO: ...
 
 		// tutorial's evil ai - frost golem
-		m_data->gm.eFrostGolem.reset();
-		m_data->gm.eFrostGolem = std::make_shared<EvilFrostMage>("C_FrostGolemSprite");
+		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>("C_FrostGolemSprite"));
 		m_data->gm.eFrostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
 		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .2f));
 		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f, 
 			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35f));
 		m_data->gm.eFrostGolem->Init();
-		// Add TakeDmgComponent
+		auto frostGolemSM = m_data->gm.eFrostGolem->AddComponent<Components::StateMachineComponent>("C_FrostGolemSM");
+		frostGolemSM->AddState("Wait", std::make_shared<States::GolemWaitState>());
+		frostGolemSM->AddState("StepIn", std::make_shared<States::GolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f , m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
+		frostGolemSM->AddState("Return", std::make_shared<States::GolemReturnState>(sf::Vector2f(m_data->gm.eFrostGolem->GetPosition()), 7.5f));
+		frostGolemSM->AddState("Attack", std::make_shared<States::GolemAttackState>(m_activeHeroes, m_data->gm.eFrostGolem->GetDmg()));
+		frostGolemSM->ChangeState("Wait");
+		// Add HP/MP UI Component
 		// TODO: ...
 
 		// ui frame
@@ -181,6 +202,7 @@ namespace HJ { namespace Encounters {
 
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
+		AddEntity("E_HeroBard", m_data->gm.hBard);
 		AddEntity("E_EvilFrostGolem", m_data->gm.eFrostGolem);
 		AddEntity("E_xTutorialUiFrame", uiFrame);
 		AddEntity("E_aAtkBtn", atkBtn);
@@ -192,8 +214,10 @@ namespace HJ { namespace Encounters {
 		AddEntity("E_aPauseBtn", pauseBtn);
 		AddEntity("E_aConcedeBtn", concedeBtn);
 
-		m_data->gm.unlockedHeroes.push_back(m_data->gm.hKnight);
-		m_hCount = m_data->gm.unlockedHeroes.size();
+		// begin the battle
+		m_status = BATTLE_STATUS::PLAYING;
+		// the main hero - Knight, always starts first
+		m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
 	}
 
 	void TutorialScene::HandleInput()
@@ -312,29 +336,35 @@ namespace HJ { namespace Encounters {
 		// list of the UI button sprites to be disabled/enabled on turn change
 		static std::vector<SpriteComponent*> battleUIButtons = { atkBtnSprite, defBtnSprite, hpBtnSprite, mpBtnSprite, skill1BtnSprite, skill2BtnSprite };
 
-		// [TEMP] initial enemy state properties
-		static sf::Vector2f enemyInitPos = m_data->gm.eFrostGolem->GetPosition();
-		static bool enemyMoveLeft = false;
-		static bool enemyMoveRight = false;
-		static bool canEnemyAttack = false;
+		// check if a hero is dead
+		CheckForHeroicDeath(battleUIButtons);
 
+		// check for condition to exit the battle (win/lose)
+		CheckForBattleOutcome(battleUIButtons);
+
+		//std::cout << m_hTurnCount << std::endl;
 		// update turn
-		m_turn = (m_hCount > 0) ? BATTLE_TURN::HERO : BATTLE_TURN::EVIL;
+		m_turn = (m_hTurnCount > 0) ? BATTLE_TURN::HERO : BATTLE_TURN::EVIL;
+		// update hero on turn
 		switch (m_turn)
 		{
 			case BATTLE_TURN::HERO:
 				// resolve attack button click
 				if (atkBtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero attacking!\n";
+					m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+					auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+					std::cout << "DMG dealt: " << dmg << std::endl;
+					std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+					std::cout << std::endl;
 
-					// next player turn
-					m_hCount--;
+					m_hTurnCount--;
+					// next hero turn
+					NextTurn();
 
-					DisableUIButtons(battleUIButtons);
-
-					// set enemy movement state
-					enemyMoveLeft = true;
+					if (m_hTurnCount == 0)
+						DisableUIButtons(battleUIButtons);
 
 					atkBtnBtn->SetResolve(false);
 				}
@@ -342,15 +372,15 @@ namespace HJ { namespace Encounters {
 				// resolve defend button click
 				if (defBtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero defending!\n";
+					m_heroOnTurn->Defend();
 
-					// next player turn
-					m_hCount--;
+					m_hTurnCount--;
+					// next hero turn
+					NextTurn();
 
-					DisableUIButtons(battleUIButtons);
-
-					// set enemy movement state
-					enemyMoveLeft = true;
+					if (m_hTurnCount == 0)
+						DisableUIButtons(battleUIButtons);
 
 					defBtnBtn->SetResolve(false);
 				}
@@ -358,7 +388,7 @@ namespace HJ { namespace Encounters {
 				// resolve use HP button click
 				if (hpBtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero used HP potion!\n";
 
 					hpBtnBtn->SetResolve(false);
 				}
@@ -366,81 +396,58 @@ namespace HJ { namespace Encounters {
 				// resolve use MP button click
 				if (mpBtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero used MP potion!\n";
 
 					mpBtnBtn->SetResolve(false);
 				}
 
-				// resolve use HP button click
+				// resolve skill1 button click
 				if (skill1BtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero used Skill 1!\n";
 
-					// next player turn
-					m_hCount--;
-					
-					DisableUIButtons(battleUIButtons);
+					m_hTurnCount--;
+					// next hero turn
+					NextTurn();
 
-					// set enemy movement state
-					enemyMoveLeft = true;
+					if (m_hTurnCount == 0)
+						DisableUIButtons(battleUIButtons);
 
 					skill1BtnBtn->SetResolve(false);
 				}
 
-				// resolve use MP button click
+				// resolve skill2 button click
 				if (skill2BtnBtn->CanResolve())
 				{
-					std::cout << "Button has been clicked!\n";
+					std::cout << "Hero used Skill 2!\n";
 
-					// next player turn
-					m_hCount--;
+					m_hTurnCount--;
+					// next hero turn
+					NextTurn();
 
-					DisableUIButtons(battleUIButtons);
-
-					// set enemy movement state
-					enemyMoveLeft = true;
+					if (m_hTurnCount == 0)
+						DisableUIButtons(battleUIButtons);
 
 					skill2BtnBtn->SetResolve(false);
 				}
 				break;
 			case BATTLE_TURN::EVIL:
-				// move to attacking position
-				// TODO: ABSTRACT IN A MOVEMENT COMPONENT
-				if (enemyMoveLeft)
-					m_data->gm.eFrostGolem->Move(sf::Vector2f(-10.0f, 0.0f));
-				if (enemyMoveRight)
-					m_data->gm.eFrostGolem->Move(sf::Vector2f(10.0f, 0.0f));
-
-				// check for destination reached -> go back -> rest heroes turn count
-				if (m_data->gm.eFrostGolem->GetPosition().x <= SCREEN_WIDTH / 2.0f && enemyMoveLeft)
+				if (m_data->gm.eFrostGolem->GetHealth() > 0)
 				{
-					enemyMoveLeft = false;
-					enemyMoveRight = true;
-				}
-				else canEnemyAttack = true;
-
-				if (m_data->gm.eFrostGolem->GetPosition().x >= enemyInitPos.x && canEnemyAttack)
-				{
-					// reset to initial position if not accurately there
-					m_data->gm.eFrostGolem->SetPosition(enemyInitPos);
-
-					std::cout << "Attacking\n";
-					// STATE MACHINES ...
-					// ATTACK ...
+					m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
 
 					EnableUIButtons(battleUIButtons);
-
-					// reset heroes count for turn update
-					m_hCount = m_data->gm.unlockedHeroes.size();
-
-					// reset enemy states
-					enemyMoveRight = false;
-					canEnemyAttack = false;
+					
+					//m_hTurnCount = m_activeHeroes.size();
+					//NextTurn();
+					// reset first hero on turn
+					ResetActiveHeroes();
 				}
-
+				else
+					m_status = BATTLE_STATUS::WON;
 				break;
 			default:
-				break;
+			break;
 		}		
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
@@ -457,7 +464,7 @@ namespace HJ { namespace Encounters {
 		m_data->ents.Save(t_name, t_entity);
 	}
 
-	void TutorialScene::DisableUIButtons(std::vector<Components::SpriteComponent*> t_buttons)
+	void TutorialScene::DisableUIButtons(std::vector<SpriteComponent*> t_buttons)
 	{
 		for (auto btn : t_buttons)
 		{
@@ -466,13 +473,88 @@ namespace HJ { namespace Encounters {
 		}
 	}
 
-	void TutorialScene::EnableUIButtons(std::vector<Components::SpriteComponent*> t_buttons)
+	void TutorialScene::EnableUIButtons(std::vector<SpriteComponent*> t_buttons)
 	{
 		for (auto btn : t_buttons)
 		{
 			btn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 			btn->SetClickable(true);
 		}
+	}
+
+	void TutorialScene::CheckForHeroicDeath(std::vector<SpriteComponent*> t_buttons)
+	{
+		if (m_heroOnTurn != nullptr && m_heroOnTurn->GetHealth() <= 0)
+		{
+			if (m_hDeathCount < m_activeHeroes.size())
+			{
+				m_hDeathCount++;
+				m_heroOnTurn->SetFight(false);
+				// opt.2 : find_if -> search by names -> set canFigth false ... should do the trick, instead of managing the vector
+				//auto heroToRemove = std::find(m_activeHeroes.begin(), m_activeHeroes.end(), std::move(m_heroOnTurn));
+				//m_activeHeroes.erase(heroToRemove);
+			}
+			else
+			{
+				DisableUIButtons(t_buttons);
+				m_status = BATTLE_STATUS::LOST;
+			}
+		}
+	}
+
+	void TutorialScene::CheckForBattleOutcome(std::vector<SpriteComponent*> t_buttons)
+	{
+		static sf::Clock clock;
+		switch (m_status)
+		{
+			case BATTLE_STATUS::LOST:
+				DisableUIButtons(t_buttons);
+
+				m_condTimer = clock.getElapsedTime().asSeconds();
+				if (m_condTimer > 10.0f)
+				{
+					// Switch scenes (to Pause Menu)
+					auto mapState = std::make_unique<MapScene>(MapScene(m_data));
+					m_data->machine.AddState(std::move(mapState), true);
+				}
+				break;
+			case BATTLE_STATUS::WON:
+				DisableUIButtons(t_buttons);
+
+				m_condTimer = clock.getElapsedTime().asSeconds();
+				if (m_condTimer > 10.0f)
+				{
+					m_data->gm.gold += 100;
+					m_data->gm.healthPot += 1;
+					m_data->gm.manaPot += 1;
+					// Switch scenes (to Pause Menu)
+					auto mapState = std::make_unique<MapScene>(MapScene(m_data));
+					m_data->machine.AddState(std::move(mapState), true);
+				}
+				break;
+			default:
+			case BATTLE_STATUS::PLAYING:
+				break;
+		}
+	}
+
+	void TutorialScene::NextTurn()
+	{
+		std::cout << "Turn: " << m_hTurnCount << std::endl;
+		if (m_hTurnCount > 0)
+			//&& m_activeHeroes[m_hTurnCount - 1] != nullptr
+			//&& m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
+		{
+			//m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::White);
+			m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
+			m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::Red);
+		}
+	}
+
+	void TutorialScene::ResetActiveHeroes()
+	{
+		m_hTurnCount = m_activeHeroes.size();
+		m_heroOnTurn = m_activeHeroes[0];
 	}
 
 } }

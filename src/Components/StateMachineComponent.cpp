@@ -26,13 +26,9 @@ namespace HJ { namespace Components {
 	{
 		auto found = m_states.find(t_name);
 		if (found != m_states.end())
-		{
 			return found->second;
-		}
 		else
-		{
 			return nullptr;
-		}
 	}
 
 	void StateMachineComponent::RemoveState(const std::string& t_name)

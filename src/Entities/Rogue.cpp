@@ -56,12 +56,12 @@ namespace HJ { namespace Entities {
 
 	void Rogue::Attack(std::shared_ptr<EvilAI> t_enemy)
 	{
-		// implement
+		Hero::Attack(t_enemy);
 	}
 
 	void Rogue::Defend()
 	{
-		// implement
+		Hero::Defend();
 	}
 
 	void Rogue::UseSkill1(std::shared_ptr<EvilAI> t_enemy)

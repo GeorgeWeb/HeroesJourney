@@ -414,10 +414,10 @@ namespace HJ {
 		auto coinTextComp = m_data->ents.Find<Entity>("E_0CoinText");
 		#pragma endregion
 
-		std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
-		std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
+		static std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
+		static std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
 			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp, healthComp, healthComp, manaComp, coinComp });
-		std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
+		static std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
 			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp });
 
 		sf::Event event;

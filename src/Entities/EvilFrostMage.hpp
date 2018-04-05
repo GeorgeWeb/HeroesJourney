@@ -6,8 +6,6 @@
 
 #include "EvilAI.hpp"
 
-#include <functional>
-
 namespace HJ { namespace Entities {
 
 		enum EvilMageBehaviour
@@ -33,10 +31,6 @@ namespace HJ { namespace Entities {
 				void Init() override final;
 				void Update(float t_deltaTime) override final;
 				void Render() override final;
-
-				void Attack() override final;
-				void Skill(std::function<void()> t_func) override final;
-				void Defend() override final;
 		};
 	}
 }

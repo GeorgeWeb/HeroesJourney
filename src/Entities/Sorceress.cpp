@@ -56,12 +56,12 @@ namespace HJ {namespace Entities {
 
 	void Sorceress::Attack(std::shared_ptr<EvilAI> t_enemy)
 	{
-		// implement
+		Hero::Attack(t_enemy);
 	}
 
 	void Sorceress::Defend()
 	{
-		// implement
+		Hero::Defend();
 	}
 
 	void Sorceress::UseSkill1(std::shared_ptr<EvilAI> t_enemy)

@@ -6,11 +6,6 @@ namespace HJ { namespace Entities {
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
 	{ }
 
-	EvilAI::EvilAI(const std::string& t_sprite, const std::string& t_animator) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
-		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))
-	{ }
-
 	EvilAI* EvilAI::GetType()
 	{
 		return this;
@@ -32,7 +27,15 @@ namespace HJ { namespace Entities {
 		//check if hero dies
 		if (m_health <= 0)
 		{
-			//animate death
+			m_spriteComp->GetSprite().setColor(sf::Color(
+				m_spriteComp->GetSprite().getColor().r - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().g - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().b - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().a - t_deltaTime
+			));
+
+			// reset to zero
+			m_health = 0;
 		}
 	}
 
@@ -47,14 +50,10 @@ namespace HJ { namespace Entities {
 		m_spriteComp->GetSprite().setTextureRect(t_texRect);
 	}
 
-	void EvilAI::Animate(const std::string& t_animationName)
+	void EvilAI::TakeDamage(unsigned int t_dmg)
 	{
-		m_spriteComp->GetSprite().setTextureRect(m_animatorComp->GetAnimation(t_animationName).uvRect);
-	}
-
-	void EvilAI::Skill(std::function<void()> t_func)
-	{
-		std::invoke([&]() { t_func; });
+		// check for dodge chance
+		m_health -= t_dmg;
 	}
 
 	std::shared_ptr<Engine::Components::SpriteComponent> EvilAI::GetSpriteComponent()

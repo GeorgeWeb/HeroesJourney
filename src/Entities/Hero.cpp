@@ -1,10 +1,13 @@
 #include "Hero.hpp"
+#include "../DEFINITIONS.hpp"
 
 namespace HJ { namespace Entities {
 
 	Hero::Hero(const std::string& t_sprite) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
-	{ }
+	{
+		m_canFight = true;
+	}
 
 	Hero::Hero(const std::string& t_sprite, const std::string& t_animator) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
@@ -32,13 +35,39 @@ namespace HJ { namespace Entities {
 		//check if hero dies
 		if (m_health <= 0) 
 		{
-			// animate death
+			m_spriteComp->GetSprite().setColor(sf::Color(
+				m_spriteComp->GetSprite().getColor().r - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().g - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().b - t_deltaTime,
+				m_spriteComp->GetSprite().getColor().a - t_deltaTime
+			));
+
+			// reset to zero
+			m_health = 0;
 		}
 	}
 
 	void Hero::Render()
 	{
 		Entity::Render();
+	}
+
+	void Hero::TakeDamage(unsigned int t_dmg)
+	{
+		// check for dodge chance
+		m_health -= t_dmg;
+	}
+
+	void Hero::Attack(std::shared_ptr<EvilAI> t_enemy)
+	{
+		// check for crit. chance
+		auto dmg = (t_enemy->GetArmour() >= m_damage) ? 0 : m_damage - t_enemy->GetArmour();
+		t_enemy->TakeDamage(dmg);
+	}
+
+	void Hero::Defend()
+	{
+		m_armour *= 2;
 	}
 
 	void Hero::SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect)

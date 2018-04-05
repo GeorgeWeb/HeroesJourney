@@ -25,15 +25,26 @@ namespace HJ { namespace Encounters {
 		void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity) override final;
 
 	private:
-		void DisableUIButtons(std::vector<Components::SpriteComponent*> t_buttons);
-		void EnableUIButtons(std::vector<Components::SpriteComponent*> t_buttons);
+		void DisableUIButtons(std::vector<Engine::Components::SpriteComponent*> t_buttons);
+		void EnableUIButtons(std::vector<Engine::Components::SpriteComponent*> t_buttons);
+		void CheckForHeroicDeath(std::vector<Engine::Components::SpriteComponent*> t_buttons);
+		void CheckForBattleOutcome(std::vector<Engine::Components::SpriteComponent*> t_buttons);
+		void NextTurn();
+		void ResetActiveHeroes();
 
 	private:
 		GameDataRef m_data;
+		
 		BATTLE_TURN m_turn;
-
-		unsigned int m_hCount;
-		bool m_won = false;
+		BATTLE_STATUS m_status;
+		
+		std::vector<std::shared_ptr<Entities::Hero>> m_activeHeroes;
+		std::shared_ptr<Entities::Hero> m_heroOnTurn = nullptr;
+		unsigned int m_hTurnCount;
+		unsigned int m_hDeathCount = 0;
+		
+		// helpful for battle outcome
+		float m_condTimer;
 	};
 } }
 
