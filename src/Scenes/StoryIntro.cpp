@@ -1,5 +1,6 @@
 #include "PauseMenu.hpp"
 #include "Encounters/Tutorial.hpp"
+#include "MapScene.hpp"
 
 #include <sstream>
 #include <iostream>
@@ -88,9 +89,12 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				//switch to tutorial scene
-				auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				m_data->machine.AddState(std::move(tutorial));
+				////switch to tutorial scene
+				//auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+				//m_data->machine.AddState(std::move(tutorial));
+
+				auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
+				m_data->machine.AddState(std::move(mapscene));
 			}
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
