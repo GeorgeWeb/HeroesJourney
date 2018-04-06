@@ -65,12 +65,12 @@ namespace HJ { namespace Encounters {
 		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>("C_FrostGolemSprite"));
 		m_data->gm.eFrostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
 		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .2f));
-		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f, 
+		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35f));
 		m_data->gm.eFrostGolem->Init();
 		auto frostGolemSM = m_data->gm.eFrostGolem->AddComponent<Components::StateMachineComponent>("C_FrostGolemSM");
 		frostGolemSM->AddState("Wait", std::make_shared<States::GolemWaitState>());
-		frostGolemSM->AddState("StepIn", std::make_shared<States::GolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f , m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
+		frostGolemSM->AddState("StepIn", std::make_shared<States::GolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
 		frostGolemSM->AddState("Return", std::make_shared<States::GolemReturnState>(sf::Vector2f(m_data->gm.eFrostGolem->GetPosition()), 7.5f));
 		frostGolemSM->AddState("Attack", std::make_shared<States::GolemAttackState>(m_activeHeroes, m_data->gm.eFrostGolem->GetDmg()));
 		frostGolemSM->ChangeState("Wait");
@@ -171,7 +171,7 @@ namespace HJ { namespace Encounters {
 		//clickable component
 		auto skill2BtnBtn = skill2Btn->AddComponent<ClickableComponent>("C_Skill2BtnBtn");
 		skill2BtnBtn->SetSpriteTarget(skill2BtnSprite.get());
-		
+
 		// Pause button
 		auto pauseBtn = std::make_shared<ECM::Entity>();
 		auto pauseBtnSprite = pauseBtn->AddComponent<SpriteComponent>("C_PauseBtnSprite");
@@ -217,7 +217,7 @@ namespace HJ { namespace Encounters {
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
-		m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
+		NextTurn();
 	}
 
 	void TutorialScene::HandleInput()
@@ -237,8 +237,8 @@ namespace HJ { namespace Encounters {
 				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
 				m_data->machine.AddState(std::move(pauseMenuState), false);
 			}
-			
-			#pragma region OPTIONS BUTTONS CLICKED CHECKS
+
+#pragma region OPTIONS BUTTONS CLICKED CHECKS
 			// check if pause button is clicked
 			auto pauseBtnSprite = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<SpriteComponent>("C_PauseBtnSprite");
 			auto pauseBtnBtn = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<ClickableComponent>("C_PauseBtnBtn");
@@ -246,9 +246,9 @@ namespace HJ { namespace Encounters {
 			{
 				pauseBtnBtn->SetClicked(true);
 			}
-			#pragma endregion
+#pragma endregion
 
-			#pragma region BATTLE BUTTONS CLICKED CHECKS
+#pragma region BATTLE BUTTONS CLICKED CHECKS
 			// check if attack button is clicked
 			auto atkBtnSprite = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<SpriteComponent>("C_AtkBtnSprite");
 			auto atkBtnBtn = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<ClickableComponent>("C_AtkBtnBtn");
@@ -296,13 +296,13 @@ namespace HJ { namespace Encounters {
 			{
 				skill2BtnBtn->SetClicked(true);
 			}
-			#pragma endregion
+#pragma endregion
 		}
 	}
 
 	void TutorialScene::Update(float t_delatTime)
 	{
-		#pragma region OPTIONS BUTTONS
+#pragma region OPTIONS BUTTONS
 		// resolve pause button click
 		auto pauseBtnBtn = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<ClickableComponent>("C_PauseBtnBtn");
 		if (pauseBtnBtn->CanResolve())
@@ -313,9 +313,9 @@ namespace HJ { namespace Encounters {
 
 			pauseBtnBtn->SetResolve(false);
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region BATTLE BUTTONS
+#pragma region BATTLE BUTTONS
 		// sprite components
 		auto atkBtnSprite = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<SpriteComponent>("C_AtkBtnSprite");
 		auto defBtnSprite = m_data->ents.Find<Entity>("E_aDefBtn")->GetComponent<SpriteComponent>("C_DefBtnSprite");
@@ -331,124 +331,113 @@ namespace HJ { namespace Encounters {
 		auto mpBtnBtn = m_data->ents.Find<Entity>("E_aMPBtn")->GetComponent<ClickableComponent>("C_MPBtnBtn");
 		auto skill1BtnBtn = m_data->ents.Find<Entity>("E_aSkill1Btn")->GetComponent<ClickableComponent>("C_Skill1BtnBtn");
 		auto skill2BtnBtn = m_data->ents.Find<Entity>("E_aSkill2Btn")->GetComponent<ClickableComponent>("C_Skill2BtnBtn");
-		#pragma endregion
+#pragma endregion
 
 		// list of the UI button sprites to be disabled/enabled on turn change
 		static std::vector<SpriteComponent*> battleUIButtons = { atkBtnSprite, defBtnSprite, hpBtnSprite, mpBtnSprite, skill1BtnSprite, skill2BtnSprite };
 
 		// check if a hero is dead
-		CheckForHeroicDeath(battleUIButtons);
+		CheckForDeaths(battleUIButtons);
 
 		// check for condition to exit the battle (win/lose)
 		CheckForBattleOutcome(battleUIButtons);
 
 		//std::cout << m_hTurnCount << std::endl;
 		// update turn
-		m_turn = (m_hTurnCount > 0) ? BATTLE_TURN::HERO : BATTLE_TURN::EVIL;
+		m_turn = (m_hTurnCount == -1) ? BATTLE_TURN::EVIL : BATTLE_TURN::HERO;
 		// update hero on turn
 		switch (m_turn)
 		{
-			case BATTLE_TURN::HERO:
-				// resolve attack button click
-				if (atkBtnBtn->CanResolve())
-				{
-					std::cout << "Hero attacking!\n";
-					m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-					auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-					std::cout << "DMG dealt: " << dmg << std::endl;
-					std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
-					std::cout << std::endl;
+		case BATTLE_TURN::HERO:
+			// resolve attack button click
+			if (atkBtnBtn->CanResolve())
+			{
+				std::cout << "Hero attacking!\n";
+				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				std::cout << "DMG dealt: " << dmg << std::endl;
+				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				std::cout << std::endl;
 
-					m_hTurnCount--;
-					// next hero turn
-					NextTurn();
+				// next hero turn
+				NextTurn();
 
-					if (m_hTurnCount == 0)
-						DisableUIButtons(battleUIButtons);
+				if (m_hTurnCount == -1)
+					DisableUIButtons(battleUIButtons);
 
-					atkBtnBtn->SetResolve(false);
-				}
+				atkBtnBtn->SetResolve(false);
+			}
 
-				// resolve defend button click
-				if (defBtnBtn->CanResolve())
-				{
-					std::cout << "Hero defending!\n";
-					m_heroOnTurn->Defend();
+			// resolve defend button click
+			if (defBtnBtn->CanResolve())
+			{
+				std::cout << "Hero defending!\n";
+				m_heroOnTurn->Defend();
 
-					m_hTurnCount--;
-					// next hero turn
-					NextTurn();
+				// next hero turn
+				NextTurn();
 
-					if (m_hTurnCount == 0)
-						DisableUIButtons(battleUIButtons);
+				if (m_hTurnCount == -1)
+					DisableUIButtons(battleUIButtons);
 
-					defBtnBtn->SetResolve(false);
-				}
+				defBtnBtn->SetResolve(false);
+			}
 
-				// resolve use HP button click
-				if (hpBtnBtn->CanResolve())
-				{
-					std::cout << "Hero used HP potion!\n";
+			// resolve use HP button click
+			if (hpBtnBtn->CanResolve())
+			{
+				std::cout << "Hero used HP potion!\n";
 
-					hpBtnBtn->SetResolve(false);
-				}
+				hpBtnBtn->SetResolve(false);
+			}
 
-				// resolve use MP button click
-				if (mpBtnBtn->CanResolve())
-				{
-					std::cout << "Hero used MP potion!\n";
+			// resolve use MP button click
+			if (mpBtnBtn->CanResolve())
+			{
+				std::cout << "Hero used MP potion!\n";
 
-					mpBtnBtn->SetResolve(false);
-				}
+				mpBtnBtn->SetResolve(false);
+			}
 
-				// resolve skill1 button click
-				if (skill1BtnBtn->CanResolve())
-				{
-					std::cout << "Hero used Skill 1!\n";
+			// resolve skill1 button click
+			if (skill1BtnBtn->CanResolve())
+			{
+				std::cout << "Hero used Skill 1!\n";
 
-					m_hTurnCount--;
-					// next hero turn
-					NextTurn();
+				// next hero turn
+				NextTurn();
 
-					if (m_hTurnCount == 0)
-						DisableUIButtons(battleUIButtons);
+				if (m_hTurnCount == -1)
+					DisableUIButtons(battleUIButtons);
 
-					skill1BtnBtn->SetResolve(false);
-				}
+				skill1BtnBtn->SetResolve(false);
+			}
 
-				// resolve skill2 button click
-				if (skill2BtnBtn->CanResolve())
-				{
-					std::cout << "Hero used Skill 2!\n";
+			// resolve skill2 button click
+			if (skill2BtnBtn->CanResolve())
+			{
+				std::cout << "Hero used Skill 2!\n";
 
-					m_hTurnCount--;
-					// next hero turn
-					NextTurn();
+				// next hero turn
+				NextTurn();
 
-					if (m_hTurnCount == 0)
-						DisableUIButtons(battleUIButtons);
+				if (m_hTurnCount == -1)
+					DisableUIButtons(battleUIButtons);
 
-					skill2BtnBtn->SetResolve(false);
-				}
-				break;
-			case BATTLE_TURN::EVIL:
-				if (m_data->gm.eFrostGolem->GetHealth() > 0)
-				{
-					m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
-
-					EnableUIButtons(battleUIButtons);
-					
-					//m_hTurnCount = m_activeHeroes.size();
-					//NextTurn();
-					// reset first hero on turn
-					ResetActiveHeroes();
-				}
-				else
-					m_status = BATTLE_STATUS::WON;
-				break;
-			default:
+				skill2BtnBtn->SetResolve(false);
+			}
 			break;
-		}		
+		case BATTLE_TURN::EVIL:
+				m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
+
+				EnableUIButtons(battleUIButtons);
+
+				m_hTurnCount = m_activeHeroes.size();
+				NextTurn();
+			break;
+		default:
+			break;
+		}
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
@@ -482,21 +471,25 @@ namespace HJ { namespace Encounters {
 		}
 	}
 
-	void TutorialScene::CheckForHeroicDeath(std::vector<SpriteComponent*> t_buttons)
+	void TutorialScene::CheckForDeaths(std::vector<SpriteComponent*> t_buttons)
 	{
+		// the golem died ;)
+		if (m_data->gm.eFrostGolem->GetHealth() <= 0)
+		{
+			std::cout << "WON\n";
+			m_status = BATTLE_STATUS::WON;
+		}
+
+		// count how many heroes died (if any)
 		if (m_heroOnTurn != nullptr && m_heroOnTurn->GetHealth() <= 0)
 		{
 			if (m_hDeathCount < m_activeHeroes.size())
 			{
 				m_hDeathCount++;
-				m_heroOnTurn->SetFight(false);
-				// opt.2 : find_if -> search by names -> set canFigth false ... should do the trick, instead of managing the vector
-				//auto heroToRemove = std::find(m_activeHeroes.begin(), m_activeHeroes.end(), std::move(m_heroOnTurn));
-				//m_activeHeroes.erase(heroToRemove);
 			}
 			else
 			{
-				DisableUIButtons(t_buttons);
+				std::cout << "LOST\n";
 				m_status = BATTLE_STATUS::LOST;
 			}
 		}
@@ -511,7 +504,7 @@ namespace HJ { namespace Encounters {
 				DisableUIButtons(t_buttons);
 
 				m_condTimer = clock.getElapsedTime().asSeconds();
-				if (m_condTimer > 10.0f)
+				if (m_condTimer > 20.0f)
 				{
 					// Switch scenes (to Pause Menu)
 					auto mapState = std::make_unique<MapScene>(MapScene(m_data));
@@ -540,21 +533,22 @@ namespace HJ { namespace Encounters {
 
 	void TutorialScene::NextTurn()
 	{
-		std::cout << "Turn: " << m_hTurnCount << std::endl;
-		if (m_hTurnCount > 0)
-			//&& m_activeHeroes[m_hTurnCount - 1] != nullptr
-			//&& m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
+		chosen = false;
+		do
 		{
-			//m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::White);
-			m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
-			m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::Red);
-		}
-	}
-
-	void TutorialScene::ResetActiveHeroes()
-	{
-		m_hTurnCount = m_activeHeroes.size();
-		m_heroOnTurn = m_activeHeroes[0];
+			if (m_hTurnCount - 1 < 0) m_hTurnCount = -1;
+			else
+			{
+				if (m_activeHeroes[m_hTurnCount - 1] != nullptr
+					&& m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
+				{
+					m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
+					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::Red);
+					chosen = true;
+				}
+				m_hTurnCount--;
+			}
+		} while (m_hTurnCount - 1 >= 0 && !chosen);
 	}
 
 } }

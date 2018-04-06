@@ -27,10 +27,9 @@ namespace HJ { namespace Encounters {
 	private:
 		void DisableUIButtons(std::vector<Engine::Components::SpriteComponent*> t_buttons);
 		void EnableUIButtons(std::vector<Engine::Components::SpriteComponent*> t_buttons);
-		void CheckForHeroicDeath(std::vector<Engine::Components::SpriteComponent*> t_buttons);
+		void CheckForDeaths(std::vector<Engine::Components::SpriteComponent*> t_buttons);
 		void CheckForBattleOutcome(std::vector<Engine::Components::SpriteComponent*> t_buttons);
 		void NextTurn();
-		void ResetActiveHeroes();
 
 	private:
 		GameDataRef m_data;
@@ -40,11 +39,13 @@ namespace HJ { namespace Encounters {
 		
 		std::vector<std::shared_ptr<Entities::Hero>> m_activeHeroes;
 		std::shared_ptr<Entities::Hero> m_heroOnTurn = nullptr;
-		unsigned int m_hTurnCount;
+		int m_hTurnCount;
 		unsigned int m_hDeathCount = 0;
 		
 		// helpful for battle outcome
 		float m_condTimer;
+
+		bool chosen = false;
 	};
 } }
 

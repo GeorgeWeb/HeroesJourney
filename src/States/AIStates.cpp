@@ -17,7 +17,7 @@ namespace HJ { namespace States {
 
 	void GolemStepInState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
-		t_owner->Move(sf::Vector2f(-10.0f, 0.0f));
+		t_owner->Move(sf::Vector2f(-m_speed, 0.0f));
 		
 		// exit state check
 		if (t_owner->GetPosition().x <= m_position.x)
@@ -39,7 +39,7 @@ namespace HJ { namespace States {
 
 	void GolemReturnState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
-		t_owner->Move(sf::Vector2f(10.0f, 0.0f));
+		t_owner->Move(sf::Vector2f(m_speed, 0.0f));
 		// exit state check
 		if (t_owner->GetPosition().x == m_position.x)
 		{
@@ -66,9 +66,9 @@ namespace HJ { namespace States {
 		for (auto hero : m_heroes)
 		{
 			auto dmg = (hero->GetArmour() >= m_damage) ? 0 : m_damage - hero->GetArmour();
-			hero->TakeDamage(dmg);
-			std::cout << "DMG taken: " << dmg << std::endl;
-			std::cout << "HP: " << hero->GetHealth() << "/" << hero->GetMaxHealth() << std::endl;
+			hero->TakeDamage(dmg + 10);
+			//std::cout << "DMG taken: " << dmg << std::endl;
+			//std::cout << "HP: " << hero->GetHealth() << "/" << hero->GetMaxHealth() << std::endl;
 			std::cout << std::endl;
 		}
 		m_isAttacking = false;

@@ -20,28 +20,28 @@ namespace HJ { namespace States {
 	class GolemStepInState final : public State
 	{
 		public:
-			GolemStepInState(sf::Vector2f t_position, unsigned int t_speed)
+			GolemStepInState(sf::Vector2f t_position, float t_speed)
 				: m_position(t_position), m_speed(t_speed), m_canStepIn(false) {}
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
 
 		private:
 			sf::Vector2f m_position;
-			unsigned int m_speed;
+			float m_speed;
 			bool m_canStepIn;
 	};
 
 	class GolemReturnState final : public State
 	{
 		public:
-			GolemReturnState(sf::Vector2f t_position, unsigned int t_speed)
+			GolemReturnState(sf::Vector2f t_position, float t_speed)
 				: m_position(t_position), m_speed(t_speed), m_canReturn(false) {}
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
 
 		private:
 			sf::Vector2f m_position;
-			unsigned int m_speed;
+			float m_speed;
 			bool m_canReturn;
 	};
 
