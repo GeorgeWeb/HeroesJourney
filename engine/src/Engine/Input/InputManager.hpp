@@ -19,7 +19,7 @@ namespace Engine { namespace Input {
 			{
 				static_assert(std::is_base_of<sf::Drawable, T>::value, "Must inherit from the SFML abstract class Drawable");
 				// [time] wait time between mouse presses to prevent unwanted multiple clicking behaviour
-				if (m_pressDelay.getElapsedTime().asSeconds() > 0.3f)
+				if (m_pressDelay.getElapsedTime().asSeconds() > 0.5f)
 				{
 					if (sf::Mouse::isButtonPressed(t_button) && t_button == sf::Mouse::Left)
 					{
