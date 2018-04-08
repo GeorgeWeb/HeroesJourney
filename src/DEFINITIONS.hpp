@@ -69,6 +69,7 @@
 #define CASTLE_SCENE_HEALTHBTN "res/img/castle_interior/healthbtn.png"
 
 // Re-usable assets
+#define STANDARD_BTN "res/img/misc/button.png"
 #define COIN_ICON "res/img/misc/coin.png"
 #define HP_POT_ICON "res/img/misc/health.png"
 #define MANA_POT_ICON "res/img/misc/mana.png"
@@ -89,18 +90,15 @@
 
 // Re-usable encounter assets global definitions
 #define BASIC_ATTACK_BTN "res/img/encounter/attackbtn.png"
-#define CONCEDE_BTN "res/img/encounter/concedebtn.png"
 #define DEFFEND_BTN "res/img/encounter/deffendbtn.png"
-#define PAUSE_BTN "res/img/encounter/pausebtn.png"
-#define USE_HP_BTN "res/img/encounter/healthbtn.png"
-#define USE_MP_BTN "res/img/encounter/manabtn.png"
+#define USE_HP_BTN "res/img/misc/health.png"
+#define USE_MP_BTN "res/img/misc/mana.png"
 #define ENCOUNTER_UI_FRAME "res/img/encounter/uiframe.png"
 
 // Tutorial global definitions
 #define TUTORIAL_ENCOUNTER "res/img/main_menu/main-menu-bg.png"
 
 // Heroes Skills global definitions
-#define TEST_SKILL1_BTN "res/img/encounter/skill1.png"
-#define TEST_SKILL2_BTN "res/img/encounter/skill2.png"
+#define TEST_SKILL_BTN "res/img/encounter/skill-frame.png"
 
 #endif // !DEFINITIONS_H
