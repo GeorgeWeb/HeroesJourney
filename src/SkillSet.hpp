@@ -5,7 +5,7 @@
 
 namespace HJ
 {
-	using namespace HJ::Components;
+	using namespace Components;
 
 	enum class SKILL_TYPE : int
 	{
@@ -37,6 +37,7 @@ namespace HJ
 			std::vector<EFFECT_TYPE> applicableEffects;
 	};
 
+	// [BASIC/GENERAL SKILL SET]
 	class BasicAttack : public Skill
 	{
 		public:
@@ -50,6 +51,8 @@ namespace HJ
 				applicableEffects = {};
 			}
 	};
+
+	/*** SPECIALIZED SKILL SETS ***/
 
 	class BasicDefence : public Skill
 	{
@@ -68,16 +71,16 @@ namespace HJ
 	// [KNIGHT SKILL SET]
 	class HeroicStrike : public Skill
 	{
-	public:
-		HeroicStrike() : Skill()
-		{
-			textureRefName = "Tex_TestSkillBtn";
-			effectDesc = "";
-			type = SKILL_TYPE::MELEE;
-			manaNeed = 50;
-			damageMod = 200;
-			applicableEffects = {};
-		}
+		public:
+			HeroicStrike() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "";
+				type = SKILL_TYPE::MELEE;
+				manaNeed = 50;
+				damageMod = 200;
+				applicableEffects = {};
+			}
 	};
 
 	class ShieldThrow : public Skill
@@ -97,23 +100,89 @@ namespace HJ
 	// [BARD SKILL SET]
 	class OffenseAura : public Skill
 	{
-	public:
-		OffenseAura() : Skill()
-		{
-			textureRefName = "Tex_TestSkillBtn";
-			effectDesc = "Stun";
-			type = SKILL_TYPE::RANGED;
-			manaNeed = 50;
-			damageMod = 0;
-			applicableEffects = { EFFECT_TYPE::STUN };
-		}
+		public:
+			OffenseAura() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "Party DMG boost";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 25;
+				damageMod = 0;
+				applicableEffects = { EFFECT_TYPE::DAMAGE_AURA };
+			}
 	};
 
+	class DeffenseAura : public Skill
+	{
+		public:
+			DeffenseAura() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "Party ARM boost";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 25;
+				damageMod = 0;
+				applicableEffects = { EFFECT_TYPE::ARMOUR_AURA };
+			}
+	};
+	
 	// [ROGUE SKILL SET]
+	class RavenBow : public Skill
+	{
+		public:
+			RavenBow() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 0;
+				damageMod = 75;
+				applicableEffects = {};
+			}
+	};
 
+	class RainOfArrows : public Skill
+	{
+		public:
+			RainOfArrows() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 50;
+				damageMod = 3 * 75;
+				applicableEffects = {};
+			}
+	};
 
 	// [SORCERESS SKILL SET]
+	class FireBolt : public Skill
+	{
+		public:
+			FireBolt() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 50;
+				damageMod = 200;
+				applicableEffects = {};
+			}
+	};
 
+	class FrostAura : public Skill
+	{
+		public:
+			FrostAura() : Skill()
+			{
+				textureRefName = "Tex_TestSkillBtn";
+				effectDesc = "Party frost resistance";
+				type = SKILL_TYPE::RANGED;
+				manaNeed = 50;
+				damageMod = 0;
+				applicableEffects = { EFFECT_TYPE::FROST_AURA };
+			}
+	};
 
 }
 

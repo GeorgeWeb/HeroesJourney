@@ -19,26 +19,32 @@ namespace HJ { namespace Components {
 		// create the effects
 		auto stun = std::make_shared<Effect>();
 		stun->SetSprite(tex, sf::Color::White);
-		auto frostResist = std::make_shared<Effect>();
-		frostResist->SetSprite(tex, sf::Color::Cyan);
+		auto frostArmour = std::make_shared<Effect>();
+		frostArmour->SetSprite(tex, sf::Color::Cyan);
 		auto armourAura = std::make_shared<Effect>();
-		armourAura->SetSprite(tex, sf::Color::Blue);
+		armourAura->SetSprite(tex, sf::Color::Yellow);
 		auto damageAura = std::make_shared<Effect>();
 		damageAura->SetSprite(tex, sf::Color::Magenta);
+		auto frostAura = std::make_shared<Effect>();
+		frostAura->SetSprite(tex, sf::Color::Blue);
 		auto dodge = std::make_shared<Effect>();
 		dodge->SetSprite(tex, sf::Color::Green);
 		auto enrage = std::make_shared<Effect>();
 		enrage->SetSprite(tex, sf::Color::Red);
 		auto fly = std::make_shared<Effect>();
-		fly->SetSprite(tex);
-		auto dodgeSkill = std::make_shared<Effect>();
-		dodgeSkill->SetSprite(tex);
+		fly->SetSprite(tex, sf::Color::Red);
+		auto multiTarget = std::make_shared<Effect>();
+		multiTarget->SetSprite(tex, sf::Color::Red);
 		// add effects to the map
 		m_effects.insert({ EFFECT_TYPE::STUN, stun });
-		m_effects.insert({ EFFECT_TYPE::FROST_ARMOR, frostResist });
+		m_effects.insert({ EFFECT_TYPE::FROST_ARMOR, frostArmour });
 		m_effects.insert({ EFFECT_TYPE::ARMOUR_AURA, armourAura });
 		m_effects.insert({ EFFECT_TYPE::DAMAGE_AURA, damageAura });
-		m_effects.insert({ EFFECT_TYPE::DODGE, dodgeSkill });
+		m_effects.insert({ EFFECT_TYPE::FROST_AURA, frostAura });
+		m_effects.insert({ EFFECT_TYPE::DODGE, dodge });
+		m_effects.insert({ EFFECT_TYPE::ENRAGE, enrage });
+		m_effects.insert({ EFFECT_TYPE::FLY, fly });
+		m_effects.insert({ EFFECT_TYPE::MULTIPLE_TARGET, multiTarget });
 
 		independent = true;
 	}

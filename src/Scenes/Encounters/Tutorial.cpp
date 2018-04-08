@@ -60,18 +60,17 @@ namespace HJ { namespace Encounters {
 		// TODO: ...
 
 		// tutorial's evil ai - frost golem
-		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>());
-		m_data->gm.eFrostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
-		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .4f));
-		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
-			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
-		m_data->gm.eFrostGolem->Init();
-		auto frostGolemSM = m_data->gm.eFrostGolem->AddComponent<Components::StateMachineComponent>("C_FrostGolemSM");
-		frostGolemSM->AddState("Wait", std::make_shared<States::FrostGolemWaitState>());
-		frostGolemSM->AddState("StepIn", std::make_shared<States::FrostGolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
-		frostGolemSM->AddState("Return", std::make_shared<States::FrostGolemReturnState>(sf::Vector2f(m_data->gm.eFrostGolem->GetPosition()), 7.5f));
-		frostGolemSM->AddState("Attack", std::make_shared<States::FrostGolemAttackState>(m_activeHeroes, m_data->gm.eFrostGolem->GetDmg()));
-		frostGolemSM->ChangeState("Wait");
+		m_frostGolem = std::make_shared<EvilAI>("Frost Golem", 100, 20, 10);
+		m_frostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
+		m_frostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .4f));
+		m_frostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
+			(SCREEN_HEIGHT - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
+		m_frostGolem->Init();
+		m_frostGolem->GetSMComponent()->AddState("Wait", std::make_shared<States::FrostGolemWaitState>());
+		m_frostGolem->GetSMComponent()->AddState("StepIn", std::make_shared<States::FrostGolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_frostGolem->GetPosition().y), 7.5f));
+		m_frostGolem->GetSMComponent()->AddState("Return", std::make_shared<States::FrostGolemReturnState>(sf::Vector2f(m_frostGolem->GetPosition()), 7.5f));
+		m_frostGolem->GetSMComponent()->AddState("Attack", std::make_shared<States::FrostGolemAttackState>(m_activeHeroes, m_frostGolem->GetDmg()));
+		m_frostGolem->GetSMComponent()->ChangeState("Wait");
 		// Add HP UI Component
 		// TODO: ...
 
@@ -229,7 +228,7 @@ namespace HJ { namespace Encounters {
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
 		AddEntity("E_HeroBard", m_data->gm.hBard);
-		AddEntity("E_EvilFrostGolem", m_data->gm.eFrostGolem);
+		AddEntity("E_EvilFrostGolem", m_frostGolem);
 		AddEntity("E_xTutorialUiFrame", uiFrame);
 		AddEntity("E_aAtkBtn", atkBtn);
 		AddEntity("E_aDefBtn", defBtn);
@@ -441,7 +440,7 @@ namespace HJ { namespace Encounters {
 				// ready for AI states
 				if (m_finishedPrep)
 				{
-					m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
+					m_frostGolem->GetSMComponent()->ChangeState("StepIn");
 					// restart preparation stuff
 					m_finishedPrep = false;
 					m_EnemyStepTime.restart();
@@ -491,15 +490,14 @@ namespace HJ { namespace Encounters {
 		// update the who is on turn text indicator for [EVIL]
 		if (m_turn == BATTLE_TURN::EVIL)
 		{
-			m_charOnTurn = m_data->gm.eFrostGolem->className();
-			std::string evilHP = std::to_string(m_data->gm.eFrostGolem->GetHealth()) + "/" + std::to_string(m_data->gm.eFrostGolem->GetMaxHealth()) + "HP";
-			std::string evilMP = std::to_string(m_data->gm.eFrostGolem->GetMana()) + "/" + std::to_string(m_data->gm.eFrostGolem->GetMaxMana()) + "MP";
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);// +" | " + evilMP);
+			m_charOnTurn = m_frostGolem->className();
+			std::string evilHP = std::to_string(m_frostGolem->GetHealth()) + "/" + std::to_string(m_frostGolem->GetMaxHealth()) + "HP";
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
 		}
 		// update the who is on turn text indicator for [HERO]
 		if (m_turn == BATTLE_TURN::HERO &&
-			m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+			m_frostGolem->GetSMComponent()->currentState() == "Wait")
 		{
 			m_charOnTurn = m_heroOnTurn->className();
 			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
@@ -508,8 +506,8 @@ namespace HJ { namespace Encounters {
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
 		}
 		// enable the disabled battle UI buttons on enemy turn end / waiting state
-		if (!m_data->gm.eFrostGolem->GetHealth() <= 0 &&
-			m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+		if (!m_frostGolem->GetHealth() <= 0 &&
+			m_frostGolem->GetSMComponent()->currentState() == "Wait")
 		{
 			EnableUIButtons();
 		}
@@ -518,10 +516,10 @@ namespace HJ { namespace Encounters {
 	void TutorialScene::CheckForDeaths()
 	{
 		// the golem died ;)
-		if (m_data->gm.eFrostGolem->GetHealth() <= 0)
+		if (m_frostGolem->GetHealth() <= 0)
 		{
 			DisableUIButtons();
-			if (m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+			if (m_frostGolem->GetSMComponent()->currentState() == "Wait")
 			{
 				for (auto uiComp : m_allUIcomps)
 				{
@@ -549,7 +547,7 @@ namespace HJ { namespace Encounters {
 			else
 			{
 				DisableUIButtons();
-				if (m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+				if (m_frostGolem->GetSMComponent()->currentState() == "Wait")
 				{
 					for (auto uiComp : m_allUIcomps)
 					{

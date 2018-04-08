@@ -73,7 +73,7 @@
 #define COIN_ICON "res/img/misc/coin.png"
 #define HP_POT_ICON "res/img/misc/health.png"
 #define MANA_POT_ICON "res/img/misc/mana.png"
-#define BLOOD_SPLASH_SPRITESHEET "res/img/misc/blod-splash-sheet.png"
+#define BLOOD_SPLASH_SPRITESHEET "res/img/misc/blood-splash-sheet.png"
 
 // Encounter popup global definitions
 #define ENCOUNTER_POPUP_BACKGROUND "res/img/map/encounter_popup/bg_img.png"

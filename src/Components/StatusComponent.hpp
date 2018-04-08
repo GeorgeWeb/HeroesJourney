@@ -17,10 +17,11 @@ namespace HJ { namespace Components {
 		FROST_ARMOR = 1,
 		ARMOUR_AURA = 2,
 		DAMAGE_AURA = 3,
-		DODGE = 4,
-		ENRAGE = 5,
-		FLY = 6,
-		MULTIPLE_TARGET = 7
+		FROST_AURA = 4,
+		DODGE = 5,
+		ENRAGE = 6,
+		FLY = 7,
+		MULTIPLE_TARGET = 8
 	};
 
 	struct Effect

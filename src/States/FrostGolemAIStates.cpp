@@ -26,7 +26,7 @@ namespace HJ { namespace States {
 		// change state to attack condition
 		if (!m_canStepIn)
 		{
-			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM");
+			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_EvilAISM");
 			sm->ChangeState("Attack");
 		}
 	}
@@ -51,7 +51,7 @@ namespace HJ { namespace States {
 		// change state to wait condition
 		if (!m_canReturn)
 		{
-			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM");
+			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_EvilAISM");
 			sm->ChangeState("Wait");
 		}
 	}
@@ -77,7 +77,7 @@ namespace HJ { namespace States {
 		// change state to return condition
 		if (!m_isAttacking)
 		{
-			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM");
+			auto sm = t_owner->GetComponent<Components::StateMachineComponent>("C_EvilAISM");
 			sm->ChangeState("Return");
 		}
 		

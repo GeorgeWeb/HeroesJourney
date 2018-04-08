@@ -38,6 +38,8 @@ namespace HJ { namespace Encounters {
 	private:
 		GameDataRef m_data;
 		
+		std::shared_ptr<Entities::EvilAI> m_frostGolem;
+
 		BATTLE_TURN m_turn;
 		BATTLE_STATUS m_status;
 		

@@ -56,10 +56,6 @@ namespace HJ {
 			std::shared_ptr<Entities::Sorceress> hSorceress;
 			std::shared_ptr<Entities::Rogue> hRogue;
 
-			// evil/enemies characters
-			std::shared_ptr<Entities::EvilFrostMage> eFrostGolem;
-			std::shared_ptr<Entities::EvilFrostMage> eFrostMage;
-
 			// inside-castle buildings
 			std::shared_ptr<Entities::Infirmary> infirmary;
 			std::shared_ptr<Entities::Blacksmith> blacksmith;
