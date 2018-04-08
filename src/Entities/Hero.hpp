@@ -18,6 +18,7 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
 			std::shared_ptr<Components::StatusComponent> m_statusComp;
+			std::shared_ptr<Components::SkillComponent> m_skillComp;
 
 		protected:
 			int m_health;
@@ -50,6 +51,7 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
+			std::shared_ptr<Components::SkillComponent> GetSkillComponent();
 			
 			virtual const std::string className() const { return "Hero"; }
 

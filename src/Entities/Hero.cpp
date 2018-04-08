@@ -6,7 +6,8 @@ namespace HJ { namespace Entities {
 	Hero::Hero() :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bHeroSprite")),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator")),
-		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus"))
+		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus")),
+		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{ }
 
 	Hero* Hero::GetType()
@@ -21,6 +22,10 @@ namespace HJ { namespace Entities {
 
 		SetVisible(true);
 		SetAlive(true);
+		
+		// Add basic skills
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
 	}
 
 	void Hero::Update(float t_deltaTime)
@@ -95,6 +100,11 @@ namespace HJ { namespace Entities {
 	std::shared_ptr<Components::StatusComponent> Hero::GetStatusComponent()
 	{
 		return m_statusComp;
+	}
+
+	std::shared_ptr<Components::SkillComponent> Hero::GetSkillComponent()
+	{
+		return m_skillComp;
 	}
 
 } }

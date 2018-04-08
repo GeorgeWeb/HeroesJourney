@@ -15,8 +15,6 @@
 #include "Entities/Bard.hpp"
 #include "Entities/Sorceress.hpp"
 #include "Entities/Rogue.hpp"
-// evils
-#include "Entities/EvilFrostMage.hpp"
 // buildings
 #include "Entities/Infirmary.hpp"
 #include "Entities/Blacksmith.hpp"

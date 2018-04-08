@@ -36,15 +36,15 @@ namespace HJ { namespace Components {
 		auto multiTarget = std::make_shared<Effect>();
 		multiTarget->SetSprite(tex, sf::Color::Red);
 		// add effects to the map
-		m_effects.insert({ EFFECT_TYPE::STUN, stun });
-		m_effects.insert({ EFFECT_TYPE::FROST_ARMOR, frostArmour });
-		m_effects.insert({ EFFECT_TYPE::ARMOUR_AURA, armourAura });
-		m_effects.insert({ EFFECT_TYPE::DAMAGE_AURA, damageAura });
-		m_effects.insert({ EFFECT_TYPE::FROST_AURA, frostAura });
-		m_effects.insert({ EFFECT_TYPE::DODGE, dodge });
-		m_effects.insert({ EFFECT_TYPE::ENRAGE, enrage });
-		m_effects.insert({ EFFECT_TYPE::FLY, fly });
-		m_effects.insert({ EFFECT_TYPE::MULTIPLE_TARGET, multiTarget });
+		m_effects[EFFECT_TYPE::STUN] = stun;
+		m_effects[EFFECT_TYPE::FROST_ARMOR] = frostArmour;
+		m_effects[EFFECT_TYPE::ARMOUR_AURA] = armourAura;
+		m_effects[EFFECT_TYPE::DAMAGE_AURA] = damageAura;
+		m_effects[EFFECT_TYPE::FROST_AURA] = frostAura;
+		m_effects[EFFECT_TYPE::DODGE] = dodge;
+		m_effects[EFFECT_TYPE::ENRAGE] = enrage;
+		m_effects[EFFECT_TYPE::FLY] = fly;
+		m_effects[EFFECT_TYPE::MULTIPLE_TARGET] = multiTarget;
 
 		independent = true;
 	}
@@ -101,6 +101,21 @@ namespace HJ { namespace Components {
 	{
 		auto effect = m_effects.find(t_type)->second;
 		effect->active = t_active;
+	}
+
+	std::shared_ptr<Effect> StatusComponent::GetEffect(EFFECT_TYPE t_type)
+	{
+		auto effect = m_effects.find(t_type);
+		if (effect != m_effects.end())
+		{
+			std::cout << "FOUND!" << std::endl;
+			return effect->second;
+		}
+		else
+		{
+			std::cout << "CAN'T FIND!" << std::endl;
+			return nullptr;
+		}
 	}
 
 

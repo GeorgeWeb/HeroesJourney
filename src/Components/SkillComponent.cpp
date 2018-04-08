@@ -6,26 +6,30 @@ namespace HJ { namespace Components {
 
 	SkillComponent::SkillComponent(ECM::Entity* t_parent)
 		: ECM::Component(t_parent)
-	{
-		
-	}
+	{ }
 
 	SkillComponent* SkillComponent::GetType()
 	{
 		return this;
 	}
 
-	void SkillComponent::Update(float t_deltaTime)
+	void SkillComponent::AddSkill(SKILL_NAME t_name, std::shared_ptr<Skill> t_skill)
 	{
+		m_skills.insert_or_assign(t_name, t_skill);
 	}
 
-	void SkillComponent::Render()
+	std::shared_ptr<Skill> SkillComponent::FindSkill(SKILL_NAME t_name)
 	{
+		auto skill = m_skills.find(t_name);
+		if (skill != m_skills.end())
+			return skill->second;
+		else
+			return nullptr;
 	}
 
-	std::vector<EFFECT_TYPE> SkillComponent::GetApplicableEffects()
+	std::map<SKILL_NAME, std::shared_ptr<Skill>> SkillComponent::GetSkills()
 	{
-		return applicableEffects;
+		return m_skills;
 	}
 
 } }

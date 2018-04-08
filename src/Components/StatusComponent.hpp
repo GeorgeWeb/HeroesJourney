@@ -36,12 +36,10 @@ namespace HJ { namespace Components {
 		}
 	};
 
-	using EffectRef = std::shared_ptr<Effect>;
-
 	class StatusComponent final : public ECM::Component
 	{
 		protected:
-			std::map<EFFECT_TYPE, EffectRef> m_effects;
+			std::map<EFFECT_TYPE, std::shared_ptr<Effect>> m_effects;
 
 		public:
 			StatusComponent() = delete;
@@ -52,8 +50,10 @@ namespace HJ { namespace Components {
 			void Update(float t_deltaTime) override;
 			void Render() override;
 
-			void SetEffect(EFFECT_TYPE t_type, bool t_active);
-			std::map<EFFECT_TYPE, EffectRef> GetEffects() { return m_effects; }
+			void SetEffect(EFFECT_TYPE t_type, bool t_active);			
+			std::shared_ptr<Effect> GetEffect(EFFECT_TYPE t_type);
+
+			std::map<EFFECT_TYPE, std::shared_ptr<Effect>> GetEffects() { return m_effects; }
 		
 		private:
 			sf::Vector2f offset = sf::Vector2f(0.0f, 0.0f);

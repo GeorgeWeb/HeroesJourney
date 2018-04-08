@@ -3,17 +3,25 @@
 
 #include "../Components/StatusComponent.hpp"
 #include "../SkillSet.hpp"
-#include <vector>
+#include <map>
 #include <memory>
 
 namespace HJ { namespace Components {
 
 	using namespace Engine;
 
+	enum class SKILL_NAME : int
+	{
+		BASIC_ATTACK = 0,
+		BASIC_DEFENCE = 1,
+		SPECIAL_SKILL_1 = 2,
+		SPECIAL_SKILL_2 = 3
+	};
+
 	class SkillComponent : public ECM::Component
 	{
 		private:
-			std::vector<EFFECT_TYPE> applicableEffects;
+			std::map<SKILL_NAME, std::shared_ptr<Skill>> m_skills;
 
 		public:
 			SkillComponent() = delete;
@@ -21,10 +29,13 @@ namespace HJ { namespace Components {
 
 			SkillComponent* GetType() override;
 
-			void Update(float t_deltaTime) override;
-			void Render() override;
+			void Update(float t_deltaTime) override {}
+			void Render() override {}
 
-			std::vector<EFFECT_TYPE> GetApplicableEffects();
+			void AddSkill(SKILL_NAME t_name, std::shared_ptr<Skill> t_skill);
+			std::shared_ptr<Skill> FindSkill(SKILL_NAME t_name);
+
+			std::map<SKILL_NAME, std::shared_ptr<Skill>> GetSkills();
 	};
 
 } }

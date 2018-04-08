@@ -74,6 +74,8 @@ namespace HJ { namespace Encounters {
 		// Add HP UI Component
 		// TODO: ...
 
+		/*** CREATE UI ELEMENTS ***/
+
 		// ui frame
 		auto uiFrame = std::make_shared<Entity>();
 		auto uiFrameSprite = uiFrame->AddComponent<SpriteComponent>("C_EncounterUIFrameSprite");
@@ -243,7 +245,7 @@ namespace HJ { namespace Encounters {
 		// list of the UI button sprites to be disabled/enabled on turn change
 		std::vector<SpriteComponent*> battleBtnSprites { atkBtnSprite.get(), defBtnSprite.get(), hpBtnSprite.get(), mpBtnSprite.get(), skill1BtnSprite.get(), skill2BtnSprite.get() };
 		m_battleUIButtons.insert(m_battleUIButtons.end(), battleBtnSprites.begin(), battleBtnSprites.end());
-		
+
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
@@ -377,7 +379,7 @@ namespace HJ { namespace Encounters {
 		HandleHeroActions(heroInitPos);
 
 		// update turn
-		m_turn = (m_hTurnCount == -1) ? BATTLE_TURN::EVIL : BATTLE_TURN::HERO;
+		m_turn = !chosen ? BATTLE_TURN::EVIL : BATTLE_TURN::HERO;
 		// update hero on turn
 		switch (m_turn)
 		{
@@ -446,6 +448,7 @@ namespace HJ { namespace Encounters {
 					m_EnemyStepTime.restart();
 					// change turn
 					m_hTurnCount = m_activeHeroes.size();
+					std::cout << "NEXT TURN!\n";
 					NextTurn();
 				}
 				break;
@@ -495,15 +498,21 @@ namespace HJ { namespace Encounters {
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
 		}
-		// update the who is on turn text indicator for [HERO]
+		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
 		if (m_turn == BATTLE_TURN::HERO &&
 			m_frostGolem->GetSMComponent()->currentState() == "Wait")
 		{
+			// update text indicator
 			m_charOnTurn = m_heroOnTurn->className();
 			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
 			std::string heroMP = std::to_string(m_heroOnTurn->GetMana()) + "/" + std::to_string(m_heroOnTurn->GetMaxMana()) + "MP";
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + heroHP + " | " + heroMP);
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
+			// update battle UI sprite textures
+			sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
+			sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
+			m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
+			m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
 		}
 		// enable the disabled battle UI buttons on enemy turn end / waiting state
 		if (!m_frostGolem->GetHealth() <= 0 &&
@@ -597,31 +606,36 @@ namespace HJ { namespace Encounters {
 		chosen = false;
 		do
 		{
-			if (m_hTurnCount - 1 < 0) m_hTurnCount = -1;
+			std::cout << m_hTurnCount << std::endl;
+			if (m_hTurnCount == 0) { }
 			else
 			{
-				if (m_activeHeroes[m_hTurnCount - 1] != nullptr
-				 && m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
+				// select the hero to be on turn
+				m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
+				if (!m_heroOnTurn || m_heroOnTurn->GetHealth() <= 0)
 				{
-					// fade the rest of the heroes in the party
-					for (auto hero : m_activeHeroes)
-					{
-						hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(
-							hero->GetSpriteComponent()->GetSprite().getColor().r,
-							hero->GetSpriteComponent()->GetSprite().getColor().g,
-							hero->GetSpriteComponent()->GetSprite().getColor().b,
-							hero->GetSpriteComponent()->GetSprite().getColor().a * 0.5f
-						));
-					}
-					// select the hero to be on turn
-					m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
+					std::cout << "This hero is dead.\n";
+				}
+				else if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN) != nullptr 
+					&& m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active)
+				{
+					// unfade hero on turn
 					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-					chosen = true;
+					for (auto effect : m_heroOnTurn->GetStatusComponent()->GetEffects())
+						effect.second->active = false;	
 				}
 				else
 				{
-					std::cout << "This hero is dead.\n";
-					m_hTurnCount--;
+					// unfade hero on turn
+					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+					// fade the rest of the heroes in the party
+					for (auto hero : m_activeHeroes)
+					{
+						if (hero->className() != m_heroOnTurn->className())
+							hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 100));
+					}
+					// choose this hero
+					chosen = true;
 				}
 				m_hTurnCount--;
 			}
@@ -702,6 +716,7 @@ namespace HJ { namespace Encounters {
 		{
 			// next hero turn
 			heroReturn = false;
+			std::cout << "I HAVE RETURNED!\n";
 			NextTurn();
 		}
 	}

@@ -38,7 +38,7 @@ namespace HJ
 	};
 
 	// [BASIC/GENERAL SKILL SET]
-	class BasicAttack : public Skill
+	class BasicAttack final : public Skill
 	{
 		public:
 			BasicAttack() : Skill()
@@ -54,7 +54,7 @@ namespace HJ
 
 	/*** SPECIALIZED SKILL SETS ***/
 
-	class BasicDefence : public Skill
+	class BasicDefence final : public Skill
 	{
 		public:
 			BasicDefence() : Skill()
@@ -69,7 +69,7 @@ namespace HJ
 	};
 
 	// [KNIGHT SKILL SET]
-	class HeroicStrike : public Skill
+	class HeroicStrike final : public Skill
 	{
 		public:
 			HeroicStrike() : Skill()
@@ -83,7 +83,7 @@ namespace HJ
 			}
 	};
 
-	class ShieldThrow : public Skill
+	class ShieldThrow final : public Skill
 	{
 		public:
 			ShieldThrow() : Skill()
@@ -98,7 +98,7 @@ namespace HJ
 	};
 
 	// [BARD SKILL SET]
-	class OffenseAura : public Skill
+	class OffenseAura final : public Skill
 	{
 		public:
 			OffenseAura() : Skill()
@@ -112,7 +112,7 @@ namespace HJ
 			}
 	};
 
-	class DeffenseAura : public Skill
+	class DeffenseAura final : public Skill
 	{
 		public:
 			DeffenseAura() : Skill()
@@ -127,7 +127,7 @@ namespace HJ
 	};
 	
 	// [ROGUE SKILL SET]
-	class RavenBow : public Skill
+	class RavenBow final : public Skill
 	{
 		public:
 			RavenBow() : Skill()
@@ -141,7 +141,7 @@ namespace HJ
 			}
 	};
 
-	class RainOfArrows : public Skill
+	class RainOfArrows final : public Skill
 	{
 		public:
 			RainOfArrows() : Skill()
@@ -156,7 +156,7 @@ namespace HJ
 	};
 
 	// [SORCERESS SKILL SET]
-	class FireBolt : public Skill
+	class FireBolt final : public Skill
 	{
 		public:
 			FireBolt() : Skill()
@@ -170,7 +170,7 @@ namespace HJ
 			}
 	};
 
-	class FrostAura : public Skill
+	class FrostAura final : public Skill
 	{
 		public:
 			FrostAura() : Skill()
