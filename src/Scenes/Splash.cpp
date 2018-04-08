@@ -27,8 +27,9 @@ namespace HJ {
 		/* < GLOBAL PRE-LOAD */
 
 		// Load resources (to be used repeatingly)
-		// Font assets
+		// General assets
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
+		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
 		// Building assets
 		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
 		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
@@ -46,24 +47,22 @@ namespace HJ {
 		// Encounter assets
 		m_data->assets.LoadTexture("Tex_EncounterUIFrame", ENCOUNTER_UI_FRAME);
 		m_data->assets.LoadTexture("Tex_BasicAttackBtn", BASIC_ATTACK_BTN);
-		m_data->assets.LoadTexture("Tex_ConcedeBtn", CONCEDE_BTN);
 		m_data->assets.LoadTexture("Tex_DefendBtn", DEFFEND_BTN);
-		m_data->assets.LoadTexture("Tex_PauseBtn", PAUSE_BTN);
 		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
 		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
 
 		// create serializable game entities
 		// buildings
-		m_data->gm.infirmary = std::make_shared<Infirmary>("C_InfirmarySprite");
-		m_data->gm.blacksmith = std::make_shared<Blacksmith>("C_BlacksmithSprite");
-		m_data->gm.library = std::make_shared<Library>("C_LibrarySprite");
-		m_data->gm.inn = std::make_shared<Inn>("C_InnSprite");
-		m_data->gm.store = std::make_shared<GeneralStore>("C_GeneralStore");
+		m_data->gm.infirmary = std::make_shared<Infirmary>();
+		m_data->gm.blacksmith = std::make_shared<Blacksmith>();
+		m_data->gm.library = std::make_shared<Library>();
+		m_data->gm.inn = std::make_shared<Inn>();
+		m_data->gm.store = std::make_shared<GeneralStore>();
 		// heroes
-		m_data->gm.hKnight = std::make_shared<Knight>("C_KnightSprite");
-		m_data->gm.hBard = std::make_shared<Bard>("C_BardSprite");
-		m_data->gm.hSorceress = std::make_shared<Sorceress>("C_SorcSprite");
-		m_data->gm.hRogue = std::make_shared<Rogue>("C_RogueSprite");
+		m_data->gm.hKnight = std::make_shared<Knight>();
+		m_data->gm.hBard = std::make_shared<Bard>();
+		m_data->gm.hSorceress = std::make_shared<Sorceress>();
+		m_data->gm.hRogue = std::make_shared<Rogue>();
 
 		/* /> GLOBAL PRE-LOAD */
 
@@ -184,7 +183,7 @@ namespace HJ {
 			bgSpriteComp->GetSprite().setColor(fadedColorBG);
 			m_logo->GetSpriteComponent()->GetSprite().setColor(fadedColorLogo);
 
-			if (bgSpriteComp->GetSprite().getColor().a == 0)
+			if (bgSpriteComp->GetSprite().getColor().a <= 0)
 			{
 				m_shouldFade = false;
 				

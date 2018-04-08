@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Library final : public Building
 	{
 		public:
-			Library(const std::string& t_sprite);
+			Library();
 			~Library() = default;
 
 			Library* GetType() override final;

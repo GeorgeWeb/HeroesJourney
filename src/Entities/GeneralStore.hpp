@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class GeneralStore final : public Building
 	{
 		public:
-			GeneralStore(const std::string& t_sprite);
+			GeneralStore();
 			~GeneralStore() = default;
 
 			GeneralStore* GetType() override final;

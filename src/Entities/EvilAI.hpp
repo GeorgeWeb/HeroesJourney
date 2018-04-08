@@ -3,24 +3,18 @@
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
+#include "../Components/StatusComponent.hpp"
 
 #include <functional>
 
 namespace HJ { namespace Entities {
-
-	// base AI behaviour class
-	enum AIBehaviour
-	{
-		BASE_ATTACK,
-		BASE_DEFEND,
-		BASE_DIE
-	};
 
 	class EvilAI : public Engine::ECM::Entity
 	{
 		private:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
+			std::shared_ptr<Components::StatusComponent> m_statusComp;
 
 		protected:
 			int m_health;
@@ -31,10 +25,6 @@ namespace HJ { namespace Entities {
 			unsigned int m_armour;
 			unsigned int m_critChance;
 			unsigned int m_dodgeChance;
-
-			bool m_isStunned;
-			bool m_isFlaming;
-			bool m_isFrozen;
 
 		public:
 			inline int GetHealth() { return m_health; }
@@ -51,22 +41,17 @@ namespace HJ { namespace Entities {
 			inline int GetArmour() { return m_armour; }
 			inline int GetDodge() { return m_dodgeChance; }
 
-			inline void SetStunned(const bool t_stun) { m_isStunned = t_stun; }
-			inline bool IsStunned() const { return m_isStunned; }
-			inline void SetFlaming(const bool t_flame) { m_isFlaming = t_flame; }
-			inline bool IsFlaming() const { return m_isFlaming; }
-			inline void SetFrozen(const bool t_freeze) { m_isFrozen = t_freeze; }
-			inline bool IsFrozen() const { return m_isFrozen; }
-
 			void TakeDamage(unsigned int t_dmg);
 
 		public:
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
+			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
+
+			virtual const std::string className() const { return "Enemy AI"; }
 
 		public:
-			EvilAI() = delete;
-			EvilAI(const std::string& t_sprite);
+			EvilAI();
 			virtual ~EvilAI() = default;
 
 			EvilAI* GetType() override;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FROST_GOLEM_AI_STATES
+#define FROST_GOLEM_AI_STATES
 
 #include "../Components/StateMachineComponent.hpp"
 #include "../Entities/Hero.hpp"
@@ -9,18 +10,18 @@ namespace HJ { namespace States {
 
 	using namespace Engine;
 	
-	class GolemWaitState final : public State
+	class FrostGolemWaitState final : public State
 	{
 		public:
-			GolemWaitState() = default;
+			FrostGolemWaitState() = default;
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override {};
 	};
 
-	class GolemStepInState final : public State
+	class FrostGolemStepInState final : public State
 	{
 		public:
-			GolemStepInState(sf::Vector2f t_position, float t_speed)
+			FrostGolemStepInState(sf::Vector2f t_position, float t_speed)
 				: m_position(t_position), m_speed(t_speed), m_canStepIn(false) {}
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
@@ -31,10 +32,10 @@ namespace HJ { namespace States {
 			bool m_canStepIn;
 	};
 
-	class GolemReturnState final : public State
+	class FrostGolemReturnState final : public State
 	{
 		public:
-			GolemReturnState(sf::Vector2f t_position, float t_speed)
+			FrostGolemReturnState(sf::Vector2f t_position, float t_speed)
 				: m_position(t_position), m_speed(t_speed), m_canReturn(false) {}
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
@@ -45,10 +46,10 @@ namespace HJ { namespace States {
 			bool m_canReturn;
 	};
 
-	class GolemAttackState final : public State
+	class FrostGolemAttackState final : public State
 	{
 		public:
-			GolemAttackState(std::vector<std::shared_ptr<Entities::Hero>> t_heroes, unsigned int t_damage)
+			FrostGolemAttackState(std::vector<std::shared_ptr<Entities::Hero>> t_heroes, unsigned int t_damage)
 				: m_heroes(t_heroes), m_damage(t_damage), m_isAttacking(false) {}
 
 			void EnterState(ECM::Entity* t_owner) override;
@@ -61,3 +62,5 @@ namespace HJ { namespace States {
 	};
 
 } }
+
+#endif // !FROST_GOLEM_AI_STATES

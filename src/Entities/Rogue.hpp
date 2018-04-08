@@ -8,11 +8,12 @@ namespace HJ { namespace Entities {
 	class Rogue final : public Hero
 	{
 		public:
-			Rogue(const std::string& t_sprite);
-			Rogue(const std::string& t_sprite, const std::string& t_animator);
+			Rogue();
 			~Rogue() = default;
 
 			Rogue* GetType() override final;
+
+			virtual const std::string className() const { return "Rogue"; }
 			
 			void Init() override final;
 

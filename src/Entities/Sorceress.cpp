@@ -2,8 +2,7 @@
 
 namespace HJ {namespace Entities {
 
-	HJ::Entities::Sorceress::Sorceress(const std::string& t_sprite) :
-		Hero(t_sprite)
+	Sorceress::Sorceress() : Hero()
 	{
 		m_health = 75;
 		m_maxHealth = 75;
@@ -14,24 +13,6 @@ namespace HJ {namespace Entities {
 		m_alive = true;
 		m_dodgeChance = 1;
 		m_critChance = 2;
-		m_isFlaming = false;
-		m_isStunned = false;
-	}
-
-	HJ::Entities::Sorceress::Sorceress(const std::string& t_sprite, const std::string& t_animatior):
-		Hero(t_sprite, t_animatior)
-	{
-		m_health = 75;
-		m_maxHealth = 75;
-		m_mana = 120;
-		m_maxMana = 120;
-		m_armour = 5;
-		m_damage = 30;
-		m_alive = true;
-		m_dodgeChance = 1;
-		m_critChance = 2;
-		m_isFlaming = false;
-		m_isStunned = false;
 	}
 
 	Sorceress* Sorceress::GetType()

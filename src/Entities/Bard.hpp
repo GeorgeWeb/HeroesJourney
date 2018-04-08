@@ -8,11 +8,12 @@ namespace HJ { namespace Entities {
 	class Bard final : public Hero
 	{
 		public:
-			Bard(const std::string& t_sprite);
-			Bard(const std::string& t_sprite, const std::string& t_animatior);
+			Bard();
 			~Bard() = default;
 
 			Bard* GetType() override final;
+
+			virtual const std::string className() const { return "Bard"; }
 
 			void Init() override final;
 			void Update(float t_deltaTime) override final;

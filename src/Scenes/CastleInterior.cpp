@@ -54,51 +54,41 @@ namespace HJ {
 		// initialize data
 		m_data->gm.infirmary->SetSprite(m_data->assets.GetTexture("Tex_Infirmary"));
 		// more properties
-		m_data->gm.infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite")->GetSprite().getGlobalBounds().height) * 0.7));
+		m_data->gm.infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.infirmary->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
+			(SCREEN_HEIGHT - m_data->gm.infirmary->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7));
 		m_data->gm.infirmary->Init();
-		auto infBtn = m_data->gm.infirmary->AddComponent<ClickableComponent>("C_InfirmaryBtn");
-		infBtn->SetSpriteTarget(m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite"));
 
 		// blacksmith
 		// initialize data
 		m_data->gm.blacksmith->SetSprite(m_data->assets.GetTexture("Tex_Blacksmith"));
 		// more properties
-		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().width) * 0.15f,
-			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite")->GetSprite().getGlobalBounds().height) * 0.35));
+		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.15f,
+			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35));
 		m_data->gm.blacksmith->Init();
-		auto blackBtn = m_data->gm.blacksmith->AddComponent<ClickableComponent>("C_BlacksmithBtn");
-		blackBtn->SetSpriteTarget(m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite"));
 
 		// Library
 		// initialize data
 		m_data->gm.library->SetSprite(m_data->assets.GetTexture("Tex_Library"));
 		// more properties
-		m_data->gm.library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite")->GetSprite().getGlobalBounds().height) * 0.2));
+		m_data->gm.library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.library->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f,
+			(SCREEN_HEIGHT - m_data->gm.library->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2));
 		m_data->gm.library->Init();
-		auto libBtn = m_data->gm.library->AddComponent<ClickableComponent>("C_LibraryBtn");
-		libBtn->SetSpriteTarget(m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite"));
 
 		// Inn
 		// initialize data
 		m_data->gm.inn->SetSprite(m_data->assets.GetTexture("Tex_Inn"));
 		// more properties
-		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().width) * 0.8f,
-			(SCREEN_HEIGHT - m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite")->GetSprite().getGlobalBounds().height) * 0.3));
+		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.8f,
+			(SCREEN_HEIGHT - m_data->gm.inn->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3));
 		m_data->gm.inn->Init();
-		auto innBtn = m_data->gm.inn->AddComponent<ClickableComponent>("C_InnBtn");
-		innBtn->SetSpriteTarget(m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite"));
 
 		// General Store
 		// initialize data
 		m_data->gm.store->SetSprite(m_data->assets.GetTexture("Tex_GeneralStore"));
 		// more properties
-		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().width) * 0.85f,
-			(SCREEN_HEIGHT - m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore")->GetSprite().getGlobalBounds().height) * 0.6));
+		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.85f,
+			(SCREEN_HEIGHT - m_data->gm.store->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.6));
 		m_data->gm.store->Init();
-		auto genBtn = m_data->gm.store->AddComponent<ClickableComponent>("C_GeneralStoreBtn");
-		genBtn->SetSpriteTarget(m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore"));
 
 		// backArrow
 		auto backArrow = std::make_shared<Entity>();
@@ -218,8 +208,6 @@ namespace HJ {
 		auto manaClick = manaBtn->AddComponent<ClickableComponent>("C_ManaBtnBtn");
 		manaClick->SetSpriteTarget(manaBtnSprite.get());
 		
-
-
 		//health button texture
 		auto healthBtn = std::make_shared<Entity>();
 		auto healthBtnSprite = healthBtn->AddComponent<SpriteComponent>("C_HealthBtnSprite");
@@ -346,8 +334,8 @@ namespace HJ {
 			}
 
 			//Check if infirmary is clicked
-			auto infComp = m_data->gm.infirmary->GetComponent<SpriteComponent>("C_InfirmarySprite");
-			auto infClick = m_data->gm.infirmary->GetComponent<ClickableComponent>("C_InfirmaryBtn");
+			auto infComp = m_data->gm.infirmary->GetSpriteComponent();
+			auto infClick = m_data->gm.infirmary->GetClickableComponent();
 			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				infClick->SetClicked(true);
@@ -360,8 +348,8 @@ namespace HJ {
 			}
 
 			//Check if Blacksmith is clicked
-			auto blacksmithComp = m_data->gm.blacksmith->GetComponent<SpriteComponent>("C_BlacksmithSprite");
-			auto blackClick = m_data->gm.blacksmith->GetComponent<ClickableComponent>("C_BlacksmithBtn");
+			auto blacksmithComp = m_data->gm.blacksmith->GetSpriteComponent();
+			auto blackClick = m_data->gm.blacksmith->GetClickableComponent();
 			if (m_data->input.isClicked(blacksmithComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				blackClick->SetClicked(true);
@@ -372,8 +360,8 @@ namespace HJ {
 			}
 
 			//Check if Library is clicked
-			auto libraryComp = m_data->gm.library->GetComponent<SpriteComponent>("C_LibrarySprite");
-			auto libraryClick = m_data->gm.library->GetComponent<ClickableComponent>("C_LibraryBtn");
+			auto libraryComp = m_data->gm.library->GetSpriteComponent();
+			auto libraryClick = m_data->gm.library->GetClickableComponent();
 			if (m_data->input.isClicked(libraryComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				libraryClick->SetClicked(true);
@@ -384,8 +372,8 @@ namespace HJ {
 			}
 
 			//Check if Inn is clicked
-			auto innComp = m_data->gm.inn->GetComponent<SpriteComponent>("C_InnSprite");
-			auto innClick = m_data->gm.inn->GetComponent<ClickableComponent>("C_InnBtn");
+			auto innComp = m_data->gm.inn->GetSpriteComponent();
+			auto innClick = m_data->gm.inn->GetClickableComponent();
 			if (m_data->input.isClicked(innComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				innClick->SetClicked(true);
@@ -396,8 +384,8 @@ namespace HJ {
 			}
 
 			//Check if GeneralStore is clicked
-			auto genStoreComp = m_data->gm.store->GetComponent<SpriteComponent>("C_GeneralStore");
-			auto genStoreClick = m_data->gm.store->GetComponent < ClickableComponent>("C_GeneralStoreBtn");
+			auto genStoreComp = m_data->gm.store->GetSpriteComponent();
+			auto genStoreClick = m_data->gm.store->GetClickableComponent();
 			if (m_data->input.isClicked(genStoreComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				genStoreClick->SetClicked(true);
@@ -484,8 +472,8 @@ namespace HJ {
 			}
 
 			// check if mana button has been clicked
-			auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < SpriteComponent>("C_ManaBtnSprite");
-			auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < ClickableComponent>("C_ManaBtnBtn");
+			auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite");
+			auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<ClickableComponent>("C_ManaBtnBtn");
 			
 			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
@@ -502,8 +490,8 @@ namespace HJ {
 			}
 
 			//check if health button has been clicked
-			auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < SpriteComponent>("C_HealthBtnSprite");
-			auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < ClickableComponent>("C_HealthBtnBtn");
+			auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite");
+			auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<ClickableComponent>("C_HealthBtnBtn");
 			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				healthClick->SetClicked(true);
@@ -535,35 +523,35 @@ namespace HJ {
 		}
 		
 		//Handle Infirmary click
-		auto infClick = m_data->gm.infirmary->GetComponent<ClickableComponent>("C_InfirmaryBtn");
+		auto infClick = m_data->gm.infirmary->GetClickableComponent();
 		if (infClick->CanResolve())
 		{
 			infClick->SetResolve(false);
 		}
 
 		//Handle Blacksmith click
-		auto blackClick = m_data->gm.blacksmith->GetComponent<ClickableComponent>("C_BlacksmithBtn");
+		auto blackClick = m_data->gm.blacksmith->GetClickableComponent();
 		if (blackClick->CanResolve())
 		{
 			blackClick->SetResolve(false);
 		}
 
 		//Handle Library click
-		auto libraryClick = m_data->gm.library->GetComponent<ClickableComponent>("C_LibraryBtn");
+		auto libraryClick = m_data->gm.library->GetClickableComponent();
 		if (libraryClick->CanResolve())
 		{
 			libraryClick->SetResolve(false);
 		}
 
 		//Handle Inn click
-		auto innClick = m_data->gm.inn->GetComponent<ClickableComponent>("C_InnBtn");
+		auto innClick = m_data->gm.inn->GetClickableComponent();
 		if (innClick->CanResolve())
 		{
 			innClick->SetResolve(false);
 		}
 
 		//Handle GenStore click
-		auto genStoreClick = m_data->gm.store->GetComponent <ClickableComponent>("C_GeneralStoreBtn");
+		auto genStoreClick = m_data->gm.store->GetClickableComponent();
 		if (genStoreClick->CanResolve())
 		{
 			genStoreClick->SetResolve(false);
@@ -580,7 +568,7 @@ namespace HJ {
 	
 
 		//Handle the ManaPotion button click
-		auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent < ClickableComponent>("C_ManaBtnBtn");
+		auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<ClickableComponent>("C_ManaBtnBtn");
 		if(manaClick->CanResolve())
 		{
 			manaClick->SetResolve(false);
@@ -589,7 +577,7 @@ namespace HJ {
 		
 
 		//Handle the Health Potion button click
-		auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent < ClickableComponent>("C_HealthBtnBtn");
+		auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<ClickableComponent>("C_HealthBtnBtn");
 		if (healthClick->CanResolve())
 		{
 			healthClick->SetResolve(false);

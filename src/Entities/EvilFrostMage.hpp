@@ -8,22 +8,10 @@
 
 namespace HJ { namespace Entities {
 
-		enum EvilMageBehaviour
-		{
-			// derived
-			ATTACK = AIBehaviour::BASE_ATTACK,
-			DEFEND = AIBehaviour::BASE_DEFEND,
-			DIE = AIBehaviour::BASE_DIE,
-			// new
-			FROST_STORM,
-			ICY_BURST
-		};
-
 		class EvilFrostMage final : public EvilAI
 		{	
 			public:
-				EvilFrostMage(const std::string& t_sprite);
-				EvilFrostMage(const std::string& t_sprite, const std::string& t_animator);
+				EvilFrostMage();
 				virtual ~EvilFrostMage() = default;
 
 				EvilFrostMage* GetType() override final;

@@ -2,6 +2,7 @@
 #define BUILDING_ENTITY_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
+#include <Engine/ECM/Components/ClickableComponent.hpp>
 #include "Hero.hpp"
 
 namespace HJ {	namespace Entities {
@@ -15,10 +16,13 @@ namespace HJ {	namespace Entities {
 			float m_time;
 
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
+			std::shared_ptr<Engine::Components::ClickableComponent> m_clickComp;
 
 		public:
-			Building() = delete;
-			Building(const std::string& t_sprite);
+			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
+			std::shared_ptr<Engine::Components::ClickableComponent> GetClickableComponent();
+		public:
+			Building();
 			virtual ~Building() = default;
 
 			virtual Building* GetType() override;

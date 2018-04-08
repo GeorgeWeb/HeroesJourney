@@ -2,8 +2,7 @@
 
 namespace HJ {	namespace Entities {
 
-	Library::Library(const std::string & t_sprite) :
-		Building(t_sprite)
+	Library::Library() : Building()
 	{
 		m_level = 1;
 		m_bonus = m_level * 10;

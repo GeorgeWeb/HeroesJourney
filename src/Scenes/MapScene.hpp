@@ -33,8 +33,8 @@ namespace HJ {
 		private:
 			void UpdateText();
 			void UpdateResources();
-			void HideEntsOnDisplay(std::vector<ECM::Entity*> t_entsToHide, std::vector<Components::SpriteComponent*> t_compsToFade, std::vector<Components::SpriteComponent*> t_compsToBlock);
-			void ShowEntsOnClose(std::vector<ECM::Entity*> t_entsToShow, std::vector<Components::SpriteComponent*> t_compsToUnfade, std::vector<Components::SpriteComponent*> t_compsToUnblock);
+			void HideEntsOnDisplay(std::vector<ECM::Entity*> t_entsToHide, std::vector<Engine::Components::SpriteComponent*> t_compsToFade, std::vector<Engine::Components::SpriteComponent*> t_compsToBlock);
+			void ShowEntsOnClose(std::vector<ECM::Entity*> t_entsToShow, std::vector<Engine::Components::SpriteComponent*> t_compsToUnfade, std::vector<Engine::Components::SpriteComponent*> t_compsToUnblock);
 
 
 		private:

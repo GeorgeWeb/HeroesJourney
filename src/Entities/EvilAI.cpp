@@ -2,8 +2,10 @@
 
 namespace HJ { namespace Entities {
 
-	EvilAI::EvilAI(const std::string& t_sprite) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
+	EvilAI::EvilAI() :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bEvilAISprite")),
+		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_EvilAIAnimator")),
+		m_statusComp(AddComponent<Components::StatusComponent>("C_aEvilAIStatus"))
 	{ }
 
 	EvilAI* EvilAI::GetType()
@@ -64,6 +66,11 @@ namespace HJ { namespace Entities {
 	std::shared_ptr<Engine::Components::AnimatorComponent> EvilAI::GetAnimatorComponent()
 	{
 		return m_animatorComp;
+	}
+
+	std::shared_ptr<Components::StatusComponent> EvilAI::GetStatusComponent()
+	{
+		return m_statusComp;
 	}
 
 } }

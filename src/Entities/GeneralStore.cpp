@@ -2,8 +2,7 @@
 
 namespace HJ { namespace Entities {
 
-	GeneralStore::GeneralStore(const std::string & t_sprite) :
-		Building(t_sprite)
+	GeneralStore::GeneralStore() : Building()
 	{
 		m_level = 1;
 		m_bonus = 1;

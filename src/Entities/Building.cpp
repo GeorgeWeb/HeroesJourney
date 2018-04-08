@@ -1,10 +1,13 @@
 #include "Building.hpp"
 
 namespace HJ {	namespace Entities {
-
-	Building::Building(const std::string& t_sprite) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
-	{ }
+	
+	Building::Building() :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_BuildingSprite")),
+		m_clickComp(AddComponent<Engine::Components::ClickableComponent>("C_BuildingClick"))
+	{
+		m_clickComp->SetSpriteTarget(m_spriteComp.get());
+	}
 
 	Building* Building::GetType()
 	{
@@ -16,7 +19,6 @@ namespace HJ {	namespace Entities {
 		m_spriteComp->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
 		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		m_time = 0.1f;
-
 		SetVisible(true);
 		SetAlive(true);
 	}
@@ -47,6 +49,16 @@ namespace HJ {	namespace Entities {
 	void Building::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
 	{
 		//
+	}
+
+	std::shared_ptr<Engine::Components::SpriteComponent> Building::GetSpriteComponent()
+	{
+		return m_spriteComp;
+	}
+
+	std::shared_ptr<Engine::Components::ClickableComponent> Building::GetClickableComponent()
+	{
+		return m_clickComp;
 	}
 
 } }

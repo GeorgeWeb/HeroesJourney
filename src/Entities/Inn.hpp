@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Inn final : public Building
 	{
 		public:
-			Inn(const std::string& t_sprite);
+			Inn();
 			~Inn() = default;
 
 			Inn* GetType() override final;

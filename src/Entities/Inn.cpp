@@ -2,8 +2,7 @@
 
 namespace HJ { namespace Entities {
 
-	Inn::Inn(const std::string & t_sprite) :
-		Building(t_sprite)
+	Inn::Inn() : Building()
 	{
 		m_level = 1;
 		m_bonus = m_level * 10;

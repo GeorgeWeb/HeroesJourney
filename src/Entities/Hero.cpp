@@ -3,15 +3,10 @@
 
 namespace HJ { namespace Entities {
 
-	Hero::Hero(const std::string& t_sprite) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite))
-	{
-		m_canFight = true;
-	}
-
-	Hero::Hero(const std::string& t_sprite, const std::string& t_animator) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>(t_sprite)),
-		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>(t_animator))
+	Hero::Hero() :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bHeroSprite")),
+		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator")),
+		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus"))
 	{ }
 
 	Hero* Hero::GetType()
@@ -89,6 +84,11 @@ namespace HJ { namespace Entities {
 	std::shared_ptr<Engine::Components::AnimatorComponent> Hero::GetAnimatorComponent()
 	{
 		return m_animatorComp;
+	}
+
+	std::shared_ptr<Components::StatusComponent> Hero::GetStatusComponent()
+	{
+		return m_statusComp;
 	}
 
 } }

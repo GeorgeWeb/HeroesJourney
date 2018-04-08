@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Infirmary final : public Building
 	{
 		public:
-			Infirmary(const std::string& t_sprite);
+			Infirmary();
 			~Infirmary() = default;
 
 			Infirmary* GetType() override final;

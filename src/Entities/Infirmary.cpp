@@ -2,12 +2,10 @@
 
 namespace HJ {	namespace Entities {
 
-	Infirmary::Infirmary(const std::string & t_sprite) :
-		Building(t_sprite)
+	Infirmary::Infirmary() : Building()
 	{
 		m_level = 1;
 		m_bonus = m_level * 10;
-	
 	}
 
 	Infirmary* Infirmary::GetType()
@@ -24,8 +22,6 @@ namespace HJ {	namespace Entities {
 	{
 		Building::Update(t_deltaTime);
 		auto infComp = m_spriteComp;
-
-		
 	}
 
 	void Infirmary::Render()
@@ -52,8 +48,6 @@ namespace HJ {	namespace Entities {
 			{
 				hero->SetMaxHealth(hero->GetMaxHealth() + m_bonus);
 			}
-			
-			
 		}
 	}
 
