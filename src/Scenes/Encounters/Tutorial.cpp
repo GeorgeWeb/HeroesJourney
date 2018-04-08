@@ -3,7 +3,7 @@
 #include "../MapScene.hpp"
 
 #include <Engine/ECM/Components/ClickableComponent.hpp>
-#include "../../States/AIStates.hpp"
+#include "../../States/FrostGolemAIStates.hpp"
 
 namespace HJ { namespace Encounters {
 
@@ -23,8 +23,7 @@ namespace HJ { namespace Encounters {
 	void TutorialScene::Init()
 	{
 		m_data->assets.LoadTexture("Tex_TutorialBG", TUTORIAL_ENCOUNTER);
-		m_data->assets.LoadTexture("Tex_TestSkill1Btn", TEST_SKILL1_BTN);
-		m_data->assets.LoadTexture("Tex_TestSkill2Btn", TEST_SKILL2_BTN);
+		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);
 
 		// populate the active heroes list with the currently unlocked ones before the battle starts
 		m_activeHeroes.push_back(m_data->gm.hBard);
@@ -33,7 +32,7 @@ namespace HJ { namespace Encounters {
 		m_hTurnCount = m_activeHeroes.size();
 
 		// Background
-		auto bg = std::make_shared<ECM::Entity>();
+		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_TutorialBGSprite");
 		// define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TutorialBG"));
@@ -56,29 +55,29 @@ namespace HJ { namespace Encounters {
 		// no unlocked heroes apart from the main character - the Knight
 		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hBard->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
+			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_data->gm.hBard->Init();
 		// Add HP/MP UI Component
 		// TODO: ...
 
 		// tutorial's evil ai - frost golem
-		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>("C_FrostGolemSprite"));
+		m_data->gm.eFrostGolem = std::move(std::make_shared<EvilFrostMage>());
 		m_data->gm.eFrostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
-		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .2f));
+		m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .4f));
 		m_data->gm.eFrostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
-			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35f));
+			(SCREEN_HEIGHT - m_data->gm.eFrostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_data->gm.eFrostGolem->Init();
 		auto frostGolemSM = m_data->gm.eFrostGolem->AddComponent<Components::StateMachineComponent>("C_FrostGolemSM");
-		frostGolemSM->AddState("Wait", std::make_shared<States::GolemWaitState>());
-		frostGolemSM->AddState("StepIn", std::make_shared<States::GolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
-		frostGolemSM->AddState("Return", std::make_shared<States::GolemReturnState>(sf::Vector2f(m_data->gm.eFrostGolem->GetPosition()), 7.5f));
-		frostGolemSM->AddState("Attack", std::make_shared<States::GolemAttackState>(m_activeHeroes, m_data->gm.eFrostGolem->GetDmg()));
+		frostGolemSM->AddState("Wait", std::make_shared<States::FrostGolemWaitState>());
+		frostGolemSM->AddState("StepIn", std::make_shared<States::FrostGolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_data->gm.eFrostGolem->GetPosition().y), 7.5f));
+		frostGolemSM->AddState("Return", std::make_shared<States::FrostGolemReturnState>(sf::Vector2f(m_data->gm.eFrostGolem->GetPosition()), 7.5f));
+		frostGolemSM->AddState("Attack", std::make_shared<States::FrostGolemAttackState>(m_activeHeroes, m_data->gm.eFrostGolem->GetDmg()));
 		frostGolemSM->ChangeState("Wait");
-		// Add HP/MP UI Component
+		// Add HP UI Component
 		// TODO: ...
 
 		// ui frame
-		auto uiFrame = std::make_shared<ECM::Entity>();
+		auto uiFrame = std::make_shared<Entity>();
 		auto uiFrameSprite = uiFrame->AddComponent<SpriteComponent>("C_EncounterUIFrameSprite");
 		uiFrameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		uiFrameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_EncounterUIFrame"));
@@ -87,24 +86,22 @@ namespace HJ { namespace Encounters {
 		uiFrame->SetVisible(true);
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
+		m_allUIcomps.push_back(uiFrameSprite.get());
 
 		// Attack button
-		auto atkBtn = std::make_shared<ECM::Entity>();
-		auto atkBtnSprite = atkBtn->AddComponent<SpriteComponent>("C_AtkBtnSprite");
+		auto atkBtn = std::make_shared<Button>();
+		auto atkBtnSprite = atkBtn->GetSpriteComponent();
 		atkBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		atkBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BasicAttackBtn"));
 		//properties
 		atkBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.67f));
-		atkBtn->SetVisible(true);
-		atkBtn->SetAlive(true);
 		atkBtn->Init();
 		//clickable component
-		auto atkBtnBtn = atkBtn->AddComponent<ClickableComponent>("C_AtkBtnBtn");
-		atkBtnBtn->SetSpriteTarget(atkBtnSprite.get());
+		m_allUIcomps.push_back(atkBtnSprite.get());
 
 		// Defend button
-		auto defBtn = std::make_shared<ECM::Entity>();
-		auto defBtnSprite = defBtn->AddComponent<SpriteComponent>("C_DefBtnSprite");
+		auto defBtn = std::make_shared<Button>();
+		auto defBtnSprite = defBtn->GetSpriteComponent();
 		defBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		defBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DefendBtn"));
 		//properties
@@ -112,93 +109,123 @@ namespace HJ { namespace Encounters {
 		defBtn->SetVisible(true);
 		defBtn->SetAlive(true);
 		defBtn->Init();
-		//clickable component
-		auto defBtnBtn = defBtn->AddComponent<ClickableComponent>("C_DefBtnBtn");
-		defBtnBtn->SetSpriteTarget(defBtnSprite.get());
+		m_allUIcomps.push_back(defBtnSprite.get());
 
 		// HP button
-		auto hpBtn = std::make_shared<ECM::Entity>();
-		auto hpBtnSprite = hpBtn->AddComponent<SpriteComponent>("C_HPBtnSprite");
+		auto hpBtn = std::make_shared<Button>();
+		// sprite
+		auto hpBtnSprite = hpBtn->GetSpriteComponent();
 		hpBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		hpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseHPBtn"));
+		hpBtnSprite->GetSprite().scale(3.0f, 3.0f);
 		//properties
 		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.81f));
-		hpBtn->SetVisible(true);
-		hpBtn->SetAlive(true);
 		hpBtn->Init();
-		//clickable component
-		auto hpBtnBtn = hpBtn->AddComponent<ClickableComponent>("C_HPBtnBtn");
-		hpBtnBtn->SetSpriteTarget(hpBtnSprite.get());
+		m_allUIcomps.push_back(hpBtnSprite.get());
 
 		// MP button
-		auto mpBtn = std::make_shared<ECM::Entity>();
-		auto mpBtnSprite = mpBtn->AddComponent<SpriteComponent>("C_MPBtnSprite");
+		auto mpBtn = std::make_shared<Button>();
+		// sprite
+		auto mpBtnSprite = mpBtn->GetSpriteComponent();
 		mpBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		mpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseMPBtn"));
+		mpBtnSprite->GetSprite().scale(3.0f, 3.0f);
 		//properties
 		mpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.16f, SCREEN_HEIGHT * 0.81f));
-		mpBtn->SetVisible(true);
-		mpBtn->SetAlive(true);
 		mpBtn->Init();
-		//clickable component
-		auto mpBtnBtn = mpBtn->AddComponent<ClickableComponent>("C_MPBtnBtn");
-		mpBtnBtn->SetSpriteTarget(mpBtnSprite.get());
+		m_allUIcomps.push_back(mpBtnSprite.get());
 
 		// Skill1 button
-		auto skill1Btn = std::make_shared<ECM::Entity>();
-		auto skill1BtnSprite = skill1Btn->AddComponent<SpriteComponent>("C_Skill1BtnSprite");
+		auto skill1Btn = std::make_shared<Button>();
+		// sprite
+		auto skill1BtnSprite = skill1Btn->GetSpriteComponent();
 		skill1BtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		skill1BtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TestSkill1Btn"));
+		skill1BtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TestSkillBtn"));
+		// text
+		auto skill1BtnText = skill1Btn->GetTextComponent();
+		skill1BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		skill1BtnText->GetText().setStyle(sf::Text::Bold);
+		skill1BtnText->GetText().setString("Skill 1");
+		skill1BtnText->GetText().setCharacterSize(18);
 		//properties
 		skill1Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.335f, SCREEN_HEIGHT * 0.669f));
-		skill1Btn->SetVisible(true);
-		skill1Btn->SetAlive(true);
 		skill1Btn->Init();
-		//clickable component
-		auto skill1BtnBtn = skill1Btn->AddComponent<ClickableComponent>("C_Skill1BtnBtn");
-		skill1BtnBtn->SetSpriteTarget(skill1BtnSprite.get());
+		skill1BtnText->GetText().setPosition(skill1Btn->GetPosition().x, skill1Btn->GetPosition().y + 220.0f);
+		m_allUIcomps.push_back(skill1BtnSprite.get());
 
 		// Skill2 button
-		auto skill2Btn = std::make_shared<ECM::Entity>();
-		auto skill2BtnSprite = skill2Btn->AddComponent<SpriteComponent>("C_Skill2BtnSprite");
+		auto skill2Btn = std::make_shared<Button>();
+		// sprite
+		auto skill2BtnSprite = skill2Btn->GetSpriteComponent();
 		skill2BtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		skill2BtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TestSkill2Btn"));
-		//properties
+		skill2BtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TestSkillBtn"));
+		// text
+		auto skill2BtnText = skill2Btn->GetTextComponent();
+		skill2BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		skill2BtnText->GetText().setStyle(sf::Text::Bold);
+		skill2BtnText->GetText().setString("Skill 2");
+		skill2BtnText->GetText().setCharacterSize(18);
+		// general properties
 		skill2Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.567f, SCREEN_HEIGHT * 0.669f));
-		skill2Btn->SetVisible(true);
-		skill2Btn->SetAlive(true);
 		skill2Btn->Init();
-		//clickable component
-		auto skill2BtnBtn = skill2Btn->AddComponent<ClickableComponent>("C_Skill2BtnBtn");
-		skill2BtnBtn->SetSpriteTarget(skill2BtnSprite.get());
+		skill2BtnText->GetText().setPosition(skill2Btn->GetPosition().x, skill2Btn->GetPosition().y + 220.0f);
+		m_allUIcomps.push_back(skill2BtnSprite.get());
 
 		// Pause button
-		auto pauseBtn = std::make_shared<ECM::Entity>();
-		auto pauseBtnSprite = pauseBtn->AddComponent<SpriteComponent>("C_PauseBtnSprite");
+		auto pauseBtn = std::make_shared<Button>();
+		// sprite
+		auto pauseBtnSprite = pauseBtn->GetSpriteComponent();
 		pauseBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		pauseBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_PauseBtn"));
-		//properties
-		pauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.88f, SCREEN_HEIGHT * 0.65f));
-		pauseBtn->SetVisible(true);
-		pauseBtn->SetAlive(true);
+		pauseBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		pauseBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		// text
+		auto pauseBtnText = pauseBtn->GetTextComponent();
+		pauseBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		pauseBtnText->GetText().setString("Pause");
+		pauseBtnText->GetText().scale(0.75f, 0.75f);
+		pauseBtnText->GetText().setCharacterSize(24);
+		// general properties
+		pauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.67f));
 		pauseBtn->Init();
-		//clickable component
-		auto pauseBtnBtn = pauseBtn->AddComponent<ClickableComponent>("C_PauseBtnBtn");
-		pauseBtnBtn->SetSpriteTarget(pauseBtnSprite.get());
+		// center text
+		pauseBtnText->GetText().setPosition(pauseBtn->GetPosition().x + pauseBtnText->GetText().getGlobalBounds().width * 0.7f, 
+								pauseBtn->GetPosition().y + pauseBtnText->GetText().getGlobalBounds().height * 1.2f);
+		m_allUIcomps.push_back(pauseBtnSprite.get());
 
 		// Concede button
-		auto concedeBtn = std::make_shared<ECM::Entity>();
-		auto concedeBtnSprite = concedeBtn->AddComponent<SpriteComponent>("C_ConcedeBtnSprite");
-		concedeBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 128));
-		concedeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_ConcedeBtn"));
-		//properties
-		concedeBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.88f, SCREEN_HEIGHT * 0.82f));
-		concedeBtn->SetVisible(true);
-		concedeBtn->SetAlive(true);
+		auto concedeBtn = std::make_shared<Button>();
+		// sprite
+		auto concedeBtnSprite = concedeBtn->GetSpriteComponent();
+		concedeBtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+		concedeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		concedeBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		// text
+		auto concedeBtnText = concedeBtn->GetTextComponent();
+		concedeBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		concedeBtnText->GetText().setColor(sf::Color(155, 155, 155, 55));
+		concedeBtnText->GetText().setString("Concede");
+		concedeBtnText->GetText().scale(0.75f, 0.75f);
+		concedeBtnText->GetText().setCharacterSize(24);
+		// general properties
+		concedeBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.81f));
 		concedeBtn->Init();
-		//clickable component
-		auto concedeBtnBtn = concedeBtn->AddComponent<ClickableComponent>("C_ConcedeBtnBtn");
-		concedeBtnBtn->SetSpriteTarget(concedeBtnSprite.get());
+		// center text
+		concedeBtnText->GetText().setPosition(concedeBtn->GetPosition().x + concedeBtnText->GetText().getGlobalBounds().width * 0.375f,
+			concedeBtn->GetPosition().y + concedeBtnText->GetText().getGlobalBounds().height * 1.125f);
+		m_allUIcomps.push_back(concedeBtnSprite.get());
+
+		// Text indicating who is on turn
+		auto turnTxt = std::make_shared<Entity>();
+		auto turnTxtComp = turnTxt->AddComponent<TextComponent>("C_CharacterTurnText");
+		turnTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		turnTxtComp->GetText().setCharacterSize(14);
+		turnTxtComp->GetText().setString(m_charOnTurn);
+		turnTxtComp->GetText().setColor(sf::Color::White);
+		turnTxtComp->GetText().setStyle(sf::Text::Bold);
+		turnTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.965f));
+		turnTxt->SetAlive(true);
+		turnTxt->SetVisible(true);
+		turnTxt->Init();
 
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
@@ -213,7 +240,12 @@ namespace HJ { namespace Encounters {
 		AddEntity("E_aSkill2Btn", skill2Btn);
 		AddEntity("E_aPauseBtn", pauseBtn);
 		AddEntity("E_aConcedeBtn", concedeBtn);
+		AddEntity("E_aTurnTxt", turnTxt);
 
+		// list of the UI button sprites to be disabled/enabled on turn change
+		std::vector<SpriteComponent*> battleBtnSprites { atkBtnSprite.get(), defBtnSprite.get(), hpBtnSprite.get(), mpBtnSprite.get(), skill1BtnSprite.get(), skill2BtnSprite.get() };
+		m_battleUIButtons.insert(m_battleUIButtons.end(), battleBtnSprites.begin(), battleBtnSprites.end());
+		
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
@@ -240,8 +272,8 @@ namespace HJ { namespace Encounters {
 
 #pragma region OPTIONS BUTTONS CLICKED CHECKS
 			// check if pause button is clicked
-			auto pauseBtnSprite = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<SpriteComponent>("C_PauseBtnSprite");
-			auto pauseBtnBtn = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<ClickableComponent>("C_PauseBtnBtn");
+			auto pauseBtnSprite = m_data->ents.Find<Button>("E_aPauseBtn")->GetSpriteComponent();
+			auto pauseBtnBtn = m_data->ents.Find<Button>("E_aPauseBtn")->GetClickableComponent();
 			if (pauseBtnSprite->IsClickable() && m_data->input.isClicked(pauseBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				pauseBtnBtn->SetClicked(true);
@@ -250,48 +282,48 @@ namespace HJ { namespace Encounters {
 
 #pragma region BATTLE BUTTONS CLICKED CHECKS
 			// check if attack button is clicked
-			auto atkBtnSprite = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<SpriteComponent>("C_AtkBtnSprite");
-			auto atkBtnBtn = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<ClickableComponent>("C_AtkBtnBtn");
+			auto atkBtnSprite = m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent();
+			auto atkBtnBtn = m_data->ents.Find<Button>("E_aAtkBtn")->GetClickableComponent();
 			if (atkBtnSprite->IsClickable() && m_data->input.isClicked(atkBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				atkBtnBtn->SetClicked(true);
 			}
 
 			// check if defend button is clicked
-			auto defBtnSprite = m_data->ents.Find<Entity>("E_aDefBtn")->GetComponent<SpriteComponent>("C_DefBtnSprite");
-			auto defBtnBtn = m_data->ents.Find<Entity>("E_aDefBtn")->GetComponent<ClickableComponent>("C_DefBtnBtn");
+			auto defBtnSprite = m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent();
+			auto defBtnBtn = m_data->ents.Find<Button>("E_aDefBtn")->GetClickableComponent();
 			if (defBtnSprite->IsClickable() && m_data->input.isClicked(defBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				defBtnBtn->SetClicked(true);
 			}
 
 			// check if use HP button is clicked
-			auto hpBtnSprite = m_data->ents.Find<Entity>("E_aHPBtn")->GetComponent<SpriteComponent>("C_HPBtnSprite");
-			auto hpBtnBtn = m_data->ents.Find<Entity>("E_aHPBtn")->GetComponent<ClickableComponent>("C_HPBtnBtn");
+			auto hpBtnSprite = m_data->ents.Find<Button>("E_aHPBtn")->GetSpriteComponent();
+			auto hpBtnBtn = m_data->ents.Find<Button>("E_aHPBtn")->GetClickableComponent();
 			if (hpBtnSprite->IsClickable() && m_data->input.isClicked(hpBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				hpBtnBtn->SetClicked(true);
 			}
 
 			// check if use MP button is clicked
-			auto mpBtnSprite = m_data->ents.Find<Entity>("E_aMPBtn")->GetComponent<SpriteComponent>("C_MPBtnSprite");
-			auto mpBtnBtn = m_data->ents.Find<Entity>("E_aMPBtn")->GetComponent<ClickableComponent>("C_MPBtnBtn");
+			auto mpBtnSprite = m_data->ents.Find<Button>("E_aMPBtn")->GetSpriteComponent();
+			auto mpBtnBtn = m_data->ents.Find<Button>("E_aMPBtn")->GetClickableComponent();
 			if (mpBtnSprite->IsClickable() && m_data->input.isClicked(mpBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				mpBtnBtn->SetClicked(true);
 			}
 
 			// check if use HP button is clicked
-			auto skill1BtnSprite = m_data->ents.Find<Entity>("E_aSkill1Btn")->GetComponent<SpriteComponent>("C_Skill1BtnSprite");
-			auto skill1BtnBtn = m_data->ents.Find<Entity>("E_aSkill1Btn")->GetComponent<ClickableComponent>("C_Skill1BtnBtn");
+			auto skill1BtnSprite = m_data->ents.Find<Button>("E_aSkill1Btn")->GetSpriteComponent();
+			auto skill1BtnBtn = m_data->ents.Find<Button>("E_aSkill1Btn")->GetClickableComponent();
 			if (skill1BtnSprite->IsClickable() && m_data->input.isClicked(skill1BtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				skill1BtnBtn->SetClicked(true);
 			}
 
 			// check if use MP button is clicked
-			auto skill2BtnSprite = m_data->ents.Find<Entity>("E_aSkill2Btn")->GetComponent<SpriteComponent>("C_Skill2BtnSprite");
-			auto skill2BtnBtn = m_data->ents.Find<Entity>("E_aSkill2Btn")->GetComponent<ClickableComponent>("C_Skill2BtnBtn");
+			auto skill2BtnSprite = m_data->ents.Find<Button>("E_aSkill2Btn")->GetSpriteComponent();
+			auto skill2BtnBtn = m_data->ents.Find<Button>("E_aSkill2Btn")->GetClickableComponent();
 			if (skill2BtnSprite->IsClickable() && m_data->input.isClicked(skill2BtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				skill2BtnBtn->SetClicked(true);
@@ -304,7 +336,7 @@ namespace HJ { namespace Encounters {
 	{
 #pragma region OPTIONS BUTTONS
 		// resolve pause button click
-		auto pauseBtnBtn = m_data->ents.Find<Entity>("E_aPauseBtn")->GetComponent<ClickableComponent>("C_PauseBtnBtn");
+		auto pauseBtnBtn = m_data->ents.Find<Button>("E_aPauseBtn")->GetClickableComponent();
 		if (pauseBtnBtn->CanResolve())
 		{
 			// Switch scenes (to Pause Menu)
@@ -317,126 +349,110 @@ namespace HJ { namespace Encounters {
 
 #pragma region BATTLE BUTTONS
 		// sprite components
-		auto atkBtnSprite = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<SpriteComponent>("C_AtkBtnSprite");
-		auto defBtnSprite = m_data->ents.Find<Entity>("E_aDefBtn")->GetComponent<SpriteComponent>("C_DefBtnSprite");
-		auto hpBtnSprite = m_data->ents.Find<Entity>("E_aHPBtn")->GetComponent<SpriteComponent>("C_HPBtnSprite");
-		auto mpBtnSprite = m_data->ents.Find<Entity>("E_aMPBtn")->GetComponent<SpriteComponent>("C_MPBtnSprite");
-		auto skill1BtnSprite = m_data->ents.Find<Entity>("E_aSkill1Btn")->GetComponent<SpriteComponent>("C_Skill1BtnSprite");
-		auto skill2BtnSprite = m_data->ents.Find<Entity>("E_aSkill2Btn")->GetComponent<SpriteComponent>("C_Skill2BtnSprite");
+		auto atkBtnSprite = m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent();
+		auto defBtnSprite = m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent();
+		auto hpBtnSprite = m_data->ents.Find<Button>("E_aHPBtn")->GetSpriteComponent();
+		auto mpBtnSprite = m_data->ents.Find<Button>("E_aMPBtn")->GetSpriteComponent();
+		auto skill1BtnSprite = m_data->ents.Find<Button>("E_aSkill1Btn")->GetSpriteComponent();
+		auto skill2BtnSprite = m_data->ents.Find<Button>("E_aSkill2Btn")->GetSpriteComponent();
 
 		// clickable components
-		auto atkBtnBtn = m_data->ents.Find<Entity>("E_aAtkBtn")->GetComponent<ClickableComponent>("C_AtkBtnBtn");
-		auto defBtnBtn = m_data->ents.Find<Entity>("E_aDefBtn")->GetComponent<ClickableComponent>("C_DefBtnBtn");
-		auto hpBtnBtn = m_data->ents.Find<Entity>("E_aHPBtn")->GetComponent<ClickableComponent>("C_HPBtnBtn");
-		auto mpBtnBtn = m_data->ents.Find<Entity>("E_aMPBtn")->GetComponent<ClickableComponent>("C_MPBtnBtn");
-		auto skill1BtnBtn = m_data->ents.Find<Entity>("E_aSkill1Btn")->GetComponent<ClickableComponent>("C_Skill1BtnBtn");
-		auto skill2BtnBtn = m_data->ents.Find<Entity>("E_aSkill2Btn")->GetComponent<ClickableComponent>("C_Skill2BtnBtn");
+		auto atkBtnBtn = m_data->ents.Find<Button>("E_aAtkBtn")->GetClickableComponent();
+		auto defBtnBtn = m_data->ents.Find<Button>("E_aDefBtn")->GetClickableComponent();
+		auto hpBtnBtn = m_data->ents.Find<Button>("E_aHPBtn")->GetClickableComponent();
+		auto mpBtnBtn = m_data->ents.Find<Button>("E_aMPBtn")->GetClickableComponent();
+		auto skill1BtnBtn = m_data->ents.Find<Button>("E_aSkill1Btn")->GetClickableComponent();
+		auto skill2BtnBtn = m_data->ents.Find<Button>("E_aSkill2Btn")->GetClickableComponent();
 #pragma endregion
-
-		// list of the UI button sprites to be disabled/enabled on turn change
-		static std::vector<SpriteComponent*> battleUIButtons = { atkBtnSprite, defBtnSprite, hpBtnSprite, mpBtnSprite, skill1BtnSprite, skill2BtnSprite };
-
+		
 		// check if a hero is dead
-		CheckForDeaths(battleUIButtons);
+		CheckForDeaths();
 
 		// check for condition to exit the battle (win/lose)
-		CheckForBattleOutcome(battleUIButtons);
+		CheckForBattleOutcome();
 
-		//std::cout << m_hTurnCount << std::endl;
+		// check if any disabled UI elemnts can be reset to enabled (after AI turn)
+		UpdateUI();
+
+		// initial hero state properties FOR action behaviour preparation
+		static sf::Vector2f heroInitPos = m_heroOnTurn->GetPosition();
+		HandleHeroActions(heroInitPos);
+
 		// update turn
 		m_turn = (m_hTurnCount == -1) ? BATTLE_TURN::EVIL : BATTLE_TURN::HERO;
 		// update hero on turn
 		switch (m_turn)
 		{
-		case BATTLE_TURN::HERO:
-			// resolve attack button click
-			if (atkBtnBtn->CanResolve())
-			{
-				std::cout << "Hero attacking!\n";
-				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				std::cout << "DMG dealt: " << dmg << std::endl;
-				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
-				std::cout << std::endl;
+			case BATTLE_TURN::HERO:
+				//m_charOnTurn = typeid(m_heroOnTurn).name();
+				if (atkBtnBtn->CanResolve())
+				{
+					heroStepIn = true;
+				}
 
-				// next hero turn
-				NextTurn();
+				// resolve defend button click
+				if (defBtnBtn->CanResolve())
+				{
+					std::cout << "Hero defending!\n";
+					m_heroOnTurn->Defend();
 
-				if (m_hTurnCount == -1)
-					DisableUIButtons(battleUIButtons);
+					// next hero turn
+					NextTurn();
 
-				atkBtnBtn->SetResolve(false);
-			}
+					defBtnBtn->SetResolve(false);
+				}
 
-			// resolve defend button click
-			if (defBtnBtn->CanResolve())
-			{
-				std::cout << "Hero defending!\n";
-				m_heroOnTurn->Defend();
+				// resolve use HP button click
+				if (hpBtnBtn->CanResolve())
+				{
+					std::cout << "Hero used HP potion!\n";
 
-				// next hero turn
-				NextTurn();
+					hpBtnBtn->SetResolve(false);
+				}
 
-				if (m_hTurnCount == -1)
-					DisableUIButtons(battleUIButtons);
+				// resolve use MP button click
+				if (mpBtnBtn->CanResolve())
+				{
+					std::cout << "Hero used MP potion!\n";
 
-				defBtnBtn->SetResolve(false);
-			}
+					mpBtnBtn->SetResolve(false);
+				}
 
-			// resolve use HP button click
-			if (hpBtnBtn->CanResolve())
-			{
-				std::cout << "Hero used HP potion!\n";
+				// resolve skill1 button click
+				if (skill1BtnBtn->CanResolve())
+				{
+					heroStepIn = true;
+				}
 
-				hpBtnBtn->SetResolve(false);
-			}
-
-			// resolve use MP button click
-			if (mpBtnBtn->CanResolve())
-			{
-				std::cout << "Hero used MP potion!\n";
-
-				mpBtnBtn->SetResolve(false);
-			}
-
-			// resolve skill1 button click
-			if (skill1BtnBtn->CanResolve())
-			{
-				std::cout << "Hero used Skill 1!\n";
-
-				// next hero turn
-				NextTurn();
-
-				if (m_hTurnCount == -1)
-					DisableUIButtons(battleUIButtons);
-
-				skill1BtnBtn->SetResolve(false);
-			}
-
-			// resolve skill2 button click
-			if (skill2BtnBtn->CanResolve())
-			{
-				std::cout << "Hero used Skill 2!\n";
-
-				// next hero turn
-				NextTurn();
-
-				if (m_hTurnCount == -1)
-					DisableUIButtons(battleUIButtons);
-
-				skill2BtnBtn->SetResolve(false);
-			}
-			break;
-		case BATTLE_TURN::EVIL:
-				m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
-
-				EnableUIButtons(battleUIButtons);
-
-				m_hTurnCount = m_activeHeroes.size();
-				NextTurn();
-			break;
-		default:
-			break;
+				// resolve skill2 button click
+				if (skill2BtnBtn->CanResolve())
+				{
+					heroStepIn = true;
+				}
+				break;
+			case BATTLE_TURN::EVIL:
+				// disable player's battle UI buttons
+				DisableUIButtons();
+				// reset heroes original texture color
+				for (auto hero : m_activeHeroes)
+					if (hero->GetHealth() > 0) hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+				// check for behaviour finished
+				if (m_EnemyStepTime.getElapsedTime().asSeconds() > 5.0f)
+					m_finishedPrep = true;
+				// ready for AI states
+				if (m_finishedPrep)
+				{
+					m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->ChangeState("StepIn");
+					// restart preparation stuff
+					m_finishedPrep = false;
+					m_EnemyStepTime.restart();
+					// change turn
+					m_hTurnCount = m_activeHeroes.size();
+					NextTurn();
+				}
+				break;
+			default:
+				break;
 		}
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
@@ -453,31 +469,75 @@ namespace HJ { namespace Encounters {
 		m_data->ents.Save(t_name, t_entity);
 	}
 
-	void TutorialScene::DisableUIButtons(std::vector<SpriteComponent*> t_buttons)
+	void TutorialScene::DisableUIButtons()
 	{
-		for (auto btn : t_buttons)
+		for (auto uiBtn : m_battleUIButtons)
 		{
-			btn->GetSprite().setColor(sf::Color(255, 255, 255, 128));
-			btn->SetClickable(false);
+			uiBtn->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+			uiBtn->SetClickable(false);
 		}
 	}
 
-	void TutorialScene::EnableUIButtons(std::vector<SpriteComponent*> t_buttons)
+	void TutorialScene::EnableUIButtons()
 	{
-		for (auto btn : t_buttons)
+		for (auto uiBtn : m_battleUIButtons)
 		{
-			btn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-			btn->SetClickable(true);
+			uiBtn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+			uiBtn->SetClickable(true);
 		}
 	}
 
-	void TutorialScene::CheckForDeaths(std::vector<SpriteComponent*> t_buttons)
+	void TutorialScene::UpdateUI()
+	{
+		// update the who is on turn text indicator for [EVIL]
+		if (m_turn == BATTLE_TURN::EVIL)
+		{
+			m_charOnTurn = m_data->gm.eFrostGolem->className();
+			std::string evilHP = std::to_string(m_data->gm.eFrostGolem->GetHealth()) + "/" + std::to_string(m_data->gm.eFrostGolem->GetMaxHealth()) + "HP";
+			std::string evilMP = std::to_string(m_data->gm.eFrostGolem->GetMana()) + "/" + std::to_string(m_data->gm.eFrostGolem->GetMaxMana()) + "MP";
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);// +" | " + evilMP);
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
+		}
+		// update the who is on turn text indicator for [HERO]
+		if (m_turn == BATTLE_TURN::HERO &&
+			m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+		{
+			m_charOnTurn = m_heroOnTurn->className();
+			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
+			std::string heroMP = std::to_string(m_heroOnTurn->GetMana()) + "/" + std::to_string(m_heroOnTurn->GetMaxMana()) + "MP";
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + heroHP + " | " + heroMP);
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
+		}
+		// enable the disabled battle UI buttons on enemy turn end / waiting state
+		if (!m_data->gm.eFrostGolem->GetHealth() <= 0 &&
+			m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+		{
+			EnableUIButtons();
+		}
+	}
+
+	void TutorialScene::CheckForDeaths()
 	{
 		// the golem died ;)
 		if (m_data->gm.eFrostGolem->GetHealth() <= 0)
 		{
-			std::cout << "WON\n";
-			m_status = BATTLE_STATUS::WON;
+			DisableUIButtons();
+			if (m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+			{
+				for (auto uiComp : m_allUIcomps)
+				{
+					uiComp->GetSprite().setColor(sf::Color(
+						uiComp->GetSprite().getColor().r,
+						uiComp->GetSprite().getColor().g,
+						uiComp->GetSprite().getColor().b,
+						uiComp->GetSprite().getColor().a - 1
+					));
+
+					// if the last UI component has faded out -> go to WON status resolving
+					if (m_allUIcomps.at(m_allUIcomps.size() - 1)->GetSprite().getColor().a <= 0)
+						m_status = BATTLE_STATUS::WON;
+				}
+			}
 		}
 
 		// count how many heroes died (if any)
@@ -489,41 +549,45 @@ namespace HJ { namespace Encounters {
 			}
 			else
 			{
-				std::cout << "LOST\n";
-				m_status = BATTLE_STATUS::LOST;
+				DisableUIButtons();
+				if (m_data->gm.eFrostGolem->GetComponent<Components::StateMachineComponent>("C_FrostGolemSM")->currentState() == "Wait")
+				{
+					for (auto uiComp : m_allUIcomps)
+					{
+						uiComp->GetSprite().setColor(sf::Color(
+							uiComp->GetSprite().getColor().r,
+							uiComp->GetSprite().getColor().g,
+							uiComp->GetSprite().getColor().b,
+							uiComp->GetSprite().getColor().a - 1
+						));
+
+						// if the last UI component has faded out -> go to LOST status resolving
+						if (m_allUIcomps.at(m_allUIcomps.size() - 1)->GetSprite().getColor().a <= 0)
+							m_status = BATTLE_STATUS::LOST;
+					}
+				}
 			}
 		}
 	}
 
-	void TutorialScene::CheckForBattleOutcome(std::vector<SpriteComponent*> t_buttons)
+	void TutorialScene::CheckForBattleOutcome()
 	{
-		static sf::Clock clock;
+		// Initialize outcome state(screen)
+		SM::StateRef outcomeState;
 		switch (m_status)
 		{
 			case BATTLE_STATUS::LOST:
-				DisableUIButtons(t_buttons);
-
-				m_condTimer = clock.getElapsedTime().asSeconds();
-				if (m_condTimer > 20.0f)
-				{
-					// Switch scenes (to Pause Menu)
-					auto mapState = std::make_unique<MapScene>(MapScene(m_data));
-					m_data->machine.AddState(std::move(mapState), true);
-				}
+				// Load lose screen
+				outcomeState = std::make_unique<MapScene>(MapScene(m_data));
+				m_data->machine.AddState(std::move(outcomeState), true);
 				break;
 			case BATTLE_STATUS::WON:
-				DisableUIButtons(t_buttons);
-
-				m_condTimer = clock.getElapsedTime().asSeconds();
-				if (m_condTimer > 10.0f)
-				{
-					m_data->gm.gold += 100;
-					m_data->gm.healthPot += 1;
-					m_data->gm.manaPot += 1;
-					// Switch scenes (to Pause Menu)
-					auto mapState = std::make_unique<MapScene>(MapScene(m_data));
-					m_data->machine.AddState(std::move(mapState), true);
-				}
+				m_data->gm.gold += 100;
+				m_data->gm.healthPot += 1;
+				m_data->gm.manaPot += 1;
+				// Load win screen
+				outcomeState = std::make_unique<MapScene>(MapScene(m_data));
+				m_data->machine.AddState(std::move(outcomeState), true);
 				break;
 			default:
 			case BATTLE_STATUS::PLAYING:
@@ -540,15 +604,109 @@ namespace HJ { namespace Encounters {
 			else
 			{
 				if (m_activeHeroes[m_hTurnCount - 1] != nullptr
-					&& m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
+				 && m_activeHeroes[m_hTurnCount - 1]->GetHealth() > 0)
 				{
+					// fade the rest of the heroes in the party
+					for (auto hero : m_activeHeroes)
+					{
+						hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(
+							hero->GetSpriteComponent()->GetSprite().getColor().r,
+							hero->GetSpriteComponent()->GetSprite().getColor().g,
+							hero->GetSpriteComponent()->GetSprite().getColor().b,
+							hero->GetSpriteComponent()->GetSprite().getColor().a * 0.5f
+						));
+					}
+					// select the hero to be on turn
 					m_heroOnTurn = m_activeHeroes[m_hTurnCount - 1];
-					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color::Red);
+					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					chosen = true;
+				}
+				else
+				{
+					std::cout << "This hero is dead.\n";
+					m_hTurnCount--;
 				}
 				m_hTurnCount--;
 			}
 		} while (m_hTurnCount - 1 >= 0 && !chosen);
+	}
+
+	void TutorialScene::HandleHeroActions(const sf::Vector2f& t_initPos)
+	{
+		auto atkBtnBtn = m_data->ents.Find<Button>("E_aAtkBtn")->GetClickableComponent();
+		auto skill1BtnBtn = m_data->ents.Find<Button>("E_aSkill1Btn")->GetClickableComponent();
+		auto skill2BtnBtn = m_data->ents.Find<Button>("E_aSkill2Btn")->GetClickableComponent();
+		
+		// move right if attacking
+		if (heroStepIn && m_heroOnTurn->GetPosition().x <= SCREEN_WIDTH / 3.5f)
+		{
+			DisableUIButtons();
+			m_heroOnTurn->Move(sf::Vector2f(10.0f, 0.0f));
+		}
+
+		// stop moving when destination is reached
+		if (m_heroOnTurn->GetPosition().x >= SCREEN_WIDTH / 3.5f)
+		{
+			// cannot step in
+			heroStepIn = false;
+
+			// [ATTACK]
+			if (atkBtnBtn->CanResolve())
+			{
+				std::cout << "Hero attacking!\n";
+				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				std::cout << "DMG dealt: " << dmg << std::endl;
+				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				std::cout << std::endl;
+				
+				// reset button's resolve
+				atkBtnBtn->SetResolve(false);
+			}
+
+			// [SKILL 1]
+			if (skill1BtnBtn->CanResolve())
+			{
+				std::cout << "Hero used Skill 1!\n";
+				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				std::cout << "DMG dealt: " << dmg << std::endl;
+				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				std::cout << std::endl;
+				
+				// reset button's resolve
+				skill1BtnBtn->SetResolve(false);
+			}
+
+			// [SKILL 2]
+			if (skill2BtnBtn->CanResolve())
+			{
+				std::cout << "Hero used Skill 2!\n";
+				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				std::cout << "DMG dealt: " << dmg << std::endl;
+				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				std::cout << std::endl;
+				
+				// reset button's resolve
+				skill2BtnBtn->SetResolve(false);
+			}
+
+			heroReturn = true;
+		}
+
+		// check if the action has been executed
+		if (heroReturn && m_heroOnTurn->GetPosition().x >= t_initPos.x)
+		{
+			m_heroOnTurn->Move(sf::Vector2f(-10.0f, 0.0f));
+		}
+
+		if (m_heroOnTurn->GetPosition().x <= t_initPos.x && heroReturn)
+		{
+			// next hero turn
+			heroReturn = false;
+			NextTurn();
+		}
 	}
 
 } }
