@@ -18,21 +18,27 @@ namespace HJ { namespace Components {
 		tex.create(16, 16);
 		// create the effects
 		auto stun = std::make_shared<Effect>();
-		stun->SetSprite(tex, sf::Color::Red);
+		stun->SetSprite(tex, sf::Color::White);
 		auto frostResist = std::make_shared<Effect>();
 		frostResist->SetSprite(tex, sf::Color::Cyan);
-		auto dodgeAura = std::make_shared<Effect>();
-		dodgeAura->SetSprite(tex, sf::Color::Blue);
+		auto armourAura = std::make_shared<Effect>();
+		armourAura->SetSprite(tex, sf::Color::Blue);
 		auto damageAura = std::make_shared<Effect>();
 		damageAura->SetSprite(tex, sf::Color::Magenta);
+		auto dodge = std::make_shared<Effect>();
+		dodge->SetSprite(tex, sf::Color::Green);
+		auto enrage = std::make_shared<Effect>();
+		enrage->SetSprite(tex, sf::Color::Red);
+		auto fly = std::make_shared<Effect>();
+		fly->SetSprite(tex);
 		auto dodgeSkill = std::make_shared<Effect>();
-		dodgeSkill->SetSprite(tex, sf::Color::Green);
+		dodgeSkill->SetSprite(tex);
 		// add effects to the map
 		m_effects.insert({ EFFECT_TYPE::STUN, stun });
-		m_effects.insert({ EFFECT_TYPE::FROST_RESISTANCE, frostResist });
-		m_effects.insert({ EFFECT_TYPE::DODGE_AURA, dodgeAura });
+		m_effects.insert({ EFFECT_TYPE::FROST_ARMOR, frostResist });
+		m_effects.insert({ EFFECT_TYPE::ARMOUR_AURA, armourAura });
 		m_effects.insert({ EFFECT_TYPE::DAMAGE_AURA, damageAura });
-		m_effects.insert({ EFFECT_TYPE::DODGE_SKILL, dodgeSkill });
+		m_effects.insert({ EFFECT_TYPE::DODGE, dodgeSkill });
 
 		independent = true;
 	}

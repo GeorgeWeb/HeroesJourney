@@ -4,6 +4,7 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
 #include "../Components/StatusComponent.hpp"
+#include "../Components/SkillComponent.hpp"
 
 #include "EvilAI.hpp"
 
@@ -62,17 +63,10 @@ namespace HJ { namespace Entities {
 			virtual void Update(float t_deltaTime) override;
 			virtual void Render() override;
 
-			virtual void Attack(std::shared_ptr<EvilAI> t_enemy);
-			virtual void Defend();
-
 			// can be applied to enemies
-			virtual void UseSkill1(std::shared_ptr<EvilAI> t_enemy) {};
+			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<EvilAI> t_enemy);
 			// can be applied to party members (used from Bard)
-			virtual void UseSkill1(std::vector<std::shared_ptr<Hero>> t_heroes) {};
-			// can be applied to enemies
-			virtual void UseSkill2(std::shared_ptr<EvilAI> t_enemy) {};
-			// can be applied to party members (used from Bard)
-			virtual void UseSkill2(std::vector<std::shared_ptr<Hero>> t_heroes) {};
+			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes);
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);

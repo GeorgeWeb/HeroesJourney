@@ -23,6 +23,8 @@ namespace HJ { namespace Entities {
 	void Bard::Init()
 	{
 		Hero::Init();
+
+		// TOOD: Add skills
 	}
 
 	void Bard::Update(float t_deltaTime)
@@ -33,26 +35,6 @@ namespace HJ { namespace Entities {
 	void Bard::Render()
 	{
 		Hero::Render();
-	}
-
-	void Bard::Attack(std::shared_ptr<EvilAI> t_enemy)
-	{
-		Hero::Attack(t_enemy);
-	}
-
-	void Bard::Defend()
-	{
-		Hero::Defend();
-	}
-
-	void Bard::UseSkill1(std::vector<std::shared_ptr<Hero>> t_heroes)
-	{
-		// implement
-	}
-
-	void Bard::UseSkill2(std::vector<std::shared_ptr<Hero>> t_heroes)
-	{
-		// implement
 	}
 
 } }

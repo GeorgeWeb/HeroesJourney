@@ -23,8 +23,7 @@ namespace HJ { namespace Encounters {
 	void TutorialScene::Init()
 	{
 		m_data->assets.LoadTexture("Tex_TutorialBG", TUTORIAL_ENCOUNTER);
-		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);
-
+	
 		// populate the active heroes list with the currently unlocked ones before the battle starts
 		m_activeHeroes.push_back(m_data->gm.hBard);
 		m_activeHeroes.push_back(m_data->gm.hKnight);
@@ -394,7 +393,7 @@ namespace HJ { namespace Encounters {
 				if (defBtnBtn->CanResolve())
 				{
 					std::cout << "Hero defending!\n";
-					m_heroOnTurn->Defend();
+					// m_heroOnTurn->Defend();
 
 					// next hero turn
 					NextTurn();
@@ -654,10 +653,10 @@ namespace HJ { namespace Encounters {
 			if (atkBtnBtn->CanResolve())
 			{
 				std::cout << "Hero attacking!\n";
-				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				std::cout << "DMG dealt: " << dmg << std::endl;
-				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				//m_heroOnTurn->ExecuteSkill(m_data->gm.eFrostGolem, );
+				//auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				//std::cout << "DMG dealt: " << dmg << std::endl;
+				//std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
 				std::cout << std::endl;
 				
 				// reset button's resolve
@@ -668,10 +667,10 @@ namespace HJ { namespace Encounters {
 			if (skill1BtnBtn->CanResolve())
 			{
 				std::cout << "Hero used Skill 1!\n";
-				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				std::cout << "DMG dealt: " << dmg << std::endl;
-				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				//m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				//auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				//std::cout << "DMG dealt: " << dmg << std::endl;
+				//std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
 				std::cout << std::endl;
 				
 				// reset button's resolve
@@ -682,10 +681,10 @@ namespace HJ { namespace Encounters {
 			if (skill2BtnBtn->CanResolve())
 			{
 				std::cout << "Hero used Skill 2!\n";
-				m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				std::cout << "DMG dealt: " << dmg << std::endl;
-				std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
+				// m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
+				// auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
+				// std::cout << "DMG dealt: " << dmg << std::endl;
+				// std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
 				std::cout << std::endl;
 				
 				// reset button's resolve

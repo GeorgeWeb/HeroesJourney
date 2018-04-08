@@ -49,20 +49,26 @@ namespace HJ { namespace Entities {
 
 	void Hero::TakeDamage(unsigned int t_dmg)
 	{
-		// check for dodge chance
+		// TODO: check for dodge chance etc. 
 		m_health -= t_dmg;
+		
+		// play blood-splash animation
+		// TODO: ...
 	}
 
-	void Hero::Attack(std::shared_ptr<EvilAI> t_enemy)
+
+	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<EvilAI> t_enemy)
 	{
+		// TODO: Skill logic
 		// check for crit. chance
-		auto dmg = (t_enemy->GetArmour() >= m_damage) ? 0 : m_damage - t_enemy->GetArmour();
-		t_enemy->TakeDamage(dmg);
+		// auto dmg = (t_enemy->GetArmour() >= m_damage) ? 0 : m_damage - t_enemy->GetArmour();
+		// t_enemy->TakeDamage(dmg);
 	}
 
-	void Hero::Defend()
+	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes)
 	{
-		m_armour *= 2;
+		// TODO: Skill logic
+		// m_armour *= 2;
 	}
 
 	void Hero::SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect)

@@ -23,6 +23,8 @@ namespace HJ { namespace Entities {
 	void Knight::Init()
 	{
 		Hero::Init();
+
+		// TODO: Add skills
 	}
 
 	void Knight::Update(float t_deltaTime)
@@ -33,26 +35,6 @@ namespace HJ { namespace Entities {
 	void Knight::Render()
 	{
 		Hero::Render();
-	}
-
-	void Knight::Attack(std::shared_ptr<EvilAI> t_enemy)
-	{
-		Hero::Attack(t_enemy);
-	}
-
-	void Knight::Defend()
-	{
-		Hero::Defend();
-	}
-
-	void Knight::UseSkill1(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
-	}
-
-	void Knight::UseSkill2(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
 	}
 
 } }

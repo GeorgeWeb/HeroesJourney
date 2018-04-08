@@ -14,10 +14,13 @@ namespace HJ { namespace Components {
 	enum class EFFECT_TYPE : int
 	{
 		STUN = 0,
-		FROST_RESISTANCE = 1,
-		DODGE_AURA = 2,
+		FROST_ARMOR = 1,
+		ARMOUR_AURA = 2,
 		DAMAGE_AURA = 3,
-		DODGE_SKILL = 4
+		DODGE = 4,
+		ENRAGE = 5,
+		FLY = 6,
+		MULTIPLE_TARGET = 7
 	};
 
 	struct Effect

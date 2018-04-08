@@ -23,6 +23,8 @@ namespace HJ { namespace Entities {
 	void Rogue::Init()
 	{
 		Hero::Init();
+
+		// TODO: Add skills
 	}
 
 	void Rogue::Update(float t_deltaTime)
@@ -33,26 +35,6 @@ namespace HJ { namespace Entities {
 	void Rogue::Render()
 	{
 		Hero::Render();
-	}
-
-	void Rogue::Attack(std::shared_ptr<EvilAI> t_enemy)
-	{
-		Hero::Attack(t_enemy);
-	}
-
-	void Rogue::Defend()
-	{
-		Hero::Defend();
-	}
-
-	void Rogue::UseSkill1(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
-	}
-
-	void Rogue::UseSkill2(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
 	}
 
 } }

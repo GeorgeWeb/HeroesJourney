@@ -18,12 +18,6 @@ namespace HJ { namespace Entities {
 			void Init() override final;
 			void Update(float t_deltaTime) override final;
 			void Render() override final;
-
-			void Attack(std::shared_ptr<EvilAI> t_enemy) override final;
-			void Defend() override final;
-
-			void UseSkill1(std::shared_ptr<EvilAI> t_enemy) override final;
-			void UseSkill2(std::shared_ptr<EvilAI> t_enemy) override final;
 	};
 
 } }

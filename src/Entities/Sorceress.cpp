@@ -23,6 +23,8 @@ namespace HJ {namespace Entities {
 	void Sorceress::Init()
 	{
 		Hero::Init();
+
+		// TODO: Add skills
 	}
 
 	void Sorceress::Update(float t_deltaTime)
@@ -33,26 +35,6 @@ namespace HJ {namespace Entities {
 	void Sorceress::Render()
 	{
 		Hero::Render();
-	}
-
-	void Sorceress::Attack(std::shared_ptr<EvilAI> t_enemy)
-	{
-		Hero::Attack(t_enemy);
-	}
-
-	void Sorceress::Defend()
-	{
-		Hero::Defend();
-	}
-
-	void Sorceress::UseSkill1(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
-	}
-
-	void Sorceress::UseSkill2(std::shared_ptr<EvilAI> t_enemy)
-	{
-		// implement
 	}
 
 } }
