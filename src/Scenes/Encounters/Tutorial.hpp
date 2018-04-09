@@ -28,11 +28,7 @@ namespace HJ { namespace Encounters {
 		void DisableUIButtons();
 		void EnableUIButtons();
 		void UpdateUI();
-		// void CheckForDeaths();
-		void CheckForBattleOutcome();
 		void NextTurn();
-		// ...
-		// void HandleHeroActions(const sf::Vector2f& t_initPos);
 
 		// evaluates the batte and checks for win/lose condition;
 		void Evaluate();
