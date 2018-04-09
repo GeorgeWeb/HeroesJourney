@@ -3,9 +3,8 @@
 
 #include <Engine/Engine.hpp>
 #include "../../Game.hpp"
-
-//#include <Engine/ECM/Components/SpriteComponent.hpp>
 #include "../../Entities/Button.hpp"
+#include "../../Entities/ActionResolver.hpp"
 
 namespace HJ { namespace Encounters {
 
@@ -29,39 +28,46 @@ namespace HJ { namespace Encounters {
 		void DisableUIButtons();
 		void EnableUIButtons();
 		void UpdateUI();
-		void CheckForDeaths();
+		// void CheckForDeaths();
 		void CheckForBattleOutcome();
 		void NextTurn();
+		// ...
+		// void HandleHeroActions(const sf::Vector2f& t_initPos);
 
-		void HandleHeroActions(const sf::Vector2f& t_initPos);
+		// evaluates the batte and checks for win/lose condition;
+		void Evaluate();
 
 	private:
 		GameDataRef m_data;
 		
-		std::shared_ptr<Entities::EvilAI> m_frostGolem;
+		// ...
+		std::shared_ptr<Entities::Hero> m_frostGolem;
+		std::shared_ptr<Entities::ActionResolver> m_actionResolver;
 
+		// ...
 		BATTLE_TURN m_turn;
 		BATTLE_STATUS m_status;
 		
+		// ...
 		std::vector<Engine::Components::SpriteComponent*> m_allUIcomps;
 		std::vector<Engine::Components::SpriteComponent*> m_battleUIButtons;
+		
+		// ...
 		std::vector<std::shared_ptr<Entities::Hero>> m_activeHeroes;
 		std::shared_ptr<Entities::Hero> m_heroOnTurn = nullptr;
+
+		// ...
 		int m_hTurnCount;
 		unsigned int m_heroDeathCount = 0;
 		unsigned int m_evilDeathCount = 0;
 		// hero on turn being chosen indicator
 		bool chosen = false;
 
-		// AI turn preparation
-		sf::Clock m_EnemyStepTime;
-		bool m_finishedPrep = false;
-
-		// hero turn preparation
-		bool heroStepIn = false;
-		bool heroReturn = false;
 		// indicator who's turn it is
 		std::string m_charOnTurn = "";
+
+		// ...
+		bool isEvalComplete;
 	};
 } }
 

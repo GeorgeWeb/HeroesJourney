@@ -4,6 +4,8 @@ namespace HJ { namespace Entities {
 
 	Knight::Knight() : Hero()
 	{
+		m_name = "Knight";
+		m_type = HERO_TYPE::GOOD;
 		m_health = 150;
 		m_maxHealth = 150;
 		m_mana = 75;

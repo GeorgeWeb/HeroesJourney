@@ -13,8 +13,6 @@ namespace HJ { namespace Entities {
 
 			Bard* GetType() override final;
 
-			virtual const std::string className() const { return "Bard"; }
-
 			void Init() override final;
 			void Update(float t_deltaTime) override final;
 			void Render() override final;

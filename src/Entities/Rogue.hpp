@@ -13,8 +13,6 @@ namespace HJ { namespace Entities {
 
 			Rogue* GetType() override final;
 
-			virtual const std::string className() const { return "Rogue"; }
-			
 			void Init() override final;
 			void Update(float t_deltaTime) override final;
 			void Render() override final;

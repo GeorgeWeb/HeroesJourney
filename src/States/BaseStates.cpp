@@ -26,6 +26,11 @@ namespace HJ { namespace States {
 	void BaseChooseTargetState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
 		// use t_owner->className() for heuristics
+		if (m_canChoose && !m_chooseFinished)
+		{
+			m_canChoose = false;
+				
+		}
 	}
 	
 	void BaseStepInState::EnterState(ECM::Entity* t_owner)

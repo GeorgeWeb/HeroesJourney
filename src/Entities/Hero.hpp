@@ -6,11 +6,15 @@
 #include "../Components/StatusComponent.hpp"
 #include "../Components/SkillComponent.hpp"
 
-#include "EvilAI.hpp"
-
 #include <functional>
 
 namespace HJ { namespace Entities {
+	
+	enum class HERO_TYPE : int
+	{
+		GOOD = 0,
+		EVIL = 1
+	};
 
 	class Hero : public Engine::ECM::Entity
 	{
@@ -29,6 +33,9 @@ namespace HJ { namespace Entities {
 			unsigned int m_armour;
 			unsigned int m_critChance;
 			unsigned int m_dodgeChance;
+
+			std::string m_name;
+			HERO_TYPE m_type;
 
 		public:
 			inline int GetHealth() const { return m_health; }
@@ -52,11 +59,15 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
 			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
 			std::shared_ptr<Components::SkillComponent> GetSkillComponent();
-			
-			virtual const std::string className() const override { return "Hero"; }
+
+			virtual const std::string className() const override { return m_name; }
+			virtual const HERO_TYPE heroType() const { return m_type; }
 
 		public:
+			// default constructor (used for GOOD types)
 			Hero();
+			// default constructor (used for EVIL types)
+			Hero(const std::string& t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour);
 			virtual ~Hero() = default;
 
 			virtual Hero* GetType() override;
@@ -65,12 +76,10 @@ namespace HJ { namespace Entities {
 			virtual void Update(float t_deltaTime) override;
 			virtual void Render() override;
 
-			// can be applied to enemies
-			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<EvilAI> t_enemy);
-			// can be applied to party members
-			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes);
-			// can be applied to you
+			// can be applied to a single
 			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<Hero> t_hero);
+			// can be applied to a party
+			// void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes);
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);

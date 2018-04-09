@@ -60,20 +60,25 @@ namespace HJ { namespace Encounters {
 		// TODO: ...
 
 		// tutorial's evil ai - frost golem
-		m_frostGolem = std::make_shared<EvilAI>("Frost Golem", 100, 20, 10);
+		m_frostGolem = std::make_shared<Hero>("Frost Golem", HERO_TYPE::EVIL, 100, 20, 10);
 		m_frostGolem->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 135, 188));
 		m_frostGolem->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(.25f, .4f));
 		m_frostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_frostGolem->Init();
+		/*
 		m_frostGolem->GetSMComponent()->AddState("Idle", std::make_shared<States::BaseIdleState>());
 		m_frostGolem->GetSMComponent()->AddState("StepIn", std::make_shared<States::BaseStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_frostGolem->GetPosition().y), 7.5f));
 		m_frostGolem->GetSMComponent()->AddState("StepBack", std::make_shared<States::BaseStepBackState>(sf::Vector2f(m_frostGolem->GetPosition()), 7.5f));
 		m_frostGolem->GetSMComponent()->AddState("Attack", std::make_shared<States::BaseAttackState>(m_activeHeroes, m_frostGolem->GetDmg()));
-		// m_frostGolem->GetSMComponent()->AddState("Finish", std::make_shared<States::BaseFinishState>());
+		// m_frostGolem->GetSMComponent()->AddState("ChooseTarget", std::make_shared<States::BaseFinishState>(m_activeHeroes, { m_frostGolem }));
 		m_frostGolem->GetSMComponent()->ChangeState("Idle");
+		*/
 		// Add HP UI Component
 		// TODO: ...
+
+		// create an event-like action resolver for hero/ai - [actions/events]
+		m_actionResolver = std::make_shared<ActionResolver>();
 
 		/*** CREATE UI ELEMENTS ***/
 
@@ -375,9 +380,11 @@ namespace HJ { namespace Encounters {
 		// check if any disabled UI elemnts can be reset to enabled (after AI turn)
 		UpdateUI();
 
+		/*
 		// initial hero state properties FOR action behaviour preparation
 		static sf::Vector2f heroInitPos = m_heroOnTurn->GetPosition();
 		HandleHeroActions(heroInitPos);
+		*/
 
 		// update turn
 		m_turn = !chosen ? BATTLE_TURN::EVIL : BATTLE_TURN::HERO;
@@ -386,13 +393,13 @@ namespace HJ { namespace Encounters {
 		{
 			case BATTLE_TURN::HERO:
 				//m_charOnTurn = typeid(m_heroOnTurn).name();
-				if (atkBtnBtn->CanResolve())
+				if (atkBtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
-					heroStepIn = true;
+					// heroStepIn = true;
 				}
 
 				// resolve defend button click
-				if (defBtnBtn->CanResolve())
+				if (defBtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
 					std::cout << "Hero defending!\n";
 					m_heroOnTurn->ExecuteSkill(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE), m_heroOnTurn);
@@ -404,7 +411,7 @@ namespace HJ { namespace Encounters {
 				}
 
 				// resolve use HP button click
-				if (hpBtnBtn->CanResolve())
+				if (hpBtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
 					std::cout << "Hero used HP potion!\n";
 
@@ -412,7 +419,7 @@ namespace HJ { namespace Encounters {
 				}
 
 				// resolve use MP button click
-				if (mpBtnBtn->CanResolve())
+				if (mpBtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
 					std::cout << "Hero used MP potion!\n";
 
@@ -420,15 +427,15 @@ namespace HJ { namespace Encounters {
 				}
 
 				// resolve skill1 button click
-				if (skill1BtnBtn->CanResolve())
+				if (skill1BtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
-					heroStepIn = true;
+					// heroStepIn = true;
 				}
 
 				// resolve skill2 button click
-				if (skill2BtnBtn->CanResolve())
+				if (skill2BtnBtn->CanResolve() && !m_actionResolver->IsActive())
 				{
-					heroStepIn = true;
+					// heroStepIn = true;
 				}
 				break;
 			case BATTLE_TURN::EVIL:
@@ -438,37 +445,28 @@ namespace HJ { namespace Encounters {
 				for (auto hero : m_activeHeroes)
 					if (hero->GetHealth() > 0) hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 				// start state machine
-				if (!m_frostGolem->GetSMComponent()->IsInTransition() && m_frostGolem->GetSMComponent()->CurrentState() == "Idle") 
+				if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Idle")
 				{
-					m_frostGolem->GetSMComponent()->ChangeState("LogicState"); //set in trans
+					m_actionResolver->Activate(m_frostGolem, m_activeHeroes);
 				}
-				if (!m_frostGolem->GetSMComponent()->IsInTransition() && m_frostGolem->GetSMComponent()->CurrentState() == "Finish")
+				else if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
+				 && !isEvalComplete)
 				{
 					m_turn = BATTLE_TURN::BETWEEN;
-					m_frostGolem->GetSMComponent()->ChangeState("Idle");
-					// change turn
-					m_hTurnCount = m_activeHeroes.size();
-					std::cout << "NEXT TURN!\n";
-					NextTurn();
+					// evaluate the round & check win condition
+					Evaluate();
 				}
-				
-				// check for behaviour finished
-				/*
-				if (m_EnemyStepTime.getElapsedTime().asSeconds() > 3.0f)
-					m_finishedPrep = true;
-				// ready for AI states
-				if (m_finishedPrep)
+				else if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
+					&& isEvalComplete)
 				{
-					m_frostGolem->GetSMComponent()->ChangeState("StepIn");
-					// restart preparation stuff
-					m_finishedPrep = false;
-					m_EnemyStepTime.restart();
+					isEvalComplete = false;
+					// stop the action resolver after evaluation is complete
+					m_actionResolver->Stop();
 					// change turn
 					m_hTurnCount = m_activeHeroes.size();
 					std::cout << "NEXT TURN!\n";
 					NextTurn();
 				}
-				*/
 				break;
 			default:
 			case BATTLE_TURN::BETWEEN:
@@ -518,8 +516,7 @@ namespace HJ { namespace Encounters {
 			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
 		}
 		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
-		if (m_turn == BATTLE_TURN::HERO &&
-			m_frostGolem->GetSMComponent()->CurrentState() == "Wait")
+		if (m_turn == BATTLE_TURN::HERO)
 		{
 			// update text indicator
 			m_charOnTurn = m_heroOnTurn->className();
@@ -659,6 +656,13 @@ namespace HJ { namespace Encounters {
 		} while (m_hTurnCount - 1 >= 0 && !chosen);
 	}
 
+	// TODO:
+	void TutorialScene::Evaluate()
+	{
+
+	}
+	
+	/*
 	void TutorialScene::HandleHeroActions(const sf::Vector2f& t_initPos)
 	{
 		auto atkBtnBtn = m_data->ents.Find<Button>("E_aAtkBtn")->GetClickableComponent();
@@ -707,6 +711,7 @@ namespace HJ { namespace Encounters {
 
 			heroReturn = true;
 		}
+		*/
 
 		// check if the action has been executed
 		if (heroReturn && m_heroOnTurn->GetPosition().x >= t_initPos.x)

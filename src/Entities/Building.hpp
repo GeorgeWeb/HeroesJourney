@@ -1,4 +1,4 @@
-#ifndef  BUILDING_ENTITY_H
+#ifndef BUILDING_ENTITY_H
 #define BUILDING_ENTITY_H
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>

@@ -4,6 +4,8 @@ namespace HJ { namespace Entities {
 
 	Rogue::Rogue() : Hero()
 	{
+		m_name = "Rogue";
+		m_type = HERO_TYPE::GOOD;
 		m_health = 75;
 		m_maxHealth = 75;
 		m_mana = 75;

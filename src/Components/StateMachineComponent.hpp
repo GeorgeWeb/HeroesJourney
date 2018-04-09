@@ -3,6 +3,7 @@
 
 #include "../States/State.hpp"
 #include <unordered_map>
+#include "../Entities/Hero.hpp"
 
 namespace HJ { namespace Components {
 
@@ -31,6 +32,21 @@ namespace HJ { namespace Components {
 			std::shared_ptr<States::State> m_currentState;
 			std::string m_currentStateName = "";
 			bool m_isInTransition;
+
+		// [hero/ai] specific
+		private:
+			std::vector<std::shared_ptr<Entities::Hero>> m_targets = {};
+			std::shared_ptr<Entities::Hero> m_initiator = nullptr;
+			std::shared_ptr<Skill> m_usedSkill = nullptr;
+
+		public:
+			inline std::vector<std::shared_ptr<Entities::Hero>> GetTargets() { return m_targets; }
+			inline std::shared_ptr<Entities::Hero> GetInitiator() { return m_initiator; }
+			inline std::shared_ptr<Skill> GetUsedSkill() { return m_usedSkill; }
+			
+			inline void SetTargets(std::vector<std::shared_ptr<Entities::Hero>> t_targets) { m_targets = t_targets; }
+			inline void SetInitiator(std::shared_ptr<Entities::Hero> t_initiator) { m_initiator = t_initiator; }
+			inline void SetUsedSkill(std::shared_ptr<Skill> t_usedSkill) { m_usedSkill = t_usedSkill; }
 	};
 
 } }

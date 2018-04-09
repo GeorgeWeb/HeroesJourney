@@ -10,6 +10,15 @@ namespace HJ { namespace Entities {
 		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{ }
 
+	Hero::Hero(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour)
+	{
+		m_name = t_name;
+		m_type = t_type;
+		m_health = m_maxHealth = t_health;
+		m_damage = t_damage;
+		m_armour = t_armour;
+	}
+
 	Hero* Hero::GetType()
 	{
 		return this;
@@ -59,21 +68,6 @@ namespace HJ { namespace Entities {
 		
 		// play blood-splash animation
 		// TODO: ...
-	}
-
-
-	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<EvilAI> t_enemy)
-	{
-		// TODO: Skill logic
-		// check for crit. chance
-		// auto dmg = (t_enemy->GetArmour() >= m_damage) ? 0 : m_damage - t_enemy->GetArmour();
-		// t_enemy->TakeDamage(dmg);
-	}
-
-	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes)
-	{
-		// TODO: Skill logic
-		// m_armour *= 2;
 	}
 
 	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<Hero> t_hero)

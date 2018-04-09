@@ -4,6 +4,8 @@ namespace HJ { namespace Entities {
 
 	Bard::Bard() : Hero()
 	{
+		m_name = "Bard";
+		m_type = HERO_TYPE::GOOD;
 		m_health = 100;
 		m_maxHealth = 100;
 		m_mana = 80;

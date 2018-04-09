@@ -23,7 +23,7 @@ namespace HJ { namespace Components {
 	void StateMachineComponent::AddState(const std::string& t_name, std::shared_ptr<State> t_state)
 	{
 		m_states.insert_or_assign(t_name, t_state);
-		// m_states.at(t_name)->InitSM(this);
+		m_states.at(t_name)->InitSM(this);
 	}
 
 	std::shared_ptr<State> StateMachineComponent::GetState(const std::string& t_name) const
