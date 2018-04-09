@@ -53,7 +53,7 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
 			std::shared_ptr<Components::SkillComponent> GetSkillComponent();
 			
-			virtual const std::string className() const { return "Hero"; }
+			virtual const std::string className() const override { return "Hero"; }
 
 		public:
 			Hero();
@@ -67,8 +67,10 @@ namespace HJ { namespace Entities {
 
 			// can be applied to enemies
 			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<EvilAI> t_enemy);
-			// can be applied to party members (used from Bard)
+			// can be applied to party members
 			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::vector<std::shared_ptr<Hero>> t_heroes);
+			// can be applied to you
+			void ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<Hero> t_hero);
 
 			void SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect);
 			void Animate(const std::string& t_animationName);

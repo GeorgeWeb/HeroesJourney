@@ -93,7 +93,8 @@ namespace HJ {
 	enum class BATTLE_TURN : int
 	{
 		HERO = 0,
-		EVIL = 1
+		EVIL = 1,
+		BETWEEN = 2
 	};
 
 	enum class BATTLE_STATUS : int

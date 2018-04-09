@@ -48,7 +48,8 @@ namespace HJ { namespace Encounters {
 		std::vector<std::shared_ptr<Entities::Hero>> m_activeHeroes;
 		std::shared_ptr<Entities::Hero> m_heroOnTurn = nullptr;
 		int m_hTurnCount;
-		unsigned int m_hDeathCount = 0;
+		unsigned int m_heroDeathCount = 0;
+		unsigned int m_evilDeathCount = 0;
 		// hero on turn being chosen indicator
 		bool chosen = false;
 
@@ -59,7 +60,6 @@ namespace HJ { namespace Encounters {
 		// hero turn preparation
 		bool heroStepIn = false;
 		bool heroReturn = false;
-
 		// indicator who's turn it is
 		std::string m_charOnTurn = "";
 	};

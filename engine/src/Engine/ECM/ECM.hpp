@@ -57,6 +57,8 @@ namespace Engine { namespace ECM {
 			bool IsForDeletion() const;
 			void SetForDelete();
 
+			virtual const std::string className() const { return "Entity"; }
+
 			template<class T, class... Targs>
 			std::shared_ptr<T> AddComponent(const std::string& t_name, Targs... t_params)
 			{

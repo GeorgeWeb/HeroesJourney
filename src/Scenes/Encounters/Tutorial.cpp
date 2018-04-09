@@ -3,7 +3,7 @@
 #include "../MapScene.hpp"
 
 #include <Engine/ECM/Components/ClickableComponent.hpp>
-#include "../../States/FrostGolemAIStates.hpp"
+#include "../../States/BaseStates.hpp"
 
 namespace HJ { namespace Encounters {
 
@@ -12,7 +12,7 @@ namespace HJ { namespace Encounters {
 	// engine/game component namespaces
 	using namespace Engine::ECM;
 	using namespace Engine::Components;
-	using namespace HJ::Entities;
+	using namespace Entities;
 
 	TutorialScene::TutorialScene(GameDataRef t_data)
 		: m_data(t_data)
@@ -66,11 +66,12 @@ namespace HJ { namespace Encounters {
 		m_frostGolem->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_frostGolem->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_frostGolem->Init();
-		m_frostGolem->GetSMComponent()->AddState("Wait", std::make_shared<States::FrostGolemWaitState>());
-		m_frostGolem->GetSMComponent()->AddState("StepIn", std::make_shared<States::FrostGolemStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_frostGolem->GetPosition().y), 7.5f));
-		m_frostGolem->GetSMComponent()->AddState("Return", std::make_shared<States::FrostGolemReturnState>(sf::Vector2f(m_frostGolem->GetPosition()), 7.5f));
-		m_frostGolem->GetSMComponent()->AddState("Attack", std::make_shared<States::FrostGolemAttackState>(m_activeHeroes, m_frostGolem->GetDmg()));
-		m_frostGolem->GetSMComponent()->ChangeState("Wait");
+		m_frostGolem->GetSMComponent()->AddState("Idle", std::make_shared<States::BaseIdleState>());
+		m_frostGolem->GetSMComponent()->AddState("StepIn", std::make_shared<States::BaseStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_frostGolem->GetPosition().y), 7.5f));
+		m_frostGolem->GetSMComponent()->AddState("StepBack", std::make_shared<States::BaseStepBackState>(sf::Vector2f(m_frostGolem->GetPosition()), 7.5f));
+		m_frostGolem->GetSMComponent()->AddState("Attack", std::make_shared<States::BaseAttackState>(m_activeHeroes, m_frostGolem->GetDmg()));
+		// m_frostGolem->GetSMComponent()->AddState("Finish", std::make_shared<States::BaseFinishState>());
+		m_frostGolem->GetSMComponent()->ChangeState("Idle");
 		// Add HP UI Component
 		// TODO: ...
 
@@ -366,7 +367,7 @@ namespace HJ { namespace Encounters {
 #pragma endregion
 		
 		// check if a hero is dead
-		CheckForDeaths();
+		// CheckForDeaths();
 
 		// check for condition to exit the battle (win/lose)
 		CheckForBattleOutcome();
@@ -394,7 +395,7 @@ namespace HJ { namespace Encounters {
 				if (defBtnBtn->CanResolve())
 				{
 					std::cout << "Hero defending!\n";
-					// m_heroOnTurn->Defend();
+					m_heroOnTurn->ExecuteSkill(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE), m_heroOnTurn);
 
 					// next hero turn
 					NextTurn();
@@ -436,8 +437,24 @@ namespace HJ { namespace Encounters {
 				// reset heroes original texture color
 				for (auto hero : m_activeHeroes)
 					if (hero->GetHealth() > 0) hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+				// start state machine
+				if (!m_frostGolem->GetSMComponent()->IsInTransition() && m_frostGolem->GetSMComponent()->CurrentState() == "Idle") 
+				{
+					m_frostGolem->GetSMComponent()->ChangeState("LogicState"); //set in trans
+				}
+				if (!m_frostGolem->GetSMComponent()->IsInTransition() && m_frostGolem->GetSMComponent()->CurrentState() == "Finish")
+				{
+					m_turn = BATTLE_TURN::BETWEEN;
+					m_frostGolem->GetSMComponent()->ChangeState("Idle");
+					// change turn
+					m_hTurnCount = m_activeHeroes.size();
+					std::cout << "NEXT TURN!\n";
+					NextTurn();
+				}
+				
 				// check for behaviour finished
-				if (m_EnemyStepTime.getElapsedTime().asSeconds() > 5.0f)
+				/*
+				if (m_EnemyStepTime.getElapsedTime().asSeconds() > 3.0f)
 					m_finishedPrep = true;
 				// ready for AI states
 				if (m_finishedPrep)
@@ -451,8 +468,10 @@ namespace HJ { namespace Encounters {
 					std::cout << "NEXT TURN!\n";
 					NextTurn();
 				}
+				*/
 				break;
 			default:
+			case BATTLE_TURN::BETWEEN:
 				break;
 		}
 		m_data->ents.Update(m_entities, t_delatTime);
@@ -500,7 +519,7 @@ namespace HJ { namespace Encounters {
 		}
 		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
 		if (m_turn == BATTLE_TURN::HERO &&
-			m_frostGolem->GetSMComponent()->currentState() == "Wait")
+			m_frostGolem->GetSMComponent()->CurrentState() == "Wait")
 		{
 			// update text indicator
 			m_charOnTurn = m_heroOnTurn->className();
@@ -514,21 +533,16 @@ namespace HJ { namespace Encounters {
 			m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
 			m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
 		}
-		// enable the disabled battle UI buttons on enemy turn end / waiting state
-		if (!m_frostGolem->GetHealth() <= 0 &&
-			m_frostGolem->GetSMComponent()->currentState() == "Wait")
-		{
-			EnableUIButtons();
-		}
 	}
 
+	/*
 	void TutorialScene::CheckForDeaths()
 	{
 		// the golem died ;)
 		if (m_frostGolem->GetHealth() <= 0)
 		{
 			DisableUIButtons();
-			if (m_frostGolem->GetSMComponent()->currentState() == "Wait")
+			if (m_frostGolem->GetSMComponent()->CurrentState() == "Idle")
 			{
 				for (auto uiComp : m_allUIcomps)
 				{
@@ -556,7 +570,7 @@ namespace HJ { namespace Encounters {
 			else
 			{
 				DisableUIButtons();
-				if (m_frostGolem->GetSMComponent()->currentState() == "Wait")
+				if (m_frostGolem->GetSMComponent()->CurrentState() == "Idle")
 				{
 					for (auto uiComp : m_allUIcomps)
 					{
@@ -575,6 +589,7 @@ namespace HJ { namespace Encounters {
 			}
 		}
 	}
+	*/
 
 	void TutorialScene::CheckForBattleOutcome()
 	{
@@ -626,16 +641,18 @@ namespace HJ { namespace Encounters {
 				}
 				else
 				{
-					// unfade hero on turn
-					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					// fade the rest of the heroes in the party
 					for (auto hero : m_activeHeroes)
 					{
 						if (hero->className() != m_heroOnTurn->className())
 							hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 100));
 					}
+					// unfade hero on turn
+					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					// choose this hero
 					chosen = true;
+					// Enable UI
+					EnableUIButtons();
 				}
 				m_hTurnCount--;
 			}
@@ -665,12 +682,7 @@ namespace HJ { namespace Encounters {
 			if (atkBtnBtn->CanResolve())
 			{
 				std::cout << "Hero attacking!\n";
-				//m_heroOnTurn->ExecuteSkill(m_data->gm.eFrostGolem, );
-				//auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				//std::cout << "DMG dealt: " << dmg << std::endl;
-				//std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
-				std::cout << std::endl;
-				
+				m_heroOnTurn->ExecuteSkill(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK), m_frostGolem);
 				// reset button's resolve
 				atkBtnBtn->SetResolve(false);
 			}
@@ -679,12 +691,7 @@ namespace HJ { namespace Encounters {
 			if (skill1BtnBtn->CanResolve())
 			{
 				std::cout << "Hero used Skill 1!\n";
-				//m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				//auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				//std::cout << "DMG dealt: " << dmg << std::endl;
-				//std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
-				std::cout << std::endl;
-				
+				m_heroOnTurn->ExecuteSkill(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1), m_frostGolem);
 				// reset button's resolve
 				skill1BtnBtn->SetResolve(false);
 			}
@@ -693,12 +700,7 @@ namespace HJ { namespace Encounters {
 			if (skill2BtnBtn->CanResolve())
 			{
 				std::cout << "Hero used Skill 2!\n";
-				// m_heroOnTurn->Attack(m_data->gm.eFrostGolem);
-				// auto dmg = (m_data->gm.eFrostGolem->GetArmour() >= m_heroOnTurn->GetDmg()) ? 0 : m_heroOnTurn->GetDmg() - m_data->gm.eFrostGolem->GetArmour();
-				// std::cout << "DMG dealt: " << dmg << std::endl;
-				// std::cout << "HP: " << m_data->gm.eFrostGolem->GetHealth() << "/" << m_data->gm.eFrostGolem->GetMaxHealth() << std::endl;
-				std::cout << std::endl;
-				
+				m_heroOnTurn->ExecuteSkill(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2), m_frostGolem);
 				// reset button's resolve
 				skill2BtnBtn->SetResolve(false);
 			}

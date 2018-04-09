@@ -4,16 +4,27 @@
 #include <Engine/ECM/ECM.hpp>
 #include <string>
 
-namespace HJ { namespace States {
-
-	using namespace Engine;
+namespace HJ { 
+	
+	// Forward declare StateMachineComponent
+	namespace Components 
+	{
+		class StateMachineComponent;
+	}
+	
+	namespace States {
 
 	class State
 	{
 		public:
 			virtual ~State() = default;
-			virtual void EnterState(ECM::Entity* t_owner) = 0;
-			virtual void Execute(ECM::Entity* t_owner, float t_deltaTime) = 0;
+			virtual void EnterState(Engine::ECM::Entity* t_owner) = 0;
+			virtual void Execute(Engine::ECM::Entity* t_owner, float t_deltaTime) = 0;
+
+			inline void InitSM(Components::StateMachineComponent* t_SM) { m_SM = t_SM; }
+
+		protected:
+			Components::StateMachineComponent* m_SM;
 	};
 
 } }

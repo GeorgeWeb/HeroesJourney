@@ -42,7 +42,7 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
 			std::shared_ptr<Components::StateMachineComponent> GetSMComponent();
 
-			const std::string className() const { return m_name; }
+			const std::string className() const override final { return m_name; }
 
 		public:
 			EvilAI(const std::string t_name, unsigned int t_health, unsigned int t_damage, unsigned int t_armour);

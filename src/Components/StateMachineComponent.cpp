@@ -13,13 +13,17 @@ namespace HJ { namespace Components {
 
 	void StateMachineComponent::Update(float t_deltaTime)
 	{
-		if (m_currentState != nullptr)
-			m_currentState->Execute(m_parent, t_deltaTime);
+		if (m_parent->IsAlive())
+		{
+			if (m_currentState != nullptr && m_isInTransition)
+				m_currentState->Execute(m_parent, t_deltaTime);
+		}
 	}
 
 	void StateMachineComponent::AddState(const std::string& t_name, std::shared_ptr<State> t_state)
 	{
 		m_states.insert_or_assign(t_name, t_state);
+		// m_states.at(t_name)->InitSM(this);
 	}
 
 	std::shared_ptr<State> StateMachineComponent::GetState(const std::string& t_name) const

@@ -6,7 +6,7 @@ namespace HJ { namespace Entities {
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bEvilAISprite")),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_EvilAIAnimator")),
 		m_statusComp(AddComponent<Components::StatusComponent>("C_aEvilAIStatus")),
-		m_smComp(AddComponent<Components::StateMachineComponent>("C_EvilAISM"))
+		m_smComp(AddComponent<Components::StateMachineComponent>("C_StateMachine"))
 	{
 		m_name = t_name;
 		m_health = m_maxHealth = t_health;

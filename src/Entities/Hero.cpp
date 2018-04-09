@@ -76,6 +76,12 @@ namespace HJ { namespace Entities {
 		// m_armour *= 2;
 	}
 
+	void Hero::ExecuteSkill(std::shared_ptr<Skill> t_skill, std::shared_ptr<Hero> t_hero)
+	{
+		// TODO: Skill logic
+		// m_armour *= 2;
+	}
+
 	void Hero::SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect)
 	{
 		m_spriteComp->GetSprite().setTexture(t_texture);
