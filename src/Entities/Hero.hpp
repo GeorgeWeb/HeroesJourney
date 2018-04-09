@@ -18,11 +18,20 @@ namespace HJ { namespace Entities {
 
 	class Hero : public Engine::ECM::Entity
 	{
-		private:
+		protected:
 			std::shared_ptr<Engine::Components::SpriteComponent> m_spriteComp;
 			std::shared_ptr<Engine::Components::AnimatorComponent> m_animatorComp;
 			std::shared_ptr<Components::StatusComponent> m_statusComp;
 			std::shared_ptr<Components::SkillComponent> m_skillComp;
+
+		public:
+			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
+			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
+			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
+			std::shared_ptr<Components::SkillComponent> GetSkillComponent();
+
+			virtual const std::string className() const override { return m_name; }
+			virtual const HERO_TYPE heroType() const { return m_type; }
 
 		protected:
 			int m_health;
@@ -53,15 +62,6 @@ namespace HJ { namespace Entities {
 			inline int GetDodge() const { return m_dodgeChance; }
 
 			void TakeDamage(unsigned int t_dmg);
-
-		public:
-			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
-			std::shared_ptr<Engine::Components::AnimatorComponent> GetAnimatorComponent();
-			std::shared_ptr<Components::StatusComponent> GetStatusComponent();
-			std::shared_ptr<Components::SkillComponent> GetSkillComponent();
-
-			virtual const std::string className() const override { return m_name; }
-			virtual const HERO_TYPE heroType() const { return m_type; }
 
 		public:
 			// default constructor (used for GOOD types)

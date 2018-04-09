@@ -15,7 +15,9 @@ namespace HJ { namespace Components {
 		BASIC_ATTACK = 0,
 		BASIC_DEFENCE = 1,
 		SPECIAL_SKILL_1 = 2,
-		SPECIAL_SKILL_2 = 3
+		SPECIAL_SKILL_2 = 3,
+		SKILL_INCREASE_HP = 4,
+		SKILL_INCREASE_MP = 5
 	};
 
 	class SkillComponent : public ECM::Component

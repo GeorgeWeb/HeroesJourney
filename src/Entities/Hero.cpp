@@ -31,10 +31,6 @@ namespace HJ { namespace Entities {
 
 		SetVisible(true);
 		SetAlive(true);
-		
-		// Add basic skills
-		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
-		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
 	}
 
 	void Hero::Update(float t_deltaTime)
