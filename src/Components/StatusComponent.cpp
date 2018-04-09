@@ -110,15 +110,9 @@ namespace HJ { namespace Components {
 	{
 		auto effect = m_effects.find(t_type);
 		if (effect != m_effects.end())
-		{
-			std::cout << "FOUND!" << std::endl;
 			return effect->second;
-		}
 		else
-		{
-			std::cout << "CAN'T FIND!" << std::endl;
 			return nullptr;
-		}
 	}
 
 

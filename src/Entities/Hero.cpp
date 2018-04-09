@@ -10,7 +10,11 @@ namespace HJ { namespace Entities {
 		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{ }
 
-	Hero::Hero(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour)
+	Hero::Hero(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour) :
+		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bHeroSprite")),
+		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator")),
+		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus")),
+		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{
 		m_name = t_name;
 		m_type = t_type;

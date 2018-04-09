@@ -13,21 +13,39 @@ namespace HJ { namespace States {
 
 	void IdleState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
+		std::cout << "Executes Idle\n";
+		m_SM->ChangeState("Finish");
+		/*
+		std::cout << "Executes Idle\n";
 		if (m_SM->IsInTransition())
 			m_SM->ChangeState("ChooseTarget");
+		*/
 	}
 
 	void ChooseTargetState::EnterState(ECM::Entity* t_owner)
 	{
 		m_canChoose = true;
+		m_chooseFinished = false;
 		// auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("HeuristicEval");
 		// heuristicEval->SetComplete(false);
 	}
 
 	void ChooseTargetState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
+		if (m_canChoose && !m_chooseFinished)
+		{
+			m_canChoose = false;
+			m_chooseFinished = true;
+		}
+		else if (!m_canChoose && m_chooseFinished)
+		{
+			m_chooseFinished = false;
+			m_SM->ChangeState("StepIn");
+		}
+
 		// auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("HeuristicEval");
 		// use t_owner->className() for heuristics
+
 		/*
 		if (m_canChoose && !heuristicEval->IsComplete())
 		{
