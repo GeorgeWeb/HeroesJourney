@@ -13,8 +13,8 @@ namespace HJ { namespace Entities {
 		m_armour = 10;
 		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 3;
-		m_critChance = 2;
+		m_dodgeChance = 30;
+		m_critChance = 20;
 	}
 
 	Bard* Bard::GetType()

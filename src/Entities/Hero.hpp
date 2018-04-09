@@ -61,8 +61,6 @@ namespace HJ { namespace Entities {
 			inline int GetArmour() const { return m_armour; }
 			inline int GetDodge() const { return m_dodgeChance; }
 
-			void TakeDamage(unsigned int t_dmg);
-
 		public:
 			// default constructor (used for GOOD types)
 			Hero();
@@ -71,6 +69,8 @@ namespace HJ { namespace Entities {
 			virtual ~Hero() = default;
 
 			virtual Hero* GetType() override;
+
+			void ReceiveDamage(unsigned int t_damage);
 
 			virtual void Init() override;
 			virtual void Update(float t_deltaTime) override;

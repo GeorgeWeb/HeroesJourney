@@ -24,6 +24,11 @@ namespace HJ { namespace Entities {
 		return this;
 	}
 
+	void Hero::ReceiveDamage(unsigned int t_damage)
+	{
+		m_health -= t_damage;
+	}
+
 	void Hero::Init()
 	{
 		m_spriteComp->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
@@ -55,15 +60,6 @@ namespace HJ { namespace Entities {
 	void Hero::Render()
 	{
 		Entity::Render();
-	}
-
-	void Hero::TakeDamage(unsigned int t_dmg)
-	{
-		// TODO: check for dodge chance etc. 
-		m_health -= t_dmg;
-		
-		// play blood-splash animation
-		// TODO: ...
 	}
 
 	void Hero::SetSprite(const sf::Texture& t_texture, sf::IntRect t_texRect)

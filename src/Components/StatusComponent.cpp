@@ -27,8 +27,8 @@ namespace HJ { namespace Components {
 		damageAura->SetSprite(tex, sf::Color::Magenta);
 		auto frostAura = std::make_shared<Effect>();
 		frostAura->SetSprite(tex, sf::Color::Blue);
-		auto dodge = std::make_shared<Effect>();
-		dodge->SetSprite(tex, sf::Color::Green);
+		auto defend = std::make_shared<Effect>();
+		defend->SetSprite(tex, sf::Color::Green);
 		auto enrage = std::make_shared<Effect>();
 		enrage->SetSprite(tex, sf::Color::Red);
 		auto fly = std::make_shared<Effect>();
@@ -43,7 +43,7 @@ namespace HJ { namespace Components {
 		m_effects[EFFECT_TYPE::ARMOUR_AURA] = armourAura;
 		m_effects[EFFECT_TYPE::DAMAGE_AURA] = damageAura;
 		m_effects[EFFECT_TYPE::FROST_AURA] = frostAura;
-		m_effects[EFFECT_TYPE::DODGE] = dodge;
+		m_effects[EFFECT_TYPE::DEFEND] = defend;
 		m_effects[EFFECT_TYPE::ENRAGE] = enrage;
 		m_effects[EFFECT_TYPE::FLY] = fly;
 		m_effects[EFFECT_TYPE::MAGIC_IMUNITY] = magicImune;

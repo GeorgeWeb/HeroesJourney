@@ -13,8 +13,8 @@ namespace HJ { namespace Entities {
 		m_armour = 20;
 		m_damage = 50;
 		m_alive = true;
-		m_dodgeChance = 2;
-		m_critChance = 3;
+		m_dodgeChance = 20;
+		m_critChance = 30;
 	}
 
 	Knight* Knight::GetType()
