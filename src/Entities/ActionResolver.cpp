@@ -2,16 +2,27 @@
 
 namespace HJ { namespace Entities {
 
-	void ActionResolver::Activate(std::shared_ptr<Entities::Hero> t_initiator, std::vector<std::shared_ptr<Entities::Hero>> t_targets, 
+	ActionResolver::ActionResolver()
+		: m_smComp(AddComponent<Components::StateMachineComponent>("C_ActionStateMachine"))
+	{
+		// initialize the states
+		m_smComp->AddState("Idle", std::make_shared<States::IdleState>());
+		m_smComp->AddState("ChooseTarget", std::make_shared<States::ChooseTargetState>());
+		m_smComp->AddState("StepIn", std::make_shared<States::StepInState>());
+		m_smComp->AddState("NearTarget", std::make_shared<States::NearTargetState>());
+		m_smComp->AddState("ExecSkill", std::make_shared<States::ExecSkillState>());
+		m_smComp->AddState("StepBack", std::make_shared<States::StepBackState>());
+		m_smComp->AddState("Returned", std::make_shared<States::ReturnedState>());
+		m_smComp->AddState("Finish", std::make_shared<States::FinishState>());
+	}
+
+	void ActionResolver::Activate(std::shared_ptr<Entities::Hero> t_initiator, std::vector<std::shared_ptr<Entities::Hero>> t_targets,
 		std::shared_ptr<Skill> t_usedSkill)
 	{
 		// initialize the actors (senders/receivers)
 		m_smComp->SetInitiator(t_initiator);
 		m_smComp->SetTargets(t_targets);
 		m_smComp->SetUsedSkill(t_usedSkill);
-
-		// initialize the states
-		// TODO: ...
 		
 		// run the state machine
 		m_smComp->SetInTransition(true);
@@ -21,6 +32,11 @@ namespace HJ { namespace Entities {
 	{
 		m_smComp->ChangeState("Idle");
 		m_active = false;
+	}
+
+	std::shared_ptr<Components::StateMachineComponent> ActionResolver::GetSMComponent()
+	{
+		return std::shared_ptr<Components::StateMachineComponent>();
 	}
 
 } }

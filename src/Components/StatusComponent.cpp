@@ -33,6 +33,8 @@ namespace HJ { namespace Components {
 		enrage->SetSprite(tex, sf::Color::Red);
 		auto fly = std::make_shared<Effect>();
 		fly->SetSprite(tex, sf::Color::Red);
+		auto magicImune = std::make_shared<Effect>();
+		magicImune->SetSprite(tex, sf::Color::Red);
 		auto multiTarget = std::make_shared<Effect>();
 		multiTarget->SetSprite(tex, sf::Color::Red);
 		// add effects to the map
@@ -44,6 +46,7 @@ namespace HJ { namespace Components {
 		m_effects[EFFECT_TYPE::DODGE] = dodge;
 		m_effects[EFFECT_TYPE::ENRAGE] = enrage;
 		m_effects[EFFECT_TYPE::FLY] = fly;
+		m_effects[EFFECT_TYPE::MAGIC_IMUNITY] = magicImune;
 		m_effects[EFFECT_TYPE::MULTIPLE_TARGET] = multiTarget;
 
 		independent = true;

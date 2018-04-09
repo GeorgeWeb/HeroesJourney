@@ -2,16 +2,11 @@
 #define SKILL_SET_H
 
 #include "Components/StatusComponent.hpp"
+#include "Damage.hpp"
 
 namespace HJ
 {
 	using namespace Components;
-
-	enum class SKILL_TYPE : int
-	{
-		MELEE = 0,
-		RANGED = 1
-	};
 
 	enum class SKILL_TARGET : int
 	{
@@ -24,17 +19,19 @@ namespace HJ
 		public:
 			Skill() = default;
 			
-			unsigned int manaNeed;
 			
-			SKILL_TYPE type;
+			DAMAGE_BASE dmgBase;
+			DAMAGE_TYPE dmgType;
 			SKILL_TARGET target;
 
 			unsigned int damageMod;
 
-			std::string textureRefName;
-			std::string effectDesc;
+			unsigned int manaNeed = 0;
 
-			std::vector<EFFECT_TYPE> applicableEffects;
+			std::string textureRefName = "";
+			std::string effectDesc = "";
+
+			std::vector<EFFECT_TYPE> applicableEffects = {};
 	};
 
 	// [BASIC/GENERAL SKILL SET]
@@ -44,15 +41,25 @@ namespace HJ
 			BasicAttack() : Skill()
 			{
 				textureRefName = "Tex_BasicAttackBtn";
-				effectDesc = "";
-				type = SKILL_TYPE::MELEE;
-				manaNeed = 0;
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
 				damageMod = 100;
-				applicableEffects = {};
 			}
 	};
 
-	/*** SPECIALIZED SKILL SETS ***/
+	class BasicMagicAttack final : public Skill
+	{
+	public:
+		BasicMagicAttack() : Skill()
+		{
+			textureRefName = "Tex_BasicAttackBtn";
+			dmgBase = DAMAGE_BASE::RANGED;
+			dmgType = DAMAGE_TYPE::MAGIC;
+			target = SKILL_TARGET::ENEMY;
+			damageMod = 100;
+		}
+	};
 
 	class BasicDefence final : public Skill
 	{
@@ -60,13 +67,14 @@ namespace HJ
 			BasicDefence() : Skill()
 			{
 				textureRefName = "Tex_DefendBtn";
-				effectDesc = "";
-				type = SKILL_TYPE::MELEE;
-				manaNeed = 0;
+				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ALLY;
 				damageMod = 0;
-				applicableEffects = {};
 			}
 	};
+
+	/*** SPECIALIZED SKILL SETS ***/
 
 	// [KNIGHT SKILL SET]
 	class HeroicStrike final : public Skill
@@ -75,11 +83,11 @@ namespace HJ
 			HeroicStrike() : Skill()
 			{
 				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "";
-				type = SKILL_TYPE::MELEE;
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
 				manaNeed = 50;
 				damageMod = 200;
-				applicableEffects = {};
 			}
 	};
 
@@ -90,9 +98,11 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Stun";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
 				manaNeed = 50;
-				damageMod = 0;
+				damageMod = 50;
 				applicableEffects = { EFFECT_TYPE::STUN };
 			}
 	};
@@ -105,7 +115,9 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party DMG boost";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ALLY;
 				manaNeed = 25;
 				damageMod = 0;
 				applicableEffects = { EFFECT_TYPE::DAMAGE_AURA };
@@ -119,7 +131,9 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party ARM boost";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ALLY;
 				manaNeed = 25;
 				damageMod = 0;
 				applicableEffects = { EFFECT_TYPE::ARMOUR_AURA };
@@ -134,10 +148,10 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "";
-				type = SKILL_TYPE::RANGED;
-				manaNeed = 0;
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
 				damageMod = 75;
-				applicableEffects = {};
 			}
 	};
 
@@ -148,10 +162,11 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
 				manaNeed = 50;
 				damageMod = 3 * 75;
-				applicableEffects = {};
 			}
 	};
 
@@ -163,10 +178,11 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::FIRE;
+				target = SKILL_TARGET::ENEMY;
 				manaNeed = 50;
 				damageMod = 200;
-				applicableEffects = {};
 			}
 	};
 
@@ -177,13 +193,145 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party frost resistance";
-				type = SKILL_TYPE::RANGED;
+				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgType = DAMAGE_TYPE::FROST;
+				target = SKILL_TARGET::ALLY;
 				manaNeed = 50;
 				damageMod = 0;
 				applicableEffects = { EFFECT_TYPE::FROST_AURA };
 			}
 	};
+	
+	// [TROLL SKILL SET]
+	class Stomp final : public Skill
+	{
+		public:
+			Stomp() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 50;
+				applicableEffects = { EFFECT_TYPE::STUN };
+			}
+	};
 
+	class Smack final : public Skill
+	{
+		public:
+			Smack() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 133;
+			}
+	};
+
+	class RageRawr final : public Skill
+	{
+		public:
+			RageRawr() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 100;
+				applicableEffects = { EFFECT_TYPE::ENRAGE, EFFECT_TYPE::STUN };
+			}
+	};
+
+	// [CYCLOP SKILL SET]
+	class HeavyBoulder final : public Skill
+	{
+		public:
+			HeavyBoulder() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 100;
+			}
+	};
+
+	class VeryHeavyBoulder final : public Skill
+	{
+		public:
+			VeryHeavyBoulder() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 90;
+				applicableEffects = { EFFECT_TYPE::STUN };
+			}
+	};
+
+	class Devour final : public Skill
+	{
+		public:
+			Devour() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::BASIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 200;
+			}
+	};
+
+	// [HARPY SKILL SET]
+	class IcyClaw : public Skill
+	{
+		public:
+			IcyClaw() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::MELEE;
+				dmgType = DAMAGE_TYPE::FROST;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 100;
+			}
+	};
+	
+	// For rage state, the harpy will use Devour, the on that the Cyclop uses.
+
+	// [EVIL FROST MAGE (LAST BOSS) SKILL SET]
+	class FrostBolt : public Skill
+	{
+		public:
+			FrostBolt() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::FROST;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 300;
+			}
+	};
+
+	class FrostRing : public Skill
+	{
+		public:
+			FrostRing() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::FROST;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 50;
+				applicableEffects = { EFFECT_TYPE::STUN };
+			}
+	};
+
+	class FrostArmor : public Skill
+	{
+		public:
+			FrostArmor() : Skill()
+			{
+				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgType = DAMAGE_TYPE::FROST;
+				target = SKILL_TARGET::ALLY;
+				damageMod = 0;
+				applicableEffects = { EFFECT_TYPE::FROST_ARMOR };
+			}
+	};
 }
 
 #endif // !SKILL_SET_H

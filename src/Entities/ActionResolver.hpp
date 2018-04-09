@@ -1,7 +1,7 @@
 #ifndef ACTION_RESOLVER_H
 #define ACTION_RESOLVER_H
 
-#include "../Components/StateMachineComponent.hpp"
+#include "../States/ActionStates.hpp"
 
 namespace HJ { namespace Entities {
 
@@ -11,15 +11,15 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Components::StateMachineComponent> m_smComp;
 			bool m_active;
 
+			// ...
+			sf::Vector2f m_initialPos;
+			float m_speed = 10.0f;
+
 		public:
-			ActionResolver() : 
-				m_smComp(AddComponent<Components::StateMachineComponent>("C_StateMachine")) 
-			{ }
+			ActionResolver();
 			~ActionResolver() = default;
 
 			ActionResolver* GetType() override final { return this; }
-
-			inline std::shared_ptr<Components::StateMachineComponent> GetSMComponent() { return std::shared_ptr<Components::StateMachineComponent>(); }
 
 			inline bool const IsActive() const { return m_active; }
 			// (re-)initialize the StateMachineComponent data on action resolve call
@@ -29,6 +29,8 @@ namespace HJ { namespace Entities {
 
 			// reset StateMachine to initial
 			void Stop();
+
+			std::shared_ptr<Components::StateMachineComponent> GetSMComponent();
 	};
 
 } }

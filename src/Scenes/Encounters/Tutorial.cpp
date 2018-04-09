@@ -3,7 +3,6 @@
 #include "../MapScene.hpp"
 
 #include <Engine/ECM/Components/ClickableComponent.hpp>
-#include "../../States/BaseStates.hpp"
 
 namespace HJ { namespace Encounters {
 
@@ -67,17 +66,10 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_activeBoss->Init();
 		// Add skills
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<BasicAttack>());
-		/*
-		m_frostGolem->GetSMComponent()->AddState("Idle", std::make_shared<States::BaseIdleState>());
-		m_frostGolem->GetSMComponent()->AddState("StepIn", std::make_shared<States::BaseStepInState>(sf::Vector2f(SCREEN_WIDTH / 1.75f, m_frostGolem->GetPosition().y), 7.5f));
-		m_frostGolem->GetSMComponent()->AddState("StepBack", std::make_shared<States::BaseStepBackState>(sf::Vector2f(m_frostGolem->GetPosition()), 7.5f));
-		m_frostGolem->GetSMComponent()->AddState("Attack", std::make_shared<States::BaseAttackState>(m_activeHeroes, m_frostGolem->GetDmg()));
-		// m_frostGolem->GetSMComponent()->AddState("ChooseTarget", std::make_shared<States::BaseFinishState>(m_activeHeroes, { m_frostGolem }));
-		m_frostGolem->GetSMComponent()->ChangeState("Idle");
-		*/
+		
 		// Add HP UI Component
 		// TODO: ...
 

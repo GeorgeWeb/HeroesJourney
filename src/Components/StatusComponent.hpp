@@ -21,13 +21,14 @@ namespace HJ { namespace Components {
 		DODGE = 5,
 		ENRAGE = 6,
 		FLY = 7,
-		MULTIPLE_TARGET = 8
+		MAGIC_IMUNITY = 8,
+		MULTIPLE_TARGET = 9
 	};
 
 	struct Effect
 	{
 		sf::Sprite sprite;
-		bool active = true;
+		bool active = false;
 
 		void SetSprite(const sf::Texture& t_texture, sf::Color t_color = sf::Color::Black)
 		{ 
