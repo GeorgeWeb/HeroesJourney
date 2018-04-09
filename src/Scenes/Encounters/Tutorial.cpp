@@ -711,7 +711,6 @@ namespace HJ { namespace Encounters {
 
 			heroReturn = true;
 		}
-		*/
 
 		// check if the action has been executed
 		if (heroReturn && m_heroOnTurn->GetPosition().x >= t_initPos.x)
@@ -727,5 +726,7 @@ namespace HJ { namespace Encounters {
 			NextTurn();
 		}
 	}
+
+	*/
 
 } }
