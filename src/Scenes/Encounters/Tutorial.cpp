@@ -67,7 +67,6 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
 		m_activeBoss->Init();
 		// Add skills
-		// m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<Stomp>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<Smack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<RageRawr>()); ///> rage skill!
@@ -401,7 +400,7 @@ namespace HJ { namespace Encounters {
 			case BATTLE_STATUS::PLAYING:
 			break;
 		}
-		
+	
 		// check if any disabled UI elemnts can be reset to enabled (after AI turn)
 		UpdateUI();
 		// update hero on turn
@@ -418,7 +417,7 @@ namespace HJ { namespace Encounters {
 					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
 					std::cout << "IN STATE: " << m_actionResolver->GetSMComponent()->CurrentState() << std::endl;
-					
+
 					DisableUIButtons();
 					atkBtnBtn->SetResolve(false);
 				}
@@ -435,25 +434,24 @@ namespace HJ { namespace Encounters {
 				// resolve use HP button click
 				if (hpBtnBtn->CanResolve())
 				{
+					m_data->gm.healthPot--;
 					std::cout << "Hero used HP potion!\n";
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SKILL_INCREASE_HP));
-
-					DisableUIButtons();
+					
+					EnableUIButtons();
 					hpBtnBtn->SetResolve(false);
 				}
 				// resolve use MP button click
 				if (mpBtnBtn->CanResolve())
 				{
+					m_data->gm.manaPot--;
 					std::cout << "Hero used MP potion!\n";
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SKILL_INCREASE_MP));
-
-					DisableUIButtons();
+					
+					EnableUIButtons();
 					mpBtnBtn->SetResolve(false);
 				}
 				// resolve skill1 button click
-				if (skill1BtnBtn->CanResolve())
+				if (skill1BtnBtn->CanResolve() 
+					&& m_heroOnTurn->GetMana() >= m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed)
 				{
 					std::cout << "Hero using Skill 1!\n";
 					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
@@ -462,8 +460,15 @@ namespace HJ { namespace Encounters {
 					DisableUIButtons();
 					skill1BtnBtn->SetResolve(false);
 				}
+				else
+				{
+					skill1BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+					skill1BtnSprite->SetClickable(false);
+				}
+
 				// resolve skill2 button click
-				if (skill2BtnBtn->CanResolve())
+				if (skill2BtnBtn->CanResolve()
+					&& m_heroOnTurn->GetMana() >= m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed)
 				{
 					std::cout << "Hero using Skill 2!\n";
 					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
@@ -471,6 +476,11 @@ namespace HJ { namespace Encounters {
 
 					DisableUIButtons();
 					skill2BtnBtn->SetResolve(false);
+				}
+				else
+				{
+					skill2BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+					skill2BtnSprite->SetClickable(false);
 				}
 			}
 			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
@@ -536,58 +546,6 @@ namespace HJ { namespace Encounters {
 		m_data->ents.Render(m_entities);
 	}
 
-	void TutorialScene::AddEntity(const std::string & t_name, std::shared_ptr<ECM::Entity> t_entity)
-	{
-		State::AddEntity(t_name, t_entity);
-		// Add to global entities container
-		m_data->ents.Save(t_name, t_entity);
-	}
-
-	void TutorialScene::DisableUIButtons()
-	{
-		for (auto uiBtn : m_battleUIButtons)
-		{
-			uiBtn->GetSprite().setColor(sf::Color(155, 155, 155, 55));
-			uiBtn->SetClickable(false);
-		}
-	}
-
-	void TutorialScene::EnableUIButtons()
-	{
-		for (auto uiBtn : m_battleUIButtons)
-		{
-			uiBtn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-			uiBtn->SetClickable(true);
-		}
-	}
-
-	void TutorialScene::UpdateUI()
-	{
-		// update the who is on turn text indicator for [EVIL]
-		if (m_turn == BATTLE_TURN::EVIL)
-		{
-			m_charOnTurn = m_activeBoss->className();
-			std::string evilHP = std::to_string(m_activeBoss->GetHealth()) + "/" + std::to_string(m_activeBoss->GetMaxHealth()) + "HP";
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
-		}
-		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
-		if (m_turn == BATTLE_TURN::HERO)
-		{
-			// update text indicator
-			m_charOnTurn = m_heroOnTurn->className();
-			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
-			std::string heroMP = std::to_string(m_heroOnTurn->GetMana()) + "/" + std::to_string(m_heroOnTurn->GetMaxMana()) + "MP";
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + heroHP + " | " + heroMP);
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
-			// update battle UI sprite textures
-			sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
-			sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
-			m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
-			m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
-		}
-	}
-
 	void TutorialScene::NextTurn()
 	{
 		std::cout << "I AM IN\n";
@@ -596,8 +554,8 @@ namespace HJ { namespace Encounters {
 		do
 		{
 			std::cout << m_hTurnCount << std::endl;
-			if (m_hTurnCount == 0) 
-			{ 
+			if (m_hTurnCount == 0)
+			{
 				if (!m_activeBoss || m_activeBoss->IsDead())
 				{
 					// DEAD
@@ -627,7 +585,7 @@ namespace HJ { namespace Encounters {
 				{
 					// DEAD
 				}
-				else if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN) != nullptr 
+				else if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN) != nullptr
 					&& m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active)
 				{
 					if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::DEFEND)->active)
@@ -654,6 +612,65 @@ namespace HJ { namespace Encounters {
 				m_hTurnCount--;
 			}
 		} while (m_turn == BATTLE_TURN::BETWEEN);
+	}
+
+	void TutorialScene::UpdateUI()
+	{
+		// update the who is on turn text indicator for [EVIL]
+		if (m_turn == BATTLE_TURN::EVIL)
+		{
+			m_charOnTurn = m_activeBoss->className();
+			std::string evilHP = std::to_string(m_activeBoss->GetHealth()) + "/" + std::to_string(m_activeBoss->GetMaxHealth()) + "HP";
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
+		}
+		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
+		if (m_turn == BATTLE_TURN::HERO)
+		{
+			// update text indicator
+			m_charOnTurn = m_heroOnTurn->className();
+			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
+			std::string heroMP = std::to_string(m_heroOnTurn->GetMana()) + "/" + std::to_string(m_heroOnTurn->GetMaxMana()) + "MP";
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + heroHP + " | " + heroMP);
+			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
+			// update battle UI sprite textures
+			sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
+			sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
+			m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
+			m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
+		}
+	}
+
+	void TutorialScene::DisableUIButtons()
+	{
+		for (auto uiBtn : m_battleUIButtons)
+		{
+			uiBtn->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+			uiBtn->SetClickable(false);
+		}
+	}
+
+	void TutorialScene::EnableUIButtons()
+	{
+		auto hpBtnSprite = m_data->ents.Find<Button>("E_aHPBtn")->GetSpriteComponent();
+		auto mpBtnSprite = m_data->ents.Find<Button>("E_aMPBtn")->GetSpriteComponent();
+		for (auto uiBtn : m_battleUIButtons)
+		{
+			uiBtn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+			uiBtn->SetClickable(true);
+			// update check for health potion button
+			if (uiBtn == hpBtnSprite.get() && m_data->gm.healthPot <= 0)
+			{
+				hpBtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+				hpBtnSprite->SetClickable(false);
+			}
+			// update check for mana potion button
+			if (uiBtn == mpBtnSprite.get() && m_data->gm.manaPot <= 0)
+			{
+				mpBtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+				mpBtnSprite->SetClickable(false);
+			}
+		}
 	}
 
 	void TutorialScene::Evaluate()
@@ -694,6 +711,13 @@ namespace HJ { namespace Encounters {
 
 		if (t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::ARMOUR_AURA)->active)
 			t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::ARMOUR_AURA)->active = false;
+	}
+
+	void TutorialScene::AddEntity(const std::string & t_name, std::shared_ptr<ECM::Entity> t_entity)
+	{
+		State::AddEntity(t_name, t_entity);
+		// Add to global entities container
+		m_data->ents.Save(t_name, t_entity);
 	}
 	
 } }
