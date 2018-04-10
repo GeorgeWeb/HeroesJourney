@@ -2,6 +2,7 @@
 #include "../DEFINITIONS.hpp"
 #include <Engine/ECM/Components/ClickableComponent.hpp>
 #include "MainMenu.hpp"
+#include "../Entities/Button.hpp"
 
 namespace HJ {
 
@@ -209,29 +210,46 @@ namespace HJ {
 		downBtn3Click->SetSpriteTarget(downBtnSprite3.get());
 
 		//Save button
-		auto save = std::make_shared<Entity>();
-		auto saveSprite = save->AddComponent<SpriteComponent>("C_SaveSprite");
+		auto save = std::make_shared<Button>();
+		auto saveSprite = save->GetSpriteComponent();
 		//define sprite
-		saveSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SaveBtn"));
+		saveSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		saveSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
+		//text
+		auto saveText = save->GetTextComponent();
+		saveText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		saveText->GetText().setString("SAVE");
+		//qText->GetText().scale(0.75f, 0.75f);
+		saveText->GetText().setCharacterSize(24);
+		//properties
 		save->SetVisible(true);
 		save->SetAlive(true);
-		auto saveBtn = save->AddComponent<ClickableComponent>("C_SaveBtn");
-		saveBtn->SetSpriteTarget(saveSprite.get());
+		save->Init();
+		//center text
+		saveText->GetText().setPosition(save->GetPosition().x + (save->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - saveText->GetText().getGlobalBounds().width * 0.5,
+			save->GetPosition().y + (save->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - saveText->GetText().getGlobalBounds().height * 0.5);
 
 		//Back button
-		auto back = std::make_shared<Entity>();
-		auto backSprite = back->AddComponent<SpriteComponent>("C_BackSprite");
+		auto back = std::make_shared<Button>();
+		auto backSprite = back->GetSpriteComponent();
 		//define sprite
-		backSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BackBtn"));
+		backSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		backSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
+		//text
+		auto backText = back->GetTextComponent();
+		backText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		backText->GetText().setString("BACK");
+		//qText->GetText().scale(0.75f, 0.75f);
+		backText->GetText().setCharacterSize(24);
+		//properties
 		back->SetVisible(true);
 		back->SetAlive(true);
-		//add button component
-		auto backBtn = back->AddComponent<ClickableComponent>("C_BackBtnBtn");
-		backBtn->SetSpriteTarget(backSprite.get());
+		back->Init();
+		//center text
+		backText->GetText().setPosition(back->GetPosition().x + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - backText->GetText().getGlobalBounds().width * 0.5,
+			back->GetPosition().y + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - backText->GetText().getGlobalBounds().height * 0.5);
 
 		//add to local ents map
 		AddEntity("E_zSetBG", bg);
@@ -268,16 +286,16 @@ namespace HJ {
 				ResizeSceneView(event.size.width, event.size.height);
 
 			//check if back button is clicked
-			auto backComp = m_data->ents.Find<Entity>("E_Back")->GetComponent<SpriteComponent>("C_BackSprite");
-			auto backClick = m_data->ents.Find<Entity>("E_Back")->GetComponent<ClickableComponent>("C_BackBtnBtn");
+			auto backComp = m_data->ents.Find<Button>("E_Back")->GetSpriteComponent();
+			auto backClick = m_data->ents.Find<Button>("E_Back")->GetClickableComponent();
 			if (backComp->IsClickable() && m_data->input.isClicked(backComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				backClick->SetClicked(true);
 			}
 
 			//check if save button is clicked
-			auto saveComp = m_data->ents.Find<Entity>("E_Save")->GetComponent<SpriteComponent>("C_SaveSprite");
-			auto saveClick = m_data->ents.Find<Entity>("E_Save")->GetComponent<ClickableComponent>("C_SaveBtn");
+			auto saveComp = m_data->ents.Find<Button>("E_Save")->GetSpriteComponent();
+			auto saveClick = m_data->ents.Find<Button>("E_Save")->GetClickableComponent();
 			if (saveComp->IsClickable() &&  m_data->input.isClicked(saveComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				saveClick->SetClicked(true);
@@ -380,7 +398,7 @@ namespace HJ {
 		m_data->ents.Update(m_entities, t_deltaTime);
 
 		//resolve back button click
-		auto backClick = m_data->ents.Find<Entity>("E_Back")->GetComponent<ClickableComponent>("C_BackBtnBtn");
+		auto backClick = m_data->ents.Find<Button>("E_Back")->GetClickableComponent();
 		if (backClick->CanResolve())
 		{
 			// change scene to Settings
@@ -390,7 +408,7 @@ namespace HJ {
 		}
 
 		//resolve save button click
-		auto saveClick = m_data->ents.Find<Entity>("E_Save")->GetComponent<ClickableComponent>("C_SaveBtn");
+		auto saveClick = m_data->ents.Find<Button>("E_Save")->GetClickableComponent();
 		if (saveClick->CanResolve())
 		{
 			//ADD LOGIC FOR SAVING THE CHANGES HERE...

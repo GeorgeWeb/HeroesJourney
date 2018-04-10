@@ -34,7 +34,7 @@ namespace HJ {
 	{
 		public:
 			// amount of gold gathered
-			unsigned int gold = 0;
+			unsigned int gold =100;
 			
 			// amount of potions acquired/bought
 			unsigned int healthPot = 0;

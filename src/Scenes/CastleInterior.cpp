@@ -1,6 +1,6 @@
 #include "CastleInterior.hpp"
 #include "PauseMenu.hpp"
-
+#include "../Entities//Button.hpp"
 #include <Engine/ECM/Components/ClickableComponent.hpp>
 
 namespace HJ {
@@ -91,14 +91,12 @@ namespace HJ {
 		m_data->gm.store->Init();
 
 		// backArrow
-		auto backArrow = std::make_shared<Entity>();
-		auto backArrowSprite = backArrow->AddComponent<SpriteComponent>("C_BackArrow");		
+		auto backArrow = std::make_shared<Button>();
+		auto backArrowSprite = backArrow->GetSpriteComponent();
 		// define backArrow sprite
 		backArrowSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BackArrow"));
 		backArrowSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		// define clickable behaviour
-		auto backArrowBtn = backArrow->AddComponent<ClickableComponent>("C_BackArrowBtn");
-		backArrowBtn->SetSpriteTarget(backArrowSprite.get());
 		// backArrow properties
 		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.05, 
 			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.01));
@@ -106,19 +104,30 @@ namespace HJ {
 		backArrow->SetAlive(true);
 
 		//upgrade button
-		auto upgradeBtn = std::make_shared<Entity>();
-		auto upgradeBtnSprite = upgradeBtn->AddComponent<SpriteComponent>("C_UpgradeBtn");
+		auto upgradeBtn = std::make_shared<Button>();
+		auto upgradeBtnSprite = upgradeBtn->GetSpriteComponent();
 		//define sprite
-		upgradeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpgradeBtn"));
+		upgradeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		upgradeBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		upgradeBtn->SetPosition(sf::Vector2f(upgradeBtnSprite->GetSprite().getGlobalBounds().width + 40.0f, SCREEN_HEIGHT - upgradeBtnSprite->GetSprite().getGlobalBounds().height - 80.0f));
+		upgradeBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		upgradeBtnSprite->SetClickable(true);
+		//text
+		auto upgradeBtnText = upgradeBtn->GetTextComponent();
+		upgradeBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		upgradeBtnText->GetText().setString("Upgrade!");
+		upgradeBtnText->GetText().scale(0.75f, 0.75f);
+		upgradeBtnText->GetText().setCharacterSize(24);
+		
 		//properties
+		upgradeBtn->Init();
 		upgradeBtn->SetVisible(false);
-		upgradeBtn->SetAlive(false);
-		upgradeBtnSprite->SetClickable(false);
-		auto upgradeClick = upgradeBtn->AddComponent<ClickableComponent>("C_UpgradeBtnBtn");
-		upgradeClick->SetSpriteTarget(upgradeBtnSprite.get());
+		upgradeBtn->SetAlive(true);
+		//center text
+		upgradeBtnText->GetText().setPosition((upgradeBtn->GetPosition().x + upgradeBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f + upgradeBtnText->GetText().getGlobalBounds().width *0.8f,
+			upgradeBtn->GetPosition().y  + upgradeBtnText->GetText().getGlobalBounds().height *1.15f);
 
+	
 		//Health potion sprite
 		auto health = std::make_shared<Entity>();
 		auto healthSprite = health->AddComponent<SpriteComponent>("C_Health");
@@ -195,33 +204,49 @@ namespace HJ {
 		coinTextFont->GetText().setCharacterSize(10);
 
 		//mana button texture
-		auto manaBtn = std::make_shared<Entity>();
-		auto manaBtnSprite = manaBtn->AddComponent<SpriteComponent>("C_ManaBtnSprite");
+		auto manaBtn = std::make_shared<Button>();
+		auto manaBtnSprite = manaBtn->GetSpriteComponent();
 		//sprite define
-		manaBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_ManaBtn"));
+		manaBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		manaBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		manaBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH - manaBtnSprite->GetSprite().getGlobalBounds().width * 2.5, SCREEN_HEIGHT - manaBtnSprite->GetSprite().getGlobalBounds().height*1.3));
 		//properties
+		manaBtn->Init();
 		manaBtn->SetVisible(false);
 		manaBtn->SetAlive(true);
 		manaBtnSprite->SetClickable(false);
-		auto manaClick = manaBtn->AddComponent<ClickableComponent>("C_ManaBtnBtn");
-		manaClick->SetSpriteTarget(manaBtnSprite.get());
+		//text
+		auto manaBtnText = manaBtn->GetTextComponent();
+		manaBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		manaBtnText->GetText().setString("Mana Potion (10)");
+		manaBtnText->GetText().scale(0.7f, 0.7f);
+		manaBtnText->GetText().setCharacterSize(24);
+		//center text
+		manaBtnText->GetText().setPosition(manaBtn->GetPosition().x + manaBtnText->GetText().getGlobalBounds().width * 0.1f,
+			manaBtn->GetPosition().y + manaBtnText->GetText().getGlobalBounds().height * 1.2f);
+
 		
 		//health button texture
-		auto healthBtn = std::make_shared<Entity>();
-		auto healthBtnSprite = healthBtn->AddComponent<SpriteComponent>("C_HealthBtnSprite");
+		auto healthBtn = std::make_shared<Button>();
+		auto healthBtnSprite = healthBtn->GetSpriteComponent();
 		//sprite define
-		healthBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_HealthBtn"));
+		healthBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		healthBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		healthBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH - healthBtnSprite->GetSprite().getGlobalBounds().width *3.7f , SCREEN_HEIGHT - healthBtnSprite->GetSprite().getGlobalBounds().height*1.3));
 		//properties
+		healthBtn->Init();
 		healthBtn->SetVisible(false);
 		healthBtn->SetAlive(true);
 		healthBtnSprite->SetClickable(false);
-		auto healthClick = healthBtn->AddComponent<ClickableComponent>("C_HealthBtnBtn");
-		healthClick->SetSpriteTarget(healthBtnSprite.get());
-
+		//text
+		auto healthBtnText = healthBtn->GetTextComponent();
+		healthBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		healthBtnText->GetText().setString("Health Potion (10)");
+		healthBtnText->GetText().scale(0.7f, 0.7f);
+		healthBtnText->GetText().setCharacterSize(24);
+		//center text
+		healthBtnText->GetText().setPosition(healthBtn->GetPosition().x + healthBtnText->GetText().getGlobalBounds().width * 0.05f,
+			healthBtn->GetPosition().y + healthBtnText->GetText().getGlobalBounds().height * 1.2f);
 		// Text
 		auto text = std::make_shared<Entity>();
 		auto infTextFont = text->AddComponent<TextComponent>("C_Text");
@@ -341,9 +366,9 @@ namespace HJ {
 				infClick->SetClicked(true);
 				//set last clicked building as infirmary
 				lastClicked = "infirmary";
-				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
-				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
-				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
+				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
 
 			}
 
@@ -354,9 +379,9 @@ namespace HJ {
 			{
 				blackClick->SetClicked(true);
 				lastClicked = "blacksmith";
-				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
-				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
-				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
+				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
 			}
 
 			//Check if Library is clicked
@@ -366,9 +391,9 @@ namespace HJ {
 			{
 				libraryClick->SetClicked(true);
 				lastClicked = "library";
-				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
-				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
-				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
+				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
 			}
 
 			//Check if Inn is clicked
@@ -378,9 +403,9 @@ namespace HJ {
 			{
 				innClick->SetClicked(true);
 				lastClicked = "inn";
-				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(true);
-				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(false);
-				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
+				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
 			}
 
 			//Check if GeneralStore is clicked
@@ -390,23 +415,23 @@ namespace HJ {
 			{
 				genStoreClick->SetClicked(true);
 				lastClicked = "generalStore";
-				m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn")->SetClickable(false);
-				m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite")->SetClickable(true);
-				m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite")->SetClickable(true);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(true);
+				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(true);
 			}
 
 			//check if back arrow is clicked
-			auto arrowComp = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<SpriteComponent>("C_BackArrow");
-			auto backArrowBtn = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<ClickableComponent>("C_BackArrowBtn");
+			auto arrowComp = m_data->ents.Find<Button>("E_BackArrow")->GetSpriteComponent();
+			auto backArrowBtn = m_data->ents.Find<Button>("E_BackArrow")->GetClickableComponent();
 			if (m_data->input.isClicked(arrowComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				backArrowBtn->SetClicked(true);
 			}
 
 			//check if upgrade button is clicked
-			auto upBtnComp = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<SpriteComponent>("C_UpgradeBtn");
-			auto upBtnClick = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<ClickableComponent>("C_UpgradeBtnBtn");
-			if (upBtnComp->IsClickable() && m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			auto upBtnComp = m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent();
+			auto upBtnClick = m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent();
+			if (upBtnClick->IsClickable() && m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				upBtnClick->SetClicked(true);
 				if (lastClicked == "infirmary")
@@ -472,8 +497,8 @@ namespace HJ {
 			}
 
 			// check if mana button has been clicked
-			auto manaComp = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<SpriteComponent>("C_ManaBtnSprite");
-			auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<ClickableComponent>("C_ManaBtnBtn");
+			auto manaComp = m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent();
+			auto manaClick = m_data->ents.Find<Button>("E_00ManaBtn")->GetClickableComponent();
 			
 			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
@@ -490,8 +515,8 @@ namespace HJ {
 			}
 
 			//check if health button has been clicked
-			auto healthComp = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<SpriteComponent>("C_HealthBtnSprite");
-			auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<ClickableComponent>("C_HealthBtnBtn");
+			auto healthComp = m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent();
+			auto healthClick = m_data->ents.Find<Button>("E_00HealthBtn")->GetClickableComponent();
 			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				healthClick->SetClicked(true);
@@ -515,7 +540,7 @@ namespace HJ {
 
 		UpdateResourceText();
 
-		auto backArrowBtn = m_data->ents.Find<Entity>("E_BackArrow")->GetComponent<ClickableComponent>("C_BackArrowBtn");
+		auto backArrowBtn = m_data->ents.Find<Button>("E_BackArrow")->GetClickableComponent();
 		if (backArrowBtn->CanResolve())
 		{
 			m_data->machine.RemoveState();
@@ -559,7 +584,7 @@ namespace HJ {
 
 
 		//Handle the Upgrade button click
-		auto upBtnClick = m_data->ents.Find<Entity>("E_00UpBtn")->GetComponent<ClickableComponent>("C_UpgradeBtnBtn");
+		auto upBtnClick = m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent();
 		if (upBtnClick->CanResolve())
 		{
 			upBtnClick->SetResolve(false);
@@ -568,7 +593,7 @@ namespace HJ {
 	
 
 		//Handle the ManaPotion button click
-		auto manaClick = m_data->ents.Find<Entity>("E_00ManaBtn")->GetComponent<ClickableComponent>("C_ManaBtnBtn");
+		auto manaClick = m_data->ents.Find<Button>("E_00ManaBtn")->GetClickableComponent();
 		if(manaClick->CanResolve())
 		{
 			manaClick->SetResolve(false);
@@ -577,7 +602,7 @@ namespace HJ {
 		
 
 		//Handle the Health Potion button click
-		auto healthClick = m_data->ents.Find<Entity>("E_00HealthBtn")->GetComponent<ClickableComponent>("C_HealthBtnBtn");
+		auto healthClick = m_data->ents.Find<Button>("E_00HealthBtn")->GetClickableComponent();
 		if (healthClick->CanResolve())
 		{
 			healthClick->SetResolve(false);
@@ -593,8 +618,53 @@ namespace HJ {
 
 	void CastleScene::UpdateText()
 	{
+
+		if (m_data->gm.gold < 10)
+		{
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
+
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
+
+		}
+		else
+		{
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+			m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(true);
+
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+			m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(true);
+		}
+
 		if (lastClicked == "infirmary")
 		{
+			// is the upgrade affordable
+			if (m_data->gm.gold < 10 * m_data->gm.infirmary->GetLevel())
+			{
+				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+
+			}
+
+			else
+			{
+
+				if (m_data->gm.gold >= 10 * m_data->gm.infirmary->GetLevel() )
+				{
+					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
+					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+
+				}
+			}
+
+
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INFIRMARY ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
@@ -610,8 +680,9 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.infirmary->GetLevel()*10)+ " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetAlive(true);
+			
+			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetAlive(true);
 
 			m_data->ents.Find<Entity>("E_00HealthBtn")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00ManaBtn")->SetVisible(false);
@@ -619,6 +690,28 @@ namespace HJ {
 
 		if (lastClicked == "blacksmith")
 		{
+
+			// is the upgrade affordable
+			if (m_data->gm.gold < 10 * m_data->gm.blacksmith->GetLevel() )
+			{
+				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+
+			}
+
+			else
+			{
+
+				if (m_data->gm.gold >= 10 * m_data->gm.blacksmith->GetLevel() )
+				{
+					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
+					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+
+				}
+			}
+
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("BLACKSMITH ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
@@ -634,8 +727,8 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.blacksmith->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetAlive(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetAlive(true);
 
 			m_data->ents.Find<Entity>("E_00HealthBtn")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00ManaBtn")->SetVisible(false);
@@ -643,6 +736,28 @@ namespace HJ {
 
 		if (lastClicked == "library")
 		{
+
+			// is the upgrade affordable
+			if (m_data->gm.gold < 10 * m_data->gm.library->GetLevel() )
+			{
+				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+
+			}
+
+			else
+			{
+
+				if (m_data->gm.gold >= 10 * m_data->gm.library->GetLevel() )
+				{
+					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
+					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+
+				}
+			}
+
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("LIBRARY ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
@@ -658,8 +773,8 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.library->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetAlive(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetAlive(true);
 
 			m_data->ents.Find<Entity>("E_00HealthBtn")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00ManaBtn")->SetVisible(false);
@@ -667,6 +782,27 @@ namespace HJ {
 
 		if (lastClicked == "inn")
 		{
+			// is the upgrade affordable
+			if (m_data->gm.gold < 10 * m_data->gm.inn->GetLevel() )
+			{
+				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
+				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
+				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
+
+			}
+
+			else
+			{
+
+				if (m_data->gm.gold >= 10 * m_data->gm.inn->GetLevel() )
+				{
+					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
+					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
+
+				}
+			}
+
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("Inn ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
@@ -682,8 +818,8 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.inn->GetLevel() * 10) + " )");
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(true);
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetAlive(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetAlive(true);
 
 			m_data->ents.Find<Entity>("E_00HealthBtn")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00ManaBtn")->SetVisible(false);
@@ -697,7 +833,7 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(false);
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(false);
-			m_data->ents.Find<Entity>("E_00UpBtn")->SetVisible(false);
+			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(false);
 
 			m_data->ents.Find<Entity>("E_00HealthBtn")->SetVisible(true);
 			m_data->ents.Find<Entity>("E_00ManaBtn")->SetVisible(true);
