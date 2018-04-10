@@ -65,7 +65,7 @@ namespace HJ { namespace Encounters {
 		std::string m_charOnTurn = "";
 
 		// ...
-		bool isEvalComplete;
+		bool isEvalComplete = false;
 	};
 } }
 

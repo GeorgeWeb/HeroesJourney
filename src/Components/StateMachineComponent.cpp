@@ -51,4 +51,9 @@ namespace HJ { namespace Components {
 		}
 	}
 
+	inline void StateMachineComponent::AutoSetPosition(const sf::Vector2f & t_position)
+	{
+
+	}
+
 } }

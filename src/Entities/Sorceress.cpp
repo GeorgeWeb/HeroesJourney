@@ -13,8 +13,8 @@ namespace HJ {namespace Entities {
 		m_armour = 5;
 		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 1;
-		m_critChance = 2;
+		m_dodgeChance = 10;
+		m_critChance = 20;
 	}
 
 	Sorceress* Sorceress::GetType()

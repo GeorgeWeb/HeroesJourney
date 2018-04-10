@@ -5,6 +5,9 @@
 #include <unordered_map>
 #include "../Entities/Hero.hpp"
 
+#include <Engine/Utils/Random.hpp>
+
+
 namespace HJ { namespace Components {
 
 	using namespace Engine;
@@ -47,6 +50,15 @@ namespace HJ { namespace Components {
 			inline void SetTargets(std::vector<std::shared_ptr<Entities::Hero>> t_targets) { m_targets = t_targets; }
 			inline void SetInitiator(std::shared_ptr<Entities::Hero> t_initiator) { m_initiator = t_initiator; }
 			inline void SetUsedSkill(std::shared_ptr<Skill> t_usedSkill) { m_usedSkill = t_usedSkill; }
+
+			inline void AutoSetPosition(const sf::Vector2f& t_position);
+
+			// ...
+			sf::Vector2f initPos;
+			sf::Vector2f endPos;
+			float speed = 10.0f;
+
+			Engine::Utils::Random random;
 	};
 
 } }

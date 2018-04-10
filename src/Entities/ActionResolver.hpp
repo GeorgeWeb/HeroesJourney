@@ -11,10 +11,6 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Components::StateMachineComponent> m_smComp;
 			bool m_active;
 
-			// ...
-			sf::Vector2f m_initialPos;
-			float m_speed = 10.0f;
-
 		public:
 			ActionResolver();
 			~ActionResolver() = default;

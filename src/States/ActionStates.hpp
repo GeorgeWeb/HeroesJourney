@@ -3,6 +3,7 @@
 
 #include "../Components/StateMachineComponent.hpp"
 #include "../Entities/Hero.hpp"
+#include "../Damage.hpp"
 
 #include <vector>
 
@@ -33,53 +34,39 @@ namespace HJ { namespace States {
 	class StepInState final : public State
 	{
 		public:
-			StepInState() : m_canStepIn(false) {}
+			StepInState() = default;
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
 
 		private:
-			sf::Vector2f m_position;
-			float m_speed;
 			bool m_canStepIn;
-	};
-
-	class NearTargetState final : public State
-	{
-		public:
-			NearTargetState() = default;
-			void EnterState(ECM::Entity* t_owner) override;
-			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
+			bool m_canCheck;
+			int m_direction;
 	};
 
 	class ExecSkillState final : public State
 	{
 		public:
-			ExecSkillState() : m_isAttacking(false) {}
+			ExecSkillState() = default;
 
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
 
 		private:
-			bool m_isAttacking;
+			bool m_isExecuting;
 	};
 
 	class StepBackState final : public State
 	{
 		public:
-			StepBackState() : m_canStepBack(false) {}
+			StepBackState() = default;
 			void EnterState(ECM::Entity* t_owner) override;
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
 
 		private:
 			bool m_canStepBack;
-	};
-
-	class ReturnedState final : public State
-	{
-	public:
-		ReturnedState() = default;
-		void EnterState(ECM::Entity* t_owner) override;
-		void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
+			bool m_canCheck;
+			int m_direction;
 	};
 
 	class FinishState final : public State
@@ -87,7 +74,7 @@ namespace HJ { namespace States {
 		public:
 			FinishState() = default;
 			void EnterState(ECM::Entity* t_owner) override;
-			void Execute(ECM::Entity* t_owner, float t_deltaTime) override;
+			void Execute(ECM::Entity* t_owner, float t_deltaTime) override {}
 	};
 
 } }

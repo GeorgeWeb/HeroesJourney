@@ -2,7 +2,6 @@
 #define SKILL_SET_H
 
 #include "Components/StatusComponent.hpp"
-#include "Damage.hpp"
 
 namespace HJ
 {
@@ -12,6 +11,21 @@ namespace HJ
 	{
 		ALLY = 0,
 		ENEMY = 1
+	};
+
+	enum class DAMAGE_BASE : int
+	{
+		MELEE = 0,
+		RANGED = 1,
+		DEFENCE = 2
+	};
+
+	enum class DAMAGE_TYPE : int
+	{
+		BASIC = 0,
+		FROST = 1,
+		FIRE = 2,
+		MAGIC = 3
 	};
 
 	class Skill
@@ -71,6 +85,7 @@ namespace HJ
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
 				damageMod = 0;
+				applicableEffects = { EFFECT_TYPE::DEFEND };
 			}
 	};
 
