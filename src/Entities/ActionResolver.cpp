@@ -1,5 +1,5 @@
 #include "ActionResolver.hpp"
-
+#include "../DEFINITIONS.hpp"
 namespace HJ { namespace Entities {
 
 	ActionResolver::ActionResolver() :
@@ -8,10 +8,10 @@ namespace HJ { namespace Entities {
 	{
 		// initialize the states
 		m_smComp->AddState("Idle", std::make_shared<States::IdleState>());
-		// m_smComp->AddState("ChooseTarget", std::make_shared<States::ChooseTargetState>());
-		// m_smComp->AddState("StepIn", std::make_shared<States::StepInState>());
-		// m_smComp->AddState("ExecSkill", std::make_shared<States::ExecSkillState>());
-		// m_smComp->AddState("StepBack", std::make_shared<States::StepBackState>());
+		m_smComp->AddState("ChooseTarget", std::make_shared<States::ChooseTargetState>());
+		m_smComp->AddState("StepIn", std::make_shared<States::StepInState>());
+		m_smComp->AddState("ExecSkill", std::make_shared<States::ExecSkillState>());
+		m_smComp->AddState("StepBack", std::make_shared<States::StepBackState>());
 		m_smComp->AddState("Finish", std::make_shared<States::FinishState>());
 		m_smComp->ChangeState("Idle");
 	}
@@ -25,7 +25,8 @@ namespace HJ { namespace Entities {
 		m_smComp->SetUsedSkill(t_usedSkill);
 		// set the initial position of the initiating actor
 		m_smComp->initPos = t_initiator->GetPosition();
-		m_smComp->speed = 7.5f;
+		m_smComp->endPos = sf::Vector2f(SCREEN_WIDTH / 3.5f, m_smComp->initPos.y);
+		m_smComp->speed = 15.0f;
 		// run the state machine
 		m_smComp->SetInTransition(true);
 		// activate>

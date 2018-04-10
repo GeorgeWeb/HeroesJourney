@@ -91,7 +91,7 @@ namespace HJ
 			m_damage /= 100;
 		}
 
-		t_receiver->ReceiveDamage(m_damage);
+		t_receiver->ReceiveDamage(m_damage / 10);
 		ApplyEffects(t_receiver);
 
 		return std::to_string(m_damage);

@@ -66,9 +66,10 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_activeBoss->Init();
 		// Add skills
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<BasicAttack>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
 		
 		// create an event-like action resolver for hero/ai - [actions/events]
 		m_actionResolver = std::make_shared<ActionResolver>();
@@ -475,7 +476,7 @@ namespace HJ { namespace Encounters {
 			// start state machine
 			if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Idle")
 			{
-				m_actionResolver->Activate(m_activeBoss, m_heroesUnion);
+				m_actionResolver->Activate(m_activeBoss, m_heroesUnion, m_activeBoss->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
 			}
 			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
 				&& !isEvalComplete)
