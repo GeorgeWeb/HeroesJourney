@@ -9,8 +9,9 @@ namespace HJ
 
 	enum class SKILL_TARGET : int
 	{
-		ALLY = 0,
-		ENEMY = 1
+		SELF =  0,
+		ALLY =  1,
+		ENEMY = 2
 	};
 
 	enum class DAMAGE_BASE : int
@@ -83,7 +84,7 @@ namespace HJ
 				textureRefName = "Tex_DefendBtn";
 				dmgBase = DAMAGE_BASE::DEFENCE;
 				dmgType = DAMAGE_TYPE::BASIC;
-				target = SKILL_TARGET::ALLY;
+				target = SKILL_TARGET::SELF;
 				damageMod = 0;
 				applicableEffects = { EFFECT_TYPE::DEFEND };
 			}
@@ -252,7 +253,7 @@ namespace HJ
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
 				damageMod = 100;
-				applicableEffects = { EFFECT_TYPE::ENRAGE, EFFECT_TYPE::STUN };
+				applicableEffects = { EFFECT_TYPE::STUN, EFFECT_TYPE::ENRAGE };
 			}
 	};
 
@@ -342,7 +343,7 @@ namespace HJ
 			{
 				dmgBase = DAMAGE_BASE::DEFENCE;
 				dmgType = DAMAGE_TYPE::FROST;
-				target = SKILL_TARGET::ALLY;
+				target = SKILL_TARGET::SELF;
 				damageMod = 0;
 				applicableEffects = { EFFECT_TYPE::FROST_ARMOR };
 			}

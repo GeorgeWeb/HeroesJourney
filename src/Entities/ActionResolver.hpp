@@ -9,6 +9,7 @@ namespace HJ { namespace Entities {
 	{
 		private:
 			std::shared_ptr<Components::StateMachineComponent> m_smComp;
+			std::shared_ptr<Components::HeuristicEvalComponent> m_heuristicEvalComp;
 			bool m_active;
 
 		public:

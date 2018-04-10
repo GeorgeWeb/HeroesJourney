@@ -25,6 +25,7 @@ namespace HJ {
 
 		protected:
 			Components::StateMachineComponent* m_SM;
+			// create pointer to heuristics component & Link
 	};
 
 } }

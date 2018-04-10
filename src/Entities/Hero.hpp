@@ -70,6 +70,8 @@ namespace HJ { namespace Entities {
 
 			virtual Hero* GetType() override;
 
+			inline bool IsDead() { return m_health <= 0; }
+
 			void ReceiveDamage(unsigned int t_damage);
 
 			virtual void Init() override;

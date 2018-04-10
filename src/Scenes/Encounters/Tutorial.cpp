@@ -66,11 +66,19 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
 		m_activeBoss->Init();
 		// Add skills
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
+		/*TODO: REMOVE */m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<BasicAttack>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
 		
+		// Baseline positions
+		// good
+		goodBaseLine = m_data->gm.hKnight->GetPosition();
+		goodBaseLine.x += m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width + 10.0f;
+		// evil
+		evilBaseLine = m_activeBoss->GetPosition();
+		evilBaseLine.x -= m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width + 10.0f;
+
 		// create an event-like action resolver for hero/ai - [actions/events]
 		m_actionResolver = std::make_shared<ActionResolver>();
 
@@ -406,6 +414,8 @@ namespace HJ { namespace Encounters {
 				if (atkBtnBtn->CanResolve())
 				{
 					std::cout << "Hero attacking!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
+					std::cout << "SET POS: " << m_actionResolver->GetSMComponent()->endPos.x << std::endl;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
 
 					atkBtnBtn->SetResolve(false);
@@ -416,6 +426,7 @@ namespace HJ { namespace Encounters {
 				if (defBtnBtn->CanResolve())
 				{
 					std::cout << "Hero defending!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE));
 
 					defBtnBtn->SetResolve(false);
@@ -425,6 +436,7 @@ namespace HJ { namespace Encounters {
 				if (hpBtnBtn->CanResolve())
 				{
 					std::cout << "Hero used HP potion!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SKILL_INCREASE_HP));
 
 					hpBtnBtn->SetResolve(false);
@@ -434,6 +446,7 @@ namespace HJ { namespace Encounters {
 				if (mpBtnBtn->CanResolve())
 				{
 					std::cout << "Hero used MP potion!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SKILL_INCREASE_MP));
 
 					mpBtnBtn->SetResolve(false);
@@ -443,6 +456,7 @@ namespace HJ { namespace Encounters {
 				if (skill1BtnBtn->CanResolve())
 				{
 					std::cout << "Hero using Skill 1!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1));
 
 					skill1BtnBtn->SetResolve(false);
@@ -452,6 +466,7 @@ namespace HJ { namespace Encounters {
 				if (skill2BtnBtn->CanResolve())
 				{
 					std::cout << "Hero using Skill 2!\n";
+					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2));
 
 					skill2BtnBtn->SetResolve(false);
@@ -461,6 +476,8 @@ namespace HJ { namespace Encounters {
 			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
 				&& !isEvalComplete)
 			{
+				// clear status effects
+				ClearStatusEffects(m_heroOnTurn);
 				std::cout << "SM Finished!\n";
 				m_turn = BATTLE_TURN::BETWEEN;
 				// evaluate the round & check win condition
@@ -476,11 +493,14 @@ namespace HJ { namespace Encounters {
 			// start state machine
 			if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Idle")
 			{
-				m_actionResolver->Activate(m_activeBoss, m_heroesUnion, m_activeBoss->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
+				m_actionResolver->GetSMComponent()->endPos = goodBaseLine;
+				m_actionResolver->Activate(m_activeBoss, m_heroesUnion);
 			}
 			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
 				&& !isEvalComplete)
 			{
+				// clear status effects
+				ClearStatusEffects(m_activeBoss);
 				m_hTurnCount = m_activeHeroes.size();
 				m_turn = BATTLE_TURN::BETWEEN;
 				// evaluate the round & check win condition
@@ -495,6 +515,7 @@ namespace HJ { namespace Encounters {
 			{
 				std::cout << "EVAL Finished!\n";
 				isEvalComplete = false;
+				
 				// stop the action resolver after evaluation is complete
 				m_actionResolver->Stop();
 				// change turn
@@ -582,11 +603,7 @@ namespace HJ { namespace Encounters {
 				else if (m_activeBoss->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN) != nullptr
 					&& m_activeBoss->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active)
 				{
-					for (auto effect : m_activeBoss->GetStatusComponent()->GetEffects())
-					{
-						if (effect.first != EFFECT_TYPE::ENRAGE)
-							effect.second->active = false;
-					}
+					ClearStatusEffects(m_activeBoss);
 				}
 				else
 				{
@@ -605,16 +622,16 @@ namespace HJ { namespace Encounters {
 				else if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN) != nullptr 
 					&& m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active)
 				{
+					if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::DEFEND)->active)
+						m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::DEFEND)->active = false;
 					// unfade hero on turn
 					m_heroOnTurn->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-					for (auto effect : m_heroOnTurn->GetStatusComponent()->GetEffects())
-					{
-						if (effect.first != EFFECT_TYPE::ENRAGE)
-							effect.second->active = false;
-					}
+					ClearStatusEffects(m_heroOnTurn);
 				}
 				else
 				{
+					if (m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::DEFEND)->active)
+						m_heroOnTurn->GetStatusComponent()->GetEffect(EFFECT_TYPE::DEFEND)->active = false;
 					// fade the rest of the heroes in the party
 					for (auto hero : m_activeHeroes)
 					{
@@ -652,6 +669,21 @@ namespace HJ { namespace Encounters {
 		// Evaluation completed
 		isEvalComplete = true;
 		std::cout << "Evaluating finished\n";
+	}
+
+	void TutorialScene::ClearStatusEffects(std::shared_ptr<Entities::Hero> t_hero)
+	{
+		if (t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active)
+			t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::STUN)->active = false;
+		
+		if (t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::DAMAGE_AURA)->active)
+			t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::DAMAGE_AURA)->active = false;
+
+		if (t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::FROST_AURA)->active)
+			t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::FROST_AURA)->active = false;
+
+		if (t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::ARMOUR_AURA)->active)
+			t_hero->GetStatusComponent()->GetEffect(EFFECT_TYPE::ARMOUR_AURA)->active = false;
 	}
 	
 } }

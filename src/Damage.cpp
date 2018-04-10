@@ -38,7 +38,7 @@ namespace HJ
 
 	std::string Damage::SendDamage(std::shared_ptr<Entities::Hero> t_receiver)
 	{
-		if (m_target == SKILL_TARGET::ALLY)
+		if (m_target != SKILL_TARGET::ENEMY)
 		{
 			// Apply effect
 			ApplyEffects(t_receiver);
@@ -91,7 +91,7 @@ namespace HJ
 			m_damage /= 100;
 		}
 
-		t_receiver->ReceiveDamage(m_damage / 10);
+		t_receiver->ReceiveDamage(m_damage);
 		ApplyEffects(t_receiver);
 
 		return std::to_string(m_damage);

@@ -29,6 +29,7 @@ namespace HJ { namespace Encounters {
 		void EnableUIButtons();
 		void UpdateUI();
 		void NextTurn();
+		void ClearStatusEffects(std::shared_ptr<Entities::Hero> t_hero);
 
 		// evaluates the batte and checks for win/lose condition;
 		void Evaluate();
@@ -66,6 +67,9 @@ namespace HJ { namespace Encounters {
 
 		// ...
 		bool isEvalComplete = false;
+
+		sf::Vector2f goodBaseLine;
+		sf::Vector2f evilBaseLine;
 	};
 } }
 

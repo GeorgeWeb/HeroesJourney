@@ -30,6 +30,7 @@ namespace HJ { namespace Entities {
 
 	void Hero::ReceiveDamage(unsigned int t_damage)
 	{
+		// play animation
 		m_health -= t_damage;
 	}
 

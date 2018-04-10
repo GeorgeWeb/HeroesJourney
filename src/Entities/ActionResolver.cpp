@@ -4,6 +4,7 @@ namespace HJ { namespace Entities {
 
 	ActionResolver::ActionResolver() :
 		m_smComp(AddComponent<Components::StateMachineComponent>("C_ActionStateMachine")),
+		m_heuristicEvalComp(AddComponent<Components::HeuristicEvalComponent>("C_HeuristicEval")),
 		m_active(false)
 	{
 		// initialize the states
@@ -25,8 +26,7 @@ namespace HJ { namespace Entities {
 		m_smComp->SetUsedSkill(t_usedSkill);
 		// set the initial position of the initiating actor
 		m_smComp->initPos = t_initiator->GetPosition();
-		m_smComp->endPos = sf::Vector2f(SCREEN_WIDTH / 3.5f, m_smComp->initPos.y);
-		m_smComp->speed = 15.0f;
+		m_smComp->speed = 30.0f;
 		// run the state machine
 		m_smComp->SetInTransition(true);
 		// activate>

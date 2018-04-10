@@ -51,8 +51,6 @@ namespace HJ { namespace Components {
 			inline void SetInitiator(std::shared_ptr<Entities::Hero> t_initiator) { m_initiator = t_initiator; }
 			inline void SetUsedSkill(std::shared_ptr<Skill> t_usedSkill) { m_usedSkill = t_usedSkill; }
 
-			inline void AutoSetPosition(const sf::Vector2f& t_position);
-
 			// ...
 			sf::Vector2f initPos;
 			sf::Vector2f endPos;

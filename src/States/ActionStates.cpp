@@ -18,60 +18,46 @@ namespace HJ { namespace States {
 
 	void ChooseTargetState::EnterState(ECM::Entity* t_owner)
 	{
+		std::cout << m_SM->GetInitiator()->className() << std::endl;
 		m_canChoose = true;
-		m_chooseFinished = false;
-		// auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("HeuristicEval");
-		// heuristicEval->SetComplete(false);
+		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
+		heuristicEval->SetComplete(false);
 		std::cout << "Choosing target.\n";
 	}
 
 	void ChooseTargetState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
-		if (m_canChoose && !m_chooseFinished)
-		{
-			m_canChoose = false;
-			m_chooseFinished = true;
-		}
-		else if (!m_canChoose && m_chooseFinished)
-		{
-			m_canChoose = false;
-			m_chooseFinished = false;
-			m_SM->ChangeState("StepIn");
-		}
-
-		// auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("HeuristicEval");
-		// use t_owner->className() for heuristics
-
-		/*
+		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
+	
 		if (m_canChoose && !heuristicEval->IsComplete())
 		{
+			std::cout << "Evaluating\n";
 			m_canChoose = false;
-			heuristicEval->SetData(..., ..., ...);
+			heuristicEval->Initialize(m_SM->GetInitiator(), m_SM->GetTargets(), m_SM->GetUsedSkill());
 			heuristicEval->Evaluate();
+
 		}
 		else if (!m_canChoose && heuristicEval->IsComplete())
 		{
-			m_SM->SetUsedSkill(heuristicEval->GetSkill());
-			m_SM->SetTargets(heuristicEval->GetTargets());
-
-			if (m_SM->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
+			if (heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
 			{
-				// heuristicEval->SetComplete(false);
-				m_SM->AutoSetPos();
+				m_canChoose = false;
+				heuristicEval->SetComplete(false);
 				m_SM->ChangeState("StepIn");
 			}
 			else
 			{
-				// heuristicEval->SetComplete(false);
+				m_canChoose = false;
+				heuristicEval->SetComplete(false);
 				m_SM->ChangeState("ExecSkill");
 			}
 		}
-		*/
 	}
 	
 	void StepInState::EnterState(ECM::Entity* t_owner)
 	{
 		std::cout << "Stepping in.\n";
+		std::cout << m_SM->endPos.x;
 		m_canStepIn = true;
 		m_canCheck = false;
 		m_direction = (m_SM->endPos.x - m_SM->GetInitiator()->GetPosition().x > 0) ? 1 : -1;
@@ -114,23 +100,28 @@ namespace HJ { namespace States {
 
 	void ExecSkillState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
+		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
+
+		std::cout << "Targets size: " << heuristicEval->GetTargets().size() << std::endl;
+		// IF BOSS DOESN"T HAVE A BASIC ATTACK
 		if (m_SM->GetUsedSkill() == nullptr)
 		{
 			m_isExecuting = false;
 			m_SM->ChangeState("StepBack");
 		}
+
 		// Create the damage
-		Damage damage(m_SM->GetInitiator(), m_SM->GetUsedSkill(), m_SM->random.NextInt(100, 0));
+		Damage damage(heuristicEval->GetInitiator(), heuristicEval->GetUsedSkill(), m_SM->random.NextInt(100, 0));
 		// Send the damage
 		if (m_isExecuting)
 		{
 			m_isExecuting = false;
-			for (auto hero : m_SM->GetTargets())
+			for (auto hero : heuristicEval->GetTargets())
 			{
 				damage.SendDamage(hero);
 			}
 			
-			if(m_SM->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
+			if(heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
 				m_SM->ChangeState("StepBack");
 			else
 				m_SM->ChangeState("Finish");

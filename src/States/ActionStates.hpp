@@ -2,6 +2,7 @@
 #define FROST_GOLEM_AI_STATES
 
 #include "../Components/StateMachineComponent.hpp"
+#include "../Components/HeuristicEvalComponent.hpp"
 #include "../Entities/Hero.hpp"
 #include "../Damage.hpp"
 
@@ -28,7 +29,7 @@ namespace HJ { namespace States {
 
 		private:
 			bool m_canChoose;
-			bool m_chooseFinished;
+			// HeuristicEvalComponent* m_heuristicEval;
 	};
 
 	class StepInState final : public State
