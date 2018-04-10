@@ -24,7 +24,6 @@ namespace HJ { namespace Components {
 	{
 		m_states.insert_or_assign(t_name, t_state);
 		m_states.at(t_name)->InitSM(this);
-		// m_states.at(t_name)->InitHEval(m_parent->GetComponent<HeuristicEvalComponent>("C_HeuristicEval"));
 	}
 
 	std::shared_ptr<State> StateMachineComponent::GetState(const std::string& t_name) const

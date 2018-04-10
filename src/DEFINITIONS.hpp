@@ -19,7 +19,7 @@
 #define HERO_ROGUE_SPRITE "res/img/characters/heroes/hero.png"
 
 // Enemies global definitions
-#define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/enemy.png"
+#define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/Frost-Demon.png"
 #define EVIL_FROST_MAGE_SPRITE "res/img/characters/evils/enemy.png"
 
 // Initial/Splash state global definitions

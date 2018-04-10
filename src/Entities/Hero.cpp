@@ -10,17 +10,14 @@ namespace HJ { namespace Entities {
 		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{ }
 
-	Hero::Hero(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour) :
-		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bHeroSprite")),
-		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator")),
-		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus")),
-		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
+	void Hero::SetStats(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour, unsigned int t_dodgeChance)
 	{
 		m_name = t_name;
 		m_type = t_type;
 		m_health = m_maxHealth = t_health;
 		m_damage = t_damage;
 		m_armour = t_armour;
+		m_dodgeChance = t_dodgeChance;
 	}
 
 	Hero* Hero::GetType()
@@ -48,15 +45,23 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		//check if hero dies
-		if (m_health <= 0) 
+		if (IsDead())
 		{
-			m_spriteComp->GetSprite().setColor(sf::Color(
-				m_spriteComp->GetSprite().getColor().r - t_deltaTime,
-				m_spriteComp->GetSprite().getColor().g - t_deltaTime,
-				m_spriteComp->GetSprite().getColor().b - t_deltaTime,
-				m_spriteComp->GetSprite().getColor().a - t_deltaTime
-			));
+			for (auto effect : m_statusComp->GetEffects())
+			{
+				if (effect.second->active)
+					effect.second->active = false;
+			}
 
+			if (m_spriteComp->GetSprite().getColor().a > 0)
+			{
+				m_spriteComp->GetSprite().setColor(sf::Color(
+					m_spriteComp->GetSprite().getColor().r - t_deltaTime,
+					m_spriteComp->GetSprite().getColor().g - t_deltaTime,
+					m_spriteComp->GetSprite().getColor().b - t_deltaTime,
+					m_spriteComp->GetSprite().getColor().a - t_deltaTime
+				));
+			}
 			// reset to zero
 			m_health = 0;
 		}

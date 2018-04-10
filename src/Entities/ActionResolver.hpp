@@ -18,6 +18,10 @@ namespace HJ { namespace Entities {
 
 			ActionResolver* GetType() override final { return this; }
 
+			virtual void Init() override;
+			virtual void Update(float t_deltaTime) override;
+			virtual void Render() override;
+
 			inline bool const IsActive() const { return m_active; }
 			// (re-)initialize the StateMachineComponent data on action resolve call
 			void Activate(std::shared_ptr<Entities::Hero> t_initiator, std::vector<std::shared_ptr<Entities::Hero>> t_targets,
@@ -28,6 +32,7 @@ namespace HJ { namespace Entities {
 			void Stop();
 
 			std::shared_ptr<Components::StateMachineComponent> GetSMComponent();
+			std::shared_ptr<Components::HeuristicEvalComponent> GetHEvalComponent();
 	};
 
 } }

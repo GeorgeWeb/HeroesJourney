@@ -23,23 +23,20 @@ namespace HJ { namespace Components {
 	{
 		if (m_usedSkill != nullptr)
 		{
-			
 			HeroEval();
 			m_complete = true;
 		}
 		else
 		{
-			std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA NULL PTR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!\n";
 			if (m_initiator->className() == "Frost Golem")
 			{
-
 				FrostGolemEval();
 				m_complete = true;
 			}
 
 			if (m_initiator->className() == "Troll")
 			{
-				FrostGolemEval();
+				TrollEval();
 				m_complete = true;
 			}
 
@@ -77,11 +74,11 @@ namespace HJ { namespace Components {
 	{	
 		if (m_usedSkill->target == SKILL_TARGET::SELF)
 		{
-			std::cout << "Evaluating my-self!" << std::endl;
-			std::cout << m_targets.size() << std::endl;
+			// std::cout << "Evaluating my-self!" << std::endl;
+			// std::cout << m_targets.size() << std::endl;
 			m_targets.clear();
 			m_targets.push_back(m_initiator);
-			std::cout << m_targets.size() << std::endl;
+			// std::cout << m_targets.size() << std::endl;
 		}
 		else if (m_usedSkill->target == SKILL_TARGET::ALLY)
 		{
@@ -113,9 +110,8 @@ namespace HJ { namespace Components {
 
 	void HeuristicEvalComponent::FrostGolemEval()
 	{
-		
 		// RAGE
-		if (m_initiator->GetHealth() < m_initiator->GetMaxHealth() / 2)
+		if (m_initiator->GetHealth() < m_initiator->GetMaxHealth() / 2 && !m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active)
 		{
 			m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active = true;
 			m_usedSkill = m_initiator->GetSkillComponent()->FindSkill(SKILL_NAME::RAGE);
@@ -172,7 +168,11 @@ namespace HJ { namespace Components {
 				}
 			}
 		}
-		std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA NULL PTR AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!\n";
+		// std::cout << "Heuristic worked!\n";
+	}
+
+	void HeuristicEvalComponent::TrollEval()
+	{
 	}
 
 } }

@@ -64,8 +64,6 @@ namespace HJ { namespace Entities {
 		public:
 			// default constructor (used for GOOD types)
 			Hero();
-			// default constructor (used for EVIL types)
-			Hero(const std::string& t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour);
 			virtual ~Hero() = default;
 
 			virtual Hero* GetType() override;
@@ -73,6 +71,8 @@ namespace HJ { namespace Entities {
 			inline bool IsDead() { return m_health <= 0; }
 
 			void ReceiveDamage(unsigned int t_damage);
+
+			void SetStats(const std::string& t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour, unsigned int t_dodgeChance);
 
 			virtual void Init() override;
 			virtual void Update(float t_deltaTime) override;

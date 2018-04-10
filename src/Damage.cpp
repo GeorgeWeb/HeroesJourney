@@ -24,7 +24,7 @@ namespace HJ
 
 			if (t_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::DAMAGE_AURA)->active)
 			{
-				m_damage *= 25;
+				m_damage *= 125;
 				m_damage /= 100;
 			}
 

@@ -44,8 +44,9 @@ namespace HJ { namespace Components {
 			// generic hero evaluation
 			void HeroEval();
 
-			// boss evaluations
+			// boss types evaluation functions
 			void FrostGolemEval();
+			void TrollEval();
 	};
 
 } }

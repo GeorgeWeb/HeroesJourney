@@ -20,35 +20,32 @@ namespace HJ { namespace States {
 	{
 		std::cout << m_SM->GetInitiator()->className() << std::endl;
 		m_canChoose = true;
-		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
-		heuristicEval->SetComplete(false);
+		m_heuristicEval->SetComplete(false);
 		std::cout << "Choosing target.\n";
 	}
 
 	void ChooseTargetState::Execute(ECM::Entity* t_owner, float t_deltaTime)
-	{
-		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
-	
-		if (m_canChoose && !heuristicEval->IsComplete())
+	{	
+		if (m_canChoose && !m_heuristicEval->IsComplete())
 		{
 			std::cout << "Evaluating\n";
 			m_canChoose = false;
-			heuristicEval->Initialize(m_SM->GetInitiator(), m_SM->GetTargets(), m_SM->GetUsedSkill());
-			heuristicEval->Evaluate();
+			m_heuristicEval->Initialize(m_SM->GetInitiator(), m_SM->GetTargets(), m_SM->GetUsedSkill());
+			m_heuristicEval->Evaluate();
 
 		}
-		else if (!m_canChoose && heuristicEval->IsComplete())
+		else if (!m_canChoose && m_heuristicEval->IsComplete())
 		{
-			if (heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
+			if (m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
 			{
 				m_canChoose = false;
-				heuristicEval->SetComplete(false);
+				m_heuristicEval->SetComplete(false);
 				m_SM->ChangeState("StepIn");
 			}
 			else
 			{
 				m_canChoose = false;
-				heuristicEval->SetComplete(false);
+				m_heuristicEval->SetComplete(false);
 				m_SM->ChangeState("ExecSkill");
 			}
 		}
@@ -68,13 +65,13 @@ namespace HJ { namespace States {
 		if (m_canStepIn && !m_canCheck)
 		{
 			m_SM->GetInitiator()->Move(sf::Vector2f(m_SM->speed * m_direction, 0.0f));
-			// t_owner->SetPosition(sf::Vector2f(m_SM->speed * m_direction, 0.0f));
 			m_canStepIn = false;
 			m_canCheck = true;
 		}
 		else if (!m_canStepIn && m_canCheck)
 		{
-			if (m_SM->GetInitiator()->GetPosition().x * m_direction <= m_SM->endPos.x * m_direction)
+			float predictedPos = m_SM->GetInitiator()->GetPosition().x + (m_SM->speed * m_direction);
+			if (predictedPos * m_direction <= m_SM->endPos.x * m_direction)
 			{
 				m_canStepIn = true;
 				m_canCheck = false;
@@ -100,28 +97,28 @@ namespace HJ { namespace States {
 
 	void ExecSkillState::Execute(ECM::Entity* t_owner, float t_deltaTime)
 	{
-		auto heuristicEval = t_owner->GetComponent<HeuristicEvalComponent>("C_HeuristicEval");
-
-		std::cout << "Targets size: " << heuristicEval->GetTargets().size() << std::endl;
+		std::cout << "Targets size: " << m_heuristicEval->GetTargets().size() << std::endl;
 		// IF BOSS DOESN"T HAVE A BASIC ATTACK
-		if (m_SM->GetUsedSkill() == nullptr)
+		if (m_heuristicEval->GetUsedSkill() == nullptr)
 		{
 			m_isExecuting = false;
 			m_SM->ChangeState("StepBack");
 		}
 
 		// Create the damage
-		Damage damage(heuristicEval->GetInitiator(), heuristicEval->GetUsedSkill(), m_SM->random.NextInt(100, 0));
+		Damage damage(m_heuristicEval->GetInitiator(), m_heuristicEval->GetUsedSkill(), m_SM->random.NextInt(100, 1));
 		// Send the damage
 		if (m_isExecuting)
 		{
 			m_isExecuting = false;
-			for (auto hero : heuristicEval->GetTargets())
+			for (auto& hero : m_heuristicEval->GetTargets())
 			{
-				damage.SendDamage(hero);
+				auto dmg = damage.SendDamage(hero);
+				std::cout << "\n\nDealt: " << dmg << "to " << hero->className() << "!! WOOHOOO !!\n";
+				std::cout << "HP left: " << hero->GetHealth() << "to " << "!! EEMI TOLKOZ !!\n\n";
 			}
 			
-			if(heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
+			if(m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
 				m_SM->ChangeState("StepBack");
 			else
 				m_SM->ChangeState("Finish");
@@ -147,7 +144,8 @@ namespace HJ { namespace States {
 		}
 		else if (!m_canStepBack && m_canCheck)
 		{
-			if (m_SM->GetInitiator()->GetPosition().x * m_direction <= m_SM->endPos.x * m_direction)
+			float predictedPos = m_SM->GetInitiator()->GetPosition().x + (m_SM->speed * m_direction);
+			if (predictedPos * m_direction <= m_SM->endPos.x * m_direction)
 			{
 				m_canStepBack = true;
 				m_canCheck = false;

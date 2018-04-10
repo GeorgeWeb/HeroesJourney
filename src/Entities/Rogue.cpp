@@ -13,7 +13,7 @@ namespace HJ { namespace Entities {
 		m_armour = 10;
 		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 40;
+		m_dodgeChance = 25;
 		m_critChance = 40;
 	}
 

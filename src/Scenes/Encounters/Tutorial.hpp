@@ -30,7 +30,6 @@ namespace HJ { namespace Encounters {
 		void UpdateUI();
 		void NextTurn();
 		void ClearStatusEffects(std::shared_ptr<Entities::Hero> t_hero);
-
 		// evaluates the batte and checks for win/lose condition;
 		void Evaluate();
 

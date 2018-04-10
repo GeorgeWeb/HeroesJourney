@@ -1,6 +1,6 @@
 #include "StatusComponent.hpp"
 
-#include <Engine/System/Renderer.hpp>
+#include <Engine/Engine.hpp>
 
 namespace HJ { namespace Components {
 
@@ -95,7 +95,7 @@ namespace HJ { namespace Components {
 			{
 				auto effect = effectPair.second;
 				if (effect->active)
-					System::Renderer::Queue(&(effect->sprite));
+					Engine2D::GetWin().draw(effect->sprite);
 			}
 		}
 	}
