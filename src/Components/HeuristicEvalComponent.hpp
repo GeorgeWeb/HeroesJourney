@@ -3,6 +3,8 @@
 
 #include "../Entities/Hero.hpp"
 #include "../SkillSet.hpp"
+#include "../Damage.hpp"
+#include "Engine/Utils/Random.hpp"
 
 namespace HJ { namespace Components {
 
@@ -36,7 +38,7 @@ namespace HJ { namespace Components {
 			std::shared_ptr<Entities::Hero> m_initiator;
 			std::vector<std::shared_ptr<Entities::Hero>> m_targets;
 			std::shared_ptr<Skill> m_usedSkill;
-
+			Utils::Random m_random;
 			bool m_complete;
 
 		// Evaluation helper
@@ -47,6 +49,9 @@ namespace HJ { namespace Components {
 			// boss types evaluation functions
 			void FrostGolemEval();
 			void TrollEval();
+			void CyclopsEval();
+			// generic rage behaviour
+			void RageBehaviour();
 	};
 
 } }

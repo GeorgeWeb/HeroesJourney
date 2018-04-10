@@ -11,7 +11,8 @@ namespace HJ
 	{
 		SELF =  0,
 		ALLY =  1,
-		ENEMY = 2
+		ENEMY = 2,
+		ENEMY_TEAM = 3
 	};
 
 	enum class DAMAGE_BASE : int
@@ -251,7 +252,7 @@ namespace HJ
 			{
 				dmgBase = DAMAGE_BASE::MELEE;
 				dmgType = DAMAGE_TYPE::BASIC;
-				target = SKILL_TARGET::ENEMY;
+				target = SKILL_TARGET::ENEMY_TEAM;
 				damageMod = 100;
 				applicableEffects = { EFFECT_TYPE::STUN, EFFECT_TYPE::ENRAGE };
 			}

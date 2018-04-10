@@ -67,10 +67,10 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
 		m_activeBoss->Init();
 		// Add skills
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<BasicAttack>());
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<BasicAttack>());
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
+		// m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<Stomp>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<Smack>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<RageRawr>()); ///> rage skill!
 		
 		// Baseline positions
 		// good

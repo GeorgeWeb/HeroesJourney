@@ -10,9 +10,10 @@ namespace HJ
 	class Damage final
 	{
 		public:
+			Damage() = default;
 			Damage(std::shared_ptr<Entities::Hero> t_initiator, std::shared_ptr<Skill> t_skill, int t_hitChance);
 			
-			std::string SendDamage(std::shared_ptr<Entities::Hero> t_receiver);
+			std::string SendDamage(std::shared_ptr<Entities::Hero> t_receiver, bool effects = true);
 
 		private:
 			void ApplyEffects(std::shared_ptr<Entities::Hero> t_receiver);

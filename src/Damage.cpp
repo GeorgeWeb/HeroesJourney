@@ -36,13 +36,17 @@ namespace HJ
 		}
 	}
 
-	std::string Damage::SendDamage(std::shared_ptr<Entities::Hero> t_receiver)
+	std::string Damage::SendDamage(std::shared_ptr<Entities::Hero> t_receiver, bool effects)
 	{
-		if (m_target != SKILL_TARGET::ENEMY)
+		if (m_target != SKILL_TARGET::ENEMY && m_target != SKILL_TARGET::ENEMY_TEAM)
 		{
 			// Apply effect
-			ApplyEffects(t_receiver);
-			return "BUFFED!";
+			if (effects)
+			{
+				ApplyEffects(t_receiver);
+				return "BUFFED!";
+			}
+			return "Nothing!";
 		}
 
 		unsigned int dodge = t_receiver->GetDodge();
@@ -92,7 +96,7 @@ namespace HJ
 		}
 
 		t_receiver->ReceiveDamage(m_damage);
-		ApplyEffects(t_receiver);
+		if(effects)ApplyEffects(t_receiver);
 
 		return std::to_string(m_damage);
 	}

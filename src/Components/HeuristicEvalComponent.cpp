@@ -42,7 +42,7 @@ namespace HJ { namespace Components {
 
 			if (m_initiator->className() == "Cyclop")
 			{
-				FrostGolemEval();
+				CyclopsEval();
 				m_complete = true;
 			}
 
@@ -74,11 +74,8 @@ namespace HJ { namespace Components {
 	{	
 		if (m_usedSkill->target == SKILL_TARGET::SELF)
 		{
-			// std::cout << "Evaluating my-self!" << std::endl;
-			// std::cout << m_targets.size() << std::endl;
 			m_targets.clear();
 			m_targets.push_back(m_initiator);
-			// std::cout << m_targets.size() << std::endl;
 		}
 		else if (m_usedSkill->target == SKILL_TARGET::ALLY)
 		{
@@ -111,28 +108,9 @@ namespace HJ { namespace Components {
 	void HeuristicEvalComponent::FrostGolemEval()
 	{
 		// RAGE
-		if (m_initiator->GetHealth() < m_initiator->GetMaxHealth() / 2 && !m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active)
+		if (m_initiator->GetHealth() <= m_initiator->GetMaxHealth() / 2 && !m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active)
 		{
-			m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active = true;
-			m_usedSkill = m_initiator->GetSkillComponent()->FindSkill(SKILL_NAME::RAGE);
-			if (m_usedSkill->target == SKILL_TARGET::ENEMY)
-			{
-				std::vector<std::shared_ptr<Entities::Hero>> originalTargets;
-				originalTargets.insert(originalTargets.begin(), m_targets.begin(), m_targets.end());
-				m_targets.clear();
-				for (std::shared_ptr<Entities::Hero> target : originalTargets)
-				{
-					if (target->heroType() != m_initiator->heroType() && !target->IsDead() && m_targets.empty())
-					{
-						m_targets.push_back(target);
-					}
-				}
-			}
-			else
-			{
-				m_targets.clear();
-				m_targets.push_back(m_initiator);
-			}
+			RageBehaviour();
 		}
 		else if (m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::MULTIPLE_TARGET)->active)
 		{
@@ -153,7 +131,6 @@ namespace HJ { namespace Components {
 		}
 		else
 		{
-		
 			m_usedSkill = m_initiator->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2);
 			
 			// get single enemy target
@@ -168,11 +145,133 @@ namespace HJ { namespace Components {
 				}
 			}
 		}
-		// std::cout << "Heuristic worked!\n";
 	}
 
 	void HeuristicEvalComponent::TrollEval()
 	{
+		// TODO
+	}
+
+	void HeuristicEvalComponent::CyclopsEval()
+	{
+		// TODO
+	}
+
+	void HeuristicEvalComponent::RageBehaviour()
+	{
+		m_initiator->GetStatusComponent()->GetEffect(EFFECT_TYPE::ENRAGE)->active = true;
+		m_usedSkill = m_initiator->GetSkillComponent()->FindSkill(SKILL_NAME::RAGE);
+
+		// CAN ADD ALL AS WELL
+
+		if (m_usedSkill->target == SKILL_TARGET::SELF)
+		{
+			m_targets.clear();
+			m_targets.push_back(m_initiator);
+		}
+		else if (m_usedSkill->target == SKILL_TARGET::ALLY)
+		{
+			std::vector<std::shared_ptr<Entities::Hero>> originalTargets;
+			originalTargets.insert(originalTargets.begin(), m_targets.begin(), m_targets.end());
+			m_targets.clear();
+		
+			for (auto target : originalTargets)
+			{
+				if (target->heroType() == m_initiator->heroType())
+					m_targets.push_back(target);
+			}
+		}
+		else if (m_usedSkill->target == SKILL_TARGET::ENEMY_TEAM)
+		{
+			std::vector<std::shared_ptr<Entities::Hero>> originalTargets;
+			originalTargets.insert(originalTargets.begin(), m_targets.begin(), m_targets.end());
+			m_targets.clear();
+		
+			for (auto target : originalTargets)
+			{
+				if (target->heroType() != m_initiator->heroType())
+					m_targets.push_back(target);
+			}
+		}
+		else // ENEMY
+		{
+			std::map<std::string, Entities::Hero> enemies;
+			for (auto target : m_targets)
+			{
+				if (target->heroType() != m_initiator->heroType())
+				{
+					Entities::Hero enemy = *target;
+					enemies[enemy.className()] = enemy;
+				}
+			}
+
+			// copy initiator
+			Entities::Hero initiatorCopy = *m_initiator;
+			auto initiatorCopyPtr = std::make_shared<Entities::Hero>(); *initiatorCopyPtr = initiatorCopy;
+			int healthDiff = 0;
+			Entities::Hero highestDealer;
+
+			Damage damage;
+			for (auto enemy : enemies)
+			{
+				// SKILL 1
+				// reset initiator copy
+				*initiatorCopyPtr = *m_initiator;
+				// copy enemy
+				auto enemyCopyPtr = std::make_shared<Entities::Hero>(); *enemyCopyPtr = enemy.second;
+				// create test damage from enemy copy
+				damage = Damage(enemyCopyPtr, enemyCopyPtr->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1), m_random.NextInt(100, 1));
+				// send damage to initiator copy
+				damage.SendDamage(initiatorCopyPtr,false);
+				// set highest dealer
+				if (m_initiator->GetHealth() - initiatorCopyPtr->GetHealth() > healthDiff)
+				{
+					healthDiff = m_initiator->GetHealth() - initiatorCopyPtr->GetHealth();
+					highestDealer = enemy.second;
+				}
+					
+				// SKILL 2
+				// reset initiator copy
+				*initiatorCopyPtr = *m_initiator;
+				// skill 2 simulate
+				// create test damage from enemy copy
+				damage = Damage(enemyCopyPtr, enemyCopyPtr->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2), m_random.NextInt(100, 1));
+				// send damage to initiator copy
+				damage.SendDamage(initiatorCopyPtr,false);
+				// set highest dealer
+				if (m_initiator->GetHealth() - initiatorCopyPtr->GetHealth() > healthDiff)
+				{
+					healthDiff = m_initiator->GetHealth() - initiatorCopyPtr->GetHealth();
+					highestDealer = enemy.second;
+				}
+					
+				// BASIC ATTACK
+				// reset initiator copy
+				*initiatorCopyPtr = *m_initiator;
+				// basic attack simulate
+				// create test damage from enemy copy
+				damage = Damage(enemyCopyPtr, enemyCopyPtr->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK), m_random.NextInt(100, 1));
+				// send damage to initiator copy
+				damage.SendDamage(initiatorCopyPtr,false);
+				// set highest dealer
+				if (m_initiator->GetHealth() - initiatorCopyPtr->GetHealth() > healthDiff)
+				{
+					healthDiff = m_initiator->GetHealth() - initiatorCopyPtr->GetHealth();
+					highestDealer = enemy.second;
+				}
+			}
+
+			// copy targets
+			std::vector<std::shared_ptr<Entities::Hero>> originalTargets;
+			originalTargets.insert(originalTargets.begin(), m_targets.begin(), m_targets.end());
+			m_targets.clear();
+			// push the highest dealer in the targets vector
+			for (auto target : originalTargets)
+			{
+				if (target->className() == highestDealer.className())
+					m_targets.push_back(target);
+			}
+		}
 	}
 
 } }
