@@ -31,9 +31,6 @@ namespace HJ { namespace Entities {
 		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<RavenBow>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<RainOfArrows>());
-		// TODO: CHANGE
-		m_skillComp->AddSkill(SKILL_NAME::SKILL_INCREASE_HP, std::make_shared<BasicDefence>());
-		m_skillComp->AddSkill(SKILL_NAME::SKILL_INCREASE_MP, std::make_shared<BasicDefence>());
 	}
 
 	void Rogue::Update(float t_deltaTime)

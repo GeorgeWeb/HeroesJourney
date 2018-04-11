@@ -43,6 +43,14 @@ namespace HJ { namespace Entities {
 	void Hero::Update(float t_deltaTime)
 	{
 		Entity::Update(t_deltaTime);
+		
+		// reset negative health/mana to zero
+		if (m_health < 0) m_health = 0;
+		if (m_mana < 0) m_mana = 0;
+
+		// reset excessive health/mana to max
+		if (m_health > m_maxHealth) m_health = m_maxHealth;
+		if (m_mana > m_maxMana) m_mana = m_maxMana;
 
 		//check if hero dies
 		if (IsDead())
@@ -62,8 +70,6 @@ namespace HJ { namespace Entities {
 					m_spriteComp->GetSprite().getColor().a - t_deltaTime
 				));
 			}
-			// reset to zero
-			m_health = 0;
 		}
 	}
 
