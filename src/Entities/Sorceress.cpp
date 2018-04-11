@@ -31,9 +31,6 @@ namespace HJ {namespace Entities {
 		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<FireBolt>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<FrostAura>());
-		// TODO: CHANGE
-		m_skillComp->AddSkill(SKILL_NAME::SKILL_INCREASE_HP, std::make_shared<BasicDefence>());
-		m_skillComp->AddSkill(SKILL_NAME::SKILL_INCREASE_MP, std::make_shared<BasicDefence>());
 	}
 
 	void Sorceress::Update(float t_deltaTime)
