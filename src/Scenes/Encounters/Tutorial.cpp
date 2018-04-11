@@ -102,7 +102,7 @@ namespace HJ { namespace Encounters {
 		atkBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		atkBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_BasicAttackBtn"));
 		//properties
-		atkBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.67f));
+		atkBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f, SCREEN_HEIGHT * 0.67f));
 		atkBtn->Init();
 		//clickable component
 		m_allUIcomps.push_back(atkBtnSprite.get());
@@ -113,7 +113,7 @@ namespace HJ { namespace Encounters {
 		defBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		defBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DefendBtn"));
 		//properties
-		defBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.16f, SCREEN_HEIGHT * 0.67f));
+		defBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.525f, SCREEN_HEIGHT * 0.67f));
 		defBtn->SetVisible(true);
 		defBtn->SetAlive(true);
 		defBtn->Init();
@@ -127,7 +127,7 @@ namespace HJ { namespace Encounters {
 		hpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseHPBtn"));
 		hpBtnSprite->GetSprite().scale(3.0f, 3.0f);
 		//properties
-		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.81f));
+		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.625f, SCREEN_HEIGHT * 0.67f));
 		hpBtn->Init();
 		m_allUIcomps.push_back(hpBtnSprite.get());
 
@@ -139,7 +139,7 @@ namespace HJ { namespace Encounters {
 		mpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseMPBtn"));
 		mpBtnSprite->GetSprite().scale(3.0f, 3.0f);
 		//properties
-		mpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.16f, SCREEN_HEIGHT * 0.81f));
+		mpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.625f, SCREEN_HEIGHT * 0.81f));
 		mpBtn->Init();
 		m_allUIcomps.push_back(mpBtnSprite.get());
 
@@ -154,11 +154,11 @@ namespace HJ { namespace Encounters {
 		skill1BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		skill1BtnText->GetText().setStyle(sf::Text::Bold);
 		skill1BtnText->GetText().setString("Skill 1");
-		skill1BtnText->GetText().setCharacterSize(18);
+		skill1BtnText->GetText().setCharacterSize(16);
 		//properties
-		skill1Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.335f, SCREEN_HEIGHT * 0.669f));
+		skill1Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f, SCREEN_HEIGHT * 0.81f));
 		skill1Btn->Init();
-		skill1BtnText->GetText().setPosition(skill1Btn->GetPosition().x, skill1Btn->GetPosition().y + 220.0f);
+		skill1BtnText->GetText().setPosition(skill1Btn->GetPosition().x, skill1Btn->GetPosition().y + 115.0f);
 		m_allUIcomps.push_back(skill1BtnSprite.get());
 
 		// Skill2 button
@@ -172,11 +172,11 @@ namespace HJ { namespace Encounters {
 		skill2BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		skill2BtnText->GetText().setStyle(sf::Text::Bold);
 		skill2BtnText->GetText().setString("Skill 2");
-		skill2BtnText->GetText().setCharacterSize(18);
+		skill2BtnText->GetText().setCharacterSize(16);
 		// general properties
-		skill2Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.567f, SCREEN_HEIGHT * 0.669f));
+		skill2Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.525f, SCREEN_HEIGHT * 0.81f));
 		skill2Btn->Init();
-		skill2BtnText->GetText().setPosition(skill2Btn->GetPosition().x, skill2Btn->GetPosition().y + 220.0f);
+		skill2BtnText->GetText().setPosition(skill2Btn->GetPosition().x, skill2Btn->GetPosition().y + 115.0f);
 		m_allUIcomps.push_back(skill2BtnSprite.get());
 
 		// Pause button
@@ -215,25 +215,60 @@ namespace HJ { namespace Encounters {
 		concedeBtnText->GetText().scale(0.75f, 0.75f);
 		concedeBtnText->GetText().setCharacterSize(24);
 		// general properties
-		concedeBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.81f));
+		concedeBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.845f));
 		concedeBtn->Init();
 		// center text
 		concedeBtnText->GetText().setPosition(concedeBtn->GetPosition().x + concedeBtnText->GetText().getGlobalBounds().width * 0.375f,
 			concedeBtn->GetPosition().y + concedeBtnText->GetText().getGlobalBounds().height * 1.125f);
 		m_allUIcomps.push_back(concedeBtnSprite.get());
 
-		// Text indicating who is on turn
-		auto turnTxt = std::make_shared<Entity>();
-		auto turnTxtComp = turnTxt->AddComponent<TextComponent>("C_CharacterTurnText");
-		turnTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
-		turnTxtComp->GetText().setCharacterSize(14);
-		turnTxtComp->GetText().setString(m_charOnTurn);
-		turnTxtComp->GetText().setColor(sf::Color::White);
-		turnTxtComp->GetText().setStyle(sf::Text::Bold);
-		turnTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.965f));
-		turnTxt->SetAlive(true);
-		turnTxt->SetVisible(true);
-		turnTxt->Init();
+		std::string& heroHP = std::string("");
+		std::string& heroMP = std::string("");
+		// Text indicating knight stats
+		auto knightStatsTxt = std::make_shared<Entity>();
+		auto knightStatsTxtComp = knightStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
+		knightStatsTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		knightStatsTxtComp->GetText().setCharacterSize(14);
+		heroHP = std::to_string(m_data->gm.hKnight->GetHealth()) + "/" + std::to_string(m_data->gm.hKnight->GetMaxHealth()) + "HP";
+		heroMP = std::to_string(m_data->gm.hKnight->GetMana()) + "/" + std::to_string(m_data->gm.hKnight->GetMaxMana()) + "MP";
+		knightStatsTxtComp->GetText().setString(m_data->gm.hKnight->className() + ": " + heroHP + " | " + heroMP);
+		knightStatsTxtComp->GetText().setColor(sf::Color::White);
+		knightStatsTxtComp->GetText().setStyle(sf::Text::Bold);
+		knightStatsTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.7f));
+		knightStatsTxt->SetAlive(true);
+		knightStatsTxt->SetVisible(true);
+		knightStatsTxt->Init();
+
+		// Text indicating bard stats
+		auto bardStatsTxt = std::make_shared<Entity>();
+		auto bardStatsTxtComp = bardStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
+		bardStatsTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		bardStatsTxtComp->GetText().setCharacterSize(14);
+		heroHP = std::to_string(m_data->gm.hBard->GetHealth()) + "/" + std::to_string(m_data->gm.hBard->GetMaxHealth()) + "HP";
+		heroMP = std::to_string(m_data->gm.hBard->GetMana()) + "/" + std::to_string(m_data->gm.hBard->GetMaxMana()) + "MP";
+		bardStatsTxtComp->GetText().setString(m_data->gm.hBard->className() + ": " + heroHP + " | " + heroMP);
+		bardStatsTxtComp->GetText().setColor(sf::Color::White);
+		bardStatsTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.75f));
+		bardStatsTxt->SetAlive(true);
+		bardStatsTxt->SetVisible(true);
+		bardStatsTxt->Init();
+
+		// Text indicating BOSS stats
+		auto bossStatsTxt = std::make_shared<Entity>();
+		auto bossStatsTxtComp = bossStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
+		bossStatsTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		bossStatsTxtComp->GetText().setCharacterSize(18);
+		heroHP = std::to_string(m_activeBoss->GetHealth()) + "/" + std::to_string(m_activeBoss->GetMaxHealth()) + "HP";
+		bardStatsTxtComp->GetText().setString(m_activeBoss->className() + ": " + heroHP);
+		bardStatsTxtComp->GetText().setColor(sf::Color::Red);
+		bossStatsTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.95f));
+		bossStatsTxt->SetAlive(true);
+		bossStatsTxt->SetVisible(true);
+		bossStatsTxt->Init();
+
+		m_statistics.push_back(bossStatsTxt);
+		m_statistics.push_back(bardStatsTxt);
+		m_statistics.push_back(knightStatsTxt);
 		
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
@@ -249,7 +284,9 @@ namespace HJ { namespace Encounters {
 		AddEntity("E_aSkill2Btn", skill2Btn);
 		AddEntity("E_aPauseBtn", pauseBtn);
 		AddEntity("E_aConcedeBtn", concedeBtn);
-		AddEntity("E_aTurnTxt", turnTxt);
+		AddEntity("E_aKnightStatsTxt", knightStatsTxt);
+		AddEntity("E_aBardStatsTxt", bardStatsTxt);
+		AddEntity("E_aBossStatsTxt", bossStatsTxt);
 	
 		// list of the UI button sprites to be disabled/enabled on turn change
 		std::vector<SpriteComponent*> battleBtnSprites { atkBtnSprite.get(), defBtnSprite.get(), hpBtnSprite.get(), mpBtnSprite.get(), skill1BtnSprite.get(), skill2BtnSprite.get() };
@@ -436,7 +473,7 @@ namespace HJ { namespace Encounters {
 				{
 					std::cout << "Hero used HP potion!\n";
 					m_data->gm.healthPot--;
-					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 50);
+					m_heroOnTurn->SetHealth(m_heroOnTurn->GetHealth() + 50);
 
 					EnableUIButtons();
 					hpBtnBtn->SetResolve(false);
@@ -446,7 +483,7 @@ namespace HJ { namespace Encounters {
 				{
 					std::cout << "Hero used MP potion!\n";
 					m_data->gm.manaPot--;
-					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 50);
+					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 30);
 
 					EnableUIButtons();
 					mpBtnBtn->SetResolve(false);
@@ -611,29 +648,51 @@ namespace HJ { namespace Encounters {
 
 	void TutorialScene::UpdateUI()
 	{
-		// update the who is on turn text indicator for [EVIL]
-		if (m_turn == BATTLE_TURN::EVIL)
+		// update battle UI indicators
+		for (int i = 0; i < m_statistics.size(); i++)
 		{
-			m_charOnTurn = m_activeBoss->className();
-			std::string evilHP = std::to_string(m_activeBoss->GetHealth()) + "/" + std::to_string(m_activeBoss->GetMaxHealth()) + "HP";
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + evilHP);
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::Red);
+			if (m_heroesUnion[i]->heroType() == HERO_TYPE::GOOD)
+			{
+				std::string heroHP = std::to_string(m_heroesUnion[i]->GetHealth()) + "/" + std::to_string(m_heroesUnion[i]->GetMaxHealth()) + "HP";
+				std::string heroMP = std::to_string(m_heroesUnion[i]->GetMana()) + "/" + std::to_string(m_heroesUnion[i]->GetMaxMana()) + "MP";
+				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setString(m_heroesUnion[i]->className() + ": " + heroHP + " | " + heroMP);
+				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setColor(sf::Color::White);
+				// DEAD HERO TEXT STYLE
+				if (m_heroesUnion[i]->IsDead())
+				{
+					std::cout << "Opt 1\n";
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(14);
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setColor(sf::Color(200, 200, 200, 155));
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Regular);
+				}
+				// HERO ON TURN TEXT STYLE
+				else if (m_heroesUnion[i] == m_heroOnTurn && !m_heroesUnion[i]->IsDead())
+				{
+					std::cout << "Opt 2\n";
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(16);
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Bold);
+				}
+				// HERO WAITING FOR TURN TEXT STYLE
+				else if (m_heroesUnion[i] != m_heroOnTurn && !m_heroesUnion[i]->IsDead())
+				{
+					std::cout << "Opt 3\n";
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(14);
+					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Regular);
+				}
+			}
+			else if (m_heroesUnion[i]->heroType() == HERO_TYPE::EVIL)
+			{
+				std::string heroHP = std::to_string(m_heroesUnion[i]->GetHealth()) + "/" + std::to_string(m_heroesUnion[i]->GetMaxHealth()) + "HP";
+				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setString(m_heroesUnion[i]->className() + ": " + heroHP);
+				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setColor(sf::Color::Red);
+				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Bold);
+			}
 		}
-		// update the who is on turn text indicator & battle UI sprite textures for [HERO]
-		if (m_turn == BATTLE_TURN::HERO)
-		{
-			// update text indicator
-			m_charOnTurn = m_heroOnTurn->className();
-			std::string heroHP = std::to_string(m_heroOnTurn->GetHealth()) + "/" + std::to_string(m_heroOnTurn->GetMaxHealth()) + "HP";
-			std::string heroMP = std::to_string(m_heroOnTurn->GetMana()) + "/" + std::to_string(m_heroOnTurn->GetMaxMana()) + "MP";
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setString(m_charOnTurn + ": " + heroHP + " | " + heroMP);
-			m_data->ents.Find<Entity>("E_aTurnTxt")->GetComponent<TextComponent>("C_CharacterTurnText")->GetText().setColor(sf::Color::White);
-			// update battle UI sprite textures
-			sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
-			sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
-			m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
-			m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
-		}
+		// update battle UI sprite textures
+		sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
+		sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
+		m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
+		m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent()->GetSprite().setTexture(basicDefTex);
 	}
 
 	void TutorialScene::DisableUIButtons()

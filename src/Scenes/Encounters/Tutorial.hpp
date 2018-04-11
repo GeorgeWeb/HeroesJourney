@@ -36,11 +36,12 @@ namespace HJ { namespace Encounters {
 	private:
 		GameDataRef m_data;
 
-		
 		// ...
 		std::vector<std::shared_ptr<Entities::Hero>> m_heroesUnion;
 		std::shared_ptr<Entities::Hero> m_activeBoss;
 		std::shared_ptr<Entities::ActionResolver> m_actionResolver;
+
+		std::vector<std::shared_ptr<ECM::Entity>> m_statistics;
 
 		// ...
 		BATTLE_TURN m_turn;
