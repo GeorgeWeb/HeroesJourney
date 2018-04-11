@@ -126,9 +126,20 @@ namespace HJ { namespace Encounters {
 		hpBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		hpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseHPBtn"));
 		hpBtnSprite->GetSprite().scale(3.0f, 3.0f);
+		// text
+		auto hpBtnText = hpBtn->GetTextComponent();
+		hpBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		hpBtnText->GetText().setStyle(sf::Text::Bold);
+		hpBtnText->GetText().setString("x" + std::to_string(m_data->gm.healthPot));
+		hpBtnText->GetText().setCharacterSize(16);
 		//properties
-		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.625f, SCREEN_HEIGHT * 0.67f));
+		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.65f, SCREEN_HEIGHT * 0.67f));
 		hpBtn->Init();
+		// hpBtnText->GetText().setPosition(hpBtn->GetPosition().x, hpBtn->GetPosition().y);
+		hpBtnText->GetText().setPosition(
+			hpBtn->GetPosition().x + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.00001f) - hpBtnText->GetText().getGlobalBounds().width * 0.00001f,
+			hpBtn->GetPosition().y + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.85f) - hpBtnText->GetText().getGlobalBounds().height * 0.85f
+		);
 		m_allUIcomps.push_back(hpBtnSprite.get());
 
 		// MP button
@@ -138,9 +149,19 @@ namespace HJ { namespace Encounters {
 		mpBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		mpBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UseMPBtn"));
 		mpBtnSprite->GetSprite().scale(3.0f, 3.0f);
+		// text
+		auto mpBtnText = mpBtn->GetTextComponent();
+		mpBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		mpBtnText->GetText().setStyle(sf::Text::Bold);
+		mpBtnText->GetText().setString("x" + std::to_string(m_data->gm.manaPot));
+		mpBtnText->GetText().setCharacterSize(16);
 		//properties
-		mpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.625f, SCREEN_HEIGHT * 0.81f));
+		mpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.65f, SCREEN_HEIGHT * 0.81f));
 		mpBtn->Init();
+		mpBtnText->GetText().setPosition(
+			mpBtn->GetPosition().x + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.0001f) - mpBtnText->GetText().getGlobalBounds().width * 0.0001f,
+			mpBtn->GetPosition().y + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.85f) - mpBtnText->GetText().getGlobalBounds().height * 0.85f
+		);
 		m_allUIcomps.push_back(mpBtnSprite.get());
 
 		// Skill1 button
@@ -420,156 +441,148 @@ namespace HJ { namespace Encounters {
 		static SM::StateRef outcomeState;
 		switch (m_status)
 		{
+			// Lose condition logic
 			case BATTLE_STATUS::LOST:
-				// Load lose screen
-				outcomeState = std::make_unique<MapScene>(MapScene(m_data));
-				m_data->machine.AddState(std::move(outcomeState), true);
-				break;
+			// Load lose screen
+			outcomeState = std::make_unique<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(std::move(outcomeState), true);
+			break;
+			
+			// Win condition logic
 			case BATTLE_STATUS::WON:
-				m_data->gm.gold += 100;
-				m_data->gm.healthPot += 1;
-				m_data->gm.manaPot += 1;
-				// Load win screen
-				outcomeState = std::make_unique<MapScene>(MapScene(m_data));
-				m_data->machine.AddState(std::move(outcomeState), true);
-				break;
+			m_data->gm.gold += 100;
+			m_data->gm.healthPot += 1;
+			m_data->gm.manaPot += 1;
+			// Load win screen
+			outcomeState = std::make_unique<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(std::move(outcomeState), true);
+			break;
+			
+			// Playing condition logic (default case)
 			default:
 			case BATTLE_STATUS::PLAYING:
-			break;
-		}
-		
-		// check if any disabled UI elemnts can be reset to enabled (after AI turn)
-		UpdateUI();
-		// update hero on turn
-		switch (m_turn)
-		{
-		case BATTLE_TURN::HERO:
-			// std::cout << "IT IS HERO\n";
-			if (m_actionResolver->GetSMComponent()->CurrentState() == "Idle" && !m_actionResolver->IsActive())
+			// Update battle UI elements
+			UpdateUI();
+			// update turns
+			switch (m_turn)
 			{
-				// std::cout << "ACTION RESOLVER NOT ACTIVE\n";
-				if (atkBtnBtn->CanResolve())
+			case BATTLE_TURN::HERO:
+				if (m_actionResolver->GetSMComponent()->CurrentState() == "Idle" && !m_actionResolver->IsActive())
 				{
-					std::cout << "Hero attacking!\n";
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
-					std::cout << "IN STATE: " << m_actionResolver->GetSMComponent()->CurrentState() << std::endl;
+					// resolve attack button click
+					if (atkBtnBtn->CanResolve())
+					{
+						m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
+						m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK));
 
-					DisableUIButtons();
-					atkBtnBtn->SetResolve(false);
+						DisableUIButtons();
+						atkBtnBtn->SetResolve(false);
+					}
+					// resolve defend button click
+					if (defBtnBtn->CanResolve())
+					{
+						m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
+						m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE));
+
+						DisableUIButtons();
+						defBtnBtn->SetResolve(false);
+					}
+					// resolve use HP button click
+					if (hpBtnBtn->CanResolve())
+					{
+						m_data->gm.healthPot--;
+						m_heroOnTurn->SetHealth(m_heroOnTurn->GetHealth() + 50);
+
+						EnableUIButtons();
+						hpBtnBtn->SetResolve(false);
+					}
+					// resolve use MP button click
+					if (mpBtnBtn->CanResolve())
+					{
+						m_data->gm.manaPot--;
+						m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 30);
+
+						EnableUIButtons();
+						mpBtnBtn->SetResolve(false);
+					}
+					// resolve skill1 button click
+					if (skill1BtnBtn->CanResolve())
+					{
+						m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed);
+
+						m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
+						m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1));
+
+						DisableUIButtons();
+						skill1BtnBtn->SetResolve(false);
+					}
+					// resolve skill2 button click
+					if (skill2BtnBtn->CanResolve())
+					{
+						std::cout << "Hero using Skill 2!\n";
+
+						m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed);
+
+						m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
+						m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2));
+
+						DisableUIButtons();
+						skill2BtnBtn->SetResolve(false);
+					}
 				}
-				// resolve defend button click
-				if (defBtnBtn->CanResolve())
+				else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
+					&& !isEvalComplete)
 				{
-					std::cout << "Hero defending!\n";
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE));
-
-					DisableUIButtons();
-					defBtnBtn->SetResolve(false);
+					// clear status effects
+					ClearStatusEffects(m_heroOnTurn);
+					// std::cout << "SM Finished!\n";
+					m_turn = BATTLE_TURN::BETWEEN;
+					// evaluate the round & check win condition
+					Evaluate();
 				}
-				// resolve use HP button click
-				if (hpBtnBtn->CanResolve())
+				break;
+			case BATTLE_TURN::EVIL:
+				// disable player's battle UI buttons
+				DisableUIButtons();
+				// reset heroes original texture color
+				for (auto hero : m_activeHeroes)
 				{
-					std::cout << "Hero used HP potion!\n";
-					m_data->gm.healthPot--;
-					m_heroOnTurn->SetHealth(m_heroOnTurn->GetHealth() + 50);
-
-					EnableUIButtons();
-					hpBtnBtn->SetResolve(false);
+					if (!hero->IsDead())
+						hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 				}
-				// resolve use MP button click
-				if (mpBtnBtn->CanResolve())
+				// start state machine
+				if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Idle")
 				{
-					std::cout << "Hero used MP potion!\n";
-					m_data->gm.manaPot--;
-					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 30);
-
-					EnableUIButtons();
-					mpBtnBtn->SetResolve(false);
+					m_actionResolver->GetSMComponent()->endPos = goodBaseLine;
+					m_actionResolver->Activate(m_activeBoss, m_heroesUnion);
 				}
-				// resolve skill1 button click
-				if (skill1BtnBtn->CanResolve())
+				else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
+					&& !isEvalComplete)
 				{
-					std::cout << "Hero using Skill 1!\n";
-
-					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed);
-					
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1));
-
-					DisableUIButtons();
-					skill1BtnBtn->SetResolve(false);
+					// clear status effects
+					ClearStatusEffects(m_activeBoss);
+					m_hTurnCount = m_activeHeroes.size();
+					m_turn = BATTLE_TURN::BETWEEN;
+					// evaluate the round & check win condition
+					Evaluate();
 				}
-				// resolve skill2 button click
-				if (skill2BtnBtn->CanResolve())
+				break;
+			default:
+			case BATTLE_TURN::BETWEEN:
+				if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
+					&& isEvalComplete)
 				{
-					std::cout << "Hero using Skill 2!\n";
-
-					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed);
-					
-					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
-					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2));
-
-					DisableUIButtons();
-					skill2BtnBtn->SetResolve(false);
+					isEvalComplete = false;
+					// stop the action resolver after evaluation is complete
+					m_actionResolver->Stop();
+					// change turn
+					if (m_status == BATTLE_STATUS::PLAYING)
+						NextTurn();
 				}
-			}
-			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
-				&& !isEvalComplete)
-			{
-				// clear status effects
-				ClearStatusEffects(m_heroOnTurn);
-				// std::cout << "SM Finished!\n";
-				m_turn = BATTLE_TURN::BETWEEN;
-				// evaluate the round & check win condition
-				Evaluate();
-			}
-			break;
-		case BATTLE_TURN::EVIL:
-			// disable player's battle UI buttons
-			DisableUIButtons();
-			// reset heroes original texture color
-			for (auto hero : m_activeHeroes)
-			{
-				if (!hero->IsDead()) 
-					hero->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-			}
-			// start state machine
-			if (!m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Idle")
-			{
-				m_actionResolver->GetSMComponent()->endPos = goodBaseLine;
-				m_actionResolver->Activate(m_activeBoss, m_heroesUnion);
-			}
-			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
-				&& !isEvalComplete)
-			{
-				// clear status effects
-				ClearStatusEffects(m_activeBoss);
-				m_hTurnCount = m_activeHeroes.size();
-				m_turn = BATTLE_TURN::BETWEEN;
-				// evaluate the round & check win condition
-				Evaluate();
-			}
-			break;
-		default:
-		case BATTLE_TURN::BETWEEN:
-			// std::cout << "IT IS BETWEEN\n";
-			if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
-				&& isEvalComplete)
-			{
-				// std::cout << "EVAL Finished!\n";
-				isEvalComplete = false;
-				// stop the action resolver after evaluation is complete
-				m_actionResolver->Stop();
-				// change turn
-				// std::cout << "NEXT TURN!\n";
-				if (m_status == BATTLE_STATUS::PLAYING)
-					NextTurn();
+				break;
 			}
 			break;
-		}
-		
+		}		
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
@@ -580,12 +593,12 @@ namespace HJ { namespace Encounters {
 
 	void TutorialScene::NextTurn()
 	{
-		std::cout << "I AM IN\n";
 		m_turn = BATTLE_TURN::BETWEEN;
 		DisableUIButtons();
 		do
 		{
 			std::cout << m_hTurnCount << std::endl;
+			// Hero turn decider
 			if (m_hTurnCount == 0)
 			{
 				if (!m_activeBoss || m_activeBoss->IsDead())
@@ -609,6 +622,7 @@ namespace HJ { namespace Encounters {
 					m_turn = BATTLE_TURN::EVIL;
 				}
 			}
+			// Boss turn decider
 			else
 			{
 				// select the hero to be on turn
@@ -648,7 +662,21 @@ namespace HJ { namespace Encounters {
 
 	void TutorialScene::UpdateUI()
 	{
-		// update battle UI indicators
+		// update potions text
+		// Health
+		m_data->ents.Find<Button>("E_aHPBtn")->GetTextComponent()->GetText().setString("x" + std::to_string(m_data->gm.healthPot));
+		if (m_data->gm.healthPot == 0)
+			m_data->ents.Find<Button>("E_aHPBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 0, 0, 155));
+		else
+			m_data->ents.Find<Button>("E_aHPBtn")->GetTextComponent()->GetText().setColor(sf::Color::White);
+		// Mana
+		m_data->ents.Find<Button>("E_aMPBtn")->GetTextComponent()->GetText().setString("x" + std::to_string(m_data->gm.manaPot));
+		if (m_data->gm.manaPot == 0)
+			m_data->ents.Find<Button>("E_aMPBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 0, 0, 155));
+		else
+			m_data->ents.Find<Button>("E_aMPBtn")->GetTextComponent()->GetText().setColor(sf::Color::White);
+
+		// update statistics indicators
 		for (int i = 0; i < m_statistics.size(); i++)
 		{
 			if (m_heroesUnion[i]->heroType() == HERO_TYPE::GOOD)
@@ -660,7 +688,6 @@ namespace HJ { namespace Encounters {
 				// DEAD HERO TEXT STYLE
 				if (m_heroesUnion[i]->IsDead())
 				{
-					std::cout << "Opt 1\n";
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(14);
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setColor(sf::Color(200, 200, 200, 155));
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Regular);
@@ -668,14 +695,12 @@ namespace HJ { namespace Encounters {
 				// HERO ON TURN TEXT STYLE
 				else if (m_heroesUnion[i] == m_heroOnTurn && !m_heroesUnion[i]->IsDead())
 				{
-					std::cout << "Opt 2\n";
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(16);
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Bold);
 				}
 				// HERO WAITING FOR TURN TEXT STYLE
 				else if (m_heroesUnion[i] != m_heroOnTurn && !m_heroesUnion[i]->IsDead())
 				{
-					std::cout << "Opt 3\n";
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setCharacterSize(14);
 					m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Regular);
 				}
@@ -688,7 +713,8 @@ namespace HJ { namespace Encounters {
 				m_statistics[i]->GetComponent<TextComponent>("C_HeroStatsText")->GetText().setStyle(sf::Text::Bold);
 			}
 		}
-		// update battle UI sprite textures
+
+		// update skills sprite textures
 		sf::Texture& basicAttTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_ATTACK)->textureRefName);
 		sf::Texture& basicDefTex = m_data->assets.GetTexture(m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::BASIC_DEFENCE)->textureRefName);
 		m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent()->GetSprite().setTexture(basicAttTex);
@@ -757,9 +783,7 @@ namespace HJ { namespace Encounters {
 					m_heroDeathCount++;
 			}
 		}
-		std::cout << "\nHero death count: " << m_heroDeathCount << std::endl;
-		std::cout << "Heroes vec size: " << m_activeHeroes.size() << std::endl;
-		std::cout << "Boss death count: " << m_evilDeathCount << std::endl << std::endl;
+
 		// set gameplay status
 		m_status = (m_evilDeathCount == 1) ? BATTLE_STATUS::WON : (m_heroDeathCount == m_activeHeroes.size()) ? BATTLE_STATUS::LOST : BATTLE_STATUS::PLAYING;
 		// Evaluation completed
