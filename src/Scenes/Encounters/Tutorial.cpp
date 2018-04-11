@@ -400,7 +400,7 @@ namespace HJ { namespace Encounters {
 			case BATTLE_STATUS::PLAYING:
 			break;
 		}
-	
+		
 		// check if any disabled UI elemnts can be reset to enabled (after AI turn)
 		UpdateUI();
 		// update hero on turn
@@ -434,53 +434,48 @@ namespace HJ { namespace Encounters {
 				// resolve use HP button click
 				if (hpBtnBtn->CanResolve())
 				{
-					m_data->gm.healthPot--;
 					std::cout << "Hero used HP potion!\n";
-					
+					m_data->gm.healthPot--;
+					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 50);
+
 					EnableUIButtons();
 					hpBtnBtn->SetResolve(false);
 				}
 				// resolve use MP button click
 				if (mpBtnBtn->CanResolve())
 				{
-					m_data->gm.manaPot--;
 					std::cout << "Hero used MP potion!\n";
-					
+					m_data->gm.manaPot--;
+					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 50);
+
 					EnableUIButtons();
 					mpBtnBtn->SetResolve(false);
 				}
 				// resolve skill1 button click
-				if (skill1BtnBtn->CanResolve() 
-					&& m_heroOnTurn->GetMana() >= m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed)
+				if (skill1BtnBtn->CanResolve())
 				{
 					std::cout << "Hero using Skill 1!\n";
+
+					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed);
+					
 					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1));
 
 					DisableUIButtons();
 					skill1BtnBtn->SetResolve(false);
 				}
-				else
-				{
-					skill1BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
-					skill1BtnSprite->SetClickable(false);
-				}
-
 				// resolve skill2 button click
-				if (skill2BtnBtn->CanResolve()
-					&& m_heroOnTurn->GetMana() >= m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed)
+				if (skill2BtnBtn->CanResolve())
 				{
 					std::cout << "Hero using Skill 2!\n";
+
+					m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed);
+					
 					m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
 					m_actionResolver->Activate(m_heroOnTurn, m_heroesUnion, m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2));
 
 					DisableUIButtons();
 					skill2BtnBtn->SetResolve(false);
-				}
-				else
-				{
-					skill2BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
-					skill2BtnSprite->SetClickable(false);
 				}
 			}
 			else if (m_actionResolver->IsActive() && m_actionResolver->GetSMComponent()->CurrentState() == "Finish"
@@ -654,6 +649,9 @@ namespace HJ { namespace Encounters {
 	{
 		auto hpBtnSprite = m_data->ents.Find<Button>("E_aHPBtn")->GetSpriteComponent();
 		auto mpBtnSprite = m_data->ents.Find<Button>("E_aMPBtn")->GetSpriteComponent();
+		auto skill1BtnSprite = m_data->ents.Find<Button>("E_aSkill1Btn")->GetSpriteComponent();
+		auto skill2BtnSprite = m_data->ents.Find<Button>("E_aSkill2Btn")->GetSpriteComponent();
+		// update button sprites needing enabling
 		for (auto uiBtn : m_battleUIButtons)
 		{
 			uiBtn->GetSprite().setColor(sf::Color(255, 255, 255, 255));
@@ -669,6 +667,18 @@ namespace HJ { namespace Encounters {
 			{
 				mpBtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
 				mpBtnSprite->SetClickable(false);
+			}
+			// update check for skill 1 button
+			if (uiBtn == skill1BtnSprite.get() && m_heroOnTurn->GetMana() < m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_1)->manaNeed)
+			{
+				skill1BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+				skill1BtnSprite->SetClickable(false);
+			}
+			// update check for skill 2 button
+			if (uiBtn == skill2BtnSprite.get() && m_heroOnTurn->GetMana() < m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed)
+			{
+				skill2BtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+				skill2BtnSprite->SetClickable(false);
 			}
 		}
 	}
