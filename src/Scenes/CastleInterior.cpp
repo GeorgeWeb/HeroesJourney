@@ -13,9 +13,7 @@ namespace HJ {
 
 	CastleScene::CastleScene(GameDataRef t_data) : 
 		m_data(t_data)
-	{ 
-		InitSceneView();
-	}
+	{ }
 
 	void CastleScene::Init()
 	{

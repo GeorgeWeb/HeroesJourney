@@ -16,9 +16,7 @@ namespace HJ {
 
 	PauseMenuScene::PauseMenuScene(GameDataRef t_data)
 		: m_data(t_data)
-	{ 
-		InitSceneView();
-	}
+	{ }
 
 	void PauseMenuScene::Init()
 	{

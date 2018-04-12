@@ -6,19 +6,25 @@ namespace HJ {
 	using namespace Engine;
 	using namespace System;
 
-	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, bool t_vsync) : 
+	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, SCREEN_MODE t_mode, bool t_vsync) : 
 		m_data(std::make_shared<GameData>()),
 		m_deltaTime(1.0f / 60.0f)
 	{	
+		sf::RenderWindow win;
 		// create the game window
-		sf::RenderWindow win(sf::VideoMode(t_width, t_height), t_title, 
-			sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
+		if (t_mode == SCREEN_MODE::FULLSCREEN)
+			win.create(sf::VideoMode(t_width, t_height), t_title, 1 << 3);
+		else if (t_mode == SCREEN_MODE::WINDOWED)
+			win.create(sf::VideoMode(t_width, t_height), t_title, sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
 		
-		/* Change cursor (abstract in Engine2D class) */
+		// set ratios
+		int newH = (1366 * t_height) / t_width;
+		int displace = (newH - 768) / (-2);
+		win.setView(sf::View(sf::FloatRect(0, displace, 1366, newH)));
 
+		// -- Change cursor --
 		// Hide default cursor
 		win.setMouseCursorVisible(false);
-
 		// Load new cursor's texture and add to cursor sprite
 		m_data->assets.LoadTexture("Tex_Cursor", CUSTOM_CURSOR_IMG);
 		Engine2D::cursor.setTexture(m_data->assets.GetTexture("Tex_Cursor"));
@@ -27,7 +33,7 @@ namespace HJ {
 		Engine2D::title = t_title;
 		// set game window
 		Engine2D::window = &win;
-		// set window v-sync default(OFF)
+		// set window v-sync default(On)
 		Engine2D::SetVsync(t_vsync);
 
 		// init. renderer
@@ -38,11 +44,10 @@ namespace HJ {
 
 		// init. game settigns
 		m_data->settings.SetResolution(t_width, t_height);
-		m_data->settings.SetScreenMode(SCREEN_MODE::WINDOWED);
-		m_data->settings.SetVSyncOn(t_vsync);
+		m_data->settings.SetScreenMode(t_mode);
 
 		// save the initialized game settings
-		m_data->settings.Save();
+		// m_data->settings.Save();
 
 		// add first state/screen
 		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));

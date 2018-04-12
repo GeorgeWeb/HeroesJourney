@@ -18,9 +18,7 @@ namespace HJ {
 
 	MainMenuScene::MainMenuScene(GameDataRef t_data)
 		: m_data(t_data)
-	{ 
-		InitSceneView();
-	}
+	{ }
 
 	void MainMenuScene::Init()
 	{

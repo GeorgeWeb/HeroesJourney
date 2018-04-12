@@ -22,9 +22,7 @@ namespace HJ {
 	MeetSorcScene::MeetSorcScene(GameDataRef t_data) :
 		m_data(t_data),
 		m_turn(DIALOG_TURN::LEFT)
-	{
-		InitSceneView();
-	}
+	{ }
 
 	void MeetSorcScene::Init()
 	{

@@ -15,9 +15,7 @@ namespace HJ { namespace Encounters {
 
 	TutorialScene::TutorialScene(GameDataRef t_data)
 		: m_data(t_data)
-	{
-		InitSceneView();
-	}
+	{ }
 
 	void TutorialScene::Init()
 	{

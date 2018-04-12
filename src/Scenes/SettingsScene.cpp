@@ -15,9 +15,7 @@ namespace HJ {
 
 	SettingsScene::SettingsScene(GameDataRef t_data)
 		: m_data(t_data)
-	{ 
-		InitSceneView();
-	}
+	{ }
 
 	void SettingsScene::Init()
 	{
@@ -40,7 +38,6 @@ namespace HJ {
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
 		bg->SetPosition(sf::Vector2f(((SCREEN_WIDTH - bgSprite->GetSprite().getGlobalBounds().width) * 0.5f), 0.0f));
-		//bgSprite->GetSprite().scale(newScaleX, newScaleY);
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
@@ -94,7 +91,7 @@ namespace HJ {
 		auto uncheck4Btn = uncheck4->AddComponent<ClickableComponent>("C_UnCheck4Btn");
 		uncheck4Btn->SetSpriteTarget(uncheck4Sprite.get());
 
-		//Unchecked buttons 5- VSYNC
+		//Unchecked buttons 5- Fullscreen
 		auto uncheck5 = std::make_shared<Entity>();
 		auto uncheck5Sprite = uncheck5->AddComponent<SpriteComponent>("C_UnCheck5Sprite");
 		//define sprite
@@ -107,120 +104,18 @@ namespace HJ {
 		auto uncheck5Btn = uncheck5->AddComponent<ClickableComponent>("C_UnCheck5Btn");
 		uncheck5Btn->SetSpriteTarget(uncheck5Sprite.get());
 
-		//TextBox1
-		auto textBox1 = std::make_shared<Entity>();
-		auto textBoxSprite1 = textBox1->AddComponent<SpriteComponent>("C_TextBoxSprite1");
-		//define sprite
-		textBoxSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
-		textBoxSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.36));
-		textBox1->SetVisible(true);
-		textBox1->SetAlive(true);
-
-		//Up Button Master
-		auto upBtn1 = std::make_shared<Entity>();
-		auto upBtnSprite1 = upBtn1->AddComponent<SpriteComponent>("C_upBtnSprite1");
-		//define sprite
-		upBtnSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
-		upBtnSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36f));
-		upBtn1->SetVisible(true);
-		upBtn1->SetAlive(true);
-		auto upBtn1Click = upBtn1->AddComponent<ClickableComponent>("C_upBtnBtn1");
-		upBtn1Click->SetSpriteTarget(upBtnSprite1.get());
-
-		//Down Button Master
-		auto downBtn1 = std::make_shared<Entity>();
-		auto downBtnSprite1 = downBtn1->AddComponent<SpriteComponent>("C_downBtnSprite1");
-		//define sprite
-		downBtnSprite1->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
-		downBtnSprite1->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn1->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f + textBoxSprite1->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.36f));
-		downBtn1->SetVisible(true);
-		downBtn1->SetAlive(true);
-		auto downBtn1Click = downBtn1->AddComponent<ClickableComponent>("C_downBtnBtn1");
-		downBtn1Click->SetSpriteTarget(downBtnSprite1.get());
-
-		//TextBox2
-		auto textBox2 = std::make_shared<Entity>();
-		auto textBoxSprite2 = textBox2->AddComponent<SpriteComponent>("C_TextBoxSprite2");
-		//define sprite
-		textBoxSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
-		textBoxSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
-		textBox2->SetVisible(true);
-		textBox2->SetAlive(true);
-
-		//Up Button 
-		auto upBtn2 = std::make_shared<Entity>();
-		auto upBtnSprite2 = upBtn2->AddComponent<SpriteComponent>("C_upBtnSprite2");
-		//define sprite
-		upBtnSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
-		upBtnSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
-		upBtn2->SetVisible(true);
-		upBtn2->SetAlive(true);
-		auto upBtn2Click = upBtn2->AddComponent<ClickableComponent>("C_upBtnBtn2");
-		upBtn2Click->SetSpriteTarget(upBtnSprite2.get());
-
-		//Down Button Master
-		auto downBtn2 = std::make_shared<Entity>();
-		auto downBtnSprite2 = downBtn2->AddComponent<SpriteComponent>("C_downBtnSprite2");
-		//define sprite
-		downBtnSprite2->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
-		downBtnSprite2->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05 + textBoxSprite2->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.44f));
-		downBtn2->SetVisible(true);
-		downBtn2->SetAlive(true);
-		auto downBtn2Click = downBtn2->AddComponent<ClickableComponent>("C_downBtnBtn2");
-		downBtn2Click->SetSpriteTarget(downBtnSprite2.get());
-
-		//TextBox3
-		auto textBox3 = std::make_shared<Entity>();
-		auto textBoxSprite3 = textBox3->AddComponent<SpriteComponent>("C_TextBoxSprite1");
-		//define sprite
-		textBoxSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TextBox"));
-		textBoxSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		textBox3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
-		textBox3->SetVisible(true);
-		textBox3->SetAlive(true);
-
-		//Up Button Master
-		auto upBtn3 = std::make_shared<Entity>();
-		auto upBtnSprite3 = upBtn3->AddComponent<SpriteComponent>("C_upBtnSprite3");
-		//define sprite
-		upBtnSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UpBtn"));
-		upBtnSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f - upBtnSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
-		upBtn3->SetVisible(true);
-		upBtn3->SetAlive(true);
-		auto upBtn3Click = upBtn3->AddComponent<ClickableComponent>("C_upBtnBtn3");
-		upBtn3Click->SetSpriteTarget(upBtnSprite3.get());
-
-		//Down Button Master
-		auto downBtn3 = std::make_shared<Entity>();
-		auto downBtnSprite3 = downBtn3->AddComponent<SpriteComponent>("C_downBtnSprite3");
-		//define sprite
-		downBtnSprite3->GetSprite().setTexture(m_data->assets.GetTexture("Tex_DownBtn"));
-		downBtnSprite3->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		downBtn3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.05f + textBoxSprite3->GetSprite().getGlobalBounds().width, bgSprite->GetSprite().getGlobalBounds().height * 0.52f));
-		downBtn3->SetVisible(true);
-		downBtn3->SetAlive(true);
-		auto downBtn3Click = downBtn3->AddComponent<ClickableComponent>("C_downBtnBtn3");
-		downBtn3Click->SetSpriteTarget(downBtnSprite3.get());
-
 		//Save button
 		auto save = std::make_shared<Button>();
 		auto saveSprite = save->GetSpriteComponent();
 		//define sprite
 		saveSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		saveSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
+		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.2f, 
+			bgSprite->GetSprite().getGlobalBounds().height * 0.75f));
 		//text
 		auto saveText = save->GetTextComponent();
 		saveText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		saveText->GetText().setString("SAVE");
-		//qText->GetText().scale(0.75f, 0.75f);
 		saveText->GetText().setCharacterSize(24);
 		//properties
 		save->SetVisible(true);
@@ -236,12 +131,12 @@ namespace HJ {
 		//define sprite
 		backSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		backSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.2f, bgSprite->GetSprite().getGlobalBounds().height * 0.8f));
+		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.2f, 
+			bgSprite->GetSprite().getGlobalBounds().height * 0.75f));
 		//text
 		auto backText = back->GetTextComponent();
 		backText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		backText->GetText().setString("BACK");
-		//qText->GetText().scale(0.75f, 0.75f);
 		backText->GetText().setCharacterSize(24);
 		//properties
 		back->SetVisible(true);
@@ -251,22 +146,13 @@ namespace HJ {
 		backText->GetText().setPosition(back->GetPosition().x + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - backText->GetText().getGlobalBounds().width * 0.5,
 			back->GetPosition().y + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - backText->GetText().getGlobalBounds().height * 0.5);
 
-		//add to local ents map
+		// add to local ents map
 		AddEntity("E_zSetBG", bg);
 		AddEntity("E_Uncheck1", uncheck1);
 		AddEntity("E_Uncheck2", uncheck2);
 		AddEntity("E_Uncheck3", uncheck3);
 		AddEntity("E_Uncheck4", uncheck4);
 		AddEntity("E_Uncheck5", uncheck5);
-		AddEntity("E_TextBox1", textBox1);
-		AddEntity("E_UpBtn1", upBtn1);
-		AddEntity("E_DownBtn1", downBtn1);
-		AddEntity("E_TextBox2", textBox2);
-		AddEntity("E_UpBtn2", upBtn2);
-		AddEntity("E_DownBtn2", downBtn2);
-		AddEntity("E_TextBox3", textBox3);
-		AddEntity("E_UpBtn3", upBtn3);
-		AddEntity("E_DownBtn3", downBtn3);
 		AddEntity("E_Save", save);
 		AddEntity("E_Back", back);
 
@@ -339,56 +225,6 @@ namespace HJ {
 			if (uncheck5Comp->IsClickable() &&  m_data->input.isClicked(uncheck5Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck5Click->SetClicked(true);
-			}
-
-			//check if the first up button is clicked
-			auto up1Comp = m_data->ents.Find<Entity>("E_UpBtn1")->GetComponent<SpriteComponent>("C_upBtnSprite1");
-			auto up1Click = m_data->ents.Find<Entity>("E_UpBtn1")->GetComponent <ClickableComponent>("C_upBtnBtn1");
-			if (up1Comp->IsClickable() &&  m_data->input.isClicked(up1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				up1Click->SetClicked(true);
-			}
-
-			//check if the first down button is clicked
-			auto down1Comp = m_data->ents.Find<Entity>("E_DownBtn1")->GetComponent<SpriteComponent>("C_downBtnSprite1");
-			auto down1Click = m_data->ents.Find<Entity>("E_DownBtn1")->GetComponent <ClickableComponent>("C_downBtnBtn1");
-			if (down1Comp->IsClickable() &&  m_data->input.isClicked(down1Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				down1Click->SetClicked(true);
-			}
-
-			//check if the second up button is clicked
-			auto up2Comp = m_data->ents.Find<Entity>("E_UpBtn2")->GetComponent<SpriteComponent>("C_upBtnSprite2");
-			auto up2Click = m_data->ents.Find<Entity>("E_UpBtn2")->GetComponent <ClickableComponent>("C_upBtnBtn2");
-			if (up2Comp->IsClickable() &&  m_data->input.isClicked(up2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				up2Click->SetClicked(true);
-			}
-
-			//check if the second down button is clicked
-			auto down2Comp = m_data->ents.Find<Entity>("E_DownBtn2")->GetComponent<SpriteComponent>("C_downBtnSprite2");
-			auto down2Click = m_data->ents.Find<Entity>("E_DownBtn2")->GetComponent <ClickableComponent>("C_downBtnBtn2");
-			if (down2Comp->IsClickable() &&  m_data->input.isClicked(down2Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				down2Click->SetClicked(true);
-
-			}
-
-			//check if the thrid up button is clicked
-			auto up3Comp = m_data->ents.Find<Entity>("E_UpBtn3")->GetComponent<SpriteComponent>("C_upBtnSprite3");
-			auto up3Click = m_data->ents.Find<Entity>("E_UpBtn3")->GetComponent <ClickableComponent>("C_upBtnBtn3");
-			if (up3Comp->IsClickable() &&  m_data->input.isClicked(up3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				up3Click->SetClicked(true);
-			}
-
-			//check if the thrid down button is clicked
-			auto down3Comp = m_data->ents.Find<Entity>("E_DownBtn3")->GetComponent<SpriteComponent>("C_downBtnSprite3");
-			auto down3Click = m_data->ents.Find<Entity>("E_DownBtn3")->GetComponent <ClickableComponent>("C_downBtnBtn3");
-			if (down3Comp->IsClickable() &&  m_data->input.isClicked(down3Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
-			{
-				down3Click->SetClicked(true);
-
 			}
 		}
 	}
@@ -486,74 +322,19 @@ namespace HJ {
 		auto uncheck5Click = m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<ClickableComponent>("C_UnCheck5Btn");
 		if (uncheck5Click->CanResolve())
 		{
-			//LOGIC FOR Vsync HERE...
-			//m_data->settings.SetScreenMode(SCREEN_MODE::FULLSCREEN);
-			if (m_data->settings.HasVSync())
+			if (m_data->settings.GetScreenMode() == SCREEN_MODE::FULLSCREEN)
 			{
-				m_data->settings.SetVSyncOn(false);
+				m_data->settings.SetScreenMode(SCREEN_MODE::WINDOWED);
 				m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 			}
 			else
 			{
-				m_data->settings.SetVSyncOn(true);
+				m_data->settings.SetScreenMode(SCREEN_MODE::FULLSCREEN);
 				m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 			}
 			
-			
 			uncheck5Click->SetResolve(false);
 		}
-
-		//resolve first up button click
-		auto up1Click = m_data->ents.Find<Entity>("E_UpBtn1")->GetComponent <ClickableComponent>("C_upBtnBtn1");
-		if (up1Click->CanResolve())
-		{	
-			//VOLUME UP LOGIC HERE
-
-			up1Click->SetResolve(false);
-		}
-		//resolve first down button click
-		auto down1Click = m_data->ents.Find<Entity>("E_DownBtn1")->GetComponent <ClickableComponent>("C_downBtnBtn1");
-		if (down1Click->CanResolve())
-		{
-			//VOLUME DOWN LOGIC HERE
-
-			down1Click->SetResolve(false);
-		}
-
-		//resolve second up button click
-		auto up2Click = m_data->ents.Find<Entity>("E_UpBtn2")->GetComponent <ClickableComponent>("C_upBtnBtn2");
-		if (up2Click->CanResolve())
-		{
-			//VOLUME UP LOGIC HERE
-
-			up2Click->SetResolve(false);
-		}
-		//resolve second down button click
-		auto down2Click = m_data->ents.Find<Entity>("E_DownBtn2")->GetComponent <ClickableComponent>("C_downBtnBtn2");
-		if (down2Click->CanResolve())
-		{
-			//VOLUME DOWN LOGIC HERE
-
-			down2Click->SetResolve(false);
-		}
-
-		//resolve third up button click
-		auto up3Click = m_data->ents.Find<Entity>("E_UpBtn3")->GetComponent <ClickableComponent>("C_upBtnBtn3");
-		if (up3Click->CanResolve())
-		{
-			//VOLUME UP LOGIC HERE
-
-			up3Click->SetResolve(false);
-		}
-		//resolve third down button click
-		auto down3Click = m_data->ents.Find<Entity>("E_DownBtn3")->GetComponent <ClickableComponent>("C_downBtnBtn3");
-		if (down3Click->CanResolve())
-		{
-			//VOLUME DOWN LOGIC HERE
-
-			down3Click->SetResolve(false);
-		}
-
 	}
 
 	void SettingsScene::UpdateSettings()
@@ -593,7 +374,7 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_Uncheck3")->GetComponent<SpriteComponent>("C_UnCheck3Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		}
 
-		if (m_data->settings.HasVSync())
+		if (m_data->settings.GetScreenMode() == SCREEN_MODE::FULLSCREEN)
 		{
 			m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 		}

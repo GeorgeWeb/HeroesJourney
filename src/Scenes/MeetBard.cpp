@@ -22,9 +22,7 @@ namespace HJ {
 	MeetBardScene::MeetBardScene(GameDataRef t_data):
 		m_data(t_data),
 		m_turn(DIALOG_TURN::LEFT)
-	{
-		InitSceneView();
-	}
+	{ }
 
 	void MeetBardScene::Init()
 	{

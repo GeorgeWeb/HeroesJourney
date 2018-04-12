@@ -20,6 +20,6 @@ auto main(void) -> int
 
 std::shared_ptr<HJ::Game> LinkStart(const std::string& t_title)
 {
-	auto game = std::make_shared<HJ::Game>(SCREEN_WIDTH, SCREEN_HEIGHT, t_title);
+	auto game = std::make_shared<HJ::Game>(1366, 768, t_title, Engine::System::SCREEN_MODE::WINDOWED);
 	return std::move(game);
 }

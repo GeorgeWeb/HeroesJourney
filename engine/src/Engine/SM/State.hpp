@@ -23,7 +23,6 @@ namespace Engine { namespace SM {
 			void Pause();
 			void Resume();
 
-			void InitSceneView();
 			void ResizeSceneView(unsigned int t_width, unsigned int t_height);
 
 			sf::View GetSceneView();

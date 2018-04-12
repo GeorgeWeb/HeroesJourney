@@ -17,10 +17,9 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	SplashScene::SplashScene(GameDataRef t_data) : m_data(t_data)
-	{
-		InitSceneView();
-	}
+	SplashScene::SplashScene(GameDataRef t_data) 
+		: m_data(t_data) 
+	{ }
 
 	void SplashScene::Init()
 	{

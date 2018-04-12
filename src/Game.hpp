@@ -82,7 +82,8 @@ namespace HJ {
 			GameDataRef m_data;
 
 		public:
-			Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, bool t_vsync = true);
+			Game() = delete;
+			Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, System::SCREEN_MODE t_mode, bool t_vsync = true);
 			~Game() = default;
 		
 		private:

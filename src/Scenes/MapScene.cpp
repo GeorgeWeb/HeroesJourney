@@ -13,9 +13,7 @@ namespace HJ {
 
 	MapScene::MapScene(GameDataRef t_data) :
 		m_data(t_data)
-	{
-		InitSceneView();
-	}
+	{ }
 
 	void MapScene::Init()
 	{
