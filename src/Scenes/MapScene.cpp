@@ -74,7 +74,7 @@ namespace HJ {
 		forestSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
 		forest->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.35f,
-			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.5f));
+			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.4f));
 		forest->SetVisible(true);
 		forest->SetAlive(true);
 		//clickable component

@@ -120,8 +120,8 @@ namespace HJ { namespace Entities {
 
 		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 5.0f));
 
-		m_closeBtnSprite->GetSprite().scale(0.5f, 0.5f);
-		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.975f, t_position.y));
+		//m_closeBtnSprite->GetSprite().scale(0.5f, 0.5f);
+		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.990f, t_position.y*1.1f));
 
 		m_opponentSprite->GetSprite().scale(1.65f, 1.65f);
 		m_opponentSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 1.55f));

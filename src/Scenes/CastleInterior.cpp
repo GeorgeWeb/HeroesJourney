@@ -55,15 +55,15 @@ namespace HJ {
 		m_data->gm.infirmary->SetSprite(m_data->assets.GetTexture("Tex_Infirmary"));
 		// more properties
 		m_data->gm.infirmary->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.infirmary->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_data->gm.infirmary->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.7));
+			(SCREEN_HEIGHT - m_data->gm.infirmary->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.6f));
 		m_data->gm.infirmary->Init();
 
 		// blacksmith
 		// initialize data
 		m_data->gm.blacksmith->SetSprite(m_data->assets.GetTexture("Tex_Blacksmith"));
 		// more properties
-		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.15f,
-			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.35));
+		m_data->gm.blacksmith->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.17f,
+			(SCREEN_HEIGHT - m_data->gm.blacksmith->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3));
 		m_data->gm.blacksmith->Init();
 
 		// Library
@@ -71,7 +71,7 @@ namespace HJ {
 		m_data->gm.library->SetSprite(m_data->assets.GetTexture("Tex_Library"));
 		// more properties
 		m_data->gm.library->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.library->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - m_data->gm.library->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2));
+			(SCREEN_HEIGHT - m_data->gm.library->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.01f));
 		m_data->gm.library->Init();
 
 		// Inn
@@ -109,8 +109,8 @@ namespace HJ {
 		//define sprite
 		upgradeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		upgradeBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		upgradeBtn->SetPosition(sf::Vector2f(upgradeBtnSprite->GetSprite().getGlobalBounds().width + 40.0f, SCREEN_HEIGHT - upgradeBtnSprite->GetSprite().getGlobalBounds().height - 80.0f));
-		upgradeBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		upgradeBtn->SetPosition(sf::Vector2f(upgradeBtnSprite->GetSprite().getGlobalBounds().width , SCREEN_HEIGHT - upgradeBtnSprite->GetSprite().getGlobalBounds().height - 96.0f));
+		upgradeBtnSprite->GetSprite().scale(0.98f, 0.7f);
 		upgradeBtnSprite->SetClickable(true);
 		//text
 		auto upgradeBtnText = upgradeBtn->GetTextComponent();
@@ -134,7 +134,7 @@ namespace HJ {
 		//sprite define
 		healthSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Health"));
 		healthSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		health->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.3, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
+		health->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.5, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
 		//properties
 		health->SetVisible(true);
 		health->SetAlive(true);
@@ -145,7 +145,7 @@ namespace HJ {
 		// define
 		hpTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		hpTextFont->GetText().setCharacterSize(14);
-		textHp->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.3 + 30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3+15)));
+		textHp->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.5 + 30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3+15)));
 		// properties
 		textHp->showOnCreate = true;
 		textHp->SetVisible(true);
@@ -159,7 +159,7 @@ namespace HJ {
 		//sprite define
 		manaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mana"));
 		manaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		mana->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.23, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
+		mana->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.43, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
 		//properties
 		mana->SetVisible(true);
 		mana->SetAlive(true);
@@ -170,7 +170,7 @@ namespace HJ {
 		// define
 		mnTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		mnTextFont->GetText().setCharacterSize(14);
-		textMn->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.23+30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3 + 15)));
+		textMn->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.43+30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3 + 15)));
 		// properties
 		textMn->showOnCreate = true;
 		textMn->SetVisible(true);
@@ -184,7 +184,7 @@ namespace HJ {
 		//sprite define
 		coinSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Coin"));
 		coinSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		coin->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.16, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
+		coin->SetPosition(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.36, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3));
 		//properties
 		coin->SetVisible(true);
 		coin->SetAlive(true);
@@ -195,7 +195,7 @@ namespace HJ {
 		// define
 		coinTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		coinTextFont->GetText().setCharacterSize(14);
-		textCoin->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.16 +30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3 + 15)));
+		textCoin->SetPosition(sf::Vector2f(sf::Vector2f(SCREEN_WIDTH - SCREEN_WIDTH * 0.36 +30, SCREEN_HEIGHT - SCREEN_HEIGHT * 0.3 + 15)));
 		// properties
 		textCoin->showOnCreate = true;
 		textCoin->SetVisible(true);
@@ -253,7 +253,7 @@ namespace HJ {
 		// define
 		infTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont->GetText().setCharacterSize(14);		
-		text->SetPosition(sf::Vector2f(infTextFont->GetText().getGlobalBounds().width + 10.0f, SCREEN_HEIGHT - infTextFont->GetText().getGlobalBounds().height - 180.0f));
+		text->SetPosition(sf::Vector2f( SCREEN_WIDTH * 0.01f + infTextFont->GetText().getGlobalBounds().width , SCREEN_HEIGHT - infTextFont->GetText().getGlobalBounds().height - 170.0f));
 		// properties
 		text->showOnCreate = false;
 		text->SetVisible(false);
@@ -266,7 +266,7 @@ namespace HJ {
 		// define
 		infTextFont2->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont2->GetText().setCharacterSize(14);
-		text2->SetPosition(sf::Vector2f(infTextFont2->GetText().getGlobalBounds().width + 20.0f, SCREEN_HEIGHT - infTextFont2->GetText().getGlobalBounds().height - 120.0f));
+		text2->SetPosition(sf::Vector2f(infTextFont2->GetText().getGlobalBounds().width + 20.0f, SCREEN_HEIGHT - infTextFont2->GetText().getGlobalBounds().height - 100.0f));
 		// properties
 		text2->showOnCreate = false;
 		text2->SetVisible(false);
@@ -279,7 +279,7 @@ namespace HJ {
 		// define
 		infTextFont3->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont3->GetText().setCharacterSize(14);
-		text3->SetPosition(sf::Vector2f(infTextFont3->GetText().getGlobalBounds().width + 20.0f, SCREEN_HEIGHT - infTextFont3->GetText().getGlobalBounds().height -50.0f));
+		text3->SetPosition(sf::Vector2f(infTextFont3->GetText().getGlobalBounds().width + 10.0f, SCREEN_HEIGHT - infTextFont3->GetText().getGlobalBounds().height - 40.0f));
 		// properties
 		text3->showOnCreate = false;
 		text3->SetVisible(false);
@@ -292,7 +292,7 @@ namespace HJ {
 		// define
 		infTextFont4->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont4->GetText().setCharacterSize(14);
-		text4->SetPosition(sf::Vector2f(infTextFont4->GetText().getGlobalBounds().width+ 240.0f, SCREEN_HEIGHT - infTextFont4->GetText().getGlobalBounds().height - 50.0f));
+		text4->SetPosition(sf::Vector2f(infTextFont4->GetText().getGlobalBounds().width+ 240.0f, SCREEN_HEIGHT - infTextFont4->GetText().getGlobalBounds().height - 40.0f));
 		// properties
 		text4->showOnCreate = false;
 		text4->SetVisible(false);
@@ -305,7 +305,7 @@ namespace HJ {
 		// define
 		infTextFont5->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		infTextFont5->GetText().setCharacterSize(14);
-		text5->SetPosition(sf::Vector2f(upgradeBtnSprite->GetSprite().getGlobalBounds().width + 100.0f, SCREEN_HEIGHT - upgradeBtnSprite->GetSprite().getGlobalBounds().height ));
+		text5->SetPosition(sf::Vector2f(infTextFont5->GetText().getGlobalBounds().width + 240.0, SCREEN_HEIGHT - infTextFont5->GetText().getGlobalBounds().height - 100.0f));
 		// properties
 		text5->showOnCreate = false;
 		text5->SetVisible(false);
@@ -316,8 +316,8 @@ namespace HJ {
 		AddEntity("E_Blacksmith", m_data->gm.blacksmith);
 		AddEntity("E_Infirmary", m_data->gm.infirmary);
 		AddEntity("E_Library", m_data->gm.library);
-		AddEntity("E_Inn", m_data->gm.inn);
-		AddEntity("E_GeneralStore", m_data->gm.store);
+		AddEntity("E_xInn", m_data->gm.inn);
+		AddEntity("E_xGeneralStore", m_data->gm.store);
 		AddEntity("E_BackArrow", backArrow);
 		AddEntity("E_00Text", text);
 		AddEntity("E_00Text2", text2);
@@ -674,10 +674,10 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus HP: " + std::to_string(m_data->gm.infirmary->GetLevel() *10));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.infirmary->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level : " + std::to_string((m_data->gm.infirmary->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.infirmary->GetLevel()*10)+ " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("Cost: " + std::to_string(m_data->gm.infirmary->GetLevel()*10));
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			
@@ -721,10 +721,10 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus ATK: " + std::to_string(m_data->gm.blacksmith->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.blacksmith->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level : " + std::to_string((m_data->gm.blacksmith->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.blacksmith->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("Cost: " + std::to_string(m_data->gm.blacksmith->GetLevel() * 10) );
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
@@ -767,10 +767,10 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus MN: " + std::to_string(m_data->gm.library->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.library->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level : " + std::to_string((m_data->gm.library->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.library->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("Cost: " + std::to_string(m_data->gm.library->GetLevel() * 10) );
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
@@ -803,19 +803,19 @@ namespace HJ {
 				}
 			}
 
-			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("Inn ");
+			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INN ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
 
 			m_data->ents.Find<Entity>("E_00Text2")->GetComponent<TextComponent>("C_Text2")->GetText().setString(" Level: " + std::to_string(m_data->gm.inn->GetLevel()));
 			m_data->ents.Find<Entity>("E_00Text2")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString(" Bonus Recovery : " + std::to_string(m_data->gm.inn->GetBonus()));
+			m_data->ents.Find<Entity>("E_00Text3")->GetComponent<TextComponent>("C_Text3")->GetText().setString("Recovery : " + std::to_string(m_data->gm.inn->GetBonus()));
 			m_data->ents.Find<Entity>("E_00Text3")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level Bonus : " + std::to_string((m_data->gm.inn->GetLevel() + 1) * 10));
+			m_data->ents.Find<Entity>("E_00Text4")->GetComponent<TextComponent>("C_Text4")->GetText().setString(" Next Level : " + std::to_string((m_data->gm.inn->GetLevel() + 1) * 10));
 			m_data->ents.Find<Entity>("E_00Text4")->SetVisible(true);
 
-			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("(cost: " + std::to_string(m_data->gm.inn->GetLevel() * 10) + " )");
+			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("Cost: " + std::to_string(m_data->gm.inn->GetLevel() * 10));
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
 			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);

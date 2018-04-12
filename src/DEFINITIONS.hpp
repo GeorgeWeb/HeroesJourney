@@ -14,9 +14,9 @@
 
 // Heroes global definitions
 #define HERO_KNIGHT_SPRITE "res/img/characters/heroes/hero.png"
-#define HERO_BARD_SPRITE "res/img/characters/heroes/hero.png"
-#define HERO_SORC_SPRITE "res/img/characters/heroes/hero.png"
-#define HERO_ROGUE_SPRITE "res/img/characters/heroes/hero.png"
+#define HERO_BARD_SPRITE "res/img/characters/heroes/bard.png"
+#define HERO_SORC_SPRITE "res/img/characters/heroes/sorc.png"
+#define HERO_ROGUE_SPRITE "res/img/characters/heroes/rogue.png"
 
 // Enemies global definitions
 #define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/Frost-Demon.png"
@@ -88,6 +88,10 @@
 #define STORY_INTRO_SCENE_CAPATIN "res/img/characters/hero.png"
 #define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
 #define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
+#define MEET_BARD_SCENE_BACKGROUND "res/img/encounter/tutorial.png"
+#define MEET_SORC_SCENE_BACKGROUND "res/img/encounter/encounter1.png"
+#define MEET_ROGUE_SCENE_BACKGROUND "res/img/encounter/encounter2.png"
+#define FINAL_STORY_SCENE_BACKGROUND "res/img/encounter/encounter3.png"
 
 // Re-usable encounter assets global definitions
 #define BASIC_ATTACK_BTN "res/img/encounter/attackbtn.png"

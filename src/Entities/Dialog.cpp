@@ -85,6 +85,7 @@ namespace HJ { namespace Entities {
 			{
 				auto& convo = m_conversation.at(i);
 			
+
 				// show
 				convo->GetText().setColor(sf::Color::White);
 
@@ -93,7 +94,7 @@ namespace HJ { namespace Entities {
 				convo->GetText().setString(m_texts.at(i));
 				convo->GetText().setCharacterSize(24);
 				unsigned int offsetY = count * 50;
-				convo->GetText().setPosition(sf::Vector2f(500.0f, 650.0f + offsetY));
+				convo->GetText().setPosition(sf::Vector2f((SCREEN_WIDTH * 0.5f - convo->GetText().getGlobalBounds().width * 0.5f) , 590.0f + offsetY));
 				/* /> Display Logic */
 				count++;
 			}

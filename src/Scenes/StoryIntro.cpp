@@ -8,6 +8,7 @@
 #include <Engine/ECM/Components/TextComponent.hpp>
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include "StoryIntro.hpp"
+#include "MeetBard.hpp"
 
 namespace HJ {
 
@@ -51,10 +52,13 @@ namespace HJ {
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
 		m_dialog->AddConversation({ 
-			"Hero: Test line #1", "- Test line #2", // LEFT CHAR
-			"Captain: Test line #3", "- Test line #4", // RIGHT CHAR
-			"Hero: Test line #5", "- Test line #6", // LEFT CHAR
-			"Captain: Test line #7", "- Test line #8"  // RIGHT CHAR
+			"Narrator: Welcome dear adventurer. Join me as i tell you the story", "- of how you lead the heroes of this land on their epic quest", // LEFT CHAR
+			"", "", // RIGHT CHAR
+			"Narrator: against the evil frost mage and his minions. ", "", // LEFT CHAR
+			"", "",  // RIGHT CHAR
+			"Narrator: Our story begins with the kingdom of our heroes besiged ", "by the forces of the evil frost mage. ", //LEFT CHAR
+			"","", //Right char
+			"Narrator: The brave Knight takes up arms to defend the castle. ",""
 		});
 		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
 		m_offset += 2;
@@ -64,9 +68,9 @@ namespace HJ {
 		// sprites settings
 		auto hero = m_dialog->GetComponent<SpriteComponent>("C_DialogLCharacterSprite");
 		hero->GetSprite().setPosition(sf::Vector2f(500.0f, 350.0f));
-		hero->GetSprite().scale(3.0f, 3.0f);
+		hero->GetSprite().scale(5.0f, 5.0f);
 		auto captain = m_dialog->GetComponent<SpriteComponent>("C_DialogRCharacterSprite");
-		captain->GetSprite().scale(3.0f, 3.0f);
+		captain->GetSprite().scale(5.0f, 5.0f);
 		captain->GetSprite().setPosition(sf::Vector2f(700.0f, 350.0f));
 		// Initialise dialog properties
 		m_dialog->Init();
@@ -102,10 +106,20 @@ namespace HJ {
 			{
 				std::cout << m_offset << std::endl;
 				// Conversation
+				if (m_dialog->GetTexts().size() > 2 + m_offset)
+				{
+					if (m_dialog->GetTexts()[m_offset] == "")
+					{
+						m_offset += 2;
+						std::cout << "empty /n";
+					}
+				}
+
 				m_dialog->DisplayConvo(0 + m_offset, 2 + m_offset, m_data->assets.GetFont("Font_Pixel"));
 				m_offset += 2;
+				std::cout << "not empty /n";
+				//m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
 
-				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
 			}
 		}
 	}
@@ -115,27 +129,28 @@ namespace HJ {
 		if (m_dialog->HasFinished())
 		{
 			//switch to tutorial scene
-			auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-			m_data->machine.AddState(std::move(tutorial));
+			auto MeetBard = std::make_unique<MeetBardScene>(MeetBardScene(m_data));
+			m_data->machine.AddState(std::move(MeetBard));
+
 		}
 		else
 		{
 			switch (m_turn)
 			{
-				case DIALOG_TURN::LEFT:
-					// Conversation
-					// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
-					m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::Green);
-					m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::White);
-					break;
-				case DIALOG_TURN::RIGHT:
-					// Conversation
-					// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
-					m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::Green);
-					m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::White);
-					break;
-				default:
-					break;
+			case DIALOG_TURN::LEFT:
+				// Conversation
+				// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
+				m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::White);
+				m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::Transparent);
+				break;
+			case DIALOG_TURN::RIGHT:
+				// Conversation
+				// HIGHLIGHT (& IF NEEDED CHANGE) TEXTURE
+				m_dialog->GetRightCharacter()->GetSprite().setColor(sf::Color::White);
+				m_dialog->GetLeftCharacter()->GetSprite().setColor(sf::Color::Transparent);
+				break;
+			default:
+				break;
 			}
 		}
 		
