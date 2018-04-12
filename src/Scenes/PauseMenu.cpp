@@ -35,11 +35,11 @@ namespace HJ {
 		auto title = std::make_shared<Entity>();
 		auto titleComp = title->AddComponent<TextComponent>("C_PauseMenuText");
 		titleComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
-		titleComp->GetText().setCharacterSize(72);
+		titleComp->GetText().setCharacterSize(66);
 		titleComp->GetText().setString("PAUSE MENU");
 		title->SetPosition(sf::Vector2f(
-			(SCREEN_WIDTH * .5f) - (titleComp->GetText().getGlobalBounds().width * .5f),
-			100.0f));
+			(SCREEN_WIDTH - titleComp->GetText().getGlobalBounds().width) * .5f,
+			(SCREEN_HEIGHT - titleComp->GetText().getGlobalBounds().height) * 0.1f));
 		title->SetAlive(true);
 		title->SetVisible(true);
 

@@ -24,7 +24,7 @@ namespace HJ {
 	void MainMenuScene::Init()
 	{
 		// Load resources
-		m_data->assets.LoadTexture("Tex_MainBG", MAINMENU_SCENE_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_MainBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_StartBtn", MAINMENU_STARTGAME_BUTTON);
 		m_data->assets.LoadTexture("Tex_SettingsBtn", MAINMENU_SETTINGS_BUTTON);
 		m_data->assets.LoadTexture("Tex_QuitBtn", MAINMENU_QUITGAME_BUTTON);
@@ -40,6 +40,19 @@ namespace HJ {
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 
+		// Title
+		auto title = std::make_shared<Entity>();
+		auto titleComp = title->AddComponent<TextComponent>("C_MainMenuText");
+		titleComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		titleComp->GetText().setCharacterSize(66);
+		titleComp->GetText().setString("HEROES JOURNEY");
+		titleComp->GetText().setColor(sf::Color(255, 255, 255, 155));
+		title->SetPosition(sf::Vector2f(
+			(SCREEN_WIDTH - titleComp->GetText().getGlobalBounds().width) * .5f,
+			(SCREEN_HEIGHT - titleComp->GetText().getGlobalBounds().height) * 0.1f));
+		title->SetAlive(true);
+		title->SetVisible(true);
+
 		//Start Button
 		auto mbtn = std::make_shared<Button>();
 		auto mbtnSprite = mbtn->GetSpriteComponent();
@@ -47,22 +60,46 @@ namespace HJ {
 		mbtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		mbtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		mbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - mbtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - mbtnSprite->GetSprite().getGlobalBounds().height) * 0.4f));
-		//mbtnSprite->GetSprite().scale(0.75f, 1.0f);
+		mbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - mbtnSprite->GetSprite().getGlobalBounds().width) * 0.45f,
+			(SCREEN_HEIGHT - mbtnSprite->GetSprite().getGlobalBounds().height) * 0.3f));
+		mbtnSprite->GetSprite().scale(1.5f, 1.0f);
 		mbtn->SetVisible(true);
 		mbtn->SetAlive(true);
 		//text
 		auto mbtnText = mbtn->GetTextComponent();
 		mbtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		mbtnText->GetText().setString("PLAY");
-		//mbtnText->GetText().scale(0.75f, 0.75f);
+		mbtnText->GetText().setString("NEW GAME");
+		mbtnText->GetText().setStyle(sf::Text::Bold);
 		mbtnText->GetText().setCharacterSize(24);
 		//click component
 		mbtn->Init();
 		//center text
-		mbtnText->GetText().setPosition(mbtn->GetPosition().x +(mbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - mbtnText->GetText().getGlobalBounds().width * 0.5,
-			mbtn->GetPosition().y + (mbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - mbtnText->GetText().getGlobalBounds().height * 0.5 );
+		mbtnText->GetText().setPosition(mbtn->GetPosition().x +(mbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - mbtnText->GetText().getGlobalBounds().width * 0.5f,
+			mbtn->GetPosition().y + (mbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - mbtnText->GetText().getGlobalBounds().height * 0.6f);
+
+		// Load Button
+		auto lbtn = std::make_shared<Button>();
+		auto lbtnSprite = lbtn->GetSpriteComponent();
+		//define bg sprite
+		lbtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		lbtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		//properties
+		lbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - lbtnSprite->GetSprite().getGlobalBounds().width) * 0.45f,
+			(SCREEN_HEIGHT - lbtnSprite->GetSprite().getGlobalBounds().height) * 0.5f));
+		lbtnSprite->GetSprite().scale(1.5f, 1.0f);
+		lbtn->SetVisible(true);
+		lbtn->SetAlive(true);
+		//text
+		auto lbtnText = lbtn->GetTextComponent();
+		lbtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		lbtnText->GetText().setString("CONTINUE...");
+		lbtnText->GetText().setStyle(sf::Text::Bold);
+		lbtnText->GetText().setCharacterSize(24);
+		//click component
+		lbtn->Init();
+		//center text
+		lbtnText->GetText().setPosition(lbtn->GetPosition().x + (lbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - lbtnText->GetText().getGlobalBounds().width * 0.5f,
+			lbtn->GetPosition().y + (lbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - lbtnText->GetText().getGlobalBounds().height * 0.6f);
 
 		//Settings Button
 		auto setbtn = std::make_shared<Button>();
@@ -71,13 +108,14 @@ namespace HJ {
 		setBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		setBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		setbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - setBtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - setBtnSprite->GetSprite().getGlobalBounds().height) * 0.6f));
-		//setBtnSprite->GetSprite().scale(0.75f, 1.0f);
+		setbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - setBtnSprite->GetSprite().getGlobalBounds().width) * 0.45f,
+			(SCREEN_HEIGHT - setBtnSprite->GetSprite().getGlobalBounds().height) * 0.7f));
+		setBtnSprite->GetSprite().scale(1.5f, 1.0f);
 		//text
 		auto setText = setbtn->GetTextComponent();
 		setText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		setText->GetText().setString("SETTINGS");
+		setText->GetText().setString("< SETTINGS />");
+		setText->GetText().setStyle(sf::Text::Bold);
 		setText->GetText().scale(0.75f, 0.75f);
 		setText->GetText().setCharacterSize(24);
 		//properties
@@ -85,8 +123,8 @@ namespace HJ {
 		setbtn->SetAlive(true);
 		setbtn->Init();
 		//center text
-		setText->GetText().setPosition(setbtn->GetPosition().x + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - setText->GetText().getGlobalBounds().width * 0.5,
-			setbtn->GetPosition().y + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - setText->GetText().getGlobalBounds().height * 0.5);
+		setText->GetText().setPosition(setbtn->GetPosition().x + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - setText->GetText().getGlobalBounds().width * 0.5f,
+			setbtn->GetPosition().y + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - setText->GetText().getGlobalBounds().height * 0.6f);
 
 
 		//Quit Button
@@ -96,26 +134,28 @@ namespace HJ {
 		qbtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		qbtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		qbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - qbtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - qbtnSprite->GetSprite().getGlobalBounds().height) * 0.8f));
-		//qbtnSprite->GetSprite().scale(0.75f, 1.0f);
+		qbtn->SetPosition(sf::Vector2f((SCREEN_WIDTH - qbtnSprite->GetSprite().getGlobalBounds().width) * 0.45f,
+			(SCREEN_HEIGHT - qbtnSprite->GetSprite().getGlobalBounds().height) * 0.9f));
+		qbtnSprite->GetSprite().scale(1.5f, 1.0f);
 		//text
 		auto qText = qbtn->GetTextComponent();
 		qText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		qText->GetText().setString("QUIT");
-		//qText->GetText().scale(0.75f, 0.75f);
+		qText->GetText().setString("EXIT GAME");
+		qText->GetText().setStyle(sf::Text::Bold);
 		qText->GetText().setCharacterSize(24);
 		//properties
 		qbtn->SetVisible(true);
 		qbtn->SetAlive(true);
 		qbtn->Init();
 		//center text
-		qText->GetText().setPosition(qbtn->GetPosition().x + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - qText->GetText().getGlobalBounds().width * 0.5,
-			qbtn->GetPosition().y + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - qText->GetText().getGlobalBounds().height * 0.5);
+		qText->GetText().setPosition(qbtn->GetPosition().x + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - qText->GetText().getGlobalBounds().width * 0.5f,
+			qbtn->GetPosition().y + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - qText->GetText().getGlobalBounds().height * 0.6f);
 
 		//add to local ents map
 		AddEntity("E_zMainBG", bg);
-		AddEntity("E_xBtn", mbtn);
+		AddEntity("E_aMainMenuTitle", title);
+		AddEntity("E_xStartBtn", mbtn);
+		AddEntity("E_xLoadBtn", lbtn);
 		AddEntity("E_xSetBtn", setbtn);
 		AddEntity("E_xQBtn", qbtn);
 	}
@@ -131,14 +171,19 @@ namespace HJ {
 			if (event.type == sf::Event::Resized)
 				ResizeSceneView(event.size.width, event.size.height);
 
-			//check if start is clicked
-			auto startComp = m_data->ents.Find<Button>("E_xBtn")->GetSpriteComponent();
-			auto startBtn = m_data->ents.Find<Button>("E_xBtn")->GetClickableComponent();
+			auto startComp = m_data->ents.Find<Button>("E_xStartBtn")->GetSpriteComponent();
+			auto startBtn = m_data->ents.Find<Button>("E_xStartBtn")->GetClickableComponent();
 			if (m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				startBtn->SetClicked(true);
 			}
 
+			auto loadComp = m_data->ents.Find<Button>("E_xLoadBtn")->GetSpriteComponent();
+			auto loadBtn = m_data->ents.Find<Button>("E_xLoadBtn")->GetClickableComponent();
+			if (m_data->input.isClicked(loadComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			{
+				loadBtn->SetClicked(true);
+			}
 
 			auto setComp = m_data->ents.Find<Button>("E_xSetBtn")->GetSpriteComponent();
 			auto setBtn = m_data->ents.Find<Button>("E_xSetBtn")->GetClickableComponent();
@@ -160,10 +205,19 @@ namespace HJ {
 	void MainMenuScene::Update(float t_delatTime)
 	{
 		m_data->ents.Update(m_entities, t_delatTime);
-		auto startBtn = m_data->ents.Find<Button>("E_xBtn")->GetClickableComponent();
+		auto startBtn = m_data->ents.Find<Button>("E_xStartBtn")->GetClickableComponent();
 		if (startBtn->CanResolve())
 		{
 			startBtn->SetResolve(false);
+			// change scene to Story intro
+			auto storyIntro = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			m_data->machine.AddState(std::move(storyIntro));
+		}
+
+		auto loadBtn = m_data->ents.Find<Button>("E_xLoadBtn")->GetClickableComponent();
+		if (loadBtn->CanResolve())
+		{
+			loadBtn->SetResolve(false);
 			// change scene to Story intro
 			auto storyIntro = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));

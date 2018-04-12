@@ -20,18 +20,31 @@ namespace HJ {
 			m_data->saveData.Load<int>({ &width, &height, &mode }, Utils::DATA_TYPE::GAME_SETTINGS);
 			// use the loaded data
 			win.create(sf::VideoMode(width, height), t_title, mode == 0 ? sf::Style::Default : sf::Style::Fullscreen);
+
+			// set ratios - HD
+			int newH = (1366 * height) / width;
+			int displace = (newH - 768) / (-2);
+			win.setView(sf::View(sf::FloatRect(0, displace, 1366, newH)));
+
+			// init. game settigns
+			m_data->settings.SetResolution(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
+			m_data->settings.SetScreenMode(static_cast<SCREEN_MODE>(mode));
 		}
 		else
 		{
 			// Create window using new data
 			win.create(sf::VideoMode(t_width, t_height), t_title, sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
-		}
-		
-		// set ratios
-		int newH = (1366 * t_height) / t_width;
-		int displace = (newH - 768) / (-2);
-		win.setView(sf::View(sf::FloatRect(0, displace, 1366, newH)));
 
+			// set ratios - HD
+			int newH = (1366 * t_height) / t_width;
+			int displace = (newH - 768) / (-2);
+			win.setView(sf::View(sf::FloatRect(0, displace, 1366, newH)));
+
+			// init. game settigns
+			m_data->settings.SetResolution(t_width, t_height);
+			m_data->settings.SetScreenMode(t_mode);
+		}
+	
 		// -- Change cursor --
 		// Hide default cursor
 		win.setMouseCursorVisible(false);
@@ -51,13 +64,6 @@ namespace HJ {
 
 		// init. controls
 		Controls::Init();
-
-		// init. game settigns
-		m_data->settings.SetResolution(t_width, t_height);
-		m_data->settings.SetScreenMode(t_mode);
-
-		// save the initialized game settings
-		// m_data->settings.Save();
 
 		// add first state/screen
 		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));

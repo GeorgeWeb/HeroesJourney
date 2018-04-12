@@ -49,15 +49,14 @@ namespace Engine { namespace Utils {
 
 					if (file.good())
 					{
-						std::cout << "Opening load file...\n";
-						// READ DATA FROM FILE AND INPUT IT IN THE GAME DATA VECTOR
+						// READ GAME DATA FROM FILE AND INPUT IT IN THE GAME DATA VECTOR
 						for (auto d : t_data)
 						{
 							file >> *d;
 						}
-
-						std::cout << "Data was saved. Closing save file...\n";
 					}
+
+					file.close();
 				}
 				catch (std::exception ex)
 				{
@@ -68,7 +67,6 @@ namespace Engine { namespace Utils {
 			template <class T>
 			void Save(std::vector<T> t_data, DATA_TYPE t_type)
 			{
-				std::cout << "Opening save file...\n";
 				try
 				{
 					std::ofstream file;
@@ -77,14 +75,12 @@ namespace Engine { namespace Utils {
 					else if (t_type == DATA_TYPE::GAME_SETTINGS)
 						file.open(m_gameSettingsPath, std::ios::out);
 
-					std::cout << "Saving...\n";
-
 					// WRITE GAME DATA TO FILE
 					for (auto d : t_data)
 					{
 						file << d << "\n";
 					}
-					std::cout << "Data was saved. Closing save file...\n";
+					
 					file.close();
 				}
 				catch (std::exception ex)

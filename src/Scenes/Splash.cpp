@@ -149,7 +149,7 @@ namespace HJ {
 	{
 		if (m_canDelay)
 		{
-			if (m_pressDelay.getElapsedTime().asSeconds() > 1.0f)
+			if (m_pressDelay.getElapsedTime().asSeconds() > 1.0f) // 4.0f
 			{
 				m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").ExitLoop();
 				m_canMove = true;
