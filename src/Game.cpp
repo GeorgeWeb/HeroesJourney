@@ -9,13 +9,23 @@ namespace HJ {
 	Game::Game(unsigned int t_width, unsigned int t_height, const std::string& t_title, SCREEN_MODE t_mode, bool t_vsync) : 
 		m_data(std::make_shared<GameData>()),
 		m_deltaTime(1.0f / 60.0f)
-	{	
+	{
 		sf::RenderWindow win;
-		// create the game window
-		if (t_mode == SCREEN_MODE::FULLSCREEN)
-			win.create(sf::VideoMode(t_width, t_height), t_title, 1 << 3);
-		else if (t_mode == SCREEN_MODE::WINDOWED)
+		if (!m_data->saveData.IsEmpty(Utils::DATA_TYPE::GAME_SETTINGS))
+		{
+			// Create window using the saved data
+			auto width = static_cast<int>(t_width);
+			auto height = static_cast<int>(t_height);
+			auto mode = static_cast<int>(t_mode);
+			m_data->saveData.Load<int>({ &width, &height, &mode }, Utils::DATA_TYPE::GAME_SETTINGS);
+			// use the loaded data
+			win.create(sf::VideoMode(width, height), t_title, mode == 0 ? sf::Style::Default : sf::Style::Fullscreen);
+		}
+		else
+		{
+			// Create window using new data
 			win.create(sf::VideoMode(t_width, t_height), t_title, sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
+		}
 		
 		// set ratios
 		int newH = (1366 * t_height) / t_width;

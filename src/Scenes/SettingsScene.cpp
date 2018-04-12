@@ -222,7 +222,7 @@ namespace HJ {
 			//check if fifth circle is clicked
 			auto uncheck5Comp = m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<SpriteComponent>("C_UnCheck5Sprite");
 			auto uncheck5Click = m_data->ents.Find<Entity>("E_Uncheck5")->GetComponent<ClickableComponent>("C_UnCheck5Btn");
-			if (uncheck5Comp->IsClickable() &&  m_data->input.isClicked(uncheck5Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (uncheck5Comp->IsClickable() && m_data->input.isClicked(uncheck5Comp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				uncheck5Click->SetClicked(true);
 			}
@@ -247,7 +247,15 @@ namespace HJ {
 		auto saveClick = m_data->ents.Find<Button>("E_Save")->GetClickableComponent();
 		if (saveClick->CanResolve())
 		{
-			//ADD LOGIC FOR SAVING THE CHANGES HERE...
+			// save data to settings file
+			m_data->saveData.Save<int>(
+			{ 
+				static_cast<int>(m_data->settings.GetResolution().x),
+				static_cast<int>(m_data->settings.GetResolution().y),
+				static_cast<int>(m_data->settings.GetScreenMode())
+			}, Utils::DATA_TYPE::GAME_SETTINGS);
+			
+			// save in-game
 			m_data->settings.Save();
 
 			// change scene to Settings
@@ -261,7 +269,6 @@ namespace HJ {
 		{
 			//LOGIC FOR RESOLUTION HERE...
 			m_data->settings.SetResolution(1024, 768);
-			//ResizeSceneView(1024, 768);
 			m_data->ents.Find<Entity>("E_Uncheck1")->GetComponent<SpriteComponent>("C_UnCheck1Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SelectBtn"));
 
 			m_data->ents.Find<Entity>("E_Uncheck2")->GetComponent<SpriteComponent>("C_UnCheck2Sprite")->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));

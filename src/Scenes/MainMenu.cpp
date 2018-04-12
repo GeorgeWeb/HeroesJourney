@@ -1,5 +1,6 @@
 #include "MainMenu.hpp"
 #include "StoryIntro.hpp"
+#include "Encounters/Tutorial.hpp"
 #include "../DEFINITIONS.hpp"
 #include "MapScene.hpp"
 #include "SettingsScene.hpp"
@@ -164,7 +165,7 @@ namespace HJ {
 		{
 			startBtn->SetResolve(false);
 			// change scene to Story intro
-			auto storyIntro = std::make_unique<StoryIntroScene>(StoryIntroScene(m_data));
+			auto storyIntro = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));
 		}
 

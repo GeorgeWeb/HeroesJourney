@@ -5,7 +5,7 @@
 
 namespace Engine { namespace System {
 
-	enum SCREEN_MODE
+	enum class SCREEN_MODE : int
 	{
 		WINDOWED   = 0,
 		FULLSCREEN = 1
@@ -22,6 +22,7 @@ namespace Engine { namespace System {
 			inline SCREEN_MODE GetScreenMode() const { return m_screenMode; };
 			void SetScreenMode(const SCREEN_MODE& t_mode);
 
+			inline sf::Vector2u GetResolution() const { return sf::Vector2u(m_screenWidth, m_screenHeight); }
 			void SetResolution(unsigned int t_width, unsigned int t_height);
 
 		private:

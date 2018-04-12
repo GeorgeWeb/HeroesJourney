@@ -69,6 +69,7 @@ namespace HJ {
 		Input::InputManager input;
 		Asset::AssetManager assets;
 		ECM::EntityManager ents;
+		Utils::FileIO saveData;
 		GameManager gm;
 	};
 

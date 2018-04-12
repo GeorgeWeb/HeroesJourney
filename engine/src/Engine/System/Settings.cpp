@@ -24,7 +24,7 @@ namespace Engine { namespace System {
 	{
 		m_screenMode = t_mode;
 		#if NDEBUG
-		std::cout << "Mode: " << m_screenMode << std::endl;
+		std::cout << "Mode: " << static_cast<int>(m_screenMode) << std::endl;
 		#endif
 	}
 
@@ -43,8 +43,7 @@ namespace Engine { namespace System {
 		if (m_screenMode == SCREEN_MODE::WINDOWED)
 		{
 			// reset game window
-			Engine2D::window->create(sf::VideoMode(m_screenWidth, m_screenHeight), Engine2D::title,
-				sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
+			Engine2D::window->create(sf::VideoMode(m_screenWidth, m_screenHeight), Engine2D::title, sf::Style::Default);
 			// Hide default cursor
 			Engine2D::window->setMouseCursorVisible(false);
 			// window size reset with the changed res

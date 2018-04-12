@@ -12,7 +12,10 @@
 #include "Input/InputManager.hpp"
 #include "ECM/EntityManager.hpp"
 #include "System/Renderer.hpp"
-#include "System/Settings.hpp""
+#include "System/Settings.hpp"
+#include "System/Animation.hpp"
+#include "Utils/Random.hpp"
+#include "Utils/FileIO.hpp"
 
 namespace Engine {
 

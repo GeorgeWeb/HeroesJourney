@@ -7,7 +7,7 @@
 namespace HJ { 
 	
 	// Forward declarations to be used as members in each State
-	namespace Components 
+	namespace Components
 	{
 		class StateMachineComponent;
 		class HeuristicEvalComponent;
