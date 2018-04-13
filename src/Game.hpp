@@ -34,14 +34,14 @@ namespace HJ {
 	{
 		public:
 			// amount of gold gathered
-			unsigned int gold = 100;
+			int gold = 100;
 			
 			// amount of potions acquired/bought
-			unsigned int healthPot = 1;
-			unsigned int manaPot = 1;
+			int healthPot = 1;
+			int manaPot = 1;
 			
-			// encounter's name + the number of times each one is completed.
-			std::vector<std::pair<std::string, unsigned int>> unlockedEncounters;
+			// number of completed levels
+			int unlockedEncounters = 0;
 
 			// resources entities
 			std::shared_ptr<ECM::Entity> cHealthPot;

@@ -3,14 +3,14 @@
 
 namespace HJ { namespace Entities {
 
-	Hero::Hero() :
+	Hero::Hero(bool t_populate) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_bHeroSprite")),
 		m_animatorComp(AddComponent<Engine::Components::AnimatorComponent>("C_HeroAnimator")),
 		m_statusComp(AddComponent<Components::StatusComponent>("C_aHeroStatus")),
 		m_skillComp(AddComponent<Components::SkillComponent>("C_HeroSkills"))
 	{ }
 
-	void Hero::SetStats(const std::string & t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour, unsigned int t_dodgeChance)
+	void Hero::SetStats(const std::string& t_name, HERO_TYPE t_type, unsigned int t_health, unsigned int t_damage, unsigned int t_armour, unsigned int t_dodgeChance)
 	{
 		m_name = t_name;
 		m_type = t_type;
@@ -33,7 +33,7 @@ namespace HJ { namespace Entities {
 
 	void Hero::Init()
 	{
-		m_spriteComp->GetSprite().scale(sf::Vector2f(5.0f, 5.0f));
+		m_spriteComp->GetSprite().setScale(sf::Vector2f(3.5f, 3.5f));
 		m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 
 		SetVisible(true);

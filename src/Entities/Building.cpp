@@ -2,7 +2,7 @@
 
 namespace HJ {	namespace Entities {
 	
-	Building::Building() :
+	Building::Building(bool t_populate) :
 		m_spriteComp(AddComponent<Engine::Components::SpriteComponent>("C_BuildingSprite")),
 		m_clickComp(AddComponent<Engine::Components::ClickableComponent>("C_BuildingClick"))
 	{
@@ -46,17 +46,17 @@ namespace HJ {	namespace Entities {
 		// TODO: upgrade change texture and bonus if upgraded
 	}
 
-	void Building::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	void Building::ApplyBonus(std::vector<std::shared_ptr<Hero>> t_heroes)
 	{
 		//
 	}
 
-	std::shared_ptr<Engine::Components::SpriteComponent> Building::GetSpriteComponent()
+	std::shared_ptr<Engine::Components::SpriteComponent>Building::GetSpriteComponent()
 	{
 		return m_spriteComp;
 	}
 
-	std::shared_ptr<Engine::Components::ClickableComponent> Building::GetClickableComponent()
+	std::shared_ptr<Engine::Components::ClickableComponent>Building::GetClickableComponent()
 	{
 		return m_clickComp;
 	}

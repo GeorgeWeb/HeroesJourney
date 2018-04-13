@@ -2,19 +2,22 @@
 
 namespace HJ {namespace Entities {
 
-	Sorceress::Sorceress() : Hero()
+	Sorceress::Sorceress(bool t_populate) : Hero(t_populate)
 	{
 		m_name = "Sorceress";
 		m_type = HERO_TYPE::GOOD;
-		m_health = 75;
-		m_maxHealth = 75;
-		m_mana = 120;
-		m_maxMana = 120;
-		m_armour = 5;
-		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 10;
-		m_critChance = 20;
+		if (t_populate)
+		{
+			m_health = 75;
+			m_maxHealth = 75;
+			m_mana = 120;
+			m_maxMana = 120;
+			m_armour = 5;
+			m_damage = 30;
+			m_dodgeChance = 10;
+			m_critChance = 20;
+		}
 	}
 
 	Sorceress* Sorceress::GetType()

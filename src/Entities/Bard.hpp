@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Bard final : public Hero
 	{
 		public:
-			Bard();
+			Bard(bool t_populate = true);
 			~Bard() = default;
 
 			Bard* GetType() override final;

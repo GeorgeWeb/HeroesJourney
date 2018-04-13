@@ -2,10 +2,13 @@
 
 namespace HJ { namespace Entities {
 
-	GeneralStore::GeneralStore() : Building()
+	GeneralStore::GeneralStore(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = 1;
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = 1;
+		}
 	}
 
 	GeneralStore* GeneralStore::GetType()

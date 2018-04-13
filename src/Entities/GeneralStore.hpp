@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class GeneralStore final : public Building
 	{
 		public:
-			GeneralStore();
+			GeneralStore(bool t_populate = true);
 			~GeneralStore() = default;
 
 			GeneralStore* GetType() override final;

@@ -2,12 +2,13 @@
 
 namespace HJ {	namespace Entities {
 
-	Library::Library() : Building()
+	Library::Library(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
-	
-
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 10;
+		}
 	}
 
 	Library* Library::GetType()

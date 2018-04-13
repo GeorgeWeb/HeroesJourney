@@ -43,7 +43,7 @@ namespace HJ { namespace Encounters {
 		// no unlocked heroes apart from the main character - the Knight
 		m_data->gm.hKnight->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hKnight->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
+			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.5f));
 		m_data->gm.hKnight->Init();
 		// Add HP/MP UI Component
 		// TODO: ...
@@ -51,7 +51,7 @@ namespace HJ { namespace Encounters {
 		// no unlocked heroes apart from the main character - the Knight
 		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hBard->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.1f));
+			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
 		m_data->gm.hBard->Init();
 		// Add HP/MP UI Component
 		// TODO: ...
@@ -62,8 +62,9 @@ namespace HJ { namespace Encounters {
 		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
 		m_activeBoss->GetSpriteComponent()->GetSprite().scale(sf::Vector2f(1.5f, 1.5f));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
-			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
+			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
 		m_activeBoss->Init();
+		m_activeBoss->GetSpriteComponent()->GetSprite().setScale(10.0f, 10.0f);
 		// Add skills
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<Stomp>());
 		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<Smack>());
@@ -223,13 +224,13 @@ namespace HJ { namespace Encounters {
 		auto concedeBtn = std::make_shared<Button>();
 		// sprite
 		auto concedeBtnSprite = concedeBtn->GetSpriteComponent();
-		concedeBtnSprite->GetSprite().setColor(sf::Color(155, 155, 155, 55));
+		concedeBtnSprite->GetSprite().setColor(sf::Color(169, 169, 169, 169));
 		concedeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		concedeBtnSprite->GetSprite().scale(0.75f, 0.75f);
 		// text
 		auto concedeBtnText = concedeBtn->GetTextComponent();
 		concedeBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		concedeBtnText->GetText().setColor(sf::Color(155, 155, 155, 55));
+		concedeBtnText->GetText().setColor(sf::Color(169, 169, 169, 169));
 		concedeBtnText->GetText().setString("Concede");
 		concedeBtnText->GetText().scale(0.75f, 0.75f);
 		concedeBtnText->GetText().setCharacterSize(24);

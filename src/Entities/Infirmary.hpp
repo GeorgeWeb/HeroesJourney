@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Infirmary final : public Building
 	{
 		public:
-			Infirmary();
+			Infirmary(bool t_populate = true);
 			~Infirmary() = default;
 
 			Infirmary* GetType() override final;

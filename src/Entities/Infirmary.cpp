@@ -2,10 +2,13 @@
 
 namespace HJ {	namespace Entities {
 
-	Infirmary::Infirmary() : Building()
+	Infirmary::Infirmary(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 10;
+		}
 	}
 
 	Infirmary* Infirmary::GetType()

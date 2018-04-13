@@ -43,20 +43,18 @@ namespace Engine { namespace Utils {
 				{
 					std::ifstream file;
 					if (t_type == DATA_TYPE::GAME_DATA)
-						file.open(m_gameDataPath, std::ios::in);
+						file.open(m_gameDataPath);
 					else if (t_type == DATA_TYPE::GAME_SETTINGS)
-						file.open(m_gameSettingsPath, std::ios::in);
+						file.open(m_gameSettingsPath);
 
 					if (file.good())
 					{
 						// READ GAME DATA FROM FILE AND INPUT IT IN THE GAME DATA VECTOR
-						for (auto d : t_data)
+						for (size_t i = 0; i < t_data.size(); i++)
 						{
-							file >> *d;
+							file >> *t_data[i];
 						}
 					}
-
-					file.close();
 				}
 				catch (std::exception ex)
 				{
@@ -71,14 +69,14 @@ namespace Engine { namespace Utils {
 				{
 					std::ofstream file;
 					if (t_type == DATA_TYPE::GAME_DATA)
-						file.open(m_gameDataPath, std::ios::out);
+						file.open(m_gameDataPath, std::ios::trunc);
 					else if (t_type == DATA_TYPE::GAME_SETTINGS)
-						file.open(m_gameSettingsPath, std::ios::out);
+						file.open(m_gameSettingsPath, std::ios::trunc);
 
 					// WRITE GAME DATA TO FILE
-					for (auto d : t_data)
+					for (size_t i = 0; i < t_data.size(); i++)
 					{
-						file << d << "\n";
+						file << t_data[i] << " ";
 					}
 					
 					file.close();

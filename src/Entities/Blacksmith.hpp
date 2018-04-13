@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Blacksmith final : public Building
 	{
 		public:
-			Blacksmith();
+			Blacksmith(bool t_populate = true);
 			~Blacksmith() = default;
 
 			Blacksmith* GetType() override final;

@@ -2,19 +2,22 @@
 
 namespace HJ { namespace Entities {
 
-	Knight::Knight() : Hero()
+	Knight::Knight(bool t_populate) : Hero(t_populate)
 	{
 		m_name = "Knight";
 		m_type = HERO_TYPE::GOOD;
-		m_health = 150;
-		m_maxHealth = 150;
-		m_mana = 75;
-		m_maxMana = 75;
-		m_armour = 20;
-		m_damage = 50;
 		m_alive = true;
-		m_dodgeChance = 5;
-		m_critChance = 30;
+		if (t_populate)
+		{
+			m_health = 150;
+			m_maxHealth = 150;
+			m_mana = 75;
+			m_maxMana = 75;
+			m_armour = 20;
+			m_damage = 50;
+			m_dodgeChance = 5;
+			m_critChance = 30;
+		}
 	}
 
 	Knight* Knight::GetType()

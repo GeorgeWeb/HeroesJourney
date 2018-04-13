@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Library final : public Building
 	{
 		public:
-			Library();
+			Library(bool t_populate = true);
 			~Library() = default;
 
 			Library* GetType() override final;

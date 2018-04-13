@@ -22,13 +22,16 @@ namespace HJ {	namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> GetSpriteComponent();
 			std::shared_ptr<Engine::Components::ClickableComponent> GetClickableComponent();
 		public:
-			Building();
+			Building(bool t_populate = true);
 			virtual ~Building() = default;
 
 			virtual Building* GetType() override;
 			
-			virtual inline int GetLevel() { return m_level; }
-			virtual inline int GetBonus() { return m_bonus; }
+			inline int GetLevel() const { return m_level; }
+			inline void SetLevel(int t_level) { m_level = t_level; }
+
+			inline int GetBonus() const { return m_bonus; }
+
 			virtual void Init() override;
 			virtual void Update(float t_deltaTime) override;
 			virtual void Render() override;

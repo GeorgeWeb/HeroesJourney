@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Inn final : public Building
 	{
 		public:
-			Inn();
+			Inn(bool t_populate = true);
 			~Inn() = default;
 
 			Inn* GetType() override final;

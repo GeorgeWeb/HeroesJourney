@@ -2,11 +2,13 @@
 
 namespace HJ { namespace Entities {
 
-	Inn::Inn() : Building()
+	Inn::Inn(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
-		
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 10;
+		}
 	}
 
 	Inn* Inn::GetType()

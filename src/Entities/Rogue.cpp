@@ -2,19 +2,22 @@
 
 namespace HJ { namespace Entities {
 
-	Rogue::Rogue() : Hero()
+	Rogue::Rogue(bool t_populate) : Hero(t_populate)
 	{
 		m_name = "Rogue";
 		m_type = HERO_TYPE::GOOD;
-		m_health = 75;
-		m_maxHealth = 75;
-		m_mana = 75;
-		m_maxMana = 75;
-		m_armour = 10;
-		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 25;
-		m_critChance = 40;
+		if (t_populate)
+		{
+			m_health = 75;
+			m_maxHealth = 75;
+			m_mana = 75;
+			m_maxMana = 75;
+			m_armour = 10;
+			m_damage = 30;
+			m_dodgeChance = 25;
+			m_critChance = 40;
+		}
 	}
 
 	Rogue* Rogue::GetType()

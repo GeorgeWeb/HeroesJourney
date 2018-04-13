@@ -2,11 +2,13 @@
 
 namespace HJ { namespace Entities {
 
-	Blacksmith::Blacksmith() : Building()
+	Blacksmith::Blacksmith(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
-		
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 10;
+		}
 	}
 
 	Blacksmith* Blacksmith::GetType()

@@ -2,19 +2,22 @@
 
 namespace HJ { namespace Entities {
 
-	Bard::Bard() : Hero()
+	Bard::Bard(bool t_populate) : Hero(t_populate)
 	{
 		m_name = "Bard";
 		m_type = HERO_TYPE::GOOD;
-		m_health = 100;
-		m_maxHealth = 100;
-		m_mana = 80;
-		m_maxMana = 80;
-		m_armour = 10;
-		m_damage = 30;
 		m_alive = true;
-		m_dodgeChance = 15;
-		m_critChance = 20;
+		if (t_populate)
+		{
+			m_health = 100;
+			m_maxHealth = 100;
+			m_mana = 80;
+			m_maxMana = 80;
+			m_armour = 10;
+			m_damage = 30;
+			m_dodgeChance = 15;
+			m_critChance = 20;
+		}
 	}
 
 	Bard* Bard::GetType()

@@ -48,22 +48,25 @@ namespace HJ { namespace Entities {
 
 		public:
 			inline int GetHealth() const { return m_health; }
-			inline void SetHealth(const int t_health) { m_health = t_health; }
+			inline void SetHealth(int t_health) { m_health = t_health; }
 			inline int GetMaxHealth() const { return m_maxHealth; }
-			inline void SetMaxHealth(const int t_maxHealth) { m_maxHealth = t_maxHealth; }
+			inline void SetMaxHealth(int t_maxHealth) { m_maxHealth = t_maxHealth; }
 			inline int GetMana() const { return m_mana; }
-			inline void SetMana(const int t_mana) { m_mana = t_mana; }
+			inline void SetMana(int t_mana) { m_mana = t_mana; }
 			inline int GetMaxMana() const { return m_maxMana; }
-			inline void SetMaxMana(const int t_maxMana) { m_maxMana = t_maxMana; }
+			inline void SetMaxMana(int t_maxMana) { m_maxMana = t_maxMana; }
 			inline int GetDmg() const { return m_damage; }
-			inline void SetDmg(const int t_damage) { m_damage = t_damage; }
+			inline void SetDmg(int t_damage) { m_damage = t_damage; }
 			inline int GetCrit() const { return m_critChance; }
+			inline void SetCrit(int t_crit) { m_critChance = t_crit; }
 			inline int GetArmour() const { return m_armour; }
+			inline void SetArmour(int t_armour) { m_armour = t_armour; }
 			inline int GetDodge() const { return m_dodgeChance; }
+			inline void SetDodge(int t_dodge) { m_dodgeChance = t_dodge; }
 
 		public:
 			// default constructor (used for GOOD types)
-			Hero();
+			Hero(bool t_populate = true);
 			virtual ~Hero() = default;
 
 			virtual Hero* GetType() override;

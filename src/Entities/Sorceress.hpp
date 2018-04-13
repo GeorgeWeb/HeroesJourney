@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Sorceress final : public Hero
 	{
 		public:
-			Sorceress();
+			Sorceress(bool t_populate = true);
 			~Sorceress() = default;
 
 			Sorceress* GetType() override final;

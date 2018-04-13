@@ -52,7 +52,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
 		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
 
-		// create serializable game entities
+		// serializable game entities
 		// buildings
 		m_data->gm.infirmary = std::make_shared<Infirmary>();
 		m_data->gm.blacksmith = std::make_shared<Blacksmith>();

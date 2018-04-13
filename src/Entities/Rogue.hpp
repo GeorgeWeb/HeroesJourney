@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Rogue final : public Hero
 	{
 		public:
-			Rogue();
+			Rogue(bool t_populate = true);
 			~Rogue() = default;
 
 			Rogue* GetType() override final;

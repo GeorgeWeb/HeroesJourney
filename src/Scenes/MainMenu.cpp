@@ -46,7 +46,7 @@ namespace HJ {
 		titleComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
 		titleComp->GetText().setCharacterSize(66);
 		titleComp->GetText().setString("HEROES JOURNEY");
-		titleComp->GetText().setColor(sf::Color(255, 255, 255, 155));
+		titleComp->GetText().setColor(sf::Color(255, 255, 255, 200));
 		title->SetPosition(sf::Vector2f(
 			(SCREEN_WIDTH - titleComp->GetText().getGlobalBounds().width) * .5f,
 			(SCREEN_HEIGHT - titleComp->GetText().getGlobalBounds().height) * 0.1f));
@@ -68,7 +68,7 @@ namespace HJ {
 		//text
 		auto mbtnText = mbtn->GetTextComponent();
 		mbtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		mbtnText->GetText().setString("NEW GAME");
+		mbtnText->GetText().setString("NEW STORY");
 		mbtnText->GetText().setStyle(sf::Text::Bold);
 		mbtnText->GetText().setCharacterSize(24);
 		//click component
@@ -114,9 +114,8 @@ namespace HJ {
 		//text
 		auto setText = setbtn->GetTextComponent();
 		setText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		setText->GetText().setString("< SETTINGS />");
+		setText->GetText().setString("SETTINGS");
 		setText->GetText().setStyle(sf::Text::Bold);
-		setText->GetText().scale(0.75f, 0.75f);
 		setText->GetText().setCharacterSize(24);
 		//properties
 		setbtn->SetVisible(true);
@@ -125,7 +124,6 @@ namespace HJ {
 		//center text
 		setText->GetText().setPosition(setbtn->GetPosition().x + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - setText->GetText().getGlobalBounds().width * 0.5f,
 			setbtn->GetPosition().y + (setbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - setText->GetText().getGlobalBounds().height * 0.6f);
-
 
 		//Quit Button
 		auto qbtn = std::make_shared<Button>();
@@ -173,14 +171,14 @@ namespace HJ {
 
 			auto startComp = m_data->ents.Find<Button>("E_xStartBtn")->GetSpriteComponent();
 			auto startBtn = m_data->ents.Find<Button>("E_xStartBtn")->GetClickableComponent();
-			if (m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (startBtn->IsClickable() && m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				startBtn->SetClicked(true);
 			}
 
 			auto loadComp = m_data->ents.Find<Button>("E_xLoadBtn")->GetSpriteComponent();
 			auto loadBtn = m_data->ents.Find<Button>("E_xLoadBtn")->GetClickableComponent();
-			if (m_data->input.isClicked(loadComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (loadBtn->IsClickable() &&  m_data->input.isClicked(loadComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				loadBtn->SetClicked(true);
 			}
@@ -195,7 +193,7 @@ namespace HJ {
 
 			auto quitComp = m_data->ents.Find<Button>("E_xQBtn")->GetSpriteComponent();
 			auto quitBtn = m_data->ents.Find<Button>("E_xQBtn")->GetClickableComponent();
-			if (m_data->input.isClicked(quitComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (quitBtn->IsClickable() && m_data->input.isClicked(quitComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				quitBtn->SetClicked(true);
 			}
@@ -204,7 +202,18 @@ namespace HJ {
 
 	void MainMenuScene::Update(float t_delatTime)
 	{
-		m_data->ents.Update(m_entities, t_delatTime);
+		auto load = m_data->ents.Find<Button>("E_xLoadBtn");
+		if (m_data->saveData.IsEmpty(Utils::DATA_TYPE::GAME_DATA))
+		{
+			load->GetClickableComponent()->SetClickable(false);
+			load->GetSpriteComponent()->GetSprite().setColor(sf::Color(128, 128, 128, 228));
+		}
+		else
+		{
+			load->GetClickableComponent()->SetClickable(true);
+			load->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		}
+
 		auto startBtn = m_data->ents.Find<Button>("E_xStartBtn")->GetClickableComponent();
 		if (startBtn->CanResolve())
 		{
@@ -214,12 +223,188 @@ namespace HJ {
 			m_data->machine.AddState(std::move(storyIntro));
 		}
 
-		auto loadBtn = m_data->ents.Find<Button>("E_xLoadBtn")->GetClickableComponent();
+		auto loadBtn = load->GetClickableComponent();
 		if (loadBtn->CanResolve())
 		{
 			loadBtn->SetResolve(false);
+			
+			// Load saved data
+			// serializable game entities
+			// heroes
+			m_data->gm.hKnight = std::make_shared<Knight>(false);
+			m_data->gm.hBard = std::make_shared<Bard>(false);
+			m_data->gm.hSorceress = std::make_shared<Sorceress>(false);
+			m_data->gm.hRogue = std::make_shared<Rogue>(false);
+			// buildings
+			m_data->gm.infirmary = std::make_shared<Infirmary>(false);
+			m_data->gm.blacksmith = std::make_shared<Blacksmith>(false);
+			m_data->gm.library = std::make_shared<Library>(false);
+			m_data->gm.inn = std::make_shared<Inn>(false);
+			m_data->gm.store = std::make_shared<GeneralStore>(false);
+
+			// heroes
+			// knight
+			int knightHP = 0, 
+				knightMaxHP = 0, 
+				knightMP = 0, 
+				knightMaxMP = 0, 
+				knightArmour = 0, 
+				knightDodge = 0, 
+				knightCrit = 0, 
+				knightDMG = 0;
+			// bard
+			int bardHP = 0,
+				bardMaxHP = 0,
+				bardMP = 0,
+				bardMaxMP = 0,
+				bardArmour = 0,
+				bardDodge = 0,
+				bardCrit = 0,
+				bardDMG = 0;
+			// rogue
+			int rogueHP = 0,
+				rogueMaxHP = 0,
+				rogueMP = 0,
+				rogueMaxMP = 0,
+				rogueArmour = 0,
+				rogueDodge = 0,
+				rogueCrit = 0,
+				rogueDMG = 0;
+			// sorceress
+			int sorcHP = 0,
+				sorcMaxHP = 0,
+				sorcMP = 0,
+				sorcMaxMP = 0,
+				sorcArmour = 0,
+				sorcDodge = 0,
+				sorcCrit = 0,
+				sorcDMG = 0;
+			// buidlings
+			int blacksmithLvl = 0,
+				infirmaryLvl = 0,
+				libraryLvl = 0,
+				innLvl = 0,
+				storeLvl = 0;
+			// resources
+			// potions
+			int healthPots = 0,
+				manaPots = 0;
+			// money
+			int gold = 0;
+			// unlocked encounters
+			int levels = 0;
+			m_data->saveData.Load<int>({
+				/*
+				&knightHP, 
+				&knightMaxHP, 
+				&knightMP, 
+				&knightMaxMP, 
+				&knightArmour, 
+				&knightDodge, 
+				&knightCrit, 
+				&knightDMG,
+				&bardHP, 
+				&bardMaxHP, 
+				&bardMaxMP, 
+				&bardArmour,
+				&bardDodge, 
+				&bardCrit, 
+				&bardDMG,
+				&rogueHP,
+				&rogueMaxHP, 
+				&rogueMaxMP, 
+				&rogueArmour, 
+				&rogueDodge, 
+				&rogueCrit, 
+				&rogueDMG,
+				&sorcHP, 
+				&sorcMaxHP, 
+				&sorcMaxMP, 
+				&sorcArmour,
+				&sorcDodge, 
+				&sorcCrit,
+				&sorcDMG,
+				&blacksmithLvl,
+				&infirmaryLvl,
+				&libraryLvl,
+				&innLvl, 
+				&storeLvl,
+				&healthPots,
+				&manaPots,
+				&gold, 
+				&levels
+				*/
+				&blacksmithLvl,
+				&infirmaryLvl,
+				&libraryLvl,
+				&innLvl,
+				&storeLvl
+			}, Utils::DATA_TYPE::GAME_DATA);
+
+			// set the loaded values
+			/*
+			// heroes
+			// knight
+			m_data->gm.hKnight->SetHealth(knightHP);
+			m_data->gm.hKnight->SetMaxHealth(knightMaxHP);
+			m_data->gm.hKnight->SetMana(knightMP);
+			m_data->gm.hKnight->SetMaxMana(knightMaxMP);
+			m_data->gm.hKnight->SetArmour(knightArmour);
+			m_data->gm.hKnight->SetDodge(knightDodge);
+			m_data->gm.hKnight->SetCrit(knightCrit);
+			m_data->gm.hKnight->SetDmg(knightDMG);
+			// bard
+			m_data->gm.hBard->SetHealth(bardHP);
+			m_data->gm.hBard->SetMaxHealth(bardMaxHP);
+			m_data->gm.hBard->SetMana(bardMP);
+			m_data->gm.hBard->SetMaxMana(bardMaxMP);
+			m_data->gm.hBard->SetArmour(bardArmour);
+			m_data->gm.hBard->SetDodge(bardDodge);
+			m_data->gm.hBard->SetCrit(bardCrit);
+			m_data->gm.hBard->SetDmg(bardDMG);
+			// rogue
+			m_data->gm.hRogue->SetHealth(rogueHP);
+			m_data->gm.hRogue->SetMaxHealth(rogueMaxHP);
+			m_data->gm.hRogue->SetMana(rogueMP);
+			m_data->gm.hRogue->SetMaxMana(rogueMaxMP);
+			m_data->gm.hRogue->SetArmour(rogueArmour);
+			m_data->gm.hRogue->SetDodge(rogueDodge);
+			m_data->gm.hRogue->SetCrit(rogueCrit);
+			m_data->gm.hRogue->SetDmg(rogueDMG);
+			// sorceress
+			m_data->gm.hSorceress->SetHealth(sorcHP);
+			m_data->gm.hSorceress->SetMaxHealth(sorcMaxHP);
+			m_data->gm.hSorceress->SetMana(sorcMP);
+			m_data->gm.hSorceress->SetMaxMana(sorcMaxMP);
+			m_data->gm.hSorceress->SetArmour(sorcArmour);
+			m_data->gm.hSorceress->SetDodge(sorcDodge);
+			m_data->gm.hSorceress->SetCrit(sorcCrit);
+			m_data->gm.hSorceress->SetDmg(sorcDMG);
+			//buidlings
+			m_data->gm.blacksmith->SetLevel(blacksmithLvl);
+			m_data->gm.infirmary->SetLevel(infirmaryLvl);
+			m_data->gm.library->SetLevel(libraryLvl);
+			m_data->gm.inn->SetLevel(innLvl);
+			m_data->gm.store->SetLevel(storeLvl);
+			// resources
+			m_data->gm.healthPot = healthPots;
+			m_data->gm.manaPot = manaPots;
+			m_data->gm.gold = gold;
+			// unlocked encounters
+			m_data->gm.unlockedEncounters = levels;
+			*/
+			//buidlings
+			m_data->gm.blacksmith->SetLevel(blacksmithLvl);
+			m_data->gm.infirmary->SetLevel(infirmaryLvl);
+			m_data->gm.library->SetLevel(libraryLvl);
+			m_data->gm.inn->SetLevel(innLvl);
+			m_data->gm.store->SetLevel(storeLvl);
+
+			std::cout << "SORC HP: " << m_data->gm.hSorceress->GetHealth();
+			std::cout << "BLACKSMITH: " << m_data->gm.blacksmith->GetLevel();
+
 			// change scene to Story intro
-			auto storyIntro = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			auto storyIntro = std::make_unique<MapScene>(MapScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));
 		}
 
@@ -240,6 +425,7 @@ namespace HJ {
 			Engine2D::GetWin().close();
 		}
 
+		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
 	void MainMenuScene::Draw(float t_deltaTime)
