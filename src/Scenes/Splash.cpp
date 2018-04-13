@@ -24,7 +24,11 @@ namespace HJ {
 	void SplashScene::Init()
 	{
 		/* < GLOBAL PRE-LOAD */
-
+		// music
+		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
+		m_data->assets.LoadMusic("AdventureTheme", ADVENTURE_FANTASY_THEME);
+		// sounds
+		// ...
 		// Load resources (to be used repeatingly)
 		// General assets
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
@@ -96,6 +100,10 @@ namespace HJ {
 		text->SetVisible(false);
 		text->SetAlive(true);
 		text->Init();
+
+		m_data->assets.GetMusic("EpicTheme").setLoop(true);
+		m_data->assets.GetMusic("EpicTheme").setVolume(50);
+		m_data->assets.GetMusic("EpicTheme").play();
 
 		// Add to ents (local) map
 		AddEntity("E_zSplashBG", bg);

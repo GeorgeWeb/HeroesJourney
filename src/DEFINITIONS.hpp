@@ -102,4 +102,10 @@
 // Heroes Skills global definitions
 #define TEST_SKILL_BTN "res/img/encounter/skill-frame.png"
 
+// MUSIC THEMES
+#define EPIC_FANTASY_THEME "res/music/themes/epic-fantasy-theme.wav"
+#define ADVENTURE_FANTASY_THEME "res/music/themes/adventure-fantasy-theme.wav"
+
+// MUSIC SOUNDS
+
 #endif // !DEFINITIONS_H
