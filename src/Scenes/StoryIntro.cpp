@@ -118,8 +118,8 @@ namespace HJ {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				// switch to tutorial scene
-				auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				m_data->machine.AddState(std::move(tutorial));
+				auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+				m_data->machine.AddState(tutorial);
 
 				
 			}
@@ -151,8 +151,8 @@ namespace HJ {
 		if (m_dialog->HasFinished())
 		{
 			// switch to tutorial scene
-			auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-			m_data->machine.AddState(std::move(tutorial));
+			auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			m_data->machine.AddState(tutorial);
 
 		}
 		else

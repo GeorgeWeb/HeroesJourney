@@ -46,7 +46,7 @@ namespace HJ { namespace Encounters {
 		
 		// tutorial's evil ai - frost golem
 		m_activeBoss = std::make_shared<Hero>();
-		m_activeBoss->SetStats("Frost Golem", HERO_TYPE::EVIL, 200, 15, 15, 15);
+		m_activeBoss->SetStats("Frost Golem", HERO_TYPE::EVIL, 100, 15, 15, 15);
 		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));

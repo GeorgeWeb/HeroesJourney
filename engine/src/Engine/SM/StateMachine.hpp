@@ -8,13 +8,13 @@
 
 namespace Engine { namespace SM {
 
-	using StateRef = std::unique_ptr<State>;
+	using StateRef = std::shared_ptr<State>;
 
 	class StateMachine final
 	{
 		public:
 			StateMachine() = default;
-			~StateMachine() = default;
+			~StateMachine();
 
 			void AddState(StateRef t_state, bool t_replacing = true);
 			void RemoveState();

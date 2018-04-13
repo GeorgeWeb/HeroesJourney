@@ -414,10 +414,10 @@ namespace HJ {
 		auto coinTextComp = m_data->ents.Find<Entity>("E_0CoinText");
 		#pragma endregion
 
-		static std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
-		static std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
+		std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
+		std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
 			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp, healthComp, healthComp, manaComp, coinComp });
-		static std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
+		std::vector<SpriteComponent*> compsClickable({ castleComp, frameComp, forestComp, mountainsComp, seaComp,
 			evilCastleComp, knightComp, sorcComp, rogueComp, bardComp });
 
 		sf::Event event;
@@ -433,16 +433,16 @@ namespace HJ {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
 				// Switch scenes (to Pause Menu)
-				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
-				m_data->machine.AddState(std::move(pauseMenuState), false);
+				auto pauseMenuState = std::make_shared<PauseMenuScene>(PauseMenuScene(m_data));
+				m_data->machine.AddState(pauseMenuState, false);
 			}
 
 			//check for castle click
 			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
 				castleBtn->SetClicked(true);
-				auto CastleInterior = std::make_unique<CastleScene>(CastleScene(m_data));
-				m_data->machine.AddState(std::move(CastleInterior), false);
+				auto CastleInterior = std::make_shared<CastleScene>(CastleScene(m_data));
+				m_data->machine.AddState(CastleInterior, false);
 			}
 			
 			//check for forest click
@@ -489,8 +489,14 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
-					auto ForestEncounter = std::make_unique<Encounters::TrollEncounter>(Encounters::TrollEncounter(m_data));
-					m_data->machine.AddState(std::move(ForestEncounter));
+
+					m_encounterPopup->OnClose();
+					m_encounterPopup->showOnCreate = false;
+
+					auto ForestEncounter = std::make_shared<Encounters::TrollEncounter>(Encounters::TrollEncounter(m_data));
+					m_data->machine.AddState(ForestEncounter, true);
+
+					
 				};
 			}
 
@@ -537,6 +543,10 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
+
+					m_encounterPopup->OnClose();
+					m_encounterPopup->showOnCreate = false;
+
 					auto MountainEncounter = std::make_unique<Encounters::CyclopEncounter>(Encounters::CyclopEncounter(m_data));
 					m_data->machine.AddState(std::move(MountainEncounter));
 				};
@@ -585,8 +595,12 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
-					auto SeaEncounter = std::make_unique<Encounters::HarpyEncounter>(Encounters::HarpyEncounter(m_data));
-					m_data->machine.AddState(std::move(SeaEncounter));
+
+					m_encounterPopup->OnClose();
+					m_encounterPopup->showOnCreate = false;
+
+					auto SeaEncounter = std::make_shared<Encounters::HarpyEncounter>(Encounters::HarpyEncounter(m_data));
+					m_data->machine.AddState(SeaEncounter);
 				};
 			}
 
@@ -633,8 +647,12 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
-					auto frostCastleEncounter = std::make_unique<Encounters::FinalBossFMEncounter>(Encounters::FinalBossFMEncounter(m_data));
-					m_data->machine.AddState(std::move(frostCastleEncounter));
+
+					m_encounterPopup->OnClose();
+					m_encounterPopup->showOnCreate = false;
+
+					auto frostCastleEncounter = std::make_shared<Encounters::FinalBossFMEncounter>(Encounters::FinalBossFMEncounter(m_data));
+					m_data->machine.AddState(frostCastleEncounter);
 				};
 			}
 

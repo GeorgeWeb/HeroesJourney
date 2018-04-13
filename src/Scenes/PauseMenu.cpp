@@ -276,8 +276,8 @@ namespace HJ {
 			menuBtn->SetResolve(false);
 
 			// change scene to Main Menu
-			auto SettingsScreen = std::make_unique<MainMenuScene>(MainMenuScene(m_data));
-			m_data->machine.AddState(std::move(SettingsScreen));
+			auto SettingsScreen = std::make_shared<MainMenuScene>(MainMenuScene(m_data));
+			m_data->machine.AddState(SettingsScreen);
 
 			// resume to game scene
 			m_data->machine.RemoveState();
@@ -288,8 +288,8 @@ namespace HJ {
 		{
 			setBtn->SetResolve(false);
 			// change scene to Settings
-			auto SettingsScreen = std::make_unique<SettingsScene>(SettingsScene(m_data));
-			m_data->machine.AddState(std::move(SettingsScreen), false);
+			auto SettingsScreen = std::make_shared<SettingsScene>(SettingsScene(m_data));
+			m_data->machine.AddState(SettingsScreen, false);
 		}
 
 		auto returnBtn = m_data->ents.Find<Button>("E_xPauseReturnBtn")->GetClickableComponent();

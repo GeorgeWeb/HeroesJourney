@@ -3,21 +3,23 @@
 
 #include "BaseEncounter.hpp"
 
-namespace HJ { namespace Encounters {
+namespace HJ {
+	namespace Encounters {
 
-	using namespace Engine;
+		using namespace Engine;
 
-	class TrollEncounter final : public BaseEncounterScene
-	{
+		class TrollEncounter final : public BaseEncounterScene
+		{
 		public:
 			TrollEncounter(GameDataRef t_data);
 
 			void Init() override final;
 
-		// private:
-			// GameDataRef m_data;
-	};
+		private:
+			GameDataRef m_data;
+		};
 
-} }
+	}
+}
 
 #endif // !TROLL_ENCOUNTER_H

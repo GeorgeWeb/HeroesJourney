@@ -418,16 +418,16 @@ namespace HJ { namespace Encounters {
 				hero->SetHealth(hero->GetMaxHealth());
 				hero->SetMana(hero->GetMaxMana());
 			}
-			outcomeState = std::make_unique<BattleOutcomeScene>(BattleOutcomeScene(m_data));
-			m_data->machine.AddState(std::move(outcomeState));
+			outcomeState = std::make_shared<BattleOutcomeScene>(BattleOutcomeScene(m_data));
+			m_data->machine.AddState(outcomeState);
 			break;
 			
 			// Win condition logic
 			case BATTLE_STATUS::WON:
 			// Load win screen
 			m_data->gm.inn->ApplyBonus(m_activeHeroes);
-			outcomeState = std::make_unique<BattleOutcomeScene>(BattleOutcomeScene(m_data));
-			m_data->machine.AddState(std::move(outcomeState));
+			outcomeState = std::make_shared<BattleOutcomeScene>(BattleOutcomeScene(m_data));
+			m_data->machine.AddState(outcomeState);
 			break;
 			
 			// Playing condition logic (default case)

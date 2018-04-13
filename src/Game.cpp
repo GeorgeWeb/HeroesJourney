@@ -66,8 +66,8 @@ namespace HJ {
 		Controls::Init();
 
 		// add first state/screen
-		auto initState = std::make_unique<SplashScene>(SplashScene(m_data));
-		m_data->machine.AddState(std::move(initState));
+		auto initState = std::make_shared<SplashScene>(SplashScene(m_data));
+		m_data->machine.AddState(initState);
 		
 		// start the game loop
 		GameLoop();

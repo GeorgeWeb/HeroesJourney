@@ -337,8 +337,8 @@ namespace HJ {
 			m_data->gm.unlockedEncounters = levels;
 
 			// change scene to Story intro
-			auto storyIntro = std::make_unique<MapScene>(MapScene(m_data));
-			m_data->machine.AddState(std::move(storyIntro));
+			auto storyIntro = std::make_shared<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(storyIntro);
 		}
 
 		auto setBtn = m_data->ents.Find<Button>("E_xSetBtn")->GetClickableComponent();
@@ -346,8 +346,8 @@ namespace HJ {
 		{
 			setBtn->SetResolve(false);
 			// change scene to Settings
-			auto SettingsScreen = std::make_unique<SettingsScene>(SettingsScene(m_data));
-			m_data->machine.AddState(std::move(SettingsScreen), false);
+			auto SettingsScreen = std::make_shared<SettingsScene>(SettingsScene(m_data));
+			m_data->machine.AddState(SettingsScreen, false);
 		}
 
 		auto quitBtn = m_data->ents.Find<Button>("E_xQBtn")->GetClickableComponent();

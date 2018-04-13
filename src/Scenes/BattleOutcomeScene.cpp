@@ -116,32 +116,32 @@ namespace HJ {
 
 				if (m_data->gm.nextEncounter == 0)
 				{
-					auto map = std::make_unique<MapScene>(MapScene(m_data));
-					m_data->machine.AddState(std::move(map));
+					auto map = std::make_shared<MapScene>(MapScene(m_data));
+					m_data->machine.AddState(map);
 				}
 
 				else if (m_data->gm.nextEncounter == 1)
 				{
-					auto meetbard = std::make_unique<MeetBardScene>(MeetBardScene(m_data));
-					m_data->machine.AddState(std::move(meetbard));
+					auto meetbard = std::make_shared<MeetBardScene>(MeetBardScene(m_data));
+					m_data->machine.AddState(meetbard);
 				}
 
 				else if (m_data->gm.nextEncounter == 2)
 				{
-					auto meetrogue = std::make_unique<MeetRogueScene>(MeetRogueScene(m_data));
-					m_data->machine.AddState(std::move(meetrogue));
+					auto meetrogue = std::make_shared<MeetRogueScene>(MeetRogueScene(m_data));
+					m_data->machine.AddState(meetrogue);
 				}
 
 				else if (m_data->gm.nextEncounter == 3)
 				{
-					auto meetsorc = std::make_unique<MeetSorcScene>(MeetSorcScene(m_data));
-					m_data->machine.AddState(std::move(meetsorc));
+					auto meetsorc = std::make_shared<MeetSorcScene>(MeetSorcScene(m_data));
+					m_data->machine.AddState(meetsorc);
 				}
 
 				else if (m_data->gm.nextEncounter == 4)
 				{
-					auto finalstory = std::make_unique<FinalStoryScene>(FinalStoryScene(m_data));
-					m_data->machine.AddState(std::move(finalstory));
+					auto finalstory = std::make_shared<FinalStoryScene>(FinalStoryScene(m_data));
+					m_data->machine.AddState(finalstory);
 				}
 			}
 		

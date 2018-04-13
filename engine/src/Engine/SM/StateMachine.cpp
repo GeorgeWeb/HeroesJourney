@@ -1,12 +1,17 @@
 #include "StateMachine.hpp"
 
 namespace Engine { namespace SM {
+	
+	StateMachine::~StateMachine()
+	{
+
+	}
 
 	void StateMachine::AddState(StateRef t_state, bool t_replacing)
 	{
 		m_isAdding = true;
 		m_isReplacing = t_replacing;
-		m_newState = std::move(t_state); ///> moving the ownership of the state to a new one
+		m_newState = t_state; ///> moving the ownership of the state to a new one
 	}
 
 	void StateMachine::RemoveState()

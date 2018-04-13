@@ -147,8 +147,8 @@ namespace HJ {
 	{
 		if (m_dialog->HasFinished())
 		{
-			auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
-			m_data->machine.AddState(std::move(mapscene));
+			auto mapscene = std::make_shared<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(mapscene);
 
 		}
 		else
