@@ -44,11 +44,24 @@ namespace HJ {
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StoryIntroBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		bgSprite->GetSprite().scale(0.9f, 0.85f);
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 		bg->Init();
+
+		// Click to continue text
+		auto continueTxt = std::make_shared<Entity>();
+		auto titleTxtComp = continueTxt->AddComponent<TextComponent>("C_ContinueText");
+		titleTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		titleTxtComp->GetText().setCharacterSize(18);
+		titleTxtComp->GetText().setString("Click to continue...");
+		titleTxtComp->GetText().setStyle(sf::Text::Bold);
+		titleTxtComp->GetText().setColor(sf::Color(55, 55, 55, 255));
+		continueTxt->SetPosition(sf::Vector2f(
+			(SCREEN_WIDTH - titleTxtComp->GetText().getGlobalBounds().width) * .97f,
+			(SCREEN_HEIGHT - titleTxtComp->GetText().getGlobalBounds().height) * 0.03f));
+		continueTxt->SetAlive(true);
+		continueTxt->SetVisible(true);
 
 		// create entities
 		m_dialog = std::make_shared<Dialog>();
@@ -58,7 +71,7 @@ namespace HJ {
 			"", "", // RIGHT CHAR
 			"Narrator: against the evil frost mage and his minions. ", "", // LEFT CHAR
 			"", "",  // RIGHT CHAR
-			"Narrator: Our story begins with the kingdom of our heroes besiged ", "by the forces of the evil frost mage. ", //LEFT CHAR
+			"Narrator: Our story begins with the kingdom of our heroes besieged ", "by the forces of the evil frost mage. ", //LEFT CHAR
 			"","", //Right char
 			"Narrator: The brave Knight takes up arms to defend the castle. ",""
 		});
@@ -79,6 +92,7 @@ namespace HJ {
 		
 		// populate the entities container
 		AddEntity("E_zDialogBG", bg);
+		AddEntity("E_aContinueText", continueTxt);
 		AddEntity("E_mStoryIntroDialog", m_dialog);
 	}
 

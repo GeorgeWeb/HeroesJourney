@@ -26,21 +26,10 @@
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
 #define SPLASH_GAME_LOGO_SPRITESHEET "res/img/splash/logo-animated.png"
 
-// MainMenu state global definitions
-#define MAINMENU_SCENE_BACKGROUND "res/img/main_menu/main-menu-bg.png"
-#define MAINMENU_STARTGAME_BUTTON "res/img/main_menu/startbtn.png"
-#define MAINMENU_QUITGAME_BUTTON "res/img/main_menu/exitbtn.png"
-#define MAINMENU_SETTINGS_BUTTON "res/img/main_menu/settingsbtn.png"
-
 //Settins state global definitions
 #define SETTING_SCENE_BACKGROUND "res/img/settings/settingscene.png"
-#define SETTING_SCENE_BACKBTN "res/img/settings/backbtn.png"
-#define SETTING_SCENE_SAVEBTN "res/img/settings/savebtn.png"
-#define SETTING_SCENE_UPBTN "res/img/settings/upbtn.png"
-#define SETTING_SCENE_DOWNBTN "res/img/settings/downbtn.png"
 #define SETTING_SCENE_SELECTEDBTN "res/img/settings/selectedset.png"
 #define SETTING_SCENE_UNSELECTEDBTN "res/img/settings/unselectedset.png"
-#define SETTING_SCENE_TEXTBOX "res/img/settings/textbox.png"
 
 // Main Game / Map screen state global definitions
 #define MAP_SCENE_BACKGROUND "res/img/map/game-map-bg.png"
@@ -83,15 +72,15 @@
 #define ENCOUNTER_POPUP_STORY "res/img/map/encounter_popup/story_img.png"
 
 // Story screens global definitions
-#define STORY_INTRO_SCENE_BACKGROUND "res/img/game-map-bg.png"
+#define STORY_INTRO_SCENE_BACKGROUND "res/img/map/game-map-bg.png"
 #define MEET_BARD_SCENE_BACKGROUND "res/img/encounter/tutorial.png"
 #define MEET_SORC_SCENE_BACKGROUND "res/img/encounter/encounter1.png"
 #define MEET_ROGUE_SCENE_BACKGROUND "res/img/encounter/encounter2.png"
 #define FINAL_STORY_SCENE_BACKGROUND "res/img/encounter/encounter3.png"
-#define STORY_INTRO_SCENE_HERO "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_CAPATIN "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_HERO "res/img/characters/heroes/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN "res/img/characters/heroes/hero.png"
+#define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/heroes/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/heroes/hero.png"
 
 // Encounter screens global definitions
 #define ENCOUNTER_TUTORIAL_BACKGROUND "res/img/encounter/tutorial.png"

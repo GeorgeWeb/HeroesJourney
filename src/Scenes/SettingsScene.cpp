@@ -21,13 +21,8 @@ namespace HJ {
 	{
 		//load resources
 		m_data->assets.LoadTexture("Tex_SettingsBG", SETTING_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_BackBtn", SETTING_SCENE_BACKBTN);
-		m_data->assets.LoadTexture("Tex_SaveBtn", SETTING_SCENE_SAVEBTN);
-		m_data->assets.LoadTexture("Tex_UpBtn", SETTING_SCENE_UPBTN);
-		m_data->assets.LoadTexture("Tex_DownBtn", SETTING_SCENE_DOWNBTN);
 		m_data->assets.LoadTexture("Tex_SelectBtn", SETTING_SCENE_SELECTEDBTN);
 		m_data->assets.LoadTexture("Tex_UnSelectBtn", SETTING_SCENE_UNSELECTEDBTN);
-		m_data->assets.LoadTexture("Tex_TextBox", SETTING_SCENE_TEXTBOX);
 
 		//background
 		auto bg = std::make_shared<Entity>();

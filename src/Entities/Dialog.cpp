@@ -92,6 +92,7 @@ namespace HJ { namespace Entities {
 				/* < Display Logic */
 				convo->SetFont(t_font);
 				convo->GetText().setString(m_texts.at(i));
+				convo->GetText().setStyle(sf::Text::Bold);
 				convo->GetText().setCharacterSize(24);
 				unsigned int offsetY = count * 50;
 				convo->GetText().setPosition(sf::Vector2f((SCREEN_WIDTH * 0.5f - convo->GetText().getGlobalBounds().width * 0.5f) , 590.0f + offsetY));

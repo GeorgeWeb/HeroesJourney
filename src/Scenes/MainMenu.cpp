@@ -26,9 +26,6 @@ namespace HJ {
 	{
 		// Load resources
 		m_data->assets.LoadTexture("Tex_MainBG", SPLASH_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_StartBtn", MAINMENU_STARTGAME_BUTTON);
-		m_data->assets.LoadTexture("Tex_SettingsBtn", MAINMENU_SETTINGS_BUTTON);
-		m_data->assets.LoadTexture("Tex_QuitBtn", MAINMENU_QUITGAME_BUTTON);
 
 		//Background
 		auto bg = std::make_shared<Entity>();
