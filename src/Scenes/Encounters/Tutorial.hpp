@@ -14,8 +14,8 @@ namespace HJ { namespace Encounters {
 
 			void Init() override final;
 
-		private:
-			GameDataRef m_data;
+		//private:
+			//GameDataRef m_data;
 	};
 
 } }

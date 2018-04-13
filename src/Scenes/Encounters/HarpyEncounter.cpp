@@ -15,8 +15,7 @@ namespace HJ {
 		using namespace Entities;
 
 		HarpyEncounter::HarpyEncounter(GameDataRef t_data)
-			: BaseEncounterScene(t_data),
-			m_data(t_data)
+			: BaseEncounterScene(t_data)
 		{ }
 
 		void HarpyEncounter::Init()

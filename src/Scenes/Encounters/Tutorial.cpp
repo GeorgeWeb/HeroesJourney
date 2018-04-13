@@ -14,8 +14,7 @@ namespace HJ { namespace Encounters {
 	using namespace Entities;
 
 	TutorialScene::TutorialScene(GameDataRef t_data)
-		: BaseEncounterScene(t_data),
-		  m_data(t_data)
+		: BaseEncounterScene(t_data)
 	{ }
 
 	void TutorialScene::Init()
