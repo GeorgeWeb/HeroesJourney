@@ -52,19 +52,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
 		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
 
-		// serializable game entities
-		// buildings
-		m_data->gm.infirmary = std::make_shared<Infirmary>();
-		m_data->gm.blacksmith = std::make_shared<Blacksmith>();
-		m_data->gm.library = std::make_shared<Library>();
-		m_data->gm.inn = std::make_shared<Inn>();
-		m_data->gm.store = std::make_shared<GeneralStore>();
-		// heroes
-		m_data->gm.hKnight = std::make_shared<Knight>();
-		m_data->gm.hBard = std::make_shared<Bard>();
-		m_data->gm.hSorceress = std::make_shared<Sorceress>();
-		m_data->gm.hRogue = std::make_shared<Rogue>();
-
 		/* /> GLOBAL PRE-LOAD */
 
 		// Load Splash screen assets

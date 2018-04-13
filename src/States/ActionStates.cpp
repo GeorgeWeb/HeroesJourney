@@ -36,17 +36,17 @@ namespace HJ { namespace States {
 		}
 		else if (!m_canChoose && m_heuristicEval->IsComplete())
 		{
-			if (m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
+			if (m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::DEFENCE)
 			{
 				m_canChoose = false;
 				m_heuristicEval->SetComplete(false);
-				m_SM->ChangeState("StepIn");
+				m_SM->ChangeState("ExecSkill");
 			}
 			else
 			{
 				m_canChoose = false;
 				m_heuristicEval->SetComplete(false);
-				m_SM->ChangeState("ExecSkill");
+				m_SM->ChangeState("StepIn");
 			}
 		}
 	}
@@ -57,6 +57,19 @@ namespace HJ { namespace States {
 		std::cout << m_SM->endPos.x;
 		m_canStepIn = true;
 		m_canCheck = false;
+		if (m_heuristicEval->GetUsedSkill()->dmgBase != DAMAGE_BASE::MELEE)
+		{
+			if (m_SM->GetInitiator()->className() == "Rogue")
+			{
+				m_SM->endPos.x = (m_SM->endPos.x - m_SM->GetInitiator()->GetPosition().x > 0) ? m_SM->endPos.x / 2.0f : m_SM->endPos.x * 2.5f;
+				m_SM->speed *= 0.5f;
+			}
+			else
+			{
+				m_SM->endPos.x = (m_SM->endPos.x - m_SM->GetInitiator()->GetPosition().x > 0) ? m_SM->endPos.x / 3.0f : m_SM->endPos.x * 2.5f;
+				m_SM->speed *= 0.5f;
+			}
+		}
 		m_direction = (m_SM->endPos.x - m_SM->GetInitiator()->GetPosition().x > 0) ? 1 : -1;
 	}
 
@@ -118,10 +131,10 @@ namespace HJ { namespace States {
 				std::cout << "HP left: " << hero->GetHealth() << "to " << "!! EEMI TOLKOZ !!\n\n";
 			}
 			
-			if(m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::MELEE)
-				m_SM->ChangeState("StepBack");
-			else
+			if(m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::DEFENCE)
 				m_SM->ChangeState("Finish");
+			else
+				m_SM->ChangeState("StepBack");
 		}
 	}
 

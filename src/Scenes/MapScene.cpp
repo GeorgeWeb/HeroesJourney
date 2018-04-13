@@ -44,7 +44,6 @@ namespace HJ {
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_MapBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//properties
-		bgSprite->GetSprite().scale(0.9f, 0.85f);
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);

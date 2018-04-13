@@ -14,7 +14,7 @@ namespace HJ { namespace Entities {
 			m_mana = 75;
 			m_maxMana = 75;
 			m_armour = 20;
-			m_damage = 50;
+			m_damage = 35;
 			m_dodgeChance = 5;
 			m_critChance = 30;
 		}

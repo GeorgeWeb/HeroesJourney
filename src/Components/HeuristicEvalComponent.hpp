@@ -50,6 +50,8 @@ namespace HJ { namespace Components {
 			void FrostGolemEval();
 			void TrollEval();
 			void CyclopsEval();
+			void HarpyEval();
+			void FrostMageEval();
 			// generic rage behaviour
 			void RageBehaviour();
 	};

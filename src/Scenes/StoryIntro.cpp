@@ -1,5 +1,9 @@
 #include "PauseMenu.hpp"
 #include "Encounters/Tutorial.hpp"
+#include "Encounters/TrollEncounter.hpp"
+#include "Encounters/CyclopEncounter.hpp"
+#include "Encounters/HarpyEncounter.hpp"
+#include "Encounters/FinalBossFMEncounter.hpp"
 #include "MapScene.hpp"
 
 #include <sstream>
@@ -91,12 +95,12 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				////switch to tutorial scene
-				//auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				//m_data->machine.AddState(std::move(tutorial));
+				// switch to tutorial scene
+				auto tutorial = std::make_unique<Encounters::FinalBossFMEncounter>(Encounters::FinalBossFMEncounter(m_data));
+				m_data->machine.AddState(std::move(tutorial));
 
-				auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
-				m_data->machine.AddState(std::move(mapscene));
+				// auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
+				// m_data->machine.AddState(std::move(mapscene));
 			}
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
@@ -117,7 +121,6 @@ namespace HJ {
 				m_offset += 2;
 				std::cout << "not empty /n";
 				//m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
-
 			}
 		}
 	}
@@ -126,9 +129,12 @@ namespace HJ {
 	{
 		if (m_dialog->HasFinished())
 		{
-			//switch to tutorial scene
-			auto MeetBard = std::make_unique<MeetBardScene>(MeetBardScene(m_data));
-			m_data->machine.AddState(std::move(MeetBard));
+			// switch to tutorial scene
+			auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			m_data->machine.AddState(std::move(tutorial));
+
+			// auto MeetBard = std::make_unique<MeetBardScene>(MeetBardScene(m_data));
+			// m_data->machine.AddState(std::move(MeetBard));
 
 		}
 		else

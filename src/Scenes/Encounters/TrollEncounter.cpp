@@ -1,4 +1,4 @@
-#include "Tutorial.hpp"
+#include "TrollEncounter.hpp"
 #include "../PauseMenu.hpp"
 #include "../MapScene.hpp"
 
@@ -13,15 +13,16 @@ namespace HJ { namespace Encounters {
 	using namespace Engine::Components;
 	using namespace Entities;
 
-	TutorialScene::TutorialScene(GameDataRef t_data)
+	TrollEncounter::TrollEncounter(GameDataRef t_data)
 		: BaseEncounterScene(t_data),
 		  m_data(t_data)
 	{ }
 
-	void TutorialScene::Init()
+	void TrollEncounter::Init()
 	{
-		m_data->assets.LoadTexture("Tex_TutorialBG", ENCOUNTER_TUTORIAL_BACKGROUND);
-	
+		m_data->assets.LoadTexture("Tex_TrollBattleBG", ENCOUNTER_TROLL_BACKGROUND);
+
+		// ......... //
 		// populate the active heroes list with the currently unlocked ones before the battle starts
 		m_activeHeroes.push_back(m_data->gm.hKnight);
 		// set the turn count to the size of all active heroes
@@ -29,35 +30,36 @@ namespace HJ { namespace Encounters {
 
 		// Background
 		auto bg = std::make_shared<Entity>();
-		auto bgSprite = bg->AddComponent<SpriteComponent>("C_TutorialBGSprite");
+		auto bgSprite = bg->AddComponent<SpriteComponent>("C_TrollBattleBGSprite");
 		// define bg sprite
-		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TutorialBG"));
+		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_TrollBattleBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		// properties
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 		bg->Init();
-		
+
 		// no unlocked heroes apart from the main character - the Knight
 		m_data->gm.hKnight->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hKnight->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 		m_data->gm.hKnight->Init();
-		
-		// tutorial's evil ai - frost golem
+
+		int health = m_data->gm.hKnight->GetHealth() * 2;
+		// encounters's evil ai - forest troll
 		m_activeBoss = std::make_shared<Hero>();
-		m_activeBoss->SetStats("Frost Golem", HERO_TYPE::EVIL, 200, 15, 15, 15);
+		m_activeBoss->SetStats("Troll", HERO_TYPE::EVIL, health, 23, 12, 7);
 		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
 		m_activeBoss->Init();
 		m_activeBoss->GetSpriteComponent()->GetSprite().setScale(7.5f, 7.5f);
 		// Add skills
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<BasicAttack>());
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<BasicAttack>());
-		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<BasicDefence>()); ///> rage skill!
-		
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<Stomp>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<Smack>());
+		m_activeBoss->GetSkillComponent()->AddSkill(SKILL_NAME::RAGE, std::make_shared<RageRawr>()); ///> rage skill!
+
 		// Baseline positions
 		// good
 		goodBaseLine = m_data->gm.hKnight->GetPosition();
@@ -122,6 +124,7 @@ namespace HJ { namespace Encounters {
 		//properties
 		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.65f, SCREEN_HEIGHT * 0.67f));
 		hpBtn->Init();
+		// hpBtnText->GetText().setPosition(hpBtn->GetPosition().x, hpBtn->GetPosition().y);
 		hpBtnText->GetText().setPosition(
 			hpBtn->GetPosition().x + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.00001f) - hpBtnText->GetText().getGlobalBounds().width * 0.00001f,
 			hpBtn->GetPosition().y + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.85f) - hpBtnText->GetText().getGlobalBounds().height * 0.85f
@@ -203,8 +206,8 @@ namespace HJ { namespace Encounters {
 		pauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.67f));
 		pauseBtn->Init();
 		// center text
-		pauseBtnText->GetText().setPosition(pauseBtn->GetPosition().x + pauseBtnText->GetText().getGlobalBounds().width * 0.7f, 
-								pauseBtn->GetPosition().y + pauseBtnText->GetText().getGlobalBounds().height * 1.2f);
+		pauseBtnText->GetText().setPosition(pauseBtn->GetPosition().x + pauseBtnText->GetText().getGlobalBounds().width * 0.7f,
+			pauseBtn->GetPosition().y + pauseBtnText->GetText().getGlobalBounds().height * 1.2f);
 		m_allUIcomps.push_back(pauseBtnSprite.get());
 
 		// Concede button
@@ -246,6 +249,22 @@ namespace HJ { namespace Encounters {
 		knightStatsTxt->SetVisible(true);
 		knightStatsTxt->Init();
 
+		/*
+		// Text indicating bard stats
+		auto bardStatsTxt = std::make_shared<Entity>();
+		auto bardStatsTxtComp = bardStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
+		bardStatsTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		bardStatsTxtComp->GetText().setCharacterSize(14);
+		heroHP = std::to_string(m_data->gm.hBard->GetHealth()) + "/" + std::to_string(m_data->gm.hBard->GetMaxHealth()) + "HP";
+		heroMP = std::to_string(m_data->gm.hBard->GetMana()) + "/" + std::to_string(m_data->gm.hBard->GetMaxMana()) + "MP";
+		bardStatsTxtComp->GetText().setString(m_data->gm.hBard->className() + ": " + heroHP + " | " + heroMP);
+		bardStatsTxtComp->GetText().setColor(sf::Color::White);
+		bardStatsTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.75f));
+		bardStatsTxt->SetAlive(true);
+		bardStatsTxt->SetVisible(true);
+		bardStatsTxt->Init();
+		*/
+
 		// Text indicating BOSS stats
 		auto bossStatsTxt = std::make_shared<Entity>();
 		auto bossStatsTxtComp = bossStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
@@ -260,10 +279,12 @@ namespace HJ { namespace Encounters {
 		bossStatsTxt->Init();
 
 		m_statistics.push_back(bossStatsTxt);
+		// m_statistics.push_back(bardStatsTxt);
 		m_statistics.push_back(knightStatsTxt);
-		
+
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
+		// AddEntity("E_HeroBard", m_data->gm.hBard);
 		AddEntity("E_SceneBoss", m_activeBoss);
 		AddEntity("E_ActionResolver", m_actionResolver);
 		AddEntity("E_xTutorialUiFrame", uiFrame);
@@ -276,10 +297,11 @@ namespace HJ { namespace Encounters {
 		AddEntity("E_aPauseBtn", pauseBtn);
 		AddEntity("E_aConcedeBtn", concedeBtn);
 		AddEntity("E_aKnightStatsTxt", knightStatsTxt);
+		// AddEntity("E_aBardStatsTxt", bardStatsTxt);
 		AddEntity("E_aBossStatsTxt", bossStatsTxt);
-	
+
 		// list of the UI button sprites to be disabled/enabled on turn change
-		std::vector<SpriteComponent*> battleBtnSprites { atkBtnSprite.get(), defBtnSprite.get(), hpBtnSprite.get(), mpBtnSprite.get(), skill1BtnSprite.get(), skill2BtnSprite.get() };
+		std::vector<SpriteComponent*> battleBtnSprites{ atkBtnSprite.get(), defBtnSprite.get(), hpBtnSprite.get(), mpBtnSprite.get(), skill1BtnSprite.get(), skill2BtnSprite.get() };
 		m_battleUIButtons.insert(m_battleUIButtons.end(), battleBtnSprites.begin(), battleBtnSprites.end());
 
 		// unify all hero types / GOOD and EVIL
@@ -289,7 +311,6 @@ namespace HJ { namespace Encounters {
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
-		std::cout << "FIRST TURN\n";
 		NextTurn();
 	}
 

@@ -82,16 +82,23 @@
 #define ENCOUNTER_POPUP_OPPONENT "res/img/map/encounter_popup/opponent_img.png"
 #define ENCOUNTER_POPUP_STORY "res/img/map/encounter_popup/story_img.png"
 
-// StoryIntro screen global definitions
+// Story screens global definitions
 #define STORY_INTRO_SCENE_BACKGROUND "res/img/game-map-bg.png"
-#define STORY_INTRO_SCENE_HERO "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_CAPATIN "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
-#define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
 #define MEET_BARD_SCENE_BACKGROUND "res/img/encounter/tutorial.png"
 #define MEET_SORC_SCENE_BACKGROUND "res/img/encounter/encounter1.png"
 #define MEET_ROGUE_SCENE_BACKGROUND "res/img/encounter/encounter2.png"
 #define FINAL_STORY_SCENE_BACKGROUND "res/img/encounter/encounter3.png"
+#define STORY_INTRO_SCENE_HERO "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/hero.png"
+#define STORY_INTRO_SCENE_CAPATIN_ICON "res/img/characters/hero.png"
+
+// Encounter screens global definitions
+#define ENCOUNTER_TUTORIAL_BACKGROUND "res/img/encounter/tutorial.png"
+#define ENCOUNTER_TROLL_BACKGROUND "res/img/encounter/encounter1.png"
+#define ENCOUNTER_CYCLOP_BACKGROUND "res/img/encounter/encounter2.png"
+#define ENCOUNTER_HARPY_BACKGROUND "res/img/encounter/encounter3.png"
+#define ENCOUNTER_FROST_MAGE_BACKGROUND "res/img/encounter/encounter4.png"
 
 // Re-usable encounter assets global definitions
 #define BASIC_ATTACK_BTN "res/img/encounter/attackbtn.png"

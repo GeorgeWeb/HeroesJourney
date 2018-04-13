@@ -14,7 +14,7 @@ namespace HJ { namespace Entities {
 			m_mana = 80;
 			m_maxMana = 80;
 			m_armour = 10;
-			m_damage = 30;
+			m_damage = 15;
 			m_dodgeChance = 15;
 			m_critChance = 20;
 		}
@@ -30,7 +30,7 @@ namespace HJ { namespace Entities {
 		Hero::Init();
 
 		// Add skills
-		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicMagicAttack>());
 		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<OffenseAura>());
 		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<DeffenseAura>());

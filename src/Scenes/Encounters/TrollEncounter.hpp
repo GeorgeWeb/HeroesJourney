@@ -1,5 +1,5 @@
-#ifndef TUTORIAL_H
-#define TUTORIAL_H
+#ifndef TROLL_ENCOUNTER_H
+#define TROLL_ENCOUNTER_H
 
 #include "BaseEncounter.hpp"
 
@@ -7,10 +7,10 @@ namespace HJ { namespace Encounters {
 
 	using namespace Engine;
 
-	class TutorialScene : public BaseEncounterScene
+	class TrollEncounter final : public BaseEncounterScene
 	{
 		public:
-			TutorialScene(GameDataRef t_data);
+			TrollEncounter(GameDataRef t_data);
 
 			void Init() override final;
 
@@ -20,4 +20,4 @@ namespace HJ { namespace Encounters {
 
 } }
 
-#endif // !TUTORIAL_H
+#endif // !TROLL_ENCOUNTER_H

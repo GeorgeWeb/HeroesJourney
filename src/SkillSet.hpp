@@ -132,7 +132,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party DMG boost";
-				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
 				manaNeed = 25;
@@ -148,7 +148,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party ARM boost";
-				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
 				manaNeed = 25;
@@ -210,7 +210,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_TestSkillBtn";
 				effectDesc = "Party frost resistance";
-				dmgBase = DAMAGE_BASE::DEFENCE;
+				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FROST;
 				target = SKILL_TARGET::ALLY;
 				manaNeed = 50;

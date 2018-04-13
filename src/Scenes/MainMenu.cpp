@@ -1,9 +1,10 @@
+#include "../DEFINITIONS.hpp"
+
 #include "MainMenu.hpp"
 #include "StoryIntro.hpp"
-#include "Encounters/Tutorial.hpp"
-#include "../DEFINITIONS.hpp"
 #include "MapScene.hpp"
 #include "SettingsScene.hpp"
+
 #include <Engine/ECM/Components/ClickableComponent.hpp>
 #include "../Entities/Button.hpp"
 
@@ -218,8 +219,22 @@ namespace HJ {
 		if (startBtn->CanResolve())
 		{
 			startBtn->SetResolve(false);
+
+			// serializable game entities
+			// buildings
+			m_data->gm.infirmary = std::make_shared<Infirmary>();
+			m_data->gm.blacksmith = std::make_shared<Blacksmith>();
+			m_data->gm.library = std::make_shared<Library>();
+			m_data->gm.inn = std::make_shared<Inn>();
+			m_data->gm.store = std::make_shared<GeneralStore>();
+			// heroes
+			m_data->gm.hKnight = std::make_shared<Knight>();
+			m_data->gm.hBard = std::make_shared<Bard>();
+			m_data->gm.hSorceress = std::make_shared<Sorceress>();
+			m_data->gm.hRogue = std::make_shared<Rogue>();
+
 			// change scene to Story intro
-			auto storyIntro = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+			auto storyIntro = std::make_unique<StoryIntroScene>(StoryIntroScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));
 		}
 
