@@ -32,8 +32,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_StoryCaptain", HERO_ROGUE_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", STORY_INTRO_SCENE_HERO_ICON);
 		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", HERO_ROGUE_SPRITE);
-		m_data->assets.LoadTexture("Tex_MeetRogueUIFrame", ENCOUNTER_UI_FRAME);
-
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -47,6 +45,20 @@ namespace HJ {
 		bg->SetVisible(true);
 		bg->SetAlive(true);
 		bg->Init();
+
+		// Click to continue text
+		auto continueTxt = std::make_shared<Entity>();
+		auto titleTxtComp = continueTxt->AddComponent<TextComponent>("C_ContinueText");
+		titleTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		titleTxtComp->GetText().setCharacterSize(18);
+		titleTxtComp->GetText().setString("Click to continue...");
+		titleTxtComp->GetText().setStyle(sf::Text::Bold);
+		titleTxtComp->GetText().setColor(sf::Color(55, 55, 55, 255));
+		continueTxt->SetPosition(sf::Vector2f(
+			(SCREEN_WIDTH - titleTxtComp->GetText().getGlobalBounds().width) * .97f,
+			(SCREEN_HEIGHT - titleTxtComp->GetText().getGlobalBounds().height) * 0.03f));
+		continueTxt->SetAlive(true);
+		continueTxt->SetVisible(true);
 
 		// create entities
 		m_dialog = std::make_shared<Dialog>();
@@ -76,7 +88,7 @@ namespace HJ {
 		auto uiFrame = std::make_shared<Entity>();
 		auto uiFrameSprite = uiFrame->AddComponent<SpriteComponent>("C_MeetRogueUIFrameSprite");
 		uiFrameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uiFrameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_MeetRogueUIFrame"));
+		uiFrameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UIFrame"));
 		uiFrameSprite->GetSprite().scale(1.0f, 0.9f);
 		//properties
 		uiFrame->SetPosition(sf::Vector2f(0.0f, SCREEN_HEIGHT - uiFrameSprite->GetSprite().getGlobalBounds().height));
@@ -86,6 +98,7 @@ namespace HJ {
 
 		// populate the entities container
 		AddEntity("E_zMeetRogueDialogBG", bg);
+		AddEntity("E_aMeetRogueContinueText", continueTxt);
 		AddEntity("E_mMeetRogueDialog", m_dialog);
 		AddEntity("E_xMeetRogueUIFrame", uiFrame);
 

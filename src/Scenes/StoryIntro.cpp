@@ -36,6 +36,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_StoryCaptain", STORY_INTRO_SCENE_CAPATIN);
 		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", STORY_INTRO_SCENE_HERO_ICON);
 		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", STORY_INTRO_SCENE_CAPATIN_ICON);
+		m_data->assets.LoadTexture("Tex_UIFrame", ENCOUNTER_UI_FRAME);
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -82,18 +83,29 @@ namespace HJ {
 		m_dialog->SetRightCharacterImage(m_data->assets.GetTexture("Tex_StoryCaptain"));
 		// sprites settings
 		auto hero = m_dialog->GetComponent<SpriteComponent>("C_DialogLCharacterSprite");
-		hero->GetSprite().setPosition(sf::Vector2f(500.0f, 350.0f));
+		hero->GetSprite().setPosition(sf::Vector2f(500.0f, 200.0f));
 		hero->GetSprite().scale(5.0f, 5.0f);
-		auto captain = m_dialog->GetComponent<SpriteComponent>("C_DialogRCharacterSprite");
-		captain->GetSprite().scale(5.0f, 5.0f);
-		captain->GetSprite().setPosition(sf::Vector2f(700.0f, 350.0f));
+
 		// Initialise dialog properties
 		m_dialog->Init();
+
+		// ui frame
+		auto uiFrame = std::make_shared<Entity>();
+		auto uiFrameSprite = uiFrame->AddComponent<SpriteComponent>("C_StoryIntroUIFrameSprite");
+		uiFrameSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		uiFrameSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UIFrame"));
+		uiFrameSprite->GetSprite().scale(1.0f, 0.9f);
+		//properties
+		uiFrame->SetPosition(sf::Vector2f(0.0f, SCREEN_HEIGHT - uiFrameSprite->GetSprite().getGlobalBounds().height));
+		uiFrame->SetVisible(true);
+		uiFrame->SetAlive(true);
+		uiFrame->Init();
 		
 		// populate the entities container
 		AddEntity("E_zDialogBG", bg);
-		AddEntity("E_aContinueText", continueTxt);
+		AddEntity("E_aStoryIntroContinueText", continueTxt);
 		AddEntity("E_mStoryIntroDialog", m_dialog);
+		AddEntity("E_xStoryIntroUIFrame", uiFrame);
 	}
 
 	void StoryIntroScene::HandleInput()
