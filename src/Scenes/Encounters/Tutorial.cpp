@@ -291,6 +291,10 @@ namespace HJ { namespace Encounters {
 		// the main hero - Knight, always starts first
 		std::cout << "FIRST TURN\n";
 		NextTurn();
+
+		// set win/loose helpers
+		m_data->gm.loot = 20;
+		m_data->gm.nextEncounter = 0;
 	}
 
 } }

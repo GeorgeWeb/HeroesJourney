@@ -41,7 +41,7 @@ namespace Engine { namespace SM {
 	{
 		int newH = (1366 * t_height) / t_width;
 		int displace = (newH - 768) / (-2);
-		m_view.reset(sf::FloatRect(0, displace, 1366, newH));
+		m_view = sf::View(sf::FloatRect(0, displace, 1366, newH));
 	}
 
 	sf::View State::GetSceneView()

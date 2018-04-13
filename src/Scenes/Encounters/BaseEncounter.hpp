@@ -70,6 +70,7 @@ namespace HJ { namespace Encounters {
 
 		sf::Vector2f goodBaseLine;
 		sf::Vector2f evilBaseLine;
+
 	};
 
 } }

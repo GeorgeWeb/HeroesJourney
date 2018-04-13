@@ -124,7 +124,6 @@ namespace HJ { namespace Encounters {
 		//properties
 		hpBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.65f, SCREEN_HEIGHT * 0.67f));
 		hpBtn->Init();
-		// hpBtnText->GetText().setPosition(hpBtn->GetPosition().x, hpBtn->GetPosition().y);
 		hpBtnText->GetText().setPosition(
 			hpBtn->GetPosition().x + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.00001f) - hpBtnText->GetText().getGlobalBounds().width * 0.00001f,
 			hpBtn->GetPosition().y + (hpBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.85f) - hpBtnText->GetText().getGlobalBounds().height * 0.85f
@@ -249,22 +248,6 @@ namespace HJ { namespace Encounters {
 		knightStatsTxt->SetVisible(true);
 		knightStatsTxt->Init();
 
-		/*
-		// Text indicating bard stats
-		auto bardStatsTxt = std::make_shared<Entity>();
-		auto bardStatsTxtComp = bardStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
-		bardStatsTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
-		bardStatsTxtComp->GetText().setCharacterSize(14);
-		heroHP = std::to_string(m_data->gm.hBard->GetHealth()) + "/" + std::to_string(m_data->gm.hBard->GetMaxHealth()) + "HP";
-		heroMP = std::to_string(m_data->gm.hBard->GetMana()) + "/" + std::to_string(m_data->gm.hBard->GetMaxMana()) + "MP";
-		bardStatsTxtComp->GetText().setString(m_data->gm.hBard->className() + ": " + heroHP + " | " + heroMP);
-		bardStatsTxtComp->GetText().setColor(sf::Color::White);
-		bardStatsTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.035f, SCREEN_HEIGHT * 0.75f));
-		bardStatsTxt->SetAlive(true);
-		bardStatsTxt->SetVisible(true);
-		bardStatsTxt->Init();
-		*/
-
 		// Text indicating BOSS stats
 		auto bossStatsTxt = std::make_shared<Entity>();
 		auto bossStatsTxtComp = bossStatsTxt->AddComponent<TextComponent>("C_HeroStatsText");
@@ -312,6 +295,10 @@ namespace HJ { namespace Encounters {
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
 		NextTurn();
+
+		// set win/loose helpers
+		m_data->gm.loot = 40;
+		m_data->gm.nextEncounter = 1;
 	}
 
 } }

@@ -35,7 +35,7 @@ namespace HJ {
 			void UpdateResources();
 			void HideEntsOnDisplay(std::vector<ECM::Entity*> t_entsToHide, std::vector<Engine::Components::SpriteComponent*> t_compsToFade, std::vector<Engine::Components::SpriteComponent*> t_compsToBlock);
 			void ShowEntsOnClose(std::vector<ECM::Entity*> t_entsToShow, std::vector<Engine::Components::SpriteComponent*> t_compsToUnfade, std::vector<Engine::Components::SpriteComponent*> t_compsToUnblock);
-
+			void UpdateParty();
 
 		private:
 			GameDataRef m_data;

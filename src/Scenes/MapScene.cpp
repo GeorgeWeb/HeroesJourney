@@ -2,6 +2,10 @@
 #include "PauseMenu.hpp"
 
 #include "../Entities/AnimatedLogo.hpp"
+#include "Encounters\TrollEncounter.hpp"
+#include "Encounters\CyclopEncounter.hpp"
+#include "Encounters\HarpyEncounter.hpp"
+#include "Encounters\FinalBossFMEncounter.hpp"
 
 namespace HJ {
 
@@ -35,7 +39,6 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_RougeIcon", MAP_SCENE_ROUGE_ICON);
 		m_data->assets.LoadTexture("Tex_Health", HP_POT_ICON);
 		m_data->assets.LoadTexture("Tex_Mana", MANA_POT_ICON);
-		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -451,7 +454,10 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
+					
+					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
+					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -483,6 +489,8 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
+					auto ForestEncounter = std::make_unique<Encounters::TrollEncounter>(Encounters::TrollEncounter(m_data));
+					m_data->machine.AddState(std::move(ForestEncounter));
 				};
 			}
 
@@ -495,7 +503,9 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
+					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
+					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -527,6 +537,8 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
+					auto MountainEncounter = std::make_unique<Encounters::CyclopEncounter>(Encounters::CyclopEncounter(m_data));
+					m_data->machine.AddState(std::move(MountainEncounter));
 				};
 			}
 
@@ -538,7 +550,10 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
+
+					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
+					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -570,6 +585,8 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
+					auto SeaEncounter = std::make_unique<Encounters::HarpyEncounter>(Encounters::HarpyEncounter(m_data));
+					m_data->machine.AddState(std::move(SeaEncounter));
 				};
 			}
 
@@ -581,7 +598,10 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					// TODO: ...
+
+					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
+					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -613,6 +633,8 @@ namespace HJ {
 				{
 					// TODO: Play logic.
 					std::cout << "Clicked Play!!!\n";
+					auto frostCastleEncounter = std::make_unique<Encounters::FinalBossFMEncounter>(Encounters::FinalBossFMEncounter(m_data));
+					m_data->machine.AddState(std::move(frostCastleEncounter));
 				};
 			}
 
@@ -787,13 +809,13 @@ namespace HJ {
 	void MapScene::HideEntsOnDisplay(std::vector<Entity*> t_entsToHide, std::vector<SpriteComponent*> t_compsToFade, std::vector<SpriteComponent*> t_compsToBlock)
 	{
 		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
-		bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 100.0f));
+		bgComp->GetSprite().setColor(sf::Color(255, 255, 255, 100.f));
 	
 		for (auto& ent : t_entsToHide)
 			ent->SetVisible(false);
 
 		for (auto& cmpToFade : t_compsToFade)
-			cmpToFade->GetSprite().setColor(sf::Color(cmpToFade->GetSprite().getColor().r, cmpToFade->GetSprite().getColor().g, cmpToFade->GetSprite().getColor().b, 10.0f));
+			cmpToFade->GetSprite().setColor(sf::Color(255, 255, 255, 10.0f));
 
 		for (auto& cmpToBlock : t_compsToBlock)
 			cmpToBlock->SetClickable(false);
@@ -802,16 +824,22 @@ namespace HJ {
 	void MapScene::ShowEntsOnClose(std::vector<Entity*> t_entsToShow, std::vector<SpriteComponent*> t_compsToUnfade, std::vector<SpriteComponent*> t_compsToUnblock)
 	{
 		auto bgComp = m_data->ents.Find<Entity>("E_zMapBG")->GetComponent<SpriteComponent>("C_MapBGSprite");
-		bgComp->GetSprite().setColor(sf::Color(bgComp->GetSprite().getColor().r, bgComp->GetSprite().getColor().g, bgComp->GetSprite().getColor().b, 255.0f));
+		bgComp->GetSprite().setColor(sf::Color(255, 255, 255, 255.0f));
 
 		for (auto& ent : t_entsToShow)
 			ent->SetVisible(true);
 
 		for (auto& cmpToFade : t_compsToUnfade)
-			cmpToFade->GetSprite().setColor(sf::Color(cmpToFade->GetSprite().getColor().r, cmpToFade->GetSprite().getColor().g, cmpToFade->GetSprite().getColor().b, 255.0f));
+			cmpToFade->GetSprite().setColor(sf::Color(255, 255, 255, 255.0f));
 
 		for (auto& cmpToBlock : t_compsToUnblock)
 			cmpToBlock->SetClickable(true);
+	}
+
+	void MapScene::UpdateParty()
+	{
+		//Change encounters unlocked and change the party members UI selection
+		//TODO:
 	}
 
 	void MapScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)

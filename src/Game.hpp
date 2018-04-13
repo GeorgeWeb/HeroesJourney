@@ -35,7 +35,11 @@ namespace HJ {
 		public:
 			// amount of gold gathered
 			int gold = 100;
-			
+			//where the outcome leads
+			int nextEncounter = 0;
+			//reward after battle
+			int loot = 0;
+
 			// amount of potions acquired/bought
 			int healthPot = 1;
 			int manaPot = 1;

@@ -363,6 +363,10 @@ namespace HJ { namespace Encounters {
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
 		NextTurn();
+
+		// set win/loose helpers
+		m_data->gm.loot = 100;
+		m_data->gm.nextEncounter = 4;
 	}
 
 } }

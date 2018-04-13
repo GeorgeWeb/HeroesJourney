@@ -76,7 +76,7 @@ namespace HJ {
 		// initialize data
 		m_data->gm.inn->SetSprite(m_data->assets.GetTexture("Tex_Inn"));
 		// more properties
-		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.8f,
+		m_data->gm.inn->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.inn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.88f,
 			(SCREEN_HEIGHT - m_data->gm.inn->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3));
 		m_data->gm.inn->Init();
 
@@ -84,7 +84,7 @@ namespace HJ {
 		// initialize data
 		m_data->gm.store->SetSprite(m_data->assets.GetTexture("Tex_GeneralStore"));
 		// more properties
-		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.85f,
+		m_data->gm.store->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.store->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.95f,
 			(SCREEN_HEIGHT - m_data->gm.store->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.6));
 		m_data->gm.store->Init();
 
@@ -122,8 +122,8 @@ namespace HJ {
 		upgradeBtn->SetVisible(false);
 		upgradeBtn->SetAlive(true);
 		//center text
-		upgradeBtnText->GetText().setPosition((upgradeBtn->GetPosition().x + upgradeBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f + upgradeBtnText->GetText().getGlobalBounds().width *0.8f,
-			upgradeBtn->GetPosition().y  + upgradeBtnText->GetText().getGlobalBounds().height *1.15f);
+		upgradeBtnText->GetText().setPosition(upgradeBtn->GetPosition().x + (upgradeBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f - upgradeBtnText->GetText().getGlobalBounds().width *0.5f,
+			upgradeBtn->GetPosition().y + (upgradeBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.5f - upgradeBtnText->GetText().getGlobalBounds().height *0.5f);
 
 	
 		//Health potion sprite

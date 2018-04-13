@@ -1,6 +1,6 @@
 #include "BaseEncounter.hpp"
 #include "../PauseMenu.hpp"
-#include "../MapScene.hpp"
+#include "../BattleOutcomeScene.hpp"
 
 #include <Engine/ECM/Components/ClickableComponent.hpp>
 
@@ -412,18 +412,22 @@ namespace HJ { namespace Encounters {
 			// Lose condition logic
 			case BATTLE_STATUS::LOST:
 			// Load lose screen
-			outcomeState = std::make_unique<MapScene>(MapScene(m_data));
-			m_data->machine.AddState(std::move(outcomeState), true);
+			m_data->gm.loot = 0;
+			for (auto hero : m_activeHeroes)
+			{
+				hero->SetHealth(hero->GetMaxHealth());
+				hero->SetMana(hero->GetMaxMana());
+			}
+			outcomeState = std::make_unique<BattleOutcomeScene>(BattleOutcomeScene(m_data));
+			m_data->machine.AddState(std::move(outcomeState));
 			break;
 			
 			// Win condition logic
 			case BATTLE_STATUS::WON:
-			m_data->gm.gold += 100;
-			m_data->gm.healthPot += 1;
-			m_data->gm.manaPot += 1;
 			// Load win screen
-			outcomeState = std::make_unique<MapScene>(MapScene(m_data));
-			m_data->machine.AddState(std::move(outcomeState), true);
+			m_data->gm.inn->ApplyBonus(m_activeHeroes);
+			outcomeState = std::make_unique<BattleOutcomeScene>(BattleOutcomeScene(m_data));
+			m_data->machine.AddState(std::move(outcomeState));
 			break;
 			
 			// Playing condition logic (default case)

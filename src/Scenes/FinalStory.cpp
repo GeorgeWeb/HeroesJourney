@@ -68,7 +68,7 @@ namespace HJ {
 			"Knight: Let us fight for out kingdom and our homes. Brave companions, ", " I will require your aid one last time.", // LEFT CHAR
 			"", "",  // RIGHT CHAR
 			"Knight:  We go to face the frost mage!", "" //LEFT CHAR
-		
+
 			});
 		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
 		m_offset += 2;
@@ -117,14 +117,9 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				////switch to tutorial scene
-				//auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				//m_data->machine.AddState(std::move(tutorial));
-
 				auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
 				m_data->machine.AddState(std::move(mapscene));
 			}
-
 			auto bgSprite = m_data->ents.Find<Entity>("E_zFinalStoryDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
 			if (bgSprite->IsClickable() && m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
@@ -152,9 +147,8 @@ namespace HJ {
 	{
 		if (m_dialog->HasFinished())
 		{
-			//switch to tutorial scene
-			//auto MeetSorc = std::make_unique<MeetSorcScene>(MeetSorcScene(m_data));
-			//m_data->machine.AddState(std::move(MeetSorc));
+			auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(std::move(mapscene));
 
 		}
 		else

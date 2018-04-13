@@ -9,6 +9,8 @@
 #include "../Entities/Button.hpp"
 
 
+
+
 namespace HJ {
 
 	using namespace Engine;
@@ -233,6 +235,7 @@ namespace HJ {
 			// change scene to Story intro
 			auto storyIntro = std::make_unique<StoryIntroScene>(StoryIntroScene(m_data));
 			m_data->machine.AddState(std::move(storyIntro));
+		
 		}
 
 		auto loadBtn = load->GetClickableComponent();

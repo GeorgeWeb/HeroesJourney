@@ -35,6 +35,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
 		m_data->assets.LoadTexture("Tex_BloodSplashSheet", BLOOD_SPLASH_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);
+		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
 		// Building assets
 		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
 		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);

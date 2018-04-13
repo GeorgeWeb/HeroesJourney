@@ -19,7 +19,7 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	MeetBardScene::MeetBardScene(GameDataRef t_data):
+	MeetBardScene::MeetBardScene(GameDataRef t_data) :
 		m_data(t_data),
 		m_turn(DIALOG_TURN::LEFT)
 	{ }
@@ -114,10 +114,6 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				////switch to tutorial scene
-				//auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				//m_data->machine.AddState(std::move(tutorial));
-
 				auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
 				m_data->machine.AddState(std::move(mapscene));
 			}
@@ -150,9 +146,8 @@ namespace HJ {
 		if (m_dialog->HasFinished())
 		{
 			//switch to tutorial scene
-			auto MeetSorc = std::make_unique<MeetSorcScene>(MeetSorcScene(m_data));
-			m_data->machine.AddState(std::move(MeetSorc));
-
+			auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(std::move(mapscene));
 		}
 		else
 		{

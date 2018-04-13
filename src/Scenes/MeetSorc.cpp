@@ -71,7 +71,7 @@ namespace HJ {
 		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
 		m_offset += 2;
 		// dialog characters
-		m_dialog->SetLeftCharacterImage(m_data->assets.GetTexture("Tex_StorySorc")); 
+		m_dialog->SetLeftCharacterImage(m_data->assets.GetTexture("Tex_StorySorc"));
 		m_dialog->SetRightCharacterImage(m_data->assets.GetTexture("Tex_StoryMainHero"));
 		// sprites settings
 		auto hero = m_dialog->GetComponent<SpriteComponent>("C_DialogLCharacterSprite");
@@ -115,10 +115,6 @@ namespace HJ {
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				////switch to tutorial scene
-				//auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				//m_data->machine.AddState(std::move(tutorial));
-
 				auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
 				m_data->machine.AddState(std::move(mapscene));
 			}
@@ -150,9 +146,8 @@ namespace HJ {
 	{
 		if (m_dialog->HasFinished())
 		{
-			//switch to tutorial scene
-			auto MeetRogue = std::make_unique<MeetRogueScene>(MeetRogueScene(m_data));
-			m_data->machine.AddState(std::move(MeetRogue));
+			auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
+			m_data->machine.AddState(std::move(mapscene));
 
 		}
 		else

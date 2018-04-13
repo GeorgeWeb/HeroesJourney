@@ -17,6 +17,10 @@
 #define HERO_BARD_SPRITE "res/img/characters/heroes/bard.png"
 #define HERO_SORC_SPRITE "res/img/characters/heroes/sorc.png"
 #define HERO_ROGUE_SPRITE "res/img/characters/heroes/rogue.png"
+#define HERO_KNIGHT_FLIP_SPRITE "res/img/characters/heroes/heroflip.png"
+#define HERO_BARD_FLIP_SPRITE "res/img/characters/heroes/bardflip.png"
+#define HERO_SORC_FLIP_SPRITE "res/img/characters/heroes/sorcflip.png"
+#define HERO_ROGUE_FLIP_SPRITE "res/img/characters/heroes/rogueflip.png"
 
 // Enemies global definitions
 #define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/Frost-Demon.png"

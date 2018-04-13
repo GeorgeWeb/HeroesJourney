@@ -1,9 +1,5 @@
 #include "PauseMenu.hpp"
 #include "Encounters/Tutorial.hpp"
-#include "Encounters/TrollEncounter.hpp"
-#include "Encounters/CyclopEncounter.hpp"
-#include "Encounters/HarpyEncounter.hpp"
-#include "Encounters/FinalBossFMEncounter.hpp"
 #include "MapScene.hpp"
 
 #include <sstream>
@@ -23,8 +19,8 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	StoryIntroScene::StoryIntroScene(GameDataRef t_data) : 
-		m_data(t_data), 
+	StoryIntroScene::StoryIntroScene(GameDataRef t_data) :
+		m_data(t_data),
 		m_turn(DIALOG_TURN::LEFT)
 	{ }
 
@@ -67,7 +63,7 @@ namespace HJ {
 		// create entities
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
-		m_dialog->AddConversation({ 
+		m_dialog->AddConversation({
 			"Narrator: Welcome dear adventurer. Join me as i tell you the story", "- of how you lead the heroes of this land on their epic quest", // LEFT CHAR
 			"", "", // RIGHT CHAR
 			"Narrator: against the evil frost mage and his minions. ", "", // LEFT CHAR
@@ -75,7 +71,7 @@ namespace HJ {
 			"Narrator: Our story begins with the kingdom of our heroes besieged ", "by the forces of the evil frost mage. ", //LEFT CHAR
 			"","", //Right char
 			"Narrator: The brave Knight takes up arms to defend the castle. ",""
-		});
+			});
 		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
 		m_offset += 2;
 		// dialog characters
@@ -100,7 +96,7 @@ namespace HJ {
 		uiFrame->SetVisible(true);
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
-		
+
 		// populate the entities container
 		AddEntity("E_zDialogBG", bg);
 		AddEntity("E_aStoryIntroContinueText", continueTxt);
@@ -122,11 +118,10 @@ namespace HJ {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				// switch to tutorial scene
-				auto tutorial = std::make_unique<Encounters::FinalBossFMEncounter>(Encounters::FinalBossFMEncounter(m_data));
+				auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 				m_data->machine.AddState(std::move(tutorial));
 
-				// auto mapscene = std::make_unique<MapScene>(MapScene(m_data));
-				// m_data->machine.AddState(std::move(mapscene));
+				
 			}
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
@@ -159,9 +154,6 @@ namespace HJ {
 			auto tutorial = std::make_unique<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 			m_data->machine.AddState(std::move(tutorial));
 
-			// auto MeetBard = std::make_unique<MeetBardScene>(MeetBardScene(m_data));
-			// m_data->machine.AddState(std::move(MeetBard));
-
 		}
 		else
 		{
@@ -183,7 +175,7 @@ namespace HJ {
 				break;
 			}
 		}
-		
+
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 
