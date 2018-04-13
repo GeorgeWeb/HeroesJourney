@@ -209,7 +209,6 @@ namespace HJ {
 			// Save the current game data
 			m_data->saveData.Save<int>({
 				// heroes stats
-				/*
 				// knight
 				m_data->gm.hKnight->GetHealth(),
 				m_data->gm.hKnight->GetMaxHealth(),
@@ -265,20 +264,8 @@ namespace HJ {
 				m_data->gm.gold,
 				// unlocked encounters
 				m_data->gm.unlockedEncounters
-				*/
-				// buidlings stats
-				// blacksmith
-				m_data->gm.blacksmith->GetLevel(),
-				// infirmary
-				m_data->gm.infirmary->GetLevel(),
-				// library
-				m_data->gm.library->GetLevel(),
-				// inn
-				m_data->gm.inn->GetLevel(),
-				// general store
-				m_data->gm.store->GetLevel()
 			}, Utils::DATA_TYPE::GAME_DATA);
-
+			
 			// resume to game scene
 			m_data->machine.RemoveState();
 		}

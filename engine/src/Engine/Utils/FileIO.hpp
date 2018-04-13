@@ -16,25 +16,13 @@ namespace Engine { namespace Utils {
 	class FileIO final
 	{
 		private:
+			// game progress data file
 			std::string m_gameDataPath = "save_data/game_data.txt";
-			std::string m_gameSettingsPath = "save_data/game_settings.txt";
+			// game settings data file
+			std::string m_settingsPath = "save_data/game_settings.txt";
 		
 		public:
 			FileIO() = default;
-
-			bool IsEmpty(DATA_TYPE t_fileType)
-			{
-				if (t_fileType == DATA_TYPE::GAME_DATA)
-				{
-					std::ifstream file(m_gameDataPath, std::ios::in);
-					return file.peek() == std::ifstream::traits_type::eof();
-				}
-				else if (t_fileType == DATA_TYPE::GAME_SETTINGS)
-				{
-					std::ifstream file(m_gameSettingsPath, std::ios::in);
-					return file.peek() == std::ifstream::traits_type::eof();
-				}
-			}
 
 			template <class T>
 			void Load(std::vector<T*> t_data, DATA_TYPE t_type)
@@ -45,14 +33,14 @@ namespace Engine { namespace Utils {
 					if (t_type == DATA_TYPE::GAME_DATA)
 						file.open(m_gameDataPath);
 					else if (t_type == DATA_TYPE::GAME_SETTINGS)
-						file.open(m_gameSettingsPath);
+						file.open(m_settingsPath);
 
 					if (file.good())
 					{
-						// READ GAME DATA FROM FILE AND INPUT IT IN THE GAME DATA VECTOR
-						for (size_t i = 0; i < t_data.size(); i++)
+						// READ DATA FROM FILE AND INPUT IT IN THE GAME DATA VECTOR
+						for (auto d : t_data)
 						{
-							file >> *t_data[i];
+							file >> *d;
 						}
 					}
 				}
@@ -71,19 +59,32 @@ namespace Engine { namespace Utils {
 					if (t_type == DATA_TYPE::GAME_DATA)
 						file.open(m_gameDataPath, std::ios::trunc);
 					else if (t_type == DATA_TYPE::GAME_SETTINGS)
-						file.open(m_gameSettingsPath, std::ios::trunc);
+						file.open(m_settingsPath, std::ios::trunc);
 
 					// WRITE GAME DATA TO FILE
-					for (size_t i = 0; i < t_data.size(); i++)
+					for (auto d : t_data)
 					{
-						file << t_data[i] << " ";
+						file << d << "\n";
 					}
-					
 					file.close();
 				}
 				catch (std::exception ex)
 				{
 					std::cout << "\n\tFile Error! Unable to LOAD data.\n";
+				}
+			}
+
+			bool IsEmpty(DATA_TYPE t_fileType)
+			{
+				if (t_fileType == DATA_TYPE::GAME_DATA)
+				{
+					std::ifstream file(m_gameDataPath);
+					return file.peek() == std::ifstream::traits_type::eof();
+				}
+				else if (t_fileType == DATA_TYPE::GAME_SETTINGS)
+				{
+					std::ifstream file(m_settingsPath);
+					return file.peek() == std::ifstream::traits_type::eof();
 				}
 			}
 	};

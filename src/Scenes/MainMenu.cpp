@@ -244,105 +244,33 @@ namespace HJ {
 
 			// heroes
 			// knight
-			int knightHP = 0, 
-				knightMaxHP = 0, 
-				knightMP = 0, 
-				knightMaxMP = 0, 
-				knightArmour = 0, 
-				knightDodge = 0, 
-				knightCrit = 0, 
-				knightDMG = 0;
+			int knightHP = 0, knightMaxHP = 0, knightMP = 0, knightMaxMP = 0, knightArmour = 0, knightDodge = 0, knightCrit = 0, knightDMG = 0;
 			// bard
-			int bardHP = 0,
-				bardMaxHP = 0,
-				bardMP = 0,
-				bardMaxMP = 0,
-				bardArmour = 0,
-				bardDodge = 0,
-				bardCrit = 0,
-				bardDMG = 0;
+			int bardHP = 0, bardMaxHP = 0, bardMP = 0, bardMaxMP = 0, bardArmour = 0, bardDodge = 0, bardCrit = 0, bardDMG = 0;
 			// rogue
-			int rogueHP = 0,
-				rogueMaxHP = 0,
-				rogueMP = 0,
-				rogueMaxMP = 0,
-				rogueArmour = 0,
-				rogueDodge = 0,
-				rogueCrit = 0,
-				rogueDMG = 0;
+			int rogueHP = 0, rogueMaxHP = 0, rogueMP = 0, rogueMaxMP = 0, rogueArmour = 0, rogueDodge = 0, rogueCrit = 0, rogueDMG = 0;
 			// sorceress
-			int sorcHP = 0,
-				sorcMaxHP = 0,
-				sorcMP = 0,
-				sorcMaxMP = 0,
-				sorcArmour = 0,
-				sorcDodge = 0,
-				sorcCrit = 0,
-				sorcDMG = 0;
+			int sorcHP = 0, sorcMaxHP = 0, sorcMP = 0, sorcMaxMP = 0, sorcArmour = 0, sorcDodge = 0, sorcCrit = 0, sorcDMG = 0;
 			// buidlings
-			int blacksmithLvl = 0,
-				infirmaryLvl = 0,
-				libraryLvl = 0,
-				innLvl = 0,
-				storeLvl = 0;
+			int blacksmithLvl = 0, infirmaryLvl = 0, libraryLvl = 0, innLvl = 0, storeLvl = 0;
 			// resources
 			// potions
-			int healthPots = 0,
-				manaPots = 0;
+			int healthPots = 0, manaPots = 0;
 			// money
 			int gold = 0;
 			// unlocked encounters
 			int levels = 0;
+			
 			m_data->saveData.Load<int>({
-				/*
-				&knightHP, 
-				&knightMaxHP, 
-				&knightMP, 
-				&knightMaxMP, 
-				&knightArmour, 
-				&knightDodge, 
-				&knightCrit, 
-				&knightDMG,
-				&bardHP, 
-				&bardMaxHP, 
-				&bardMaxMP, 
-				&bardArmour,
-				&bardDodge, 
-				&bardCrit, 
-				&bardDMG,
-				&rogueHP,
-				&rogueMaxHP, 
-				&rogueMaxMP, 
-				&rogueArmour, 
-				&rogueDodge, 
-				&rogueCrit, 
-				&rogueDMG,
-				&sorcHP, 
-				&sorcMaxHP, 
-				&sorcMaxMP, 
-				&sorcArmour,
-				&sorcDodge, 
-				&sorcCrit,
-				&sorcDMG,
-				&blacksmithLvl,
-				&infirmaryLvl,
-				&libraryLvl,
-				&innLvl, 
-				&storeLvl,
-				&healthPots,
-				&manaPots,
-				&gold, 
-				&levels
-				*/
-				&blacksmithLvl,
-				&infirmaryLvl,
-				&libraryLvl,
-				&innLvl,
-				&storeLvl
-			}, Utils::DATA_TYPE::GAME_DATA);
+				&knightHP, &knightMaxHP, &knightMP, &knightMaxMP, &knightArmour, &knightDodge, &knightCrit, &knightDMG,
+				&bardHP, &bardMaxHP, &bardMP, &bardMaxMP, &bardArmour, &bardDodge, &bardCrit, &bardDMG, 
+				&rogueHP, &rogueMaxHP, &rogueMP, &rogueMaxMP, &rogueArmour, &rogueDodge, &rogueCrit, &rogueDMG,
+				&sorcHP, &sorcMaxHP, &sorcMP, &sorcMaxMP, &sorcArmour, &sorcDodge, &sorcCrit, &sorcDMG,
+				&blacksmithLvl, &infirmaryLvl, &libraryLvl, &innLvl, &storeLvl, 
+				&healthPots, &manaPots, &gold, &levels
+			}, Utils::DATA_TYPE::GAME_DATA);			
 
 			// set the loaded values
-			/*
 			// heroes
 			// knight
 			m_data->gm.hKnight->SetHealth(knightHP);
@@ -392,16 +320,6 @@ namespace HJ {
 			m_data->gm.gold = gold;
 			// unlocked encounters
 			m_data->gm.unlockedEncounters = levels;
-			*/
-			//buidlings
-			m_data->gm.blacksmith->SetLevel(blacksmithLvl);
-			m_data->gm.infirmary->SetLevel(infirmaryLvl);
-			m_data->gm.library->SetLevel(libraryLvl);
-			m_data->gm.inn->SetLevel(innLvl);
-			m_data->gm.store->SetLevel(storeLvl);
-
-			std::cout << "SORC HP: " << m_data->gm.hSorceress->GetHealth();
-			std::cout << "BLACKSMITH: " << m_data->gm.blacksmith->GetLevel();
 
 			// change scene to Story intro
 			auto storyIntro = std::make_unique<MapScene>(MapScene(m_data));
