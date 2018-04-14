@@ -153,7 +153,6 @@ namespace HJ {
 			// switch to tutorial scene
 			auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 			m_data->machine.AddState(tutorial);
-
 		}
 		else
 		{

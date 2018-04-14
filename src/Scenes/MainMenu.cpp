@@ -219,6 +219,10 @@ namespace HJ {
 		{
 			startBtn->SetResolve(false);
 
+			m_data->gm.healthPot = 1;
+			m_data->gm.manaPot = 1;
+			m_data->gm.gold = 1;
+
 			// serializable game entities
 			// buildings
 			m_data->gm.infirmary = std::make_shared<Infirmary>();

@@ -51,11 +51,21 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_EvilFrostGolem", EVIL_FROST_GOLEM_SPRITE);
 		m_data->assets.LoadTexture("Tex_EvilFrostMage", EVIL_FROST_MAGE_SPRITE);
 		// Encounter assets
+		// basics
 		m_data->assets.LoadTexture("Tex_EncounterUIFrame", ENCOUNTER_UI_FRAME);
 		m_data->assets.LoadTexture("Tex_BasicAttackBtn", BASIC_ATTACK_BTN);
 		m_data->assets.LoadTexture("Tex_DefendBtn", DEFFEND_BTN);
 		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
 		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
+		// special skills
+		m_data->assets.LoadTexture("Tex_ArcherySkill", ARCHERY_SKILL);
+		m_data->assets.LoadTexture("Tex_RoASkill", RAIN_OF_ARROWS_SKILL);
+		m_data->assets.LoadTexture("Tex_HeroicStrikeSkill", HEROIC_STRIKE_SKILL);
+		m_data->assets.LoadTexture("Tex_ShieldBashSkill", SHIELD_BASH_SKILL);
+		m_data->assets.LoadTexture("Tex_FireBoltSkill", FIRE_BOLT_SKILL);
+		m_data->assets.LoadTexture("Tex_FireAuraSkill", FIRE_AURA_SKILL);
+		m_data->assets.LoadTexture("Tex_OffAuraSkill", OFF_AURA_SKILL);
+		m_data->assets.LoadTexture("Tex_DefAuraSkill", DEF_AURA_SKILL);
 
 		/* /> GLOBAL PRE-LOAD */
 

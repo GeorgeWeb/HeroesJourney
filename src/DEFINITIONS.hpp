@@ -57,9 +57,6 @@
 #define CASTLE_SCENE_GENERAL_STORE "res/img/castle_interior/generalstore.png"
 #define CASTLE_SCENE_BACK_ARROW "res/img/castle_interior/backarrow.png"
 #define CASTLE_SCENE_UI_FRAME "res/img/castle_interior/frame.png"
-#define CASTLE_SCENE_UPGRADE_BUTTON "res/img/castle_interior/upgradebtn.png"
-#define CASTLE_SCENE_MANABTN "res/img/castle_interior/manabtn.png"
-#define CASTLE_SCENE_HEALTHBTN "res/img/castle_interior/healthbtn.png"
 
 // Re-usable assets
 #define STANDARD_BTN "res/img/misc/button.png"
@@ -105,6 +102,14 @@
 
 // Heroes Skills global definitions
 #define TEST_SKILL_BTN "res/img/encounter/skill-frame.png"
+#define ARCHERY_SKILL "res/img/encounter/skills/Archery.png"
+#define RAIN_OF_ARROWS_SKILL "res/img/encounter/skills/RainOfArrows.png"
+#define OFF_AURA_SKILL "res/img/encounter/skills/DamageAura.png"
+#define DEF_AURA_SKILL "res/img/encounter/skills/DefensiveAura.png"
+#define FIRE_AURA_SKILL "res/img/encounter/skills/FireAura.png"
+#define FIRE_BOLT_SKILL "res/img/encounter/skills/FireBolt.png"
+#define HEROIC_STRIKE_SKILL "res/img/encounter/skills/HeroicStrike.png"
+#define SHIELD_BASH_SKILL "res/img/encounter/skills/ShieldBash.png"
 
 // MUSIC THEMES
 #define EPIC_FANTASY_THEME "res/music/themes/epic-fantasy-theme.wav"

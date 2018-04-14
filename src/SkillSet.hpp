@@ -35,7 +35,6 @@ namespace HJ
 		public:
 			Skill() = default;
 			
-			
 			DAMAGE_BASE dmgBase;
 			DAMAGE_TYPE dmgType;
 			SKILL_TARGET target;
@@ -66,15 +65,15 @@ namespace HJ
 
 	class BasicMagicAttack final : public Skill
 	{
-	public:
-		BasicMagicAttack() : Skill()
-		{
-			textureRefName = "Tex_BasicAttackBtn";
-			dmgBase = DAMAGE_BASE::RANGED;
-			dmgType = DAMAGE_TYPE::MAGIC;
-			target = SKILL_TARGET::ENEMY;
-			damageMod = 100;
-		}
+		public:
+			BasicMagicAttack() : Skill()
+			{
+				textureRefName = "Tex_BasicAttackBtn";
+				dmgBase = DAMAGE_BASE::RANGED;
+				dmgType = DAMAGE_TYPE::MAGIC;
+				target = SKILL_TARGET::ENEMY;
+				damageMod = 100;
+			}
 	};
 
 	class BasicDefence final : public Skill
@@ -99,7 +98,8 @@ namespace HJ
 		public:
 			HeroicStrike() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
+				textureRefName = "Tex_HeroicStrikeSkill";
+				effectDesc = "Heroic Strike";
 				dmgBase = DAMAGE_BASE::MELEE;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -113,8 +113,8 @@ namespace HJ
 		public:
 			ShieldThrow() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "Stun";
+				textureRefName = "Tex_ShieldBashSkill";
+				effectDesc = "Shield Bash";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -130,8 +130,8 @@ namespace HJ
 		public:
 			OffenseAura() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "Party DMG boost";
+				textureRefName = "Tex_OffAuraSkill";
+				effectDesc = "DMG Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -146,8 +146,8 @@ namespace HJ
 		public:
 			DeffenseAura() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "Party ARM boost";
+				textureRefName = "Tex_DefAuraSkill";
+				effectDesc = "DEF Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -163,8 +163,8 @@ namespace HJ
 		public:
 			RavenBow() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "";
+				textureRefName = "Tex_ArcherySkill";
+				effectDesc = "Archery";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -177,8 +177,8 @@ namespace HJ
 		public:
 			RainOfArrows() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "";
+				textureRefName = "Tex_RoASkill";
+				effectDesc = "Rain Of Arrows";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -193,8 +193,8 @@ namespace HJ
 		public:
 			FireBolt() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "";
+				textureRefName = "Tex_FireBoltSkill";
+				effectDesc = "Fire Bolt";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FIRE;
 				target = SKILL_TARGET::ENEMY;
@@ -208,8 +208,8 @@ namespace HJ
 		public:
 			FrostAura() : Skill()
 			{
-				textureRefName = "Tex_TestSkillBtn";
-				effectDesc = "Party frost resistance";
+				textureRefName = "Tex_FireAuraSkill";
+				effectDesc = "Fire Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FROST;
 				target = SKILL_TARGET::ALLY;

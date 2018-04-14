@@ -160,7 +160,8 @@ namespace HJ { namespace Encounters {
 		skill1BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		skill1BtnText->GetText().setStyle(sf::Text::Bold);
 		skill1BtnText->GetText().setString("Skill 1");
-		skill1BtnText->GetText().setCharacterSize(16);
+		skill1BtnText->GetText().setCharacterSize(13);
+		skill1BtnText->GetText().setStyle(sf::Text::Bold);
 		//properties
 		skill1Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f, SCREEN_HEIGHT * 0.81f));
 		skill1Btn->Init();
@@ -178,7 +179,8 @@ namespace HJ { namespace Encounters {
 		skill2BtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		skill2BtnText->GetText().setStyle(sf::Text::Bold);
 		skill2BtnText->GetText().setString("Skill 2");
-		skill2BtnText->GetText().setCharacterSize(16);
+		skill2BtnText->GetText().setCharacterSize(13);
+		skill2BtnText->GetText().setStyle(sf::Text::Bold);
 		// general properties
 		skill2Btn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.525f, SCREEN_HEIGHT * 0.81f));
 		skill2Btn->Init();

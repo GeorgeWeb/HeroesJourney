@@ -15,6 +15,7 @@ namespace HJ { namespace Components {
 
 		// Create an empty texture
 		sf::Texture tex;
+		// TODO: Load All Textures
 		tex.create(16, 16);
 		// create the effects
 		auto stun = std::make_shared<Effect>();
