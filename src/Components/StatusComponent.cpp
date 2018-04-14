@@ -1,55 +1,49 @@
 #include "StatusComponent.hpp"
-
 #include <Engine/Engine.hpp>
+#include "../DEFINITIONS.hpp"
 
 namespace HJ { namespace Components {
 
 	using namespace Engine;
 
-	sf::Vector2f spriteLayerOffset = sf::Vector2f(0.0f, -20.0f);
+	sf::Vector2f spriteLayerOffset = sf::Vector2f(0.0f, -30.0f);
+	sf::Texture StatusComponent::stunTex;
+	sf::Texture StatusComponent::defendTex;
+	sf::Texture StatusComponent::dmgAuraTex;
+	sf::Texture StatusComponent::armAuraTex;
+	sf::Texture StatusComponent::frostAuraTex;
+	sf::Texture StatusComponent::frostArmTex;
+	sf::Texture StatusComponent::enrageTex;
+	sf::Texture StatusComponent::flyTex;
+	sf::Texture StatusComponent::magicImuneTex;
+	sf::Texture StatusComponent::multiTargetTex;
 
 	StatusComponent::StatusComponent(ECM::Entity* t_parent)
 		: ECM::Component(t_parent)
 	{
-		// initialize effects map
-
-		// Create an empty texture
-		sf::Texture tex;
-		// TODO: Load All Textures
-		tex.create(16, 16);
-		// create the effects
-		auto stun = std::make_shared<Effect>();
-		stun->SetSprite(tex, sf::Color::White);
-		auto frostArmour = std::make_shared<Effect>();
-		frostArmour->SetSprite(tex, sf::Color::Cyan);
-		auto armourAura = std::make_shared<Effect>();
-		armourAura->SetSprite(tex, sf::Color::Yellow);
-		auto damageAura = std::make_shared<Effect>();
-		damageAura->SetSprite(tex, sf::Color::Magenta);
-		auto frostAura = std::make_shared<Effect>();
-		frostAura->SetSprite(tex, sf::Color::Blue);
-		auto defend = std::make_shared<Effect>();
-		defend->SetSprite(tex, sf::Color::Green);
-		auto enrage = std::make_shared<Effect>();
-		enrage->SetSprite(tex, sf::Color::Red);
-		auto fly = std::make_shared<Effect>();
-		fly->SetSprite(tex, sf::Color::Red);
-		auto magicImune = std::make_shared<Effect>();
-		magicImune->SetSprite(tex, sf::Color::Red);
-		auto multiTarget = std::make_shared<Effect>();
-		multiTarget->SetSprite(tex, sf::Color::Red);
-		// add effects to the map
-		m_effects[EFFECT_TYPE::STUN] = stun;
-		m_effects[EFFECT_TYPE::FROST_ARMOR] = frostArmour;
-		m_effects[EFFECT_TYPE::ARMOUR_AURA] = armourAura;
-		m_effects[EFFECT_TYPE::DAMAGE_AURA] = damageAura;
-		m_effects[EFFECT_TYPE::FROST_AURA] = frostAura;
-		m_effects[EFFECT_TYPE::DEFEND] = defend;
-		m_effects[EFFECT_TYPE::ENRAGE] = enrage;
-		m_effects[EFFECT_TYPE::FLY] = fly;
-		m_effects[EFFECT_TYPE::MAGIC_IMUNITY] = magicImune;
-		m_effects[EFFECT_TYPE::MULTIPLE_TARGET] = multiTarget;
-
+		// -- Initialize effects map -- //
+		stunTex.loadFromFile(STUN_EFFECT);
+		defendTex.loadFromFile(DEFEND_EFFECT);
+		dmgAuraTex.loadFromFile(DAMAGE_AURA_EFFECT);
+		armAuraTex.loadFromFile(ARMOUR_AURA_EFFECT);
+		frostAuraTex.loadFromFile(FROST_AURA_EFFECT);
+		frostArmTex.loadFromFile(FROST_ARMOUR_EFFECT);
+		enrageTex.loadFromFile(ENRAGE_EFFECT);
+		flyTex.loadFromFile(FLYING_EFFECT);
+		magicImuneTex.loadFromFile(MAGIC_IMUNITY_EFFECT);
+		multiTargetTex.loadFromFile(MULTI_TARGET_EFFECT);
+		// create the effects using the texture paths
+		m_effects[EFFECT_TYPE::STUN] = std::make_shared<Effect>(stunTex);
+		m_effects[EFFECT_TYPE::FROST_ARMOR] = std::make_shared<Effect>(frostArmTex);
+		m_effects[EFFECT_TYPE::ARMOUR_AURA] = std::make_shared<Effect>(armAuraTex);
+		m_effects[EFFECT_TYPE::DAMAGE_AURA] = std::make_shared<Effect>(dmgAuraTex);
+		m_effects[EFFECT_TYPE::FROST_AURA] = std::make_shared<Effect>(frostAuraTex);
+		m_effects[EFFECT_TYPE::DEFEND] = std::make_shared<Effect>(defendTex);
+		m_effects[EFFECT_TYPE::ENRAGE] = std::make_shared<Effect>(enrageTex);
+		m_effects[EFFECT_TYPE::FLY] = std::make_shared<Effect>(flyTex);
+		m_effects[EFFECT_TYPE::MAGIC_IMUNITY] = std::make_shared<Effect>(magicImuneTex);
+		m_effects[EFFECT_TYPE::MULTIPLE_TARGET] = std::make_shared<Effect>(multiTargetTex);
+		// set the component to be indepent (position wise) from its parent
 		independent = true;
 	}
 
@@ -70,20 +64,19 @@ namespace HJ { namespace Components {
 				auto effect = effectPair.second;
 				// set dependent (to parent Entity) position
 				if (!independent)
-					effect->sprite.setPosition(m_parent->GetPosition());
+					effect->sprite->setPosition(m_parent->GetPosition());
 				
 				// postion effects
-				// effect->sprite.setPosition(m_parent->GetPosition());
-				effect->sprite.setPosition(m_parent->GetPosition() + spriteLayerOffset + offset);
+				effect->sprite->setPosition(m_parent->GetPosition() + spriteLayerOffset + offset);
 				if (effect->active)
 				{
 					unsigned int padding = (type == EFFECT_TYPE::STUN) ? 25.0f : 5.0f;
-					offset.x += effect->sprite.getGlobalBounds().width + padding;
+					offset.x += effect->sprite->getGlobalBounds().width + padding;
 				}
 
 				// set smoothness to the textures applied to each sprite
-				if (effect->sprite.getTexture() != nullptr && !effect->sprite.getTexture()->isSmooth())
-					const_cast<sf::Texture*>(effect->sprite.getTexture())->setSmooth(true);
+				if (effect->sprite->getTexture() != nullptr && !effect->sprite->getTexture()->isSmooth())
+					const_cast<sf::Texture*>(effect->sprite->getTexture())->setSmooth(true);
 			}
 		}
 	}
@@ -96,7 +89,8 @@ namespace HJ { namespace Components {
 			{
 				auto effect = effectPair.second;
 				if (effect->active)
-					Engine2D::GetWin().draw(effect->sprite);
+					System::Renderer::Queue(&(*effect->sprite));
+					// Engine2D::GetWin().draw(*effect->sprite);
 			}
 		}
 	}

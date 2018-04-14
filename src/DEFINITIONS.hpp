@@ -111,6 +111,18 @@
 #define HEROIC_STRIKE_SKILL "res/img/encounter/skills/HeroicStrike.png"
 #define SHIELD_BASH_SKILL "res/img/encounter/skills/ShieldBash.png"
 
+// Heroes Skills global definitions
+#define ARMOUR_AURA_EFFECT "res/img/encounter/effects/ArmourAura.png"
+#define DAMAGE_AURA_EFFECT "res/img/encounter/effects/DamageAura.png"
+#define DEFEND_EFFECT "res/img/encounter/effects/Defend.png"
+#define ENRAGE_EFFECT "res/img/encounter/effects/Enrage.png"
+#define FLYING_EFFECT "res/img/encounter/effects/FireAura.png"
+#define FROST_ARMOUR_EFFECT "res/img/encounter/effects/Flying.png"
+#define FROST_AURA_EFFECT "res/img/encounter/effects/FrostArmor.png"
+#define MAGIC_IMUNITY_EFFECT "res/img/encounter/effects/MagicAura.png"
+#define MULTI_TARGET_EFFECT "res/img/encounter/effects/MultiTarget.png"
+#define STUN_EFFECT "res/img/encounter/effects/Stunned.png"
+
 // MUSIC THEMES
 #define EPIC_FANTASY_THEME "res/music/themes/epic-fantasy-theme.wav"
 #define ADVENTURE_FANTASY_THEME "res/music/themes/adventure-fantasy-theme.wav"

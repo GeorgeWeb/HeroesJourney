@@ -105,11 +105,16 @@ namespace HJ {
 				// handle input & Update scene
 				m_data->machine.GetActiveState()->HandleInput();
 				m_data->machine.GetActiveState()->Update(m_deltaTime);
-				
-				// Update cursor
-				Engine2D::cursor.setPosition(m_data->input.GetMousePositionToWorld(Engine2D::GetWin()));
 
 				accumulator -= m_deltaTime;
+
+				// !!! <Update cursor>
+				// Could find a better solution, BUT it does work for now, since it loses the texture on some random occasions
+				// the thing is there's some caching implemented and if it exists in the textures map it will just be re-assigned and not re-loaded
+				// dunno why, but I need to use LoadTexture as well to avoid that random disapperaing behaviour!
+				m_data->assets.LoadTexture("Tex_Cursor", CUSTOM_CURSOR_IMG);
+				Engine2D::cursor.setTexture(m_data->assets.GetTexture("Tex_Cursor"));
+				Engine2D::cursor.setPosition(m_data->input.GetMousePositionToWorld(Engine2D::GetWin()));
 			}
 
 			// calculate interpolation time based on the accumulator and delta time

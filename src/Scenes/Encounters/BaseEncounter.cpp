@@ -419,6 +419,10 @@ namespace HJ { namespace Encounters {
 			{
 				hero->SetHealth(hero->GetMaxHealth());
 				hero->SetMana(hero->GetMaxMana());
+				
+				// reset all status effects
+				for (auto eff : hero->GetStatusComponent()->GetEffects()) 
+					eff.second->active = false;
 			}
 			outcomeState = std::make_shared<BattleOutcomeScene>(BattleOutcomeScene(m_data));
 			m_data->machine.AddState(outcomeState);
@@ -426,6 +430,12 @@ namespace HJ { namespace Encounters {
 			
 			// Win condition logic
 			case BATTLE_STATUS::WON:
+		
+			// reset all status effects
+			for (auto hero : m_activeHeroes)
+				for (auto eff : hero->GetStatusComponent()->GetEffects()) 
+					eff.second->active = false;
+
 			// Load win screen
 			m_data->gm.inn->ApplyBonus(m_activeHeroes);
 			outcomeState = std::make_shared<BattleOutcomeScene>(BattleOutcomeScene(m_data));
