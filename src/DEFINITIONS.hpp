@@ -81,10 +81,10 @@
 
 // Story screens global definitions
 #define STORY_INTRO_SCENE_BACKGROUND "res/img/map/game-map-bg.png"
-#define MEET_BARD_SCENE_BACKGROUND "res/img/encounter/tutorial.png"
-#define MEET_SORC_SCENE_BACKGROUND "res/img/encounter/encounter1.png"
+#define MEET_BARD_SCENE_BACKGROUND "res/img/encounter/encounter1.png"
+#define MEET_SORC_SCENE_BACKGROUND "res/img/encounter/encounter3.png"
 #define MEET_ROGUE_SCENE_BACKGROUND "res/img/encounter/encounter2.png"
-#define FINAL_STORY_SCENE_BACKGROUND "res/img/encounter/encounter3.png"
+#define FINAL_STORY_SCENE_BACKGROUND "res/img/encounter/encounter4.png"
 #define STORY_INTRO_SCENE_HERO "res/img/characters/heroes/hero.png"
 #define STORY_INTRO_SCENE_CAPATIN "res/img/characters/heroes/hero.png"
 #define STORY_INTRO_SCENE_HERO_ICON "res/img/characters/heroes/hero.png"

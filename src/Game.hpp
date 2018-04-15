@@ -39,6 +39,12 @@ namespace HJ {
 			int nextEncounter = 0;
 			//reward after battle
 			int loot = 0;
+			//
+			bool battlePassed = true;
+			bool trollPassed = false;
+			bool cyclopsPassed = false;
+			bool harpyPassed = false;
+			bool magePassed = false;
 
 			// amount of potions acquired/bought
 			int healthPot = 1;

@@ -367,7 +367,13 @@ namespace HJ { namespace Encounters {
 
 		// set win/loose helpers
 		m_data->gm.loot = 100;
-		m_data->gm.nextEncounter = 4;
+
+		if (!m_data->gm.magePassed)
+		{
+			m_data->gm.nextEncounter = 4;
+			m_data->gm.magePassed = true;
+		}
+
 	}
 
 } }

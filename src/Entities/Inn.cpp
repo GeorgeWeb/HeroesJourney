@@ -7,7 +7,7 @@ namespace HJ { namespace Entities {
 		if (t_populate)
 		{
 			m_level = 1;
-			m_bonus = m_level * 10;
+			m_bonus = m_level * 20;
 		}
 	}
 
@@ -37,7 +37,7 @@ namespace HJ { namespace Entities {
 
 	void Inn::Upgrade()
 	{
-		m_bonus = m_level * 10;
+		m_bonus = m_level * 20;
 		m_level += 1;
 	}
 

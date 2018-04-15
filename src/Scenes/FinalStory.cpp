@@ -63,11 +63,11 @@ namespace HJ {
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
 		m_dialog->AddConversation({
-			"Knight: The evil frost mage's minions have been slain, ", "nothing lies in our path. Beyond the coast is the Castle of Ice.  ", // LEFT CHAR
+			"Knight: The evil frost mage have been slain, ", "The Castle of Ice is in ruins and the kingdom is finally at peace. ", // LEFT CHAR
 			"", "", // RIGHT CHAR
-			"Knight: Let us fight for out kingdom and our homes. Brave companions, ", " I will require your aid one last time.", // LEFT CHAR
+			"Anton: Thank you adventurer for joining us. We hope you had as much fun , ", " playing the game as we did making it.", // LEFT CHAR
 			"", "",  // RIGHT CHAR
-			"Knight:  We go to face the frost mage!", "" //LEFT CHAR
+			"Georgi: Sam if you are reading this, congratulations. ", "Also i have lost a bet. :)" //LEFT CHAR
 
 			});
 		m_dialog->DisplayConvo(0, 2, m_data->assets.GetFont("Font_Pixel"));
@@ -102,6 +102,10 @@ namespace HJ {
 		AddEntity("E_aFinalStoryContinueText", continueTxt);
 		AddEntity("E_mFinalStoryDialog", m_dialog);
 		AddEntity("E_xFinalStoryUIFrame", uiFrame);
+
+
+		//
+		m_data->gm.battlePassed = true;
 	}
 
 	void FinalStoryScene::HandleInput()

@@ -28,9 +28,9 @@ namespace HJ {
 	{
 		// load assets
 		m_data->assets.LoadTexture("Tex_MeetRogueBG", MEET_ROGUE_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_StoryMainHero", STORY_INTRO_SCENE_HERO);
+		m_data->assets.LoadTexture("Tex_StoryMainHero", HERO_KNIGHT_FLIP_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryCaptain", HERO_ROGUE_SPRITE);
-		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", STORY_INTRO_SCENE_HERO_ICON);
+		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", HERO_KNIGHT_FLIP_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", HERO_ROGUE_SPRITE);
 
 		//Background
@@ -101,6 +101,8 @@ namespace HJ {
 		AddEntity("E_aMeetRogueContinueText", continueTxt);
 		AddEntity("E_mMeetRogueDialog", m_dialog);
 		AddEntity("E_xMeetRogueUIFrame", uiFrame);
+
+		m_data->gm.battlePassed = true;
 
 	}
 

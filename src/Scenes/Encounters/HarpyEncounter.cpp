@@ -344,6 +344,12 @@ namespace HJ {
 			// set win/loose helpers
 			m_data->gm.loot = 80;
 			m_data->gm.nextEncounter = 3;
+
+			if (!m_data->gm.harpyPassed)
+			{
+				m_data->gm.nextEncounter = 3;
+				m_data->gm.harpyPassed = true;
+			}
 		}
 
 	}

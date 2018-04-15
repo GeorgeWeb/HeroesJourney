@@ -321,7 +321,12 @@ namespace HJ { namespace Encounters {
 
 		// set win/loose helpers
 		m_data->gm.loot = 60;
-		m_data->gm.nextEncounter = 2;
+		
+		if (!m_data->gm.cyclopsPassed)
+		{
+			m_data->gm.nextEncounter = 2;
+			m_data->gm.cyclopsPassed = true;
+		}
 	}
 
 } }

@@ -28,10 +28,10 @@ namespace HJ {
 	{
 		// load assets
 		m_data->assets.LoadTexture("Tex_MeetSorcBG", MEET_SORC_SCENE_BACKGROUND);
-		m_data->assets.LoadTexture("Tex_StoryMainHero", STORY_INTRO_SCENE_HERO);
+		m_data->assets.LoadTexture("Tex_StoryMainHero", HERO_KNIGHT_FLIP_SPRITE);
 		m_data->assets.LoadTexture("Tex_StorySorc", HERO_SORC_SPRITE);
-		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", STORY_INTRO_SCENE_HERO_ICON);
-		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", STORY_INTRO_SCENE_CAPATIN_ICON);
+		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", HERO_KNIGHT_FLIP_SPRITE);
+		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", HERO_KNIGHT_FLIP_SPRITE);
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -63,7 +63,7 @@ namespace HJ {
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
 		m_dialog->AddConversation({
-			"Sorceress : I am impressed young knight, you bested the Evil frost  ", " mage's troll. As a sorceress of the flame allow me to aid you. ", // LEFT CHAR
+			"Sorceress : I am impressed young knight, you bested the Evil frost  ", " mage's harpy. As a sorceress of the flame allow me to aid you. ", // LEFT CHAR
 			"Knight : Why would you aid us in our quest? ", "", // RIGHT CHAR
 			"Sorceress : The evil frost mage hates the sorcereses of the flame the most. . ", "I offer my spells of scorching heat to your cause. ", // LEFT CHAR
 			"Knight : I welcome you Sorceress of the flame, ", "We head now to the mountains.  "  // RIGHT CHAR
@@ -100,6 +100,10 @@ namespace HJ {
 		AddEntity("E_aMeetSorcContinueText", continueTxt);
 		AddEntity("E_mMeetSorcDialog", m_dialog);
 		AddEntity("E_xMeetSorcUIFrame", uiFrame);
+
+
+		//
+		m_data->gm.battlePassed = true;
 	}
 
 	void MeetSorcScene::HandleInput()

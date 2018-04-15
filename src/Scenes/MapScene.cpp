@@ -421,6 +421,7 @@ namespace HJ {
 		auto mnTextComp = m_data->ents.Find<Entity>("E_0MnText");
 		auto coinTextComp = m_data->ents.Find<Entity>("E_0CoinText");
 		#pragma endregion
+		
 
 		std::vector<Entity*> entsVisibile({ text, text2, text3, text4, hpTextComp, mnTextComp, coinTextComp });
 		std::vector<SpriteComponent*> compsVisibile({ frameComp, castleComp, forestComp, mountainsComp, seaComp,
@@ -706,6 +707,14 @@ namespace HJ {
 		
 		//update resources
 		UpdateResources();
+		
+		//
+		if (m_data->gm.battlePassed)
+		{
+			UpdateParty();
+			m_data->gm.battlePassed = false;
+		}
+		
 
 		auto castleBtn = m_data->ents.Find<Entity>("E_Castle")->GetComponent<ClickableComponent>("C_CastleBtn");
 		auto forestBtn = m_data->ents.Find<Entity>("E_Forest")->GetComponent<ClickableComponent>("C_ForestBtn");
@@ -849,12 +858,108 @@ namespace HJ {
 
 		for (auto& cmpToBlock : t_compsToUnblock)
 			cmpToBlock->SetClickable(true);
+		
+			m_data->gm.battlePassed = true;
 	}
 
 	void MapScene::UpdateParty()
 	{
 		//Change encounters unlocked and change the party members UI selection
 		//TODO:
+		sf::Color locked = sf::Color(255, 255, 255, 100);
+		sf::Color unlocked = sf::Color(255, 255, 255, 255);
+
+		auto mountainsComp = m_data->ents.Find<Entity>("E_Mountains")->GetComponent<SpriteComponent>("C_MountainsSprite");
+		auto seaComp = m_data->ents.Find<Entity>("E_Sea")->GetComponent<SpriteComponent>("C_SeaSprite");
+		auto evilCastleComp = m_data->ents.Find<Entity>("E_EvilCastle")->GetComponent<SpriteComponent>("C_EvilCastleSprite");
+		auto sorcComp = m_data->ents.Find<Entity>("E_0SorcIcon")->GetComponent<SpriteComponent>("C_SorcIconSprite");
+		auto rogueComp = m_data->ents.Find<Entity>("E_0RogueIcon")->GetComponent<SpriteComponent>("C_RougeIconSprite");
+		auto bardComp = m_data->ents.Find<Entity>("E_0BardIcon")->GetComponent<SpriteComponent>("C_BardIconSprite");
+
+		if (m_data->gm.nextEncounter == 0)
+		{
+			mountainsComp->SetClickable(false);
+			mountainsComp->GetSprite().setColor(locked);
+
+			seaComp->SetClickable(false);
+			seaComp->GetSprite().setColor(locked);
+
+			evilCastleComp->SetClickable(false);
+			evilCastleComp->GetSprite().setColor(locked);
+
+			sorcComp->SetClickable(false);
+			sorcComp->GetSprite().setColor(locked);
+
+			rogueComp->SetClickable(false);
+			rogueComp->GetSprite().setColor(locked);
+
+			bardComp->SetClickable(false);
+			bardComp->GetSprite().setColor(locked);
+
+		}
+
+		else if (m_data->gm.nextEncounter == 1)
+		{
+			mountainsComp->SetClickable(true);
+			mountainsComp->GetSprite().setColor(unlocked);
+
+			seaComp->SetClickable(false);
+			seaComp->GetSprite().setColor(locked);
+
+			evilCastleComp->SetClickable(false);
+			evilCastleComp->GetSprite().setColor(locked);
+
+			sorcComp->SetClickable(false);
+			sorcComp->GetSprite().setColor(locked);
+
+			rogueComp->SetClickable(false);
+			rogueComp->GetSprite().setColor(locked);
+
+			bardComp->SetClickable(true);
+			bardComp->GetSprite().setColor(unlocked);
+		}
+
+		else if (m_data->gm.nextEncounter == 2)
+		{
+			mountainsComp->SetClickable(true);
+			mountainsComp->GetSprite().setColor(unlocked);
+
+			seaComp->SetClickable(true);
+			seaComp->GetSprite().setColor(unlocked);
+
+			evilCastleComp->SetClickable(false);
+			evilCastleComp->GetSprite().setColor(locked);
+
+			sorcComp->SetClickable(false);
+			sorcComp->GetSprite().setColor(locked);
+
+			rogueComp->SetClickable(true);
+			rogueComp->GetSprite().setColor(unlocked);
+
+			bardComp->SetClickable(true);
+			bardComp->GetSprite().setColor(unlocked);
+		}
+
+		else if (m_data->gm.nextEncounter == 3)
+		{
+			mountainsComp->SetClickable(true);
+			mountainsComp->GetSprite().setColor(unlocked);
+
+			seaComp->SetClickable(true);
+			seaComp->GetSprite().setColor(unlocked);
+
+			evilCastleComp->SetClickable(true);
+			evilCastleComp->GetSprite().setColor(unlocked);
+
+			sorcComp->SetClickable(true);
+			sorcComp->GetSprite().setColor(unlocked);
+
+			rogueComp->SetClickable(true);
+			rogueComp->GetSprite().setColor(unlocked);
+
+			bardComp->SetClickable(true);
+			bardComp->GetSprite().setColor(unlocked);
+		}
 	}
 
 	void MapScene::AddEntity(const std::string& t_name, std::shared_ptr<Entity> t_entity)

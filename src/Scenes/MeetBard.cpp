@@ -29,7 +29,7 @@ namespace HJ {
 		// load assets
 		m_data->assets.LoadTexture("Tex_MeetBardBG", MEET_BARD_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_StoryMainHero", STORY_INTRO_SCENE_HERO);
-		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_FLIP_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", STORY_INTRO_SCENE_HERO_ICON);
 		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", STORY_INTRO_SCENE_CAPATIN_ICON);
 
@@ -63,7 +63,7 @@ namespace HJ {
 		m_dialog = std::make_shared<Dialog>();
 		// Conversation
 		m_dialog->AddConversation({
-			"Knight: Battle is won. The mage is retreating, but we need to push on. ", "- I must find him in his castle and end this once and for all.", // LEFT CHAR
+			"Knight: Battle is won. The troll is defeated, but i need to push on. ", "- I must find the mage in his castle and end this once and for all.", // LEFT CHAR
 			"Bard: What would you say to a hand from an old ally? ", "Or do you plan to face him by yourself? ", // RIGHT CHAR
 			"Knight: Old friend, you are most welcome on this quest. ", "" //Right char
 			});
@@ -99,6 +99,9 @@ namespace HJ {
 		AddEntity("E_aMeetBardContinueText", continueTxt);
 		AddEntity("E_mMeetBardDialog", m_dialog);
 		AddEntity("E_xMeetBardUIFrame", uiFrame);
+
+		//
+		m_data->gm.battlePassed = true;
 	}
 
 	void MeetBardScene::HandleInput()

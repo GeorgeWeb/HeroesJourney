@@ -46,7 +46,7 @@ namespace HJ {
 				(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 			m_data->gm.hKnight->Init();
 
-			int health = m_data->gm.hKnight->GetHealth() * 2;
+			int health = m_data->gm.hKnight->GetHealth() * 1.5f;
 			// encounters's evil ai - forest troll
 			m_activeBoss = std::make_shared<Hero>();
 			m_activeBoss->SetStats("Troll", HERO_TYPE::EVIL, health, 23, 12, 7);
@@ -298,7 +298,21 @@ namespace HJ {
 
 			// set win/loose helpers
 			m_data->gm.loot = 40;
-			m_data->gm.nextEncounter = 1;
+			
+			if (m_data->gm.trollPassed == true)
+			{
+
+				std::cout << "true" << std::endl;
+			}
+
+			if (m_data->gm.trollPassed == false)
+			{
+				m_data->gm.nextEncounter = 1;
+				m_data->gm.trollPassed = true;
+				std::cout << "false" << std::endl;
+			}
+			
+
 		}
 
 	}

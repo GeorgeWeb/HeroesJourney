@@ -115,13 +115,16 @@ namespace HJ {
 			{
 				m_data->gm.gold += m_data->gm.loot;
 
-				if (m_data->gm.nextEncounter == 0)
+				if (m_data->gm.nextEncounter == 0 || m_data->gm.loot == 5)
 				{
+					m_data->gm.battlePassed = true;
 					auto map = std::make_shared<MapScene>(MapScene(m_data));
 					m_data->machine.AddState(map);
 					// reset loot
 					m_data->gm.loot = 0;
+					
 				}
+
 
 				else if (m_data->gm.nextEncounter == 1)
 				{
