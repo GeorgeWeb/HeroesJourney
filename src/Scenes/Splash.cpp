@@ -49,6 +49,9 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_HeroRogue", HERO_ROGUE_SPRITE);
 		// Evil assets
 		m_data->assets.LoadTexture("Tex_EvilFrostGolem", EVIL_FROST_GOLEM_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilTroll", EVIL_TROLL_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilCyclops", EVIL_CYCLOPS_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilHarpy", EVIL_HARPY_SPRITE);
 		m_data->assets.LoadTexture("Tex_EvilFrostMage", EVIL_FROST_MAGE_SPRITE);
 		// Encounter assets
 		// basics

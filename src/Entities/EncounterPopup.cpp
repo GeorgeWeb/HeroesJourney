@@ -1,5 +1,6 @@
 #include "EncounterPopup.hpp"
 #include "../DEFINITIONS.hpp"
+#include "../Controls.hpp"
 
 #include <Engine/Engine.hpp>
 
@@ -48,14 +49,14 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		// check for key press or click for closing
-		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 		{
 			SetAlive(false);
 			SetVisible(false);
 			std::invoke(OnClose);
 		}
 
-		if (m_playBtnSprite->IsClickable() && m_encInput.isClicked(m_playBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+		if (m_playBtnSprite->IsClickable() && m_encInput.isClicked(m_playBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 		{
 			std::invoke(OnPlay);
 		}
@@ -92,7 +93,7 @@ namespace HJ { namespace Entities {
 
 	void EncounterPopup::SetOpponentImage(const sf::Texture& t_texture)
 	{
-		m_opponentSprite->GetSprite().setTexture(t_texture);
+		m_opponentSprite->GetSprite().setTexture(t_texture, true);
 		m_opponentSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 
@@ -106,7 +107,8 @@ namespace HJ { namespace Entities {
 	{
 		m_titleText->SetFont(t_font);
 		m_titleText->GetText().setString(t_text);
-		m_titleText->GetText().setCharacterSize(24);
+		m_titleText->GetText().setCharacterSize(22);
+		m_titleText->GetText().setStyle(sf::Text::Bold);
 	}
 
 	void EncounterPopup::OnDisplay(std::function<void()> t_func)
@@ -118,18 +120,16 @@ namespace HJ { namespace Entities {
 	{
 		m_bgSprite->GetSprite().setPosition(t_position);
 
-		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 5.0f));
+		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.15f, t_position.y * 5.025f));
 
-		//m_closeBtnSprite->GetSprite().scale(0.5f, 0.5f);
 		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.990f, t_position.y*1.1f));
 
-		m_opponentSprite->GetSprite().scale(1.65f, 1.65f);
-		m_opponentSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 1.55f));
+		m_opponentSprite->GetSprite().scale(2.8f, 2.8f);
+		m_opponentSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 1.9f));
 
-		m_storySprite->GetSprite().scale(1.1f, 2.6f);
-		m_storySprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 1.1f, t_position.y * 1.55f));
+		m_storySprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 1.1f, t_position.y * 1.7f));
 
-		m_titleText->GetText().setPosition(sf::Vector2f(t_position.x * 1.65f, t_position.y * 1.15f));
+		m_titleText->GetText().setPosition(sf::Vector2f(t_position.x * 1.65f, t_position.y * 1.25f));
 	}
 
 } }

@@ -62,11 +62,11 @@ namespace HJ {
 			m_activeBoss = std::make_shared<Hero>();
 			int health = m_data->gm.hRogue->GetHealth() * 3;
 			m_activeBoss->SetStats("Harpy", HERO_TYPE::EVIL, health, 15, 1, 15);
-			m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
+			m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilHarpy"), sf::IntRect(0, 0, 32, 32));
 			m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
-				(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
+				(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
 			m_activeBoss->Init();
-			m_activeBoss->GetSpriteComponent()->GetSprite().setScale(7.5f, 7.5f);
+			m_activeBoss->GetSpriteComponent()->GetSprite().setScale(5.0f, 5.0f);
 			// Add perma status effects
 			m_activeBoss->GetStatusComponent()->SetEffect(EFFECT_TYPE::FLY, true);
 			// Add skills

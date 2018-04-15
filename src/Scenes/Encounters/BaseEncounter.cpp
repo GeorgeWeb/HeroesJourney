@@ -305,7 +305,7 @@ namespace HJ { namespace Encounters {
 			if (event.type == sf::Event::Resized)
 				ResizeSceneView(event.size.width, event.size.height);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Pause")))
 			{
 				// Switch scenes (to Pause Menu)
 				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
@@ -316,7 +316,7 @@ namespace HJ { namespace Encounters {
 			// check if pause button is clicked
 			auto pauseBtnSprite = m_data->ents.Find<Button>("E_aPauseBtn")->GetSpriteComponent();
 			auto pauseBtnBtn = m_data->ents.Find<Button>("E_aPauseBtn")->GetClickableComponent();
-			if (pauseBtnSprite->IsClickable() && m_data->input.isClicked(pauseBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (pauseBtnSprite->IsClickable() && m_data->input.isClicked(pauseBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				pauseBtnBtn->SetClicked(true);
 			}
@@ -326,7 +326,7 @@ namespace HJ { namespace Encounters {
 			// check if attack button is clicked
 			auto atkBtnSprite = m_data->ents.Find<Button>("E_aAtkBtn")->GetSpriteComponent();
 			auto atkBtnBtn = m_data->ents.Find<Button>("E_aAtkBtn")->GetClickableComponent();
-			if (atkBtnSprite->IsClickable() && m_data->input.isClicked(atkBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (atkBtnSprite->IsClickable() && m_data->input.isClicked(atkBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				atkBtnBtn->SetClicked(true);
 			}
@@ -334,7 +334,7 @@ namespace HJ { namespace Encounters {
 			// check if defend button is clicked
 			auto defBtnSprite = m_data->ents.Find<Button>("E_aDefBtn")->GetSpriteComponent();
 			auto defBtnBtn = m_data->ents.Find<Button>("E_aDefBtn")->GetClickableComponent();
-			if (defBtnSprite->IsClickable() && m_data->input.isClicked(defBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (defBtnSprite->IsClickable() && m_data->input.isClicked(defBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				defBtnBtn->SetClicked(true);
 			}
@@ -342,7 +342,7 @@ namespace HJ { namespace Encounters {
 			// check if use HP button is clicked
 			auto hpBtnSprite = m_data->ents.Find<Button>("E_aHPBtn")->GetSpriteComponent();
 			auto hpBtnBtn = m_data->ents.Find<Button>("E_aHPBtn")->GetClickableComponent();
-			if (hpBtnSprite->IsClickable() && m_data->input.isClicked(hpBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (hpBtnSprite->IsClickable() && m_data->input.isClicked(hpBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				hpBtnBtn->SetClicked(true);
 			}
@@ -350,7 +350,7 @@ namespace HJ { namespace Encounters {
 			// check if use MP button is clicked
 			auto mpBtnSprite = m_data->ents.Find<Button>("E_aMPBtn")->GetSpriteComponent();
 			auto mpBtnBtn = m_data->ents.Find<Button>("E_aMPBtn")->GetClickableComponent();
-			if (mpBtnSprite->IsClickable() && m_data->input.isClicked(mpBtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (mpBtnSprite->IsClickable() && m_data->input.isClicked(mpBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				mpBtnBtn->SetClicked(true);
 			}
@@ -358,7 +358,7 @@ namespace HJ { namespace Encounters {
 			// check if use HP button is clicked
 			auto skill1BtnSprite = m_data->ents.Find<Button>("E_aSkill1Btn")->GetSpriteComponent();
 			auto skill1BtnBtn = m_data->ents.Find<Button>("E_aSkill1Btn")->GetClickableComponent();
-			if (skill1BtnSprite->IsClickable() && m_data->input.isClicked(skill1BtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (skill1BtnSprite->IsClickable() && m_data->input.isClicked(skill1BtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				skill1BtnBtn->SetClicked(true);
 			}
@@ -366,7 +366,7 @@ namespace HJ { namespace Encounters {
 			// check if use MP button is clicked
 			auto skill2BtnSprite = m_data->ents.Find<Button>("E_aSkill2Btn")->GetSpriteComponent();
 			auto skill2BtnBtn = m_data->ents.Find<Button>("E_aSkill2Btn")->GetClickableComponent();
-			if (skill2BtnSprite->IsClickable() && m_data->input.isClicked(skill2BtnSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (skill2BtnSprite->IsClickable() && m_data->input.isClicked(skill2BtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				skill2BtnBtn->SetClicked(true);
 			}
@@ -414,7 +414,6 @@ namespace HJ { namespace Encounters {
 			// Lose condition logic
 			case BATTLE_STATUS::LOST:
 			// Load lose screen
-			m_data->gm.loot = 0;
 			for (auto hero : m_activeHeroes)
 			{
 				hero->SetHealth(hero->GetMaxHealth());
@@ -424,6 +423,7 @@ namespace HJ { namespace Encounters {
 				for (auto eff : hero->GetStatusComponent()->GetEffects()) 
 					eff.second->active = false;
 			}
+			m_data->gm.loot = 0;
 			outcomeState = std::make_shared<BattleOutcomeScene>(BattleOutcomeScene(m_data));
 			m_data->machine.AddState(outcomeState);
 			break;

@@ -24,7 +24,10 @@
 
 // Enemies global definitions
 #define EVIL_FROST_GOLEM_SPRITE "res/img/characters/evils/Frost-Demon.png"
-#define EVIL_FROST_MAGE_SPRITE "res/img/characters/evils/enemy.png"
+#define EVIL_TROLL_SPRITE "res/img/characters/evils/Troll.png"
+#define EVIL_CYCLOPS_SPRITE "res/img/characters/evils/Cyclops.png"
+#define EVIL_HARPY_SPRITE "res/img/characters/evils/Harpy.png"
+#define EVIL_FROST_MAGE_SPRITE "res/img/characters/evils/Frost-Mage.png"
 
 // Initial/Splash state global definitions
 #define SPLASH_SCENE_BACKGROUND "res/img/splash/splash-bg.jpg"
@@ -46,6 +49,10 @@
 #define MAP_SCENE_SORC_ICON "res/img/map/sorcicon.png"
 #define MAP_SCENE_BARD_ICON "res/img/map/bardicon.png"
 #define MAP_SCENE_ROUGE_ICON "res/img/map/archericon.png"
+#define MAP_SCENE_TROLL_ICON "res/img/map/trollicon.png"
+#define MAP_SCENE_CYCLOPS_ICON "res/img/map/cyclopsicon.png"
+#define MAP_SCENE_HARPY_ICON "res/img/map/harpyicon.png"
+#define MAP_SCENE_MAGE_ICON "res/img/map/frostmageicon.png"
 #define MAP_SCENE_UI_FRAME "res/img/map/frame.png"
 
 // Castle screen state global definitions
@@ -116,9 +123,9 @@
 #define DAMAGE_AURA_EFFECT "res/img/encounter/effects/DamageAura.png"
 #define DEFEND_EFFECT "res/img/encounter/effects/Defend.png"
 #define ENRAGE_EFFECT "res/img/encounter/effects/Enrage.png"
-#define FLYING_EFFECT "res/img/encounter/effects/FireAura.png"
-#define FROST_ARMOUR_EFFECT "res/img/encounter/effects/Flying.png"
-#define FROST_AURA_EFFECT "res/img/encounter/effects/FrostArmor.png"
+#define FLYING_EFFECT "res/img/encounter/effects/Flying.png"
+#define FROST_ARMOUR_EFFECT "res/img/encounter/effects/FrostArmor.png"
+#define FROST_AURA_EFFECT "res/img/encounter/effects/FireAura.png"
 #define MAGIC_IMUNITY_EFFECT "res/img/encounter/effects/MagicAura.png"
 #define MULTI_TARGET_EFFECT "res/img/encounter/effects/MultiTarget.png"
 #define STUN_EFFECT "res/img/encounter/effects/Stunned.png"

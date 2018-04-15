@@ -37,6 +37,10 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_SorcIcon", MAP_SCENE_SORC_ICON);
 		m_data->assets.LoadTexture("Tex_BardIcon", MAP_SCENE_BARD_ICON);
 		m_data->assets.LoadTexture("Tex_RougeIcon", MAP_SCENE_ROUGE_ICON);
+		m_data->assets.LoadTexture("Tex_PopupTrollIcon", MAP_SCENE_TROLL_ICON);
+		m_data->assets.LoadTexture("Tex_PopupCyclopsIcon", MAP_SCENE_CYCLOPS_ICON);
+		m_data->assets.LoadTexture("Tex_PopupHarpyIcon", MAP_SCENE_HARPY_ICON);
+		m_data->assets.LoadTexture("Tex_PopupMageIcon", MAP_SCENE_MAGE_ICON);
 		m_data->assets.LoadTexture("Tex_Health", HP_POT_ICON);
 		m_data->assets.LoadTexture("Tex_Mana", MANA_POT_ICON);
 
@@ -58,8 +62,8 @@ namespace HJ {
 		castleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Castle"));
 		castleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.1f,
-			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.3f));
+		castle->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.05f,
+			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.05f));
 		castle->SetVisible(true);
 		castle->SetAlive(true);
 		//clickable component
@@ -73,8 +77,8 @@ namespace HJ {
 		forestSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Forest"));
 		forestSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		forest->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.35f,
-			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.4f));
+		forest->SetPosition(sf::Vector2f((SCREEN_WIDTH - castleSprite->GetSprite().getGlobalBounds().width) * 0.25f,
+			(SCREEN_HEIGHT - castleSprite->GetSprite().getGlobalBounds().height) * 0.45f));
 		forest->SetVisible(true);
 		forest->SetAlive(true);
 		//clickable component
@@ -88,8 +92,8 @@ namespace HJ {
 		mountainsSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Mountains"));
 		mountainsSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.8f));
+		mountains->SetPosition(sf::Vector2f((SCREEN_WIDTH - mountainsSprite->GetSprite().getGlobalBounds().width) * 0.6f,
+			(SCREEN_HEIGHT - mountainsSprite->GetSprite().getGlobalBounds().height) * 0.4f));
 		mountains->SetVisible(true);
 		mountains->SetAlive(true);
 		auto mountainsBtn = mountains->AddComponent<ClickableComponent>("C_MountainsBtn");
@@ -102,8 +106,9 @@ namespace HJ {
 		seaSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Sea"));
 		seaSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.95f,
-			(SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.9f));
+		sea->SetPosition(sf::Vector2f((SCREEN_WIDTH - seaSprite->GetSprite().getGlobalBounds().width) * 0.9f,
+			(SCREEN_HEIGHT - seaSprite->GetSprite().getGlobalBounds().height) * 0.8f));
+		seaSprite->GetSprite().scale(0.8f, 0.8f);
 		sea->SetVisible(true);
 		sea->SetAlive(true);
 		auto seaBtn = sea->AddComponent<ClickableComponent>("C_SeaBtn");
@@ -116,8 +121,8 @@ namespace HJ {
 		evilCastleSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_EvilCastle"));
 		evilCastleSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		//castle properties
-		evilCastle->SetPosition(sf::Vector2f((SCREEN_WIDTH - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.7f,
-			(SCREEN_HEIGHT - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.2f));
+		evilCastle->SetPosition(sf::Vector2f((SCREEN_WIDTH - evilCastleSprite->GetSprite().getGlobalBounds().width) * 0.95f,
+			(SCREEN_HEIGHT - evilCastleSprite->GetSprite().getGlobalBounds().height) * 0.05f));
 		evilCastle->SetVisible(true);
 		evilCastle->SetAlive(true);
 		auto evilCastleBtn = evilCastle->AddComponent<ClickableComponent>("C_EvilCastleBtn");
@@ -201,7 +206,7 @@ namespace HJ {
 		m_encounterPopup->SetPlayButtonImage(m_data->assets.GetTexture("Tex_PopupPlayBtn"));
 		m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
 		m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
-		m_encounterPopup->SetTitleText("ENCOUNTER #?", m_data->assets.GetFont("Font_Pixel"));
+		m_encounterPopup->SetTitleText("ENCOUNTER", m_data->assets.GetFont("Font_Pixel"));
 		// position
 		m_encounterPopup->SetPosition(sf::Vector2f(
 			(SCREEN_WIDTH - m_encounterPopup->GetComponent<SpriteComponent>("C_zPopupBGSprite")->GetSprite().getGlobalBounds().width) * 0.5f,
@@ -221,7 +226,8 @@ namespace HJ {
 		auto infTextFont = text->AddComponent<TextComponent>("C_Text");
 		// define
 		infTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		infTextFont->GetText().setCharacterSize(12);
+		infTextFont->GetText().setCharacterSize(11);
+		infTextFont->GetText().setStyle(sf::Text::Bold);
 		text->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.75f));
 		// properties
 		text->showOnCreate = false;
@@ -234,7 +240,8 @@ namespace HJ {
 		auto infTextFont2 = text2->AddComponent<TextComponent>("C_Text2");
 		// define
 		infTextFont2->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		infTextFont2->GetText().setCharacterSize(12);
+		infTextFont2->GetText().setCharacterSize(11);
+		infTextFont2->GetText().setStyle(sf::Text::Bold);
 		text2->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.80f));
 		// properties
 		text2->showOnCreate = false;
@@ -247,7 +254,8 @@ namespace HJ {
 		auto infTextFont3 = text3->AddComponent<TextComponent>("C_Text3");
 		// define
 		infTextFont3->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		infTextFont3->GetText().setCharacterSize(12);
+		infTextFont3->GetText().setCharacterSize(11);
+		infTextFont3->GetText().setStyle(sf::Text::Bold);
 		text3->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.87f));
 		// properties
 		text3->showOnCreate = false;
@@ -260,7 +268,8 @@ namespace HJ {
 		auto infTextFont4 = text4->AddComponent<TextComponent>("C_Text4");
 		// define
 		infTextFont4->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		infTextFont4->GetText().setCharacterSize(12);
+		infTextFont4->GetText().setCharacterSize(11);
+		infTextFont4->GetText().setStyle(sf::Text::Bold);
 		text4->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.26f, SCREEN_HEIGHT * 0.92f));
 		// properties
 		text4->showOnCreate = false;
@@ -275,7 +284,7 @@ namespace HJ {
 		//sprite define
 		healthSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_Health"));
 		healthSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		health->SetPosition(sf::Vector2f(SCREEN_WIDTH *0.02f,  SCREEN_HEIGHT * 0.65f));
+		health->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.02f,  SCREEN_HEIGHT * 0.65f));
 		//properties
 		health->SetVisible(true);
 		health->SetAlive(true);
@@ -286,6 +295,7 @@ namespace HJ {
 		// define
 		hpTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		hpTextFont->GetText().setCharacterSize(14);
+		hpTextFont->GetText().setStyle(sf::Text::Bold);
 		textHp->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.04f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textHp->showOnCreate = true;
@@ -311,6 +321,7 @@ namespace HJ {
 		// define
 		mnTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		mnTextFont->GetText().setCharacterSize(14);
+		mnTextFont->GetText().setStyle(sf::Text::Bold);
 		textMn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.09f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textMn->showOnCreate = true;
@@ -336,6 +347,7 @@ namespace HJ {
 		// define
 		coinTextFont->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		coinTextFont->GetText().setCharacterSize(14);
+		coinTextFont->GetText().setStyle(sf::Text::Bold);
 		textCoin->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.15f, SCREEN_HEIGHT * 0.67f));
 		// properties
 		textCoin->showOnCreate = true;
@@ -367,10 +379,6 @@ namespace HJ {
 		AddEntity("E_0HpText", textHp);
 		AddEntity("E_0MnText", textMn);
 		AddEntity("E_0CoinText", textCoin);
-
-		// If you wanna re-use an entity from another scene that already exists in the global ents. mngr.
-		//m_data->ents.Find<AnimatedLogo>("E_GameLogo")->Init();
-		//AddEntity("E_GameLogo", m_data->ents.GetSharedEntity("E_GameLogo"));
 	}
 
 	void MapScene::HandleInput()
@@ -430,15 +438,19 @@ namespace HJ {
 				ResizeSceneView(event.size.width, event.size.height);
 
 			// Pause menu
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Pause")))
 			{
+				// make sure popups are 
+				ShowEntsOnClose(entsVisibile, compsVisibile, compsClickable);
+				m_encounterPopup->showOnCreate = false;
+
 				// Switch scenes (to Pause Menu)
 				auto pauseMenuState = std::make_shared<PauseMenuScene>(PauseMenuScene(m_data));
 				m_data->machine.AddState(pauseMenuState, false);
 			}
 
 			//check for castle click
-			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (castleComp->IsClickable() && m_data->input.isClicked(castleComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				castleBtn->SetClicked(true);
 				auto CastleInterior = std::make_shared<CastleScene>(CastleScene(m_data));
@@ -446,7 +458,7 @@ namespace HJ {
 			}
 			
 			//check for forest click
-			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (forestComp->IsClickable() && m_data->input.isClicked(forestComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				forestBtn->SetClicked(true);
 				
@@ -454,9 +466,8 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					
-					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
-					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					m_encounterPopup->SetTitleText("Whispering Wilds", m_data->assets.GetFont("Font_Pixel"));
+					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupTrollIcon"));
 					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
@@ -487,21 +498,16 @@ namespace HJ {
 				// SET PLAY CLICKED BEHAVIOUR
 				m_encounterPopup->OnPlay = [=]()
 				{
-					// TODO: Play logic.
-					std::cout << "Clicked Play!!!\n";
-
 					m_encounterPopup->OnClose();
 					m_encounterPopup->showOnCreate = false;
 
 					auto ForestEncounter = std::make_shared<Encounters::TrollEncounter>(Encounters::TrollEncounter(m_data));
 					m_data->machine.AddState(ForestEncounter, true);
-
-					
 				};
 			}
 
 			//check for mountains click
-			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (mountainsComp->IsClickable() && m_data->input.isClicked(mountainsComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				mountainsBtn->SetClicked(true);
 
@@ -509,8 +515,8 @@ namespace HJ {
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
-					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					m_encounterPopup->SetTitleText("The Arctic Rise", m_data->assets.GetFont("Font_Pixel"));
+					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupCyclopsIcon"));
 					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
@@ -541,28 +547,25 @@ namespace HJ {
 				// SET PLAY CLICKED BEHAVIOUR
 				m_encounterPopup->OnPlay = [=]()
 				{
-					// TODO: Play logic.
-					std::cout << "Clicked Play!!!\n";
-
 					m_encounterPopup->OnClose();
 					m_encounterPopup->showOnCreate = false;
 
-					auto MountainEncounter = std::make_unique<Encounters::CyclopEncounter>(Encounters::CyclopEncounter(m_data));
-					m_data->machine.AddState(std::move(MountainEncounter));
+					auto MountainEncounter = std::make_shared<Encounters::CyclopEncounter>(Encounters::CyclopEncounter(m_data));
+					m_data->machine.AddState(MountainEncounter, true);
 				};
 			}
 
 			//check for sea click
-			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (seaComp->IsClickable() && m_data->input.isClicked(seaComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				seaBtn->SetClicked(true);
+
 				// SET CREATION BEHAVIOUR
 				m_encounterPopup->OnDisplay([=]()
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
-
-					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
-					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					m_encounterPopup->SetTitleText("The Ethereal Bay", m_data->assets.GetFont("Font_Pixel"));
+					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupHarpyIcon"));
 					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
@@ -593,19 +596,16 @@ namespace HJ {
 				// SET PLAY CLICKED BEHAVIOUR
 				m_encounterPopup->OnPlay = [=]()
 				{
-					// TODO: Play logic.
-					std::cout << "Clicked Play!!!\n";
-
 					m_encounterPopup->OnClose();
 					m_encounterPopup->showOnCreate = false;
 
 					auto SeaEncounter = std::make_shared<Encounters::HarpyEncounter>(Encounters::HarpyEncounter(m_data));
-					m_data->machine.AddState(SeaEncounter);
+					m_data->machine.AddState(SeaEncounter, true);
 				};
 			}
 
 			//check for evil castle click
-			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (evilCastleComp->IsClickable() && m_data->input.isClicked(evilCastleComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				evilCastleBtn->SetClicked(true);
 				// SET CREATION BEHAVIOUR
@@ -613,8 +613,8 @@ namespace HJ {
 				{
 					// Change the textures of the popup based on the actual Encounter we're in.
 
-					//m_encounterPopup->SetTitleText("Encounter 1!", m_data->assets.GetFont("Font_Pixel"));
-					//m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupOpponent"));
+					m_encounterPopup->SetTitleText("La Kingdom of Evil", m_data->assets.GetFont("Font_Pixel"));
+					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupMageIcon"));
 					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
 
 					// Show the encounter popup
@@ -645,9 +645,6 @@ namespace HJ {
 				// SET PLAY CLICKED BEHAVIOUR
 				m_encounterPopup->OnPlay = [=]()
 				{
-					// TODO: Play logic.
-					std::cout << "Clicked Play!!!\n";
-
 					m_encounterPopup->OnClose();
 					m_encounterPopup->showOnCreate = false;
 
@@ -656,7 +653,7 @@ namespace HJ {
 				};
 			}
 
-			if (knightComp->IsClickable() && m_data->input.isClicked(knightComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (knightComp->IsClickable() && m_data->input.isClicked(knightComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				knightBtn->SetClicked(true);
 
@@ -667,7 +664,7 @@ namespace HJ {
 				m_data->ents.Find<Entity>("E_0Text")->SetVisible(true);
 			}
 
-			if (rogueComp->IsClickable() && m_data->input.isClicked(rogueComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (rogueComp->IsClickable() && m_data->input.isClicked(rogueComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				rogueBtn->SetClicked(true);
 
@@ -678,7 +675,7 @@ namespace HJ {
 				m_data->ents.Find<Entity>("E_0Text")->SetVisible(true);
 			}
 
-			if (bardComp->IsClickable() && m_data->input.isClicked(bardComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (bardComp->IsClickable() && m_data->input.isClicked(bardComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				bardBtn->SetClicked(true);
 
@@ -689,7 +686,7 @@ namespace HJ {
 				m_data->ents.Find<Entity>("E_0Text")->SetVisible(true);
 			}
 
-			if (sorcComp->IsClickable() && m_data->input.isClicked(sorcComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (sorcComp->IsClickable() && m_data->input.isClicked(sorcComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				sorcBtn->SetClicked(true);
 

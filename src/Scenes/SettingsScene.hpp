@@ -3,9 +3,10 @@
 
 #include "../Game.hpp"
 #include <Engine/Engine.hpp>
-#include <Engine/ECM/Components/SpriteComponent.hpp>
-
 #include <Engine/System/Settings.hpp>
+
+#include "../Entities/Button.hpp"
+#include <map>
 
 namespace HJ {
 
@@ -28,6 +29,12 @@ namespace HJ {
 
 		private:
 			GameDataRef m_data;
+
+			std::shared_ptr<Entities::Button> m_changeBackBtn;
+			std::shared_ptr<Entities::Button> m_changePauseBtn;
+			std::shared_ptr<Entities::Button> m_changeSkipBtn;
+
+			std::map<std::string, std::shared_ptr<Entities::Button>> m_controls;
 	};
 }
 

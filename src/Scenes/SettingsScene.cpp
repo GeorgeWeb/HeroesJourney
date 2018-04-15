@@ -1,8 +1,6 @@
 #include "SettingsScene.hpp"
 #include "../DEFINITIONS.hpp"
-#include <Engine/ECM/Components/ClickableComponent.hpp>
 #include "MainMenu.hpp"
-#include "../Entities/Button.hpp"
 
 namespace HJ {
 
@@ -27,7 +25,6 @@ namespace HJ {
 		//background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SettingsBGSprite");
-		//define bg sprite
 		//define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SettingsBG"));
 		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
@@ -92,7 +89,7 @@ namespace HJ {
 		//define sprite
 		uncheck5Sprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_UnSelectBtn"));
 		uncheck5Sprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		uncheck5->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.25f, bgSprite->GetSprite().getGlobalBounds().height * 0.23f));
+		uncheck5->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.643f - bgSprite->GetSprite().getGlobalBounds().width * 0.25f, bgSprite->GetSprite().getGlobalBounds().height * 0.273f));
 		uncheck5->SetVisible(true);
 		uncheck5->SetAlive(true);
 		//clickabe component
@@ -105,20 +102,21 @@ namespace HJ {
 		//define sprite
 		saveSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		saveSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f + bgSprite->GetSprite().getGlobalBounds().width * 0.2f, 
-			bgSprite->GetSprite().getGlobalBounds().height * 0.75f));
+		save->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.7f - saveSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.925f - saveSprite->GetSprite().getGlobalBounds().height * 0.5f));
 		//text
 		auto saveText = save->GetTextComponent();
 		saveText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		saveText->GetText().setString("SAVE");
-		saveText->GetText().setCharacterSize(24);
+		saveText->GetText().setString("SAVE!");
+		saveText->GetText().setCharacterSize(26);
+		saveText->GetText().setStyle(sf::Text::Bold);
 		//properties
 		save->SetVisible(true);
 		save->SetAlive(true);
 		save->Init();
 		//center text
 		saveText->GetText().setPosition(save->GetPosition().x + (save->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - saveText->GetText().getGlobalBounds().width * 0.5,
-			save->GetPosition().y + (save->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - saveText->GetText().getGlobalBounds().height * 0.5);
+			save->GetPosition().y + (save->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - saveText->GetText().getGlobalBounds().height * 0.6f);
 
 		//Back button
 		auto back = std::make_shared<Button>();
@@ -126,20 +124,93 @@ namespace HJ {
 		//define sprite
 		backSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		backSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - bgSprite->GetSprite().getGlobalBounds().width * 0.2f, 
-			bgSprite->GetSprite().getGlobalBounds().height * 0.75f));
+		back->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.525f - backSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.925f - backSprite->GetSprite().getGlobalBounds().height * 0.5f));
 		//text
 		auto backText = back->GetTextComponent();
 		backText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		backText->GetText().setString("BACK");
-		backText->GetText().setCharacterSize(24);
+		backText->GetText().setString("CLOSE");
+		backText->GetText().setCharacterSize(26);
+		backText->GetText().setStyle(sf::Text::Bold);
 		//properties
 		back->SetVisible(true);
 		back->SetAlive(true);
 		back->Init();
 		//center text
 		backText->GetText().setPosition(back->GetPosition().x + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5) - backText->GetText().getGlobalBounds().width * 0.5,
-			back->GetPosition().y + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.5) - backText->GetText().getGlobalBounds().height * 0.5);
+			back->GetPosition().y + (back->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - backText->GetText().getGlobalBounds().height * 0.6f);
+
+		// change Back button
+		m_changeBackBtn = std::make_shared<Button>();
+		auto changeBackBtnSprite = m_changeBackBtn->GetSpriteComponent();
+		//define sprite
+		changeBackBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		changeBackBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		changeBackBtnSprite->GetSprite().scale(0.5, 0.5f);
+		m_changeBackBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changeBackBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.5f - changeBackBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
+		//text
+		auto changeBackBtnTxt = m_changeBackBtn->GetTextComponent();
+		changeBackBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		changeBackBtnTxt->GetText().setString("Back");
+		changeBackBtnTxt->GetText().setCharacterSize(15);
+		changeBackBtnTxt->GetText().setStyle(sf::Text::Bold);
+		//properties
+		m_changeBackBtn->SetVisible(true);
+		m_changeBackBtn->SetAlive(true);
+		m_changeBackBtn->Init();
+		//center text
+		changeBackBtnTxt->GetText().setPosition(m_changeBackBtn->GetPosition().x + (m_changeBackBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - changeBackBtnTxt->GetText().getGlobalBounds().width * 0.5f,
+			m_changeBackBtn->GetPosition().y + (m_changeBackBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - changeBackBtnTxt->GetText().getGlobalBounds().height * 0.6f);
+		m_controls.insert({ "Back", m_changeBackBtn });
+
+		// change Pause button
+		m_changePauseBtn = std::make_shared<Button>();
+		auto changePauseBtnSprite = m_changePauseBtn->GetSpriteComponent();
+		//define sprite
+		changePauseBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		changePauseBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		changePauseBtnSprite->GetSprite().scale(0.5, 0.5f);
+		m_changePauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changePauseBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.58f - changePauseBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
+		//text
+		auto changePauseBtnTxt = m_changePauseBtn->GetTextComponent();
+		changePauseBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		changePauseBtnTxt->GetText().setString("Pause");
+		changePauseBtnTxt->GetText().setCharacterSize(15);
+		changePauseBtnTxt->GetText().setStyle(sf::Text::Bold);
+		//properties
+		m_changePauseBtn->SetVisible(true);
+		m_changePauseBtn->SetAlive(true);
+		m_changePauseBtn->Init();
+		//center text
+		changePauseBtnTxt->GetText().setPosition(m_changePauseBtn->GetPosition().x + (m_changePauseBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - changePauseBtnTxt->GetText().getGlobalBounds().width * 0.5f,
+			m_changePauseBtn->GetPosition().y + (m_changePauseBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - changePauseBtnTxt->GetText().getGlobalBounds().height * 0.6f);
+		m_controls.insert({ "Pause", m_changePauseBtn });
+
+		// change Skip button
+		m_changeSkipBtn = std::make_shared<Button>();
+		auto changeSkipBtnSprite = m_changeSkipBtn->GetSpriteComponent();
+		//define sprite
+		changeSkipBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
+		changeSkipBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
+		changeSkipBtnSprite->GetSprite().scale(0.5, 0.5f);
+		m_changeSkipBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changeSkipBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.66f - changeSkipBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
+		//text
+		auto changeSkipBtnTxt = m_changeSkipBtn->GetTextComponent();
+		changeSkipBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		changeSkipBtnTxt->GetText().setString("Skip");
+		changeSkipBtnTxt->GetText().setCharacterSize(15);
+		changeSkipBtnTxt->GetText().setStyle(sf::Text::Bold);
+		//properties
+		m_changeSkipBtn->SetVisible(true);
+		m_changeSkipBtn->SetAlive(true);
+		m_changeSkipBtn->Init();
+		//center text
+		changeSkipBtnTxt->GetText().setPosition(m_changeSkipBtn->GetPosition().x + (m_changeSkipBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - changeSkipBtnTxt->GetText().getGlobalBounds().width * 0.5f,
+			m_changeSkipBtn->GetPosition().y + (m_changeSkipBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.65) - changeSkipBtnTxt->GetText().getGlobalBounds().height * 0.5f);
+		m_controls.insert({ "Skip", m_changeSkipBtn });
 
 		// add to local ents map
 		AddEntity("E_zSetBG", bg);
@@ -150,6 +221,9 @@ namespace HJ {
 		AddEntity("E_Uncheck5", uncheck5);
 		AddEntity("E_Save", save);
 		AddEntity("E_Back", back);
+		AddEntity("E_ChangeBackBtn", m_changeBackBtn);
+		AddEntity("E_ChangePauseBtn", m_changePauseBtn);
+		AddEntity("E_ChangeSkipBtn", m_changeSkipBtn);
 
 		// pre-populate the settings
 		UpdateSettings();
@@ -169,9 +243,19 @@ namespace HJ {
 			//check if back button is clicked
 			auto backComp = m_data->ents.Find<Button>("E_Back")->GetSpriteComponent();
 			auto backClick = m_data->ents.Find<Button>("E_Back")->GetClickableComponent();
-			if (backComp->IsClickable() && m_data->input.isClicked(backComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if ((backComp->IsClickable() && m_data->input.isClicked(backComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+				|| sf::Keyboard::isKeyPressed(Controls::GetKey("Back")))
 			{
 				backClick->SetClicked(true);
+			}
+
+			for (auto control : m_controls)
+			{
+				auto button = control.second;
+				if (button->GetSpriteComponent()->IsClickable() && m_data->input.isClicked(button->GetSpriteComponent()->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+				{
+					button->GetClickableComponent()->SetClicked(true);
+				}
 			}
 
 			//check if save button is clicked
@@ -227,6 +311,28 @@ namespace HJ {
 	void SettingsScene::Update(float t_deltaTime)
 	{
 		m_data->ents.Update(m_entities, t_deltaTime);
+
+		for (auto control : m_controls)
+		{
+			auto button = control.second;
+			auto action = control.first;
+
+			if (button->GetClickableComponent()->CanResolve())
+			{
+				button->GetSpriteComponent()->GetSprite().setColor(sf::Color(150, 128, 106, 200));
+
+				for (auto keyToMap = sf::Keyboard::Unknown; keyToMap != sf::Keyboard::Pause; keyToMap = static_cast<sf::Keyboard::Key>(keyToMap + 1))
+				{
+					if (sf::Keyboard::isKeyPressed(keyToMap))
+					{
+						Controls::SetKey(action, keyToMap);
+						button->GetSpriteComponent()->GetSprite().setColor(sf::Color::White);
+						button->GetClickableComponent()->SetResolve(false);
+					}
+				}
+
+			}
+		}
 
 		//resolve back button click
 		auto backClick = m_data->ents.Find<Button>("E_Back")->GetClickableComponent();

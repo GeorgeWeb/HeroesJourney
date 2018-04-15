@@ -49,13 +49,15 @@ namespace HJ {
 		infTextFont->GetText().setCharacterSize(66);
 		if (m_data->gm.loot == 0)
 		{
+			// makes it a bit easier this way, cuz we thought of no reward initially...
+			m_data->gm.loot = 5;
 			infTextFont->GetText().setString("DEFEAT!");
 		}
 		else
 		{
 			infTextFont->GetText().setString("VICTORY!");
 		}
-		victoryText->SetPosition(sf::Vector2f(SCREEN_WIDTH *0.5f - infTextFont->GetText().getGlobalBounds().width *0.5f, (SCREEN_HEIGHT * 0.5f) - (infTextFont->GetText().getGlobalBounds().height * 0.5f)));
+		victoryText->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - infTextFont->GetText().getGlobalBounds().width * 0.5f, (SCREEN_HEIGHT * 0.5f) - (infTextFont->GetText().getGlobalBounds().height * 0.5f)));
 		// properties
 		victoryText->showOnCreate = true;
 		victoryText->SetVisible(true);
@@ -69,7 +71,7 @@ namespace HJ {
 		lootTextComp->SetFont(m_data->assets.GetFont("Font_Pixel"));
 		lootTextComp->GetText().setCharacterSize(24);
 		lootTextComp->GetText().setString("Reward: " + std::to_string( m_data->gm.loot));
-		lootText->SetPosition(sf::Vector2f(SCREEN_WIDTH *0.5f - infTextFont->GetText().getGlobalBounds().width *0.5, SCREEN_HEIGHT * 0.5f + infTextFont->GetText().getGlobalBounds().height + lootTextComp->GetText().getGlobalBounds().height));
+		lootText->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - infTextFont->GetText().getGlobalBounds().width * 0.5f, SCREEN_HEIGHT * 0.5f + infTextFont->GetText().getGlobalBounds().height + lootTextComp->GetText().getGlobalBounds().height));
 		// properties
 		lootText->showOnCreate = true;
 		lootText->SetVisible(true);
@@ -88,8 +90,6 @@ namespace HJ {
 		coin->SetVisible(true);
 		coin->SetAlive(true);
 		coin->Init();
-
-		
 
 		// populate the entities container
 		AddEntity("E_zVictoryBG", bg);
@@ -110,7 +110,8 @@ namespace HJ {
 				ResizeSceneView(event.size.width, event.size.height);
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zVictoryBG")->GetComponent<SpriteComponent>("C_zBGSprite");
-			if (bgSprite->IsClickable() && m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Skip")) || sf::Keyboard::isKeyPressed(Controls::GetKey("Back")) 
+				|| (bgSprite->IsClickable() && m_data->input.isClicked(bgSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin())))
 			{
 				m_data->gm.gold += m_data->gm.loot;
 
@@ -118,42 +119,47 @@ namespace HJ {
 				{
 					auto map = std::make_shared<MapScene>(MapScene(m_data));
 					m_data->machine.AddState(map);
+					// reset loot
+					m_data->gm.loot = 0;
 				}
 
 				else if (m_data->gm.nextEncounter == 1)
 				{
 					auto meetbard = std::make_shared<MeetBardScene>(MeetBardScene(m_data));
 					m_data->machine.AddState(meetbard);
+					// reset loot
+					m_data->gm.loot = 0;
 				}
 
 				else if (m_data->gm.nextEncounter == 2)
 				{
 					auto meetrogue = std::make_shared<MeetRogueScene>(MeetRogueScene(m_data));
 					m_data->machine.AddState(meetrogue);
+					// reset loot
+					m_data->gm.loot = 0;
 				}
 
 				else if (m_data->gm.nextEncounter == 3)
 				{
 					auto meetsorc = std::make_shared<MeetSorcScene>(MeetSorcScene(m_data));
 					m_data->machine.AddState(meetsorc);
+					// reset loot
+					m_data->gm.loot = 0;
 				}
 
 				else if (m_data->gm.nextEncounter == 4)
 				{
 					auto finalstory = std::make_shared<FinalStoryScene>(FinalStoryScene(m_data));
 					m_data->machine.AddState(finalstory);
+					// reset loot
+					m_data->gm.loot = 0;
 				}
 			}
-		
-
-		
 		}
 	}
 
 	void BattleOutcomeScene::Update(float t_delatTime)
 	{
-		
-
 		m_data->ents.Update(m_entities, t_delatTime);
 	}
 

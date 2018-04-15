@@ -67,7 +67,7 @@ namespace HJ { namespace Encounters {
 		m_activeBoss = std::make_shared<Hero>();
 		int health = m_data->gm.hKnight->GetHealth() * 4;
 		m_activeBoss->SetStats("Frost Mage", HERO_TYPE::EVIL, health, 15, 5, 10);
-		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
+		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostMage"), sf::IntRect(0, 0, 32, 32));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
 			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
 		m_activeBoss->Init();

@@ -115,13 +115,15 @@ namespace HJ {
 			if (event.type == sf::Event::Resized)
 				ResizeSceneView(event.size.width, event.size.height);
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Skip")))
 			{
 				// switch to tutorial scene
-				auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				m_data->machine.AddState(tutorial);
+				//auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
+				//m_data->machine.AddState(tutorial);
 
-				
+				// switch to tutorial scene
+				auto tutorial = std::make_shared<MapScene>(MapScene(m_data));
+				m_data->machine.AddState(tutorial);
 			}
 
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");

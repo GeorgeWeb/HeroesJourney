@@ -165,7 +165,7 @@ namespace HJ {
 				ResizeSceneView(event.size.width, event.size.height);
 
 			// Resume to the last Game Screen
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Back")))
 				m_data->machine.RemoveState();
 
 			auto saveComp = m_data->ents.Find<Button>("E_xPauseSaveBtn")->GetSpriteComponent();

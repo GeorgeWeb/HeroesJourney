@@ -11,8 +11,15 @@ namespace Engine { namespace Input {
 			InputManager() = default;
 			~InputManager() = default;
 
+			// Mouse position handling
 			sf::Vector2i GetMousePosition(sf::RenderWindow& t_window) const;
 			sf::Vector2f GetMousePositionToWorld(sf::RenderWindow& t_window) const;
+			// Joystick position handling
+			sf::Vector2i GetJoystickPosition() const;
+			sf::Vector2f GetJoystickPositionToWorld(sf::RenderWindow& t_window) const;
+
+			// possible additional features:
+			// template<class T> bool IsMouseOver(const T& t_object, sf::Vector2i t_mousePos, sf::RenderWindow& t_window);
 
 			template<class T>
 			bool isClicked(const T& t_object, sf::Mouse::Button t_button, sf::RenderWindow& t_window)
@@ -21,7 +28,7 @@ namespace Engine { namespace Input {
 				// [time] wait time between mouse presses to prevent unwanted multiple clicking behaviour
 				if (m_pressDelay.getElapsedTime().asSeconds() > 0.5f)
 				{
-					if (sf::Mouse::isButtonPressed(t_button) && t_button == sf::Mouse::Left)
+					if (sf::Mouse::isButtonPressed(t_button))
 					{
 						auto mouse = GetMousePositionToWorld(t_window);
 						auto bounds = t_object.getGlobalBounds();
@@ -36,8 +43,6 @@ namespace Engine { namespace Input {
 
 				return false;
 			}
-
-			//bool IsMouseOver(std::shared_ptr<ECM::Entity> t_entity, sf::Vector2i t_mousePos, sf::RenderWindow& t_window);
 			
 		private:
 			sf::Clock m_pressDelay;

@@ -93,8 +93,9 @@ namespace HJ {
 		backArrowSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		// define clickable behaviour
 		// backArrow properties
-		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.05, 
-			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.01));
+		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.02f, 
+			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.02f));
+		// backArrowSprite->GetSprite().scale(0.75f, 1.0f);
 		backArrow->SetVisible(true);
 		backArrow->SetAlive(true);
 
@@ -346,7 +347,7 @@ namespace HJ {
 				ResizeSceneView(event.size.width, event.size.height);
 			}
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Pause")))
 			{
 				// Switch scenes (to Pause Menu)
 				auto pauseMenuState = std::make_unique<PauseMenuScene>(PauseMenuScene(m_data));
@@ -356,7 +357,7 @@ namespace HJ {
 			//Check if infirmary is clicked
 			auto infComp = m_data->gm.infirmary->GetSpriteComponent();
 			auto infClick = m_data->gm.infirmary->GetClickableComponent();
-			if (m_data->input.isClicked(infComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(infComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				infClick->SetClicked(true);
 				//set last clicked building as infirmary
@@ -370,7 +371,7 @@ namespace HJ {
 			//Check if Blacksmith is clicked
 			auto blacksmithComp = m_data->gm.blacksmith->GetSpriteComponent();
 			auto blackClick = m_data->gm.blacksmith->GetClickableComponent();
-			if (m_data->input.isClicked(blacksmithComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(blacksmithComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				blackClick->SetClicked(true);
 				lastClicked = "blacksmith";
@@ -382,7 +383,7 @@ namespace HJ {
 			//Check if Library is clicked
 			auto libraryComp = m_data->gm.library->GetSpriteComponent();
 			auto libraryClick = m_data->gm.library->GetClickableComponent();
-			if (m_data->input.isClicked(libraryComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(libraryComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				libraryClick->SetClicked(true);
 				lastClicked = "library";
@@ -394,7 +395,7 @@ namespace HJ {
 			//Check if Inn is clicked
 			auto innComp = m_data->gm.inn->GetSpriteComponent();
 			auto innClick = m_data->gm.inn->GetClickableComponent();
-			if (m_data->input.isClicked(innComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(innComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				innClick->SetClicked(true);
 				lastClicked = "inn";
@@ -406,7 +407,7 @@ namespace HJ {
 			//Check if GeneralStore is clicked
 			auto genStoreComp = m_data->gm.store->GetSpriteComponent();
 			auto genStoreClick = m_data->gm.store->GetClickableComponent();
-			if (m_data->input.isClicked(genStoreComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(genStoreComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				genStoreClick->SetClicked(true);
 				lastClicked = "generalStore";
@@ -418,7 +419,8 @@ namespace HJ {
 			//check if back arrow is clicked
 			auto arrowComp = m_data->ents.Find<Button>("E_BackArrow")->GetSpriteComponent();
 			auto backArrowBtn = m_data->ents.Find<Button>("E_BackArrow")->GetClickableComponent();
-			if (m_data->input.isClicked(arrowComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(arrowComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin())
+				|| sf::Keyboard::isKeyPressed(Controls::GetKey("Back")))
 			{
 				backArrowBtn->SetClicked(true);
 			}
@@ -426,7 +428,7 @@ namespace HJ {
 			//check if upgrade button is clicked
 			auto upBtnComp = m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent();
 			auto upBtnClick = m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent();
-			if (upBtnClick->IsClickable() && m_data->input.isClicked(upBtnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (upBtnClick->IsClickable() && m_data->input.isClicked(upBtnComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				upBtnClick->SetClicked(true);
 				if (lastClicked == "infirmary")
@@ -495,7 +497,7 @@ namespace HJ {
 			auto manaComp = m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent();
 			auto manaClick = m_data->ents.Find<Button>("E_00ManaBtn")->GetClickableComponent();
 			
-			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (manaComp->IsClickable() && m_data->input.isClicked(manaComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				manaClick->SetClicked(true);
 				if (m_data->gm.gold >= 10)
@@ -512,7 +514,7 @@ namespace HJ {
 			//check if health button has been clicked
 			auto healthComp = m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent();
 			auto healthClick = m_data->ents.Find<Button>("E_00HealthBtn")->GetClickableComponent();
-			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (healthComp->IsClickable() &&m_data->input.isClicked(healthComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				healthClick->SetClicked(true);
 				if (m_data->gm.gold >= 10)

@@ -8,9 +8,6 @@
 #include <Engine/ECM/Components/ClickableComponent.hpp>
 #include "../Entities/Button.hpp"
 
-
-
-
 namespace HJ {
 
 	using namespace Engine;
@@ -221,7 +218,7 @@ namespace HJ {
 
 			m_data->gm.healthPot = 1;
 			m_data->gm.manaPot = 1;
-			m_data->gm.gold = 1;
+			m_data->gm.gold = 10;
 
 			// serializable game entities
 			// buildings

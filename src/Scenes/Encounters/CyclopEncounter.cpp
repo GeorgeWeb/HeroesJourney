@@ -55,11 +55,11 @@ namespace HJ { namespace Encounters {
 		m_activeBoss = std::make_shared<Hero>();
 		int health = m_data->gm.hKnight->GetHealth() * 3;
 		m_activeBoss->SetStats("Cyclop", HERO_TYPE::EVIL, health, 10, 10, 10);
-		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostGolem"), sf::IntRect(0, 0, 32, 32));
+		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilCyclops"), sf::IntRect(0, 0, 32, 64));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
-			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.2f));
+			(SCREEN_HEIGHT - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.15f));
 		m_activeBoss->Init();
-		m_activeBoss->GetSpriteComponent()->GetSprite().setScale(7.5f, 7.5f);
+		m_activeBoss->GetSpriteComponent()->GetSprite().setScale(5.0f, 5.0f);
 		// Add perma status effects
 		m_activeBoss->GetStatusComponent()->SetEffect(EFFECT_TYPE::MULTIPLE_TARGET, true);
 		// Add skills
