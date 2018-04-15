@@ -13,12 +13,11 @@ namespace HJ {
 		sf::RenderWindow win;
 		if (!m_data->saveData.IsEmpty(Utils::DATA_TYPE::GAME_SETTINGS))
 		{
-			// Create window using the saved data
-			auto width = static_cast<int>(t_width);
-			auto height = static_cast<int>(t_height);
-			auto mode = static_cast<int>(t_mode);
-			m_data->saveData.Load<int>({ &width, &height, &mode }, Utils::DATA_TYPE::GAME_SETTINGS);
-			// use the loaded data
+			// Create window using the saved window properties
+			int width, height, mode, backKey, pauseKey, skipKey, selectBtn;
+			m_data->saveData.Load<int>({ &width, &height, &mode, &backKey, &pauseKey, &skipKey, &selectBtn }, Utils::DATA_TYPE::GAME_SETTINGS);
+			
+			// use the saved window properties to create the player prefered one
 			win.create(sf::VideoMode(width, height), t_title, mode == 0 ? sf::Style::Default : sf::Style::Fullscreen);
 
 			// set ratios - HD
@@ -29,10 +28,16 @@ namespace HJ {
 			// init. game settigns
 			m_data->settings.SetResolution(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
 			m_data->settings.SetScreenMode(static_cast<SCREEN_MODE>(mode));
+
+			// use the saved controls to map the prefered ones
+			Controls::SetKey("Back", static_cast<sf::Keyboard::Key>(backKey));
+			Controls::SetKey("Pause", static_cast<sf::Keyboard::Key>(pauseKey));
+			Controls::SetKey("Skip", static_cast<sf::Keyboard::Key>(skipKey));
+			Controls::SetButton("Select", static_cast<sf::Mouse::Button>(selectBtn));
 		}
 		else
 		{
-			// Create window using new data
+			// Create window using default properties
 			win.create(sf::VideoMode(t_width, t_height), t_title, sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
 
 			// set ratios - HD
@@ -40,9 +45,12 @@ namespace HJ {
 			int displace = (newH - 768) / (-2);
 			win.setView(sf::View(sf::FloatRect(0, displace, 1366, newH)));
 
-			// init. game settigns
+			// init. default game settigns
 			m_data->settings.SetResolution(t_width, t_height);
 			m_data->settings.SetScreenMode(t_mode);
+
+			// init. default controls
+			Controls::Init();
 		}
 	
 		// -- Change cursor --
@@ -61,9 +69,6 @@ namespace HJ {
 
 		// init. renderer
 		Renderer::Initialize(win);
-
-		// init. controls
-		Controls::Init();
 
 		// add first state/screen
 		auto initState = std::make_shared<SplashScene>(SplashScene(m_data));

@@ -19,6 +19,9 @@ namespace HJ {
 
 			static sf::Mouse::Button GetButton(const std::string& t_action);
 			static void SetButton(const std::string& t_action, sf::Mouse::Button t_button);
+
+			static std::string KeyToString(sf::Keyboard::Key t_key);
+			static std::string BtnToString(sf::Keyboard::Key t_btn);
 	};
 
 }

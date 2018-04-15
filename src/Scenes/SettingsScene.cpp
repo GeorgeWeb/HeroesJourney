@@ -146,14 +146,14 @@ namespace HJ {
 		//define sprite
 		changeBackBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		changeBackBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		changeBackBtnSprite->GetSprite().scale(0.5, 0.5f);
-		m_changeBackBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changeBackBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+		changeBackBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		m_changeBackBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.275f - changeBackBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
 			SCREEN_HEIGHT * 0.5f - changeBackBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
 		//text
 		auto changeBackBtnTxt = m_changeBackBtn->GetTextComponent();
 		changeBackBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		changeBackBtnTxt->GetText().setString("Back");
-		changeBackBtnTxt->GetText().setCharacterSize(15);
+		changeBackBtnTxt->GetText().setString(Controls::KeyToString(Controls::GetKey("Back")));
+		changeBackBtnTxt->GetText().setCharacterSize(17);
 		changeBackBtnTxt->GetText().setStyle(sf::Text::Bold);
 		//properties
 		m_changeBackBtn->SetVisible(true);
@@ -170,14 +170,14 @@ namespace HJ {
 		//define sprite
 		changePauseBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		changePauseBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		changePauseBtnSprite->GetSprite().scale(0.5, 0.5f);
-		m_changePauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changePauseBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
-			SCREEN_HEIGHT * 0.58f - changePauseBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
+		changePauseBtnSprite->GetSprite().scale(0.75, 0.75f);
+		m_changePauseBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.275f - changePauseBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.625f - changePauseBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
 		//text
 		auto changePauseBtnTxt = m_changePauseBtn->GetTextComponent();
 		changePauseBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		changePauseBtnTxt->GetText().setString("Pause");
-		changePauseBtnTxt->GetText().setCharacterSize(15);
+		changePauseBtnTxt->GetText().setString(Controls::KeyToString(Controls::GetKey("Pause")));
+		changePauseBtnTxt->GetText().setCharacterSize(17);
 		changePauseBtnTxt->GetText().setStyle(sf::Text::Bold);
 		//properties
 		m_changePauseBtn->SetVisible(true);
@@ -194,14 +194,14 @@ namespace HJ {
 		//define sprite
 		changeSkipBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		changeSkipBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-		changeSkipBtnSprite->GetSprite().scale(0.5, 0.5f);
-		m_changeSkipBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.2625f - changeSkipBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
-			SCREEN_HEIGHT * 0.66f - changeSkipBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
+		changeSkipBtnSprite->GetSprite().scale(0.75f, 0.75f);
+		m_changeSkipBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.275f - changeSkipBtnSprite->GetSprite().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.75f - changeSkipBtnSprite->GetSprite().getGlobalBounds().height * 0.5f));
 		//text
 		auto changeSkipBtnTxt = m_changeSkipBtn->GetTextComponent();
 		changeSkipBtnTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		changeSkipBtnTxt->GetText().setString("Skip");
-		changeSkipBtnTxt->GetText().setCharacterSize(15);
+		changeSkipBtnTxt->GetText().setString(Controls::KeyToString(Controls::GetKey("Skip")));
+		changeSkipBtnTxt->GetText().setCharacterSize(17);
 		changeSkipBtnTxt->GetText().setStyle(sf::Text::Bold);
 		//properties
 		m_changeSkipBtn->SetVisible(true);
@@ -209,8 +209,47 @@ namespace HJ {
 		m_changeSkipBtn->Init();
 		//center text
 		changeSkipBtnTxt->GetText().setPosition(m_changeSkipBtn->GetPosition().x + (m_changeSkipBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - changeSkipBtnTxt->GetText().getGlobalBounds().width * 0.5f,
-			m_changeSkipBtn->GetPosition().y + (m_changeSkipBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.65) - changeSkipBtnTxt->GetText().getGlobalBounds().height * 0.5f);
+			m_changeSkipBtn->GetPosition().y + (m_changeSkipBtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6) - changeSkipBtnTxt->GetText().getGlobalBounds().height * 0.6f);
 		m_controls.insert({ "Skip", m_changeSkipBtn });
+
+		// Back btn description text
+		auto backTxt = std::make_shared<Entity>();
+		auto backTxtComp = backTxt->AddComponent<TextComponent>("C_BackText");
+		backTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		backTxtComp->GetText().setCharacterSize(24);
+		backTxtComp->GetText().setString("Back");
+		backTxtComp->GetText().setStyle(sf::Text::Bold);
+		backTxtComp->GetText().setColor(sf::Color(255, 255, 255, 200));
+		backTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f - backTxtComp->GetText().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.5f - backTxtComp->GetText().getGlobalBounds().height * 0.5f));
+		backTxt->SetAlive(true);
+		backTxt->SetVisible(true);
+
+		// Pause btn description text
+		auto pauseTxt = std::make_shared<Entity>();
+		auto pauseTxtComp = pauseTxt->AddComponent<TextComponent>("C_PauseText");
+		pauseTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		pauseTxtComp->GetText().setCharacterSize(24);
+		pauseTxtComp->GetText().setString("Pause");
+		pauseTxtComp->GetText().setStyle(sf::Text::Bold);
+		pauseTxtComp->GetText().setColor(sf::Color(255, 255, 255, 200));
+		pauseTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f - pauseTxtComp->GetText().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.625f - pauseTxtComp->GetText().getGlobalBounds().height * 0.5f));
+		pauseTxt->SetAlive(true);
+		pauseTxt->SetVisible(true);
+
+		// Skip btn description text
+		auto skipTxt = std::make_shared<Entity>();
+		auto skipTxtComp = skipTxt->AddComponent<TextComponent>("C_SkipText");
+		skipTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		skipTxtComp->GetText().setCharacterSize(24);
+		skipTxtComp->GetText().setString("Skip");
+		skipTxtComp->GetText().setStyle(sf::Text::Bold);
+		skipTxtComp->GetText().setColor(sf::Color(255, 255, 255, 200));
+		skipTxt->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.4f - skipTxtComp->GetText().getGlobalBounds().width * 0.5f,
+			SCREEN_HEIGHT * 0.75f - skipTxtComp->GetText().getGlobalBounds().height * 0.5f));
+		skipTxt->SetAlive(true);
+		skipTxt->SetVisible(true);
 
 		// add to local ents map
 		AddEntity("E_zSetBG", bg);
@@ -224,6 +263,9 @@ namespace HJ {
 		AddEntity("E_ChangeBackBtn", m_changeBackBtn);
 		AddEntity("E_ChangePauseBtn", m_changePauseBtn);
 		AddEntity("E_ChangeSkipBtn", m_changeSkipBtn);
+		AddEntity("E_BackText", backTxt);
+		AddEntity("E_PauseText", pauseTxt);
+		AddEntity("E_SkipText", skipTxt);
 
 		// pre-populate the settings
 		UpdateSettings();
@@ -310,29 +352,46 @@ namespace HJ {
 
 	void SettingsScene::Update(float t_deltaTime)
 	{
-		m_data->ents.Update(m_entities, t_deltaTime);
-
+		// check for bindings
 		for (auto control : m_controls)
 		{
-			auto button = control.second;
 			auto action = control.first;
+			auto button = control.second;
 
 			if (button->GetClickableComponent()->CanResolve())
 			{
-				button->GetSpriteComponent()->GetSprite().setColor(sf::Color(150, 128, 106, 200));
+				button->GetSpriteComponent()->GetSprite().setColor(sf::Color::Red);
 
 				for (auto keyToMap = sf::Keyboard::Unknown; keyToMap != sf::Keyboard::Pause; keyToMap = static_cast<sf::Keyboard::Key>(keyToMap + 1))
 				{
 					if (sf::Keyboard::isKeyPressed(keyToMap))
 					{
+						// update the controls map
 						Controls::SetKey(action, keyToMap);
+						// update the button string
+						std::string entName;
+						entName.assign("E_Change"); entName.append(action); entName.append("Btn");
+						m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().setString(Controls::KeyToString(Controls::GetKey(action)));
+						// update the button's text position
+						m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().setPosition
+						(
+							m_data->ents.Find<Button>(entName)->GetPosition().x 
+								+ (m_data->ents.Find<Button>(entName)->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) 
+								- m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().getGlobalBounds().width * 0.5f,
+							m_data->ents.Find<Button>(entName)->GetPosition().y 
+								+ (m_data->ents.Find<Button>(entName)->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.65) 
+								- m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().getGlobalBounds().height * 0.5f
+						);
+						// reset normal button color
 						button->GetSpriteComponent()->GetSprite().setColor(sf::Color::White);
+						// resolve the button click
 						button->GetClickableComponent()->SetResolve(false);
 					}
 				}
 
 			}
 		}
+
 
 		//resolve back button click
 		auto backClick = m_data->ents.Find<Button>("E_Back")->GetClickableComponent();
@@ -353,7 +412,11 @@ namespace HJ {
 			{ 
 				static_cast<int>(m_data->settings.GetResolution().x),
 				static_cast<int>(m_data->settings.GetResolution().y),
-				static_cast<int>(m_data->settings.GetScreenMode())
+				static_cast<int>(m_data->settings.GetScreenMode()),
+				static_cast<int>(Controls::GetKey("Back")),
+				static_cast<int>(Controls::GetKey("Pause")),
+				static_cast<int>(Controls::GetKey("Skip")),
+				static_cast<int>(Controls::GetButton("Select"))
 			}, Utils::DATA_TYPE::GAME_SETTINGS);
 			
 			// save in-game
@@ -443,6 +506,8 @@ namespace HJ {
 			
 			uncheck5Click->SetResolve(false);
 		}
+		
+		m_data->ents.Update(m_entities, t_deltaTime);
 	}
 
 	void SettingsScene::UpdateSettings()

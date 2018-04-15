@@ -170,21 +170,21 @@ namespace HJ {
 
 			auto saveComp = m_data->ents.Find<Button>("E_xPauseSaveBtn")->GetSpriteComponent();
 			auto saveBtn = m_data->ents.Find<Button>("E_xPauseSaveBtn")->GetClickableComponent();
-			if (saveBtn->IsClickable() && m_data->input.isClicked(saveComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (saveBtn->IsClickable() && m_data->input.isClicked(saveComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				saveBtn->SetClicked(true);
 			}
 
 			auto menuComp = m_data->ents.Find<Button>("E_xPauseMainMenuBtn")->GetSpriteComponent();
 			auto menuBtn = m_data->ents.Find<Button>("E_xPauseMainMenuBtn")->GetClickableComponent();
-			if (menuBtn->IsClickable() && m_data->input.isClicked(menuComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (menuBtn->IsClickable() && m_data->input.isClicked(menuComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				menuBtn->SetClicked(true);
 			}
 
 			auto setComp = m_data->ents.Find<Button>("E_xPauseSettingsBtn")->GetSpriteComponent();
 			auto setBtn = m_data->ents.Find<Button>("E_xPauseSettingsBtn")->GetClickableComponent();
-			if (m_data->input.isClicked(setComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(setComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				std::cout << "button has been clicked" << std::endl;
 				setBtn->SetClicked(true);
@@ -192,7 +192,7 @@ namespace HJ {
 
 			auto returnComp = m_data->ents.Find<Button>("E_xPauseReturnBtn")->GetSpriteComponent();
 			auto returnBtn = m_data->ents.Find<Button>("E_xPauseReturnBtn")->GetClickableComponent();
-			if (returnBtn->IsClickable() && m_data->input.isClicked(returnComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (returnBtn->IsClickable() && m_data->input.isClicked(returnComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				returnBtn->SetClicked(true);
 			}

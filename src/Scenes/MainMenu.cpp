@@ -168,21 +168,21 @@ namespace HJ {
 
 			auto startComp = m_data->ents.Find<Button>("E_xStartBtn")->GetSpriteComponent();
 			auto startBtn = m_data->ents.Find<Button>("E_xStartBtn")->GetClickableComponent();
-			if (startBtn->IsClickable() && m_data->input.isClicked(startComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (startBtn->IsClickable() && m_data->input.isClicked(startComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				startBtn->SetClicked(true);
 			}
 
 			auto loadComp = m_data->ents.Find<Button>("E_xLoadBtn")->GetSpriteComponent();
 			auto loadBtn = m_data->ents.Find<Button>("E_xLoadBtn")->GetClickableComponent();
-			if (loadBtn->IsClickable() &&  m_data->input.isClicked(loadComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (loadBtn->IsClickable() &&  m_data->input.isClicked(loadComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				loadBtn->SetClicked(true);
 			}
 
 			auto setComp = m_data->ents.Find<Button>("E_xSetBtn")->GetSpriteComponent();
 			auto setBtn = m_data->ents.Find<Button>("E_xSetBtn")->GetClickableComponent();
-			if (m_data->input.isClicked(setComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (m_data->input.isClicked(setComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				std::cout << "button has been clicked" << std::endl;
 				setBtn->SetClicked(true);
@@ -190,7 +190,7 @@ namespace HJ {
 
 			auto quitComp = m_data->ents.Find<Button>("E_xQBtn")->GetSpriteComponent();
 			auto quitBtn = m_data->ents.Find<Button>("E_xQBtn")->GetClickableComponent();
-			if (quitBtn->IsClickable() && m_data->input.isClicked(quitComp->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+			if (quitBtn->IsClickable() && m_data->input.isClicked(quitComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				quitBtn->SetClicked(true);
 			}
@@ -287,6 +287,7 @@ namespace HJ {
 			}, Utils::DATA_TYPE::GAME_DATA);			
 
 			// set the loaded values
+			#pragma region Setting up last gameplay save
 			// heroes
 			// knight
 			m_data->gm.hKnight->SetHealth(knightHP);
@@ -336,6 +337,7 @@ namespace HJ {
 			m_data->gm.gold = gold;
 			// unlocked encounters
 			m_data->gm.unlockedEncounters = levels;
+			#pragma endregion
 
 			// change scene to Story intro
 			auto storyIntro = std::make_shared<MapScene>(MapScene(m_data));
