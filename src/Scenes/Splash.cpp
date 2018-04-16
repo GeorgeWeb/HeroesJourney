@@ -23,59 +23,12 @@ namespace HJ {
 
 	void SplashScene::Init()
 	{
-		/* < GLOBAL PRE-LOAD */
-
-		// music
-		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
-		m_data->assets.LoadMusic("AdventureTheme", ADVENTURE_FANTASY_THEME);
-		m_data->assets.LoadMusic("CastleTheme", CASTLE_BAKGROUND_THEME);
-		// sounds
-		// m_data->assets.LoadSound("BuildingSound", CASTLE_INSIDE_BUILDING_SOUND);
-		// General assets
-		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
-		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
-		m_data->assets.LoadTexture("Tex_BloodSplashSheet", BLOOD_SPLASH_SPRITESHEET);
-		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);
-		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
-		// Building assets
-		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
-		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
-		m_data->assets.LoadTexture("Tex_Library", CASTLE_SCENE_LIBRARY);
-		m_data->assets.LoadTexture("Tex_Inn", CASTLE_SCENE_INN);
-		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
-		// Hero assets
-		m_data->assets.LoadTexture("Tex_HeroKnight", HERO_KNIGHT_SPRITE);
-		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_SPRITE);
-		m_data->assets.LoadTexture("Tex_HeroSorc", HERO_SORC_SPRITE);
-		m_data->assets.LoadTexture("Tex_HeroRogue", HERO_ROGUE_SPRITE);
-		// Evil assets
-		m_data->assets.LoadTexture("Tex_EvilFrostGolem", EVIL_FROST_GOLEM_SPRITE);
-		m_data->assets.LoadTexture("Tex_EvilTroll", EVIL_TROLL_SPRITE);
-		m_data->assets.LoadTexture("Tex_EvilCyclops", EVIL_CYCLOPS_SPRITE);
-		m_data->assets.LoadTexture("Tex_EvilHarpy", EVIL_HARPY_SPRITE);
-		m_data->assets.LoadTexture("Tex_EvilFrostMage", EVIL_FROST_MAGE_SPRITE);
-		// Encounter assets
-		// basics
-		m_data->assets.LoadTexture("Tex_EncounterUIFrame", ENCOUNTER_UI_FRAME);
-		m_data->assets.LoadTexture("Tex_BasicAttackBtn", BASIC_ATTACK_BTN);
-		m_data->assets.LoadTexture("Tex_DefendBtn", DEFFEND_BTN);
-		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
-		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
-		// special skills
-		m_data->assets.LoadTexture("Tex_ArcherySkill", ARCHERY_SKILL);
-		m_data->assets.LoadTexture("Tex_RoASkill", RAIN_OF_ARROWS_SKILL);
-		m_data->assets.LoadTexture("Tex_HeroicStrikeSkill", HEROIC_STRIKE_SKILL);
-		m_data->assets.LoadTexture("Tex_ShieldBashSkill", SHIELD_BASH_SKILL);
-		m_data->assets.LoadTexture("Tex_FireBoltSkill", FIRE_BOLT_SKILL);
-		m_data->assets.LoadTexture("Tex_FireAuraSkill", FIRE_AURA_SKILL);
-		m_data->assets.LoadTexture("Tex_OffAuraSkill", OFF_AURA_SKILL);
-		m_data->assets.LoadTexture("Tex_DefAuraSkill", DEF_AURA_SKILL);
-
-		/* /> GLOBAL PRE-LOAD */
 
 		// Load Splash screen assets
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
+		// music
+		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
 
 		// Splash screen entities
 		// Background

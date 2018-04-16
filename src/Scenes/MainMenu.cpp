@@ -23,6 +23,56 @@ namespace HJ {
 
 	void MainMenuScene::Init()
 	{
+		/* < GLOBAL PRE-LOAD */
+		#pragma region GLOBAL PRE-LOAD
+		// music
+		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
+		m_data->assets.LoadMusic("AdventureTheme", ADVENTURE_FANTASY_THEME);
+		m_data->assets.LoadMusic("CastleTheme", CASTLE_BAKGROUND_THEME);
+		// sounds
+		// m_data->assets.LoadSound("BuildingSound", CASTLE_INSIDE_BUILDING_SOUND);
+		// General assets
+		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
+		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
+		m_data->assets.LoadTexture("Tex_BloodSplashSheet", BLOOD_SPLASH_SPRITESHEET);
+		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);
+		m_data->assets.LoadTexture("Tex_Coin", COIN_ICON);
+		// Building assets
+		m_data->assets.LoadTexture("Tex_Infirmary", CASTLE_SCENE_INFIRMARY);
+		m_data->assets.LoadTexture("Tex_Blacksmith", CASTLE_SCENE_BLACKSMITH);
+		m_data->assets.LoadTexture("Tex_Library", CASTLE_SCENE_LIBRARY);
+		m_data->assets.LoadTexture("Tex_Inn", CASTLE_SCENE_INN);
+		m_data->assets.LoadTexture("Tex_GeneralStore", CASTLE_SCENE_GENERAL_STORE);
+		// Hero assets
+		m_data->assets.LoadTexture("Tex_HeroKnight", HERO_KNIGHT_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroSorc", HERO_SORC_SPRITE);
+		m_data->assets.LoadTexture("Tex_HeroRogue", HERO_ROGUE_SPRITE);
+		// Evil assets
+		m_data->assets.LoadTexture("Tex_EvilFrostGolem", EVIL_FROST_GOLEM_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilTroll", EVIL_TROLL_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilCyclops", EVIL_CYCLOPS_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilHarpy", EVIL_HARPY_SPRITE);
+		m_data->assets.LoadTexture("Tex_EvilFrostMage", EVIL_FROST_MAGE_SPRITE);
+		// Encounter assets
+		// basics
+		m_data->assets.LoadTexture("Tex_EncounterUIFrame", ENCOUNTER_UI_FRAME);
+		m_data->assets.LoadTexture("Tex_BasicAttackBtn", BASIC_ATTACK_BTN);
+		m_data->assets.LoadTexture("Tex_DefendBtn", DEFFEND_BTN);
+		m_data->assets.LoadTexture("Tex_UseHPBtn", USE_HP_BTN);
+		m_data->assets.LoadTexture("Tex_UseMPBtn", USE_MP_BTN);
+		// special skills
+		m_data->assets.LoadTexture("Tex_ArcherySkill", ARCHERY_SKILL);
+		m_data->assets.LoadTexture("Tex_RoASkill", RAIN_OF_ARROWS_SKILL);
+		m_data->assets.LoadTexture("Tex_HeroicStrikeSkill", HEROIC_STRIKE_SKILL);
+		m_data->assets.LoadTexture("Tex_ShieldBashSkill", SHIELD_BASH_SKILL);
+		m_data->assets.LoadTexture("Tex_FireBoltSkill", FIRE_BOLT_SKILL);
+		m_data->assets.LoadTexture("Tex_FireAuraSkill", FIRE_AURA_SKILL);
+		m_data->assets.LoadTexture("Tex_OffAuraSkill", OFF_AURA_SKILL);
+		m_data->assets.LoadTexture("Tex_DefAuraSkill", DEF_AURA_SKILL);
+		#pragma endregion
+		/* /> GLOBAL PRE-LOAD */
+
 		// Load resources
 		m_data->assets.LoadTexture("Tex_MainBG", SPLASH_SCENE_BACKGROUND);
 
@@ -281,8 +331,8 @@ namespace HJ {
 			int healthPots = 0, manaPots = 0;
 			// money
 			int gold = 0;
-			// unlocked encounters
-			int levels = 0;
+			// encounters/campaign progression
+			int trollPassed = 0, cyclopsPassed = 0, harpyPassed = 0, magePassed = 0, progress = 0;
 			
 			m_data->saveData.Load<int>({
 				&knightHP, &knightMaxHP, &knightMP, &knightMaxMP, &knightArmour, &knightDodge, &knightCrit, &knightDMG,
@@ -290,7 +340,8 @@ namespace HJ {
 				&rogueHP, &rogueMaxHP, &rogueMP, &rogueMaxMP, &rogueArmour, &rogueDodge, &rogueCrit, &rogueDMG,
 				&sorcHP, &sorcMaxHP, &sorcMP, &sorcMaxMP, &sorcArmour, &sorcDodge, &sorcCrit, &sorcDMG,
 				&blacksmithLvl, &infirmaryLvl, &libraryLvl, &innLvl, &storeLvl, 
-				&healthPots, &manaPots, &gold, &levels
+				&healthPots, &manaPots, &gold, 
+				&trollPassed, &cyclopsPassed, &harpyPassed, &magePassed, &progress
 			}, Utils::DATA_TYPE::GAME_DATA);			
 
 			// set the loaded values
@@ -342,8 +393,12 @@ namespace HJ {
 			m_data->gm.healthPot = healthPots;
 			m_data->gm.manaPot = manaPots;
 			m_data->gm.gold = gold;
-			// unlocked encounters
-			m_data->gm.nextEncounter = levels;
+			// encounters/campaign progression
+			m_data->gm.trollPassed = trollPassed;
+			m_data->gm.cyclopsPassed = cyclopsPassed;
+			m_data->gm.harpyPassed = harpyPassed;
+			m_data->gm.magePassed = magePassed;
+			m_data->gm.nextEncounter = progress;
 			#pragma endregion
 
 			// change scene to Story intro

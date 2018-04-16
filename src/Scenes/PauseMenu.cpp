@@ -262,7 +262,11 @@ namespace HJ {
 				m_data->gm.manaPot,
 				// money
 				m_data->gm.gold,
-				// unlocked encounters
+				// encounters/campaign progression
+				m_data->gm.trollPassed,
+				m_data->gm.cyclopsPassed,
+				m_data->gm.harpyPassed,
+				m_data->gm.magePassed,
 				m_data->gm.nextEncounter
 			}, Utils::DATA_TYPE::GAME_DATA);
 			

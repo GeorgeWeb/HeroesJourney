@@ -300,8 +300,9 @@ namespace HJ { namespace Encounters {
 
 		// set win/loose helpers
 		m_data->gm.loot = 20;
-		m_data->gm.nextEncounter = 0;
 		
+		// forcing moving on either way (if tutorial was lost / won)
+		m_data->gm.nextEncounter = 0;
 	}
 
 } }

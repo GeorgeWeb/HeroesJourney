@@ -34,24 +34,24 @@ namespace HJ {
 	{
 		public:
 			// amount of gold gathered
-			int gold = 100;
-			//where the outcome leads
+			int gold = 10;
+			
+			// where the outcome leads
 			int nextEncounter = 0;
-			//reward after battle
+			
+			// reward after battle
 			int loot = 0;
+			
 			//
 			bool battlePassed = true;
-			bool trollPassed = false;
-			bool cyclopsPassed = false;
-			bool harpyPassed = false;
-			bool magePassed = false;
+			int trollPassed = 0;
+			int cyclopsPassed = 0;
+			int harpyPassed = 0;
+			int magePassed = 0;
 
 			// amount of potions acquired/bought
 			int healthPot = 1;
 			int manaPot = 1;
-			
-			// number of completed levels
-			int unlockedEncounters = 0;
 
 			// resources entities
 			std::shared_ptr<ECM::Entity> cHealthPot;

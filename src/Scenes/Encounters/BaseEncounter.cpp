@@ -432,7 +432,31 @@ namespace HJ { namespace Encounters {
 			
 			// Win condition logic
 			case BATTLE_STATUS::WON:
-		
+			// Manage unlockables / campaign progreesion
+			if (m_activeBoss->className() == "Troll")
+			{
+				m_data->gm.trollPassed++;
+				if (m_data->gm.trollPassed == 1)
+					m_data->gm.nextEncounter = 1;
+			}		
+			else if (m_activeBoss->className() == "Cyclop")
+			{
+				m_data->gm.cyclopsPassed++;
+				if (m_data->gm.cyclopsPassed == 1)
+					m_data->gm.nextEncounter = 2;
+			}
+			else if (m_activeBoss->className() == "Harpy")
+			{
+				m_data->gm.harpyPassed++;
+				if (m_data->gm.harpyPassed == 1)
+					m_data->gm.nextEncounter = 3;
+			}
+			else if (m_activeBoss->className() == "Frost Mage")
+			{
+				m_data->gm.magePassed++;
+				if (m_data->gm.magePassed == 1)
+					m_data->gm.nextEncounter = 4;
+			}
 			// reset all status effects
 			for (auto hero : m_activeHeroes)
 				for (auto eff : hero->GetStatusComponent()->GetEffects()) 

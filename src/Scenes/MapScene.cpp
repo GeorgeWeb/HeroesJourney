@@ -384,6 +384,9 @@ namespace HJ {
 		AddEntity("E_0HpText", textHp);
 		AddEntity("E_0MnText", textMn);
 		AddEntity("E_0CoinText", textCoin);
+		
+		// update progress on load
+		UpdateParty();
 	}
 
 	void MapScene::HandleInput()

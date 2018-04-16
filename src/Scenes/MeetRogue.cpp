@@ -32,6 +32,7 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_StoryCaptain", HERO_ROGUE_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryMainHeroIcon", HERO_KNIGHT_FLIP_SPRITE);
 		m_data->assets.LoadTexture("Tex_StoryCaptainIcon", HERO_ROGUE_SPRITE);
+		m_data->assets.LoadTexture("Tex_UIFrame", ENCOUNTER_UI_FRAME);
 
 		//Background
 		auto bg = std::make_shared<ECM::Entity>();
@@ -48,15 +49,15 @@ namespace HJ {
 
 		// Click to continue text
 		auto continueTxt = std::make_shared<Entity>();
-		auto titleTxtComp = continueTxt->AddComponent<TextComponent>("C_ContinueText");
-		titleTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
-		titleTxtComp->GetText().setCharacterSize(18);
-		titleTxtComp->GetText().setString("Click to continue...");
-		titleTxtComp->GetText().setStyle(sf::Text::Bold);
-		titleTxtComp->GetText().setColor(sf::Color(55, 55, 55, 255));
+		auto continueTxtComp = continueTxt->AddComponent<TextComponent>("C_ContinueText");
+		continueTxtComp->GetText().setFont(m_data->assets.GetFont("Font_Pixel"));
+		continueTxtComp->GetText().setCharacterSize(18);
+		continueTxtComp->GetText().setString("Click to continue...");
+		continueTxtComp->GetText().setStyle(sf::Text::Bold);
+		continueTxtComp->GetText().setColor(sf::Color(255, 255, 255, 255));
 		continueTxt->SetPosition(sf::Vector2f(
-			(SCREEN_WIDTH - titleTxtComp->GetText().getGlobalBounds().width) * .97f,
-			(SCREEN_HEIGHT - titleTxtComp->GetText().getGlobalBounds().height) * 0.03f));
+			(SCREEN_WIDTH - continueTxtComp->GetText().getGlobalBounds().width) * .5f,
+			(SCREEN_HEIGHT - continueTxtComp->GetText().getGlobalBounds().height) * 0.03f));
 		continueTxt->SetAlive(true);
 		continueTxt->SetVisible(true);
 

@@ -73,6 +73,8 @@ namespace HJ { namespace Encounters {
 
 		std::shared_ptr<sf::SoundBuffer> m_drinkPotionBfr;
 		sf::Sound m_drinkPotionSnd;
+
+		bool m_passed = false;
 	};
 
 } }

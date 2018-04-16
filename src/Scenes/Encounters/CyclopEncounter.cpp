@@ -46,7 +46,7 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 		m_data->gm.hKnight->Init();
 
-		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
+		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroBard"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hBard->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 		(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.25f));
 		m_data->gm.hBard->Init();
@@ -326,12 +326,6 @@ namespace HJ { namespace Encounters {
 
 		// set win/loose helpers
 		m_data->gm.loot = 60;
-		
-		if (!m_data->gm.cyclopsPassed)
-		{
-			m_data->gm.nextEncounter = 2;
-			m_data->gm.cyclopsPassed = true;
-		}
 	}
 
 } }

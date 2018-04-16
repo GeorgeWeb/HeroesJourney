@@ -300,21 +300,6 @@ namespace HJ {
 
 			// set win/loose helpers
 			m_data->gm.loot = 40;
-			
-			if (m_data->gm.trollPassed == true)
-			{
-
-				std::cout << "true" << std::endl;
-			}
-
-			if (m_data->gm.trollPassed == false)
-			{
-				m_data->gm.nextEncounter = 1;
-				m_data->gm.trollPassed = true;
-				std::cout << "false" << std::endl;
-			}
-			
-
 		}
 
 	}
