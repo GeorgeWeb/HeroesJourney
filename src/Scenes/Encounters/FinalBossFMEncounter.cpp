@@ -20,6 +20,7 @@ namespace HJ { namespace Encounters {
 	void FinalBossFMEncounter::Init()
 	{
 		m_data->assets.LoadTexture("Tex_FrostMageBattleBG", ENCOUNTER_FROST_MAGE_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_HeroSorc", HERO_SORC_SPRITE);
 
 		// ......... //
 		// populate the active heroes list with the currently unlocked ones before the battle starts

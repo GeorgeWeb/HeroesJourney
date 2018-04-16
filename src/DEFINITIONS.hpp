@@ -56,6 +56,8 @@
 #define MAP_SCENE_MAGE_ICON "res/img/map/frostmageicon.png"
 #define MAP_SCENE_UI_FRAME "res/img/map/frame.png"
 
+
+
 // Castle screen state global definitions
 #define CASTLE_SCENE_BACKGROUD "res/img/castle_interior/castleinterior.png"
 #define CASTLE_SCENE_INFIRMARY "res/img/castle_interior/infirmary.png"
@@ -79,6 +81,10 @@
 #define ENCOUNTER_POPUP_PLAY_BTN "res/img/map/encounter_popup/play_btn.png"
 #define ENCOUNTER_POPUP_OPPONENT "res/img/map/encounter_popup/opponent_img.png"
 #define ENCOUNTER_POPUP_STORY "res/img/map/encounter_popup/story_img.png"
+#define ENCOUNTER_POPUP_TROLL_STORY "res/img/map/encounter_popup/trollstory_img.png"
+#define ENCOUNTER_POPUP_CYCLOP_STORY "res/img/map/encounter_popup/cyclopstory_img.png"
+#define ENCOUNTER_POPUP_HARPY_STORY "res/img/map/encounter_popup/harpystory_img.png"
+#define ENCOUNTER_POPUP_MAGE_STORY "res/img/map/encounter_popup/magestory_img.png"
 
 // Story screens global definitions
 #define STORY_INTRO_SCENE_BACKGROUND "res/img/map/game-map-bg.png"

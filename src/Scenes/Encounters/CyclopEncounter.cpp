@@ -20,6 +20,7 @@ namespace HJ { namespace Encounters {
 	void CyclopEncounter::Init()
 	{
 		m_data->assets.LoadTexture("Tex_CyclopBattleBG", ENCOUNTER_CYCLOP_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_HeroBard", HERO_BARD_SPRITE);
 
 		// ......... //
 		// populate the active heroes list with the currently unlocked ones before the battle starts

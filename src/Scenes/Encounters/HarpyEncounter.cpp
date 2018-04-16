@@ -21,6 +21,8 @@ namespace HJ {
 		void HarpyEncounter::Init()
 		{
 			m_data->assets.LoadTexture("Tex_HarpyBattleBG", ENCOUNTER_HARPY_BACKGROUND);
+			m_data->assets.LoadTexture("Tex_HeroRogue", HERO_ROGUE_SPRITE);
+
 
 			// ......... //
 			// populate the active heroes list with the currently unlocked ones before the battle starts
