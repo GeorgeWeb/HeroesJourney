@@ -29,10 +29,7 @@ namespace HJ {
 		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
 		m_data->assets.LoadMusic("AdventureTheme", ADVENTURE_FANTASY_THEME);
 		m_data->assets.LoadMusic("CastleTheme", CASTLE_BAKGROUND_THEME);
-		// sounds
-		// m_data->assets.LoadSound("BuildingSound", CASTLE_INSIDE_BUILDING_SOUND);
 		// General assets
-		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
 		m_data->assets.LoadTexture("Tex_BloodSplashSheet", BLOOD_SPLASH_SPRITESHEET);
 		m_data->assets.LoadTexture("Tex_TestSkillBtn", TEST_SKILL_BTN);

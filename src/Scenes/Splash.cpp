@@ -23,8 +23,8 @@ namespace HJ {
 
 	void SplashScene::Init()
 	{
-
 		// Load Splash screen assets
+		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
 		// music
