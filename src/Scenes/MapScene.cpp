@@ -33,6 +33,10 @@ namespace HJ {
 		m_data->assets.LoadTexture("Tex_PopupPlayBtn", ENCOUNTER_POPUP_PLAY_BTN);
 		m_data->assets.LoadTexture("Tex_PopupOpponent", ENCOUNTER_POPUP_OPPONENT);
 		m_data->assets.LoadTexture("Tex_PopupStory", ENCOUNTER_POPUP_STORY);
+		m_data->assets.LoadTexture("Tex_TrollStory", ENCOUNTER_POPUP_TROLL_STORY);
+		m_data->assets.LoadTexture("Tex_CyclopStory", ENCOUNTER_POPUP_CYCLOP_STORY);
+		m_data->assets.LoadTexture("Tex_HarpyStory", ENCOUNTER_POPUP_HARPY_STORY);
+		m_data->assets.LoadTexture("Tex_MageStory", ENCOUNTER_POPUP_MAGE_STORY);
 		m_data->assets.LoadTexture("Tex_KnightIcon", MAP_SCENE_KNIGHT_ICON);
 		m_data->assets.LoadTexture("Tex_SorcIcon", MAP_SCENE_SORC_ICON);
 		m_data->assets.LoadTexture("Tex_BardIcon", MAP_SCENE_BARD_ICON);
@@ -469,7 +473,7 @@ namespace HJ {
 					// Change the textures of the popup based on the actual Encounter we're in.
 					m_encounterPopup->SetTitleText("Whispering Wilds", m_data->assets.GetFont("Font_Pixel"));
 					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupTrollIcon"));
-					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
+					m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_TrollStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -518,7 +522,7 @@ namespace HJ {
 					// Change the textures of the popup based on the actual Encounter we're in.
 					m_encounterPopup->SetTitleText("The Arctic Rise", m_data->assets.GetFont("Font_Pixel"));
 					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupCyclopsIcon"));
-					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
+					m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_CyclopStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -567,7 +571,7 @@ namespace HJ {
 					// Change the textures of the popup based on the actual Encounter we're in.
 					m_encounterPopup->SetTitleText("The Ethereal Bay", m_data->assets.GetFont("Font_Pixel"));
 					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupHarpyIcon"));
-					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
+					m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_HarpyStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);
@@ -616,7 +620,7 @@ namespace HJ {
 
 					m_encounterPopup->SetTitleText("La Kingdom of Evil", m_data->assets.GetFont("Font_Pixel"));
 					m_encounterPopup->SetOpponentImage(m_data->assets.GetTexture("Tex_PopupMageIcon"));
-					//m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_PopupStory"));
+					m_encounterPopup->SetStoryImage(m_data->assets.GetTexture("Tex_MageStory"));
 
 					// Show the encounter popup
 					m_encounterPopup->SetVisible(true);

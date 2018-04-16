@@ -20,6 +20,7 @@ namespace HJ { namespace Encounters {
 	void FinalBossFMEncounter::Init()
 	{
 		m_data->assets.LoadTexture("Tex_FrostMageBattleBG", ENCOUNTER_FROST_MAGE_BACKGROUND);
+		m_data->assets.LoadTexture("Tex_HeroSorc", HERO_SORC_SPRITE);
 
 		// ......... //
 		// populate the active heroes list with the currently unlocked ones before the battle starts
@@ -48,17 +49,17 @@ namespace HJ { namespace Encounters {
 			(SCREEN_HEIGHT - m_data->gm.hKnight->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.475f));
 		m_data->gm.hKnight->Init();
 
-		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
+		m_data->gm.hBard->SetSprite(m_data->assets.GetTexture("Tex_HeroBard"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hBard->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.hBard->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.4f));
 		m_data->gm.hBard->Init();
 
-		m_data->gm.hRogue->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
+		m_data->gm.hRogue->SetSprite(m_data->assets.GetTexture("Tex_HeroRogue"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hRogue->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hRogue->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.2f,
 			(SCREEN_HEIGHT - m_data->gm.hRogue->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f));
 		m_data->gm.hRogue->Init();
 
-		m_data->gm.hSorceress->SetSprite(m_data->assets.GetTexture("Tex_HeroKnight"), sf::IntRect(0, 0, 32, 32));
+		m_data->gm.hSorceress->SetSprite(m_data->assets.GetTexture("Tex_HeroSorc"), sf::IntRect(0, 0, 32, 32));
 		m_data->gm.hSorceress->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_data->gm.hSorceress->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.1f,
 			(SCREEN_HEIGHT - m_data->gm.hSorceress->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.225f));
 		m_data->gm.hSorceress->Init();
