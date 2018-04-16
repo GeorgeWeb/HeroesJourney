@@ -49,14 +49,21 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		// check for key press or click for closing
-		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
+		if (m_closeBtnSprite->IsClickable() && m_input.isClicked(m_closeBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 		{
 			SetAlive(false);
 			SetVisible(false);
+
+			// play click sound
+			static Asset::AssetManager assets;
+			m_clickBfr = assets.LoadBuffer(BUTTON_CLICK_SOUND);
+			m_clickSnd.setBuffer(*m_clickBfr);
+			m_clickSnd.play();
+
 			std::invoke(OnClose);
 		}
 
-		if (m_playBtnSprite->IsClickable() && m_encInput.isClicked(m_playBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
+		if (m_playBtnSprite->IsClickable() && m_input.isClicked(m_playBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 		{
 			std::invoke(OnPlay);
 		}

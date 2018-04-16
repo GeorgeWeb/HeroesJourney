@@ -95,7 +95,6 @@ namespace HJ {
 		// backArrow properties
 		backArrow->SetPosition(sf::Vector2f((SCREEN_WIDTH - backArrowSprite->GetSprite().getGlobalBounds().width) * 0.02f, 
 			(SCREEN_HEIGHT - backArrowSprite->GetSprite().getGlobalBounds().height) * 0.02f));
-		// backArrowSprite->GetSprite().scale(0.75f, 1.0f);
 		backArrow->SetVisible(true);
 		backArrow->SetAlive(true);
 
@@ -307,7 +306,21 @@ namespace HJ {
 		text5->SetVisible(false);
 		text5->SetAlive(true);
 		text5->Init();
-		
+
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(8);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
+		// play castle theme
+		m_data->assets.GetMusic("CastleTheme").setLoop(false);
+		m_data->assets.GetMusic("CastleTheme").setVolume(30);
+		m_data->assets.GetMusic("CastleTheme").play();
+
+		// Load sounds
+		m_openDoorBfr = m_data->assets.LoadBuffer("res/music/sounds/castle-inside-building.wav");
+		m_openDoorSnd.setBuffer(*m_openDoorBfr);
+
 		AddEntity("E_zCastleBG", bg);
 		AddEntity("E_Blacksmith", m_data->gm.blacksmith);
 		AddEntity("E_Infirmary", m_data->gm.infirmary);
@@ -360,12 +373,15 @@ namespace HJ {
 			if (m_data->input.isClicked(infComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				infClick->SetClicked(true);
+
+				// play sound
+				m_openDoorSnd.play();
+
 				//set last clicked building as infirmary
 				lastClicked = "infirmary";
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
 				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00ManaBtn")->GetSpriteComponent()->SetClickable(false);
-
 			}
 
 			//Check if Blacksmith is clicked
@@ -374,6 +390,10 @@ namespace HJ {
 			if (m_data->input.isClicked(blacksmithComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				blackClick->SetClicked(true);
+
+				// play sound
+				m_openDoorSnd.play();
+
 				lastClicked = "blacksmith";
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
 				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
@@ -386,6 +406,10 @@ namespace HJ {
 			if (m_data->input.isClicked(libraryComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				libraryClick->SetClicked(true);
+
+				// play sound
+				m_openDoorSnd.play();
+
 				lastClicked = "library";
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
 				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
@@ -398,6 +422,10 @@ namespace HJ {
 			if (m_data->input.isClicked(innComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				innClick->SetClicked(true);
+
+				// play sound
+				m_openDoorSnd.play();
+
 				lastClicked = "inn";
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(true);
 				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(false);
@@ -410,6 +438,10 @@ namespace HJ {
 			if (m_data->input.isClicked(genStoreComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
 				genStoreClick->SetClicked(true);
+
+				// play sound
+				m_openDoorSnd.play();
+
 				lastClicked = "generalStore";
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00HealthBtn")->GetSpriteComponent()->SetClickable(true);
@@ -422,6 +454,7 @@ namespace HJ {
 			if (m_data->input.isClicked(arrowComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin())
 				|| sf::Keyboard::isKeyPressed(Controls::GetKey("Back")))
 			{
+				m_data->assets.GetMusic("CastleTheme").stop();
 				backArrowBtn->SetClicked(true);
 			}
 
@@ -441,10 +474,6 @@ namespace HJ {
 					
 						m_data->gm.infirmary->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
-					else
-					{
-						// TODO: ...
-					}
 				}
 
 				else if (lastClicked == "blacksmith")
@@ -455,10 +484,6 @@ namespace HJ {
 						m_data->gm.blacksmith->Upgrade();
 						std::cout << "Blacksmith found!" << std::endl;
 						m_data->gm.blacksmith->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
-					}
-					else
-					{
-						// TODO: ...
 					}
 				}
 
@@ -471,10 +496,6 @@ namespace HJ {
 						std::cout << "Library found!" << std::endl;
 						m_data->gm.library->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
-					else
-					{
-						// TODO: ...
-					}
 				}
 
 				else if (lastClicked == "inn")
@@ -485,10 +506,6 @@ namespace HJ {
 						m_data->gm.inn->Upgrade();
 						std::cout << "Inn found!" << std::endl;
 						m_data->gm.inn->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
-					}
-					else
-					{
-						// TODO: ...
 					}
 				}
 			}
@@ -504,10 +521,6 @@ namespace HJ {
 				{
 					m_data->gm.gold -= 10;
 					m_data->gm.manaPot += 1;
-				}
-				else
-				{
-					// TODO: ...
 				}
 			}
 
@@ -527,12 +540,14 @@ namespace HJ {
 					// TODO: ...
 				}
 			}
-
 		}
 	}
 
 	void CastleScene::Update(float t_delatTime)
 	{
+		// fade the opening sound
+		m_data->assets.GetMusic("CastleTheme").setVolume(m_data->assets.GetMusic("CastleTheme").getVolume() - t_delatTime);
+
 		UpdateText();
 
 		UpdateResourceText();
@@ -579,7 +594,6 @@ namespace HJ {
 			genStoreClick->SetResolve(false);
 		}
 
-
 		//Handle the Upgrade button click
 		auto upBtnClick = m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent();
 		if (upBtnClick->CanResolve())
@@ -587,17 +601,13 @@ namespace HJ {
 			upBtnClick->SetResolve(false);
 		}
 
-	
-
 		//Handle the ManaPotion button click
 		auto manaClick = m_data->ents.Find<Button>("E_00ManaBtn")->GetClickableComponent();
 		if(manaClick->CanResolve())
 		{
 			manaClick->SetResolve(false);
 		}
-
 		
-
 		//Handle the Health Potion button click
 		auto healthClick = m_data->ents.Find<Button>("E_00HealthBtn")->GetClickableComponent();
 		if (healthClick->CanResolve())
@@ -646,21 +656,17 @@ namespace HJ {
 				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
 				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
-
 			}
 
 			else
 			{
-
 				if (m_data->gm.gold >= 10 * m_data->gm.infirmary->GetLevel() )
 				{
 					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
 					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
-
 				}
 			}
-
 
 			m_data->ents.Find<Entity>("E_00Text")->GetComponent<TextComponent>("C_Text")->GetText().setString("INFIRMARY ");
 			m_data->ents.Find<Entity>("E_00Text")->SetVisible(true);
@@ -677,7 +683,6 @@ namespace HJ {
 			m_data->ents.Find<Entity>("E_00Text5")->GetComponent<TextComponent>("C_Text5")->GetText().setString("Cost: " + std::to_string(m_data->gm.infirmary->GetLevel()*10));
 			m_data->ents.Find<Entity>("E_00Text5")->SetVisible(true);
 
-			
 			m_data->ents.Find<Button>("E_00UpBtn")->SetVisible(true);
 			m_data->ents.Find<Button>("E_00UpBtn")->SetAlive(true);
 
@@ -694,18 +699,15 @@ namespace HJ {
 				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
 				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
-
 			}
 
 			else
 			{
-
 				if (m_data->gm.gold >= 10 * m_data->gm.blacksmith->GetLevel() )
 				{
 					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
 					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
-
 				}
 			}
 
@@ -740,7 +742,6 @@ namespace HJ {
 				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
 				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
-
 			}
 
 			else
@@ -785,18 +786,14 @@ namespace HJ {
 				m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(false);
 				m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 55));
 				m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 55));
-
 			}
-
 			else
 			{
-
 				if (m_data->gm.gold >= 10 * m_data->gm.inn->GetLevel() )
 				{
 					m_data->ents.Find<Button>("E_00UpBtn")->GetClickableComponent()->SetClickable(true);
 					m_data->ents.Find<Button>("E_00UpBtn")->GetSpriteComponent()->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 					m_data->ents.Find<Button>("E_00UpBtn")->GetTextComponent()->GetText().setColor(sf::Color(255, 255, 255, 255));
-
 				}
 			}
 

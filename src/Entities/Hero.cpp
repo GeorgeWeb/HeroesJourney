@@ -1,5 +1,6 @@
 #include "Hero.hpp"
 #include "../DEFINITIONS.hpp"
+#include <Engine/Asset/AssetManager.hpp>
 
 namespace HJ { namespace Entities {
 
@@ -27,7 +28,17 @@ namespace HJ { namespace Entities {
 
 	void Hero::ReceiveDamage(unsigned int t_damage)
 	{
-		// play animation
+		// play hurt sound
+		if (t_damage > 0 && m_type == HERO_TYPE::GOOD)
+		{
+			static Engine::Asset::AssetManager assets;
+			m_getHitBfr = assets.LoadBuffer(GET_HURT_SOUND);
+			m_getHitSnd.setBuffer(*m_getHitBfr);
+			m_getHitSnd.play();
+		}
+
+		// play hurt animation
+
 		m_health -= t_damage;
 	}
 

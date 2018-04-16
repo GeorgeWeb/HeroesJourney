@@ -146,6 +146,14 @@ namespace HJ {
 		qText->GetText().setPosition(qbtn->GetPosition().x + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) - qText->GetText().getGlobalBounds().width * 0.5f,
 			qbtn->GetPosition().y + (qbtn->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6f) - qText->GetText().getGlobalBounds().height * 0.6f);
 
+		// Pause splash theme
+		m_data->assets.GetMusic("EpicTheme").stop();
+
+		// play theme
+		m_data->assets.GetMusic("AdventureTheme").setLoop(true);
+		m_data->assets.GetMusic("AdventureTheme").setVolume(35);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		//add to local ents map
 		AddEntity("E_zMainBG", bg);
 		AddEntity("E_aMainMenuTitle", title);
@@ -184,7 +192,6 @@ namespace HJ {
 			auto setBtn = m_data->ents.Find<Button>("E_xSetBtn")->GetClickableComponent();
 			if (m_data->input.isClicked(setComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
-				std::cout << "button has been clicked" << std::endl;
 				setBtn->SetClicked(true);
 			}
 
@@ -336,7 +343,7 @@ namespace HJ {
 			m_data->gm.manaPot = manaPots;
 			m_data->gm.gold = gold;
 			// unlocked encounters
-			m_data->gm.unlockedEncounters = levels;
+			m_data->gm.nextEncounter = levels;
 			#pragma endregion
 
 			// change scene to Story intro

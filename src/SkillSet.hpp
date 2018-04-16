@@ -2,6 +2,7 @@
 #define SKILL_SET_H
 
 #include "Components/StatusComponent.hpp"
+#include "DEFINITIONS.hpp"
 
 namespace HJ
 {
@@ -39,11 +40,15 @@ namespace HJ
 			DAMAGE_TYPE dmgType;
 			SKILL_TARGET target;
 
+			// power and mana modificators
 			unsigned int damageMod;
-
 			unsigned int manaNeed = 0;
 
+			// assets
 			std::string textureRefName = "";
+			std::string soundRefName = "";
+
+			// skill description
 			std::string effectDesc = "";
 
 			std::vector<EFFECT_TYPE> applicableEffects = {};
@@ -56,6 +61,7 @@ namespace HJ
 			BasicAttack() : Skill()
 			{
 				textureRefName = "Tex_BasicAttackBtn";
+				soundRefName = SKILL_BASIC_ATTACK_SOUND;
 				dmgBase = DAMAGE_BASE::MELEE;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -69,6 +75,7 @@ namespace HJ
 			BasicMagicAttack() : Skill()
 			{
 				textureRefName = "Tex_BasicAttackBtn";
+				soundRefName = SKILL_BASIC_ATTACK_SOUND;
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::MAGIC;
 				target = SKILL_TARGET::ENEMY;
@@ -82,6 +89,7 @@ namespace HJ
 			BasicDefence() : Skill()
 			{
 				textureRefName = "Tex_DefendBtn";
+				soundRefName = SKILL_BASIC_DEFENCE_SOUND;
 				dmgBase = DAMAGE_BASE::DEFENCE;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::SELF;
@@ -99,7 +107,8 @@ namespace HJ
 			HeroicStrike() : Skill()
 			{
 				textureRefName = "Tex_HeroicStrikeSkill";
-				effectDesc = "Heroic Strike";
+				soundRefName = SKILL_HEROIC_STRIKE_SOUND;
+				effectDesc = "Heroic Strike/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::MELEE;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -114,7 +123,8 @@ namespace HJ
 			ShieldThrow() : Skill()
 			{
 				textureRefName = "Tex_ShieldBashSkill";
-				effectDesc = "Shield Bash";
+				soundRefName = SKILL_SHIELD_BASH_SOUND;
+				effectDesc = "Shield Bash/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -131,7 +141,8 @@ namespace HJ
 			OffenseAura() : Skill()
 			{
 				textureRefName = "Tex_OffAuraSkill";
-				effectDesc = "DMG Aura";
+				soundRefName = SKILL_OFF_AURA_SOUND;
+				effectDesc = "DMG Aura/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -147,7 +158,8 @@ namespace HJ
 			DeffenseAura() : Skill()
 			{
 				textureRefName = "Tex_DefAuraSkill";
-				effectDesc = "DEF Aura";
+				soundRefName = SKILL_DEF_AURA_SOUND;
+				effectDesc = "DEF Aura/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -164,7 +176,8 @@ namespace HJ
 			RavenBow() : Skill()
 			{
 				textureRefName = "Tex_ArcherySkill";
-				effectDesc = "Archery";
+				soundRefName = SKILL_BOW_SOUND;
+				effectDesc = "Raven Bow/" + std::to_string(manaNeed) +"mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -178,7 +191,8 @@ namespace HJ
 			RainOfArrows() : Skill()
 			{
 				textureRefName = "Tex_RoASkill";
-				effectDesc = "Rain Of Arrows";
+				soundRefName = SKILL_ROA_SOUND;
+				effectDesc = "Rain Of Arrows/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -194,7 +208,8 @@ namespace HJ
 			FireBolt() : Skill()
 			{
 				textureRefName = "Tex_FireBoltSkill";
-				effectDesc = "Fire Bolt";
+				soundRefName = SKILL_FIRE_BOLT_SOUND;
+				effectDesc = "Fire Bolt/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FIRE;
 				target = SKILL_TARGET::ENEMY;
@@ -209,7 +224,8 @@ namespace HJ
 			FrostAura() : Skill()
 			{
 				textureRefName = "Tex_FireAuraSkill";
-				effectDesc = "Fire Aura";
+				soundRefName = SKILL_FIRE_AURA_SOUND;
+				effectDesc = "Fire Aura/" + std::to_string(manaNeed) + "mp";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FROST;
 				target = SKILL_TARGET::ALLY;

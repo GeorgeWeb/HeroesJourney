@@ -263,7 +263,7 @@ namespace HJ {
 				// money
 				m_data->gm.gold,
 				// unlocked encounters
-				m_data->gm.unlockedEncounters
+				m_data->gm.nextEncounter
 			}, Utils::DATA_TYPE::GAME_DATA);
 			
 			// resume to game scene

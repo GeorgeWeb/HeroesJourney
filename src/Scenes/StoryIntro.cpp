@@ -8,7 +8,6 @@
 #include <Engine/ECM/Components/TextComponent.hpp>
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include "StoryIntro.hpp"
-#include "MeetBard.hpp"
 
 namespace HJ {
 
@@ -97,6 +96,11 @@ namespace HJ {
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
 
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(15);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		// populate the entities container
 		AddEntity("E_zDialogBG", bg);
 		AddEntity("E_aStoryIntroContinueText", continueTxt);
@@ -118,11 +122,7 @@ namespace HJ {
 			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Skip")))
 			{
 				// switch to tutorial scene
-				//auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
-				//m_data->machine.AddState(tutorial);
-
-				// switch to tutorial scene
-				auto tutorial = std::make_shared<MapScene>(MapScene(m_data));
+				auto tutorial = std::make_shared<Encounters::TutorialScene>(Encounters::TutorialScene(m_data));
 				m_data->machine.AddState(tutorial);
 			}
 
@@ -136,13 +136,11 @@ namespace HJ {
 					if (m_dialog->GetTexts()[m_offset] == "")
 					{
 						m_offset += 2;
-						std::cout << "empty /n";
 					}
 				}
 
 				m_dialog->DisplayConvo(0 + m_offset, 2 + m_offset, m_data->assets.GetFont("Font_Pixel"));
 				m_offset += 2;
-				std::cout << "not empty /n";
 				//m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
 			}
 		}

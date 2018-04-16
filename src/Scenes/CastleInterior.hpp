@@ -34,7 +34,6 @@ namespace HJ {
 		private:
 			GameDataRef m_data;
 			
-			
 			// Entities
 			std::shared_ptr<Entities::Infirmary> m_infirmary;
 			std::shared_ptr<Entities::Blacksmith > m_blacksmith;
@@ -44,6 +43,10 @@ namespace HJ {
 
 			//last clicked building
 			std::string lastClicked = "";
+
+			// Sounds & Buffers
+			std::shared_ptr<sf::SoundBuffer> m_openDoorBfr;
+			sf::Sound m_openDoorSnd;
 	};
 }
 

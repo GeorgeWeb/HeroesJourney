@@ -94,6 +94,11 @@ namespace HJ {
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
 
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(15);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		// populate the entities container
 		AddEntity("E_zMeetBardDialogBG", bg);
 		AddEntity("E_aMeetBardContinueText", continueTxt);
@@ -131,13 +136,11 @@ namespace HJ {
 					if (m_dialog->GetTexts()[m_offset] == "")
 					{
 						m_offset += 2;
-						std::cout << "empty /n";
 					}
 				}
 
 				m_dialog->DisplayConvo(0 + m_offset, 2 + m_offset, m_data->assets.GetFont("Font_Pixel"));
 				m_offset += 2;
-				std::cout << "not empty /n";
 				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
 
 			}

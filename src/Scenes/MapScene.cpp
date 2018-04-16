@@ -356,6 +356,11 @@ namespace HJ {
 		textCoin->Init();
 		coinTextFont->GetText().setCharacterSize(10);
 
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(12.5f);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "z" for background "x" for UI
 		AddEntity("E_zMapBG", bg);
 		AddEntity("E_Castle", castle);

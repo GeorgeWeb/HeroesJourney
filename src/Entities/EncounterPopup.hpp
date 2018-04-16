@@ -19,12 +19,12 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> m_opponentSprite;
 			std::shared_ptr<Engine::Components::SpriteComponent> m_storySprite;
 			std::shared_ptr<Engine::Components::TextComponent> m_titleText;
-			// clickable components for the buttons (Close and Play)
-			//std::shared_ptr<Engine::Components::ClickableComponent> m_closeBtn;
-			//std::shared_ptr<Engine::Components::ClickableComponent> m_playBtn;
 
 			// input manager to handle input from the entity's update method.
-			Engine::Input::InputManager m_encInput;
+			Engine::Input::InputManager m_input;
+
+			std::shared_ptr<sf::SoundBuffer> m_clickBfr;
+			sf::Sound m_clickSnd;
 
 		public:
 			EncounterPopup();

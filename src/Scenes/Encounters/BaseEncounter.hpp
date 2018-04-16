@@ -70,6 +70,9 @@ namespace HJ { namespace Encounters {
 
 		sf::Vector2f goodBaseLine;
 		sf::Vector2f evilBaseLine;
+
+		std::shared_ptr<sf::SoundBuffer> m_drinkPotionBfr;
+		sf::Sound m_drinkPotionSnd;
 	};
 
 } }

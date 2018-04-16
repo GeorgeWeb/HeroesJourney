@@ -1,6 +1,8 @@
 #include "ClickableComponent.hpp"
-#include "../../Input/InputManager.hpp"
 #include "../../System/Renderer.hpp"
+#include <string>
+
+const std::string btn_click_snd = "res/music/sounds/button-click.wav";
 
 namespace Engine { namespace Components {
 
@@ -32,6 +34,13 @@ namespace Engine { namespace Components {
 		{
 			if (m_isClicked && !m_unClicked)
 			{
+				// play click sound
+				static Asset::AssetManager assets;
+				m_clickBfr = assets.LoadBuffer(btn_click_snd);
+				m_clickSnd.setBuffer(*m_clickBfr);
+				m_clickSnd.play();
+
+				// change color on click
 				m_spriteComponent->GetSprite().setColor(sf::Color(
 					m_spriteComponent->GetSprite().getColor().r - 100,
 					m_spriteComponent->GetSprite().getColor().g - 100,
@@ -48,6 +57,7 @@ namespace Engine { namespace Components {
 
 			if (m_timer < 0.0f && m_unClicked)
 			{
+				// change color back to normal after unclicked
 				m_spriteComponent->GetSprite().setColor(sf::Color(
 					m_spriteComponent->GetSprite().getColor().r + 100,
 					m_spriteComponent->GetSprite().getColor().g + 100,

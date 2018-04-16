@@ -5,7 +5,6 @@
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/TextComponent.hpp>
 #include <Engine/ECM/Components/ClickableComponent.hpp>
-#include <Engine/Input/InputManager.hpp>
 
 namespace HJ { namespace Entities {
 

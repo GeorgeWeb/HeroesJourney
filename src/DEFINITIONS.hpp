@@ -3,6 +3,7 @@
 
 //#define NDEBUG
 
+// default resolution | HD
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 
@@ -130,10 +131,26 @@
 #define MULTI_TARGET_EFFECT "res/img/encounter/effects/MultiTarget.png"
 #define STUN_EFFECT "res/img/encounter/effects/Stunned.png"
 
-// MUSIC THEMES
+// AUDIO: MUSIC
 #define EPIC_FANTASY_THEME "res/music/themes/epic-fantasy-theme.wav"
 #define ADVENTURE_FANTASY_THEME "res/music/themes/adventure-fantasy-theme.wav"
+#define CASTLE_BAKGROUND_THEME "res/music/themes/castle-crowd-background.wav"
 
-// MUSIC SOUNDS
-
+// AUDIO: SOUNDS
+#define	BUTTON_CLICK_SOUND "res/music/sounds/button-click.wav"
+#define CASTLE_INSIDE_BUILDING_SOUND "res/music/sounds/castle-inside-building.wav"
+#define GET_HURT_SOUND "res/music/sounds/hurt-sound.wav"
+#define POTION_DRINK_SOUND "res/music/sounds/potion-drink.wav"
+#define SKILL_BASIC_ATTACK_SOUND "res/music/sounds/skill-basic-attack.wav"
+#define SKILL_BASIC_DEFENCE_SOUND "res/music/sounds/skill-basic-defence.wav"
+#define SKILL_OFF_AURA_SOUND "res/music/sounds/skill-off-aura.wav"
+#define SKILL_DEF_AURA_SOUND "res/music/sounds/skill-def-aura.wav"
+#define SKILL_HEROIC_STRIKE_SOUND "res/music/sounds/skill-heroic-strike.wav"
+#define SKILL_SHIELD_BASH_SOUND "res/music/sounds/skill-shield-bash.wav"
+#define SKILL_BOW_SOUND "res/music/sounds/skill-raven-bow.wav"
+#define SKILL_ROA_SOUND "res/music/sounds/skill-RoA.wav"
+#define SKILL_FIRE_BOLT_SOUND "res/music/sounds/skill-fire-bolt.wav"
+#define SKILL_FIRE_AURA_SOUND "res/music/sounds/skill-antifrost-aura.wav"
+#define	VICTORY_SOUND "res/music/sounds/victory-sound.wav"
+#define	DODGE_SOUND "res/music/sounds/dodge-sound.wav"
 #endif // !DEFINITIONS_H

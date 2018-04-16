@@ -60,7 +60,7 @@ namespace HJ {
 
 			// encounters's evil ai - forest troll
 			m_activeBoss = std::make_shared<Hero>();
-			int health = m_data->gm.hRogue->GetHealth() * 3;
+			int health = m_data->gm.hRogue->GetMaxHealth() * 3;
 			m_activeBoss->SetStats("Harpy", HERO_TYPE::EVIL, health, 15, 1, 15);
 			m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilHarpy"), sf::IntRect(0, 0, 32, 32));
 			m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
@@ -307,6 +307,11 @@ namespace HJ {
 			m_statistics.push_back(rogueStatsTxt);
 			m_statistics.push_back(bardStatsTxt);
 			m_statistics.push_back(knightStatsTxt);
+
+			// Regulate main theme
+			m_data->assets.GetMusic("AdventureTheme").pause();
+			m_data->assets.GetMusic("AdventureTheme").setVolume(10);
+			m_data->assets.GetMusic("AdventureTheme").play();
 
 			AddEntity("E_zTutorialBG", bg);
 			AddEntity("E_HeroKnight", m_data->gm.hKnight);

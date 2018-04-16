@@ -65,7 +65,7 @@ namespace HJ { namespace Encounters {
 			
 		// encounters's evil ai - forest troll
 		m_activeBoss = std::make_shared<Hero>();
-		int health = m_data->gm.hKnight->GetHealth() * 4;
+		int health = m_data->gm.hKnight->GetMaxHealth() * 4;
 		m_activeBoss->SetStats("Frost Mage", HERO_TYPE::EVIL, health, 15, 5, 10);
 		m_activeBoss->SetSprite(m_data->assets.GetTexture("Tex_EvilFrostMage"), sf::IntRect(0, 0, 32, 32));
 		m_activeBoss->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_activeBoss->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.7f,
@@ -329,6 +329,11 @@ namespace HJ { namespace Encounters {
 		m_statistics.push_back(rogueStatsTxt);
 		m_statistics.push_back(bardStatsTxt);
 		m_statistics.push_back(knightStatsTxt);
+
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(10);
+		m_data->assets.GetMusic("AdventureTheme").play();
 
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);

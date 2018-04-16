@@ -55,6 +55,18 @@ namespace HJ { namespace States {
 
 		private:
 			bool m_isExecuting;
+
+			// Asset Manager instance
+			Asset::AssetManager m_assets;
+
+			// battle sounds
+			std::shared_ptr<sf::SoundBuffer> m_skillBfr;
+			sf::Sound m_skillSnd;
+			std::shared_ptr<sf::SoundBuffer> m_dodgeBfr;
+			sf::Sound m_dodgeSnd;
+
+			// dodge checker
+			unsigned int m_dodgeCount = 0;
 	};
 
 	class StepBackState final : public State

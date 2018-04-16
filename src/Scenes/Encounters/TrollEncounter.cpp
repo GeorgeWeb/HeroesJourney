@@ -262,12 +262,15 @@ namespace HJ {
 			bossStatsTxt->Init();
 
 			m_statistics.push_back(bossStatsTxt);
-			// m_statistics.push_back(bardStatsTxt);
 			m_statistics.push_back(knightStatsTxt);
+
+			// Regulate main theme
+			m_data->assets.GetMusic("AdventureTheme").pause();
+			m_data->assets.GetMusic("AdventureTheme").setVolume(10);
+			m_data->assets.GetMusic("AdventureTheme").play();
 
 			AddEntity("E_zTutorialBG", bg);
 			AddEntity("E_HeroKnight", m_data->gm.hKnight);
-			// AddEntity("E_HeroBard", m_data->gm.hBard);
 			AddEntity("E_SceneBoss", m_activeBoss);
 			AddEntity("E_ActionResolver", m_actionResolver);
 			AddEntity("E_xTutorialUiFrame", uiFrame);
@@ -280,7 +283,6 @@ namespace HJ {
 			AddEntity("E_aPauseBtn", pauseBtn);
 			AddEntity("E_aConcedeBtn", concedeBtn);
 			AddEntity("E_aKnightStatsTxt", knightStatsTxt);
-			// AddEntity("E_aBardStatsTxt", bardStatsTxt);
 			AddEntity("E_aBossStatsTxt", bossStatsTxt);
 
 			// list of the UI button sprites to be disabled/enabled on turn change

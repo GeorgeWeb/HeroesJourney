@@ -97,6 +97,11 @@ namespace HJ {
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
 
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(15);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		// populate the entities container
 		AddEntity("E_zFinalStoryDialogBG", bg);
 		AddEntity("E_aFinalStoryContinueText", continueTxt);

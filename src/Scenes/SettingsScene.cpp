@@ -379,8 +379,8 @@ namespace HJ {
 								+ (m_data->ents.Find<Button>(entName)->GetSpriteComponent()->GetSprite().getGlobalBounds().width * 0.5f) 
 								- m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().getGlobalBounds().width * 0.5f,
 							m_data->ents.Find<Button>(entName)->GetPosition().y 
-								+ (m_data->ents.Find<Button>(entName)->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.65) 
-								- m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().getGlobalBounds().height * 0.5f
+								+ (m_data->ents.Find<Button>(entName)->GetSpriteComponent()->GetSprite().getGlobalBounds().height * 0.6) 
+								- m_data->ents.Find<Button>(entName)->GetTextComponent()->GetText().getGlobalBounds().height * 0.6f
 						);
 						// reset normal button color
 						button->GetSpriteComponent()->GetSprite().setColor(sf::Color::White);

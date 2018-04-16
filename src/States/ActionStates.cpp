@@ -1,5 +1,5 @@
 #include "ActionStates.hpp"
-
+// #include "../Entities/Hero.hpp"
 #include <iostream>
 
 namespace HJ { namespace States {
@@ -124,11 +124,31 @@ namespace HJ { namespace States {
 		if (m_isExecuting)
 		{
 			m_isExecuting = false;
+
+			// play skill sounds
+			if (!m_heuristicEval->GetUsedSkill()->soundRefName.empty() && m_heuristicEval->GetInitiator()->heroType() == Entities::HERO_TYPE::GOOD)
+			{
+				m_skillBfr = m_assets.LoadBuffer(m_heuristicEval->GetUsedSkill()->soundRefName);
+				m_skillSnd.setBuffer(*m_skillBfr);
+				m_skillSnd.play();
+			}
+
 			for (auto& hero : m_heuristicEval->GetTargets())
 			{
 				auto dmg = damage.SendDamage(hero);
-				std::cout << "\n\nDealt: " << dmg << "to " << hero->className() << "!! WOOHOOO !!\n";
-				std::cout << "HP left: " << hero->GetHealth() << "to " << "!! EEMI TOLKOZ !!\n\n";
+				if (dmg == "DODGED") m_dodgeCount++;
+				
+				std::cout << "\n\nDealt: " << dmg << " to " << hero->className() << "\n";
+				std::cout << "HP left: " << hero->GetHealth() << " to " << hero->className() << "\n\n";
+			}
+
+			// play sound on dodge
+			if (m_dodgeCount > 0)
+			{
+				m_dodgeBfr = m_assets.LoadBuffer(m_heuristicEval->GetUsedSkill()->soundRefName);
+				m_dodgeSnd.setBuffer(*m_dodgeBfr);
+				m_dodgeSnd.play();
+				m_dodgeCount = 0;
 			}
 			
 			if(m_heuristicEval->GetUsedSkill()->dmgBase == DAMAGE_BASE::DEFENCE)

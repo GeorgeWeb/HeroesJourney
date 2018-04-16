@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <string>
 
+// helper macros for converting key OR button enum code to string
 #define KEY_ITEM(k) case sf::Keyboard::##k : ret = #k; break;
 #define BTN_ITEM(b) case sf::Mouse::##b : ret = #b; break;
 

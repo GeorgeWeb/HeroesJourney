@@ -6,8 +6,6 @@
 #include "../Components/StatusComponent.hpp"
 #include "../Components/SkillComponent.hpp"
 
-#include <functional>
-
 namespace HJ { namespace Entities {
 	
 	enum class HERO_TYPE : int
@@ -45,6 +43,10 @@ namespace HJ { namespace Entities {
 
 			std::string m_name;
 			HERO_TYPE m_type;
+
+		private:
+			std::shared_ptr<sf::SoundBuffer> m_getHitBfr;
+			sf::Sound m_getHitSnd;
 
 		public:
 			inline int GetHealth() const { return m_health; }

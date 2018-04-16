@@ -95,6 +95,11 @@ namespace HJ {
 		uiFrame->SetAlive(true);
 		uiFrame->Init();
 
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(15);
+		m_data->assets.GetMusic("AdventureTheme").play();
+
 		// populate the entities container
 		AddEntity("E_zMeetSorcDialogBG", bg);
 		AddEntity("E_aMeetSorcContinueText", continueTxt);
@@ -141,7 +146,6 @@ namespace HJ {
 				m_offset += 2;
 				std::cout << "not empty /n";
 				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
-
 			}
 		}
 	}

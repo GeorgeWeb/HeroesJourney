@@ -44,9 +44,9 @@ namespace HJ
 			if (effects)
 			{
 				ApplyEffects(t_receiver);
-				return "BUFFED!";
+				return "BUFFED";
 			}
-			return "Nothing!";
+			return "Nothing";
 		}
 
 		unsigned int dodge = t_receiver->GetDodge();
@@ -57,7 +57,7 @@ namespace HJ
 
 		if (dodge > m_hitChance)
 		{
-			return "DODGED!";
+			return "DODGED";
 		}
 
 		if (t_receiver->GetStatusComponent()->GetEffect(EFFECT_TYPE::FLY)->active && m_base == DAMAGE_BASE::MELEE)

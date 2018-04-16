@@ -263,6 +263,11 @@ namespace HJ { namespace Encounters {
 		m_statistics.push_back(bossStatsTxt);
 		m_statistics.push_back(knightStatsTxt);
 		
+		// Regulate main theme
+		m_data->assets.GetMusic("AdventureTheme").pause();
+		m_data->assets.GetMusic("AdventureTheme").setVolume(10);
+		m_data->assets.GetMusic("AdventureTheme").play();
+		
 		AddEntity("E_zTutorialBG", bg);
 		AddEntity("E_HeroKnight", m_data->gm.hKnight);
 		AddEntity("E_SceneBoss", m_activeBoss);

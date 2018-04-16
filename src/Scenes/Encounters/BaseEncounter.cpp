@@ -15,7 +15,10 @@ namespace HJ { namespace Encounters {
 
 	BaseEncounterScene::BaseEncounterScene(GameDataRef t_data)
 		: m_data(t_data)
-	{ }
+	{
+		m_drinkPotionBfr = m_data->assets.LoadBuffer(POTION_DRINK_SOUND);
+		m_drinkPotionSnd.setBuffer(*m_drinkPotionBfr);
+	}
 
 	void BaseEncounterScene::Init()
 	{
@@ -290,7 +293,6 @@ namespace HJ { namespace Encounters {
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
-		std::cout << "FIRST TURN\n";
 		NextTurn();
 	}
 
@@ -474,6 +476,9 @@ namespace HJ { namespace Encounters {
 					// resolve use HP button click
 					if (hpBtnBtn->CanResolve())
 					{
+						// play sound
+						m_drinkPotionSnd.play();
+
 						m_data->gm.healthPot--;
 						m_heroOnTurn->SetHealth(m_heroOnTurn->GetHealth() + 50);
 
@@ -483,6 +488,9 @@ namespace HJ { namespace Encounters {
 					// resolve use MP button click
 					if (mpBtnBtn->CanResolve())
 					{
+						// play sound
+						m_drinkPotionSnd.play();
+
 						m_data->gm.manaPot--;
 						m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() + 30);
 

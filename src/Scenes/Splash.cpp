@@ -24,12 +24,13 @@ namespace HJ {
 	void SplashScene::Init()
 	{
 		/* < GLOBAL PRE-LOAD */
+
 		// music
 		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
 		m_data->assets.LoadMusic("AdventureTheme", ADVENTURE_FANTASY_THEME);
+		m_data->assets.LoadMusic("CastleTheme", CASTLE_BAKGROUND_THEME);
 		// sounds
-		// ...
-		// Load resources (to be used repeatingly)
+		// m_data->assets.LoadSound("BuildingSound", CASTLE_INSIDE_BUILDING_SOUND);
 		// General assets
 		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 		m_data->assets.LoadTexture("Tex_StandardBtn", STANDARD_BTN);
@@ -115,8 +116,9 @@ namespace HJ {
 		text->SetAlive(true);
 		text->Init();
 
-		m_data->assets.GetMusic("EpicTheme").setLoop(true);
-		m_data->assets.GetMusic("EpicTheme").setVolume(50);
+		// play theme
+		m_data->assets.GetMusic("EpicTheme").setLoop(false);
+		m_data->assets.GetMusic("EpicTheme").setVolume(35);
 		m_data->assets.GetMusic("EpicTheme").play();
 
 		// Add to ents (local) map
