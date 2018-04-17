@@ -8,6 +8,9 @@ A 2D Fantasy Game build from scratch using SFML / C++ and a lot of RedBull
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
+### Youtube playthrough!
+[![Heroes Journey](https://img.youtube.com/vi/3_m0fZHJiI8/0.jpg)](https://www.youtube.com/watch?time_continue=549&v=3_m0fZHJiI8)
+
 ---
 
 1. Clone or fork this repo
