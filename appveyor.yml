@@ -2,7 +2,9 @@ version: 1.0.{build}
 
 image: Visual Studio 2017
 
-configuration: Debug
+configuration:
+- Release
+- Debug
 
 platform: x64
 

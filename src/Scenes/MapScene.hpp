@@ -3,6 +3,9 @@
 
 #include <Engine/Engine.hpp>
 #include <Engine/ECM/Components/SpriteComponent.hpp>
+#include <Engine/ECM/Components/ClickableComponent.hpp>
+#include <Engine\ECM\Components\TextComponent.hpp>
+
 #include "CastleInterior.hpp"
 
 #include "../Game.hpp"
@@ -28,25 +31,17 @@ namespace HJ {
 			void AddEntity(const std::string& t_name, std::shared_ptr<ECM::Entity> t_entity) override final;
 
 		private:
+			void UpdateText();
+			void UpdateResources();
+			void HideEntsOnDisplay(std::vector<ECM::Entity*> t_entsToHide, std::vector<Engine::Components::SpriteComponent*> t_compsToFade, std::vector<Engine::Components::SpriteComponent*> t_compsToBlock);
+			void ShowEntsOnClose(std::vector<ECM::Entity*> t_entsToShow, std::vector<Engine::Components::SpriteComponent*> t_compsToUnfade, std::vector<Engine::Components::SpriteComponent*> t_compsToUnblock);
+			void UpdateParty();
+
+		private:
 			GameDataRef m_data;
-
-			//boolean click checks
-			bool m_castleClick = false;
-			bool m_forestClick = false;
-			bool m_mountainsClick = false;
-			bool m_seaClick = false;
-			bool m_evilCastleClick = false;
-
-			//unclick checks
-			bool m_castleUnClick = false;
-			bool m_forestUnClick = false;
-			bool m_mountainsUnClick = false;
-			bool m_seaUnClick = false;
-			bool m_evilCastleUnClick = false;
-
-			sf::Clock m_clock;
-			float m_time = 0.1f;
-
+			
+			//using idea from the castle interior for text
+			std::string lastClicked = "";
 			/* ENTITIES */
 			// Encounters popups
 			std::shared_ptr<Entities::EncounterPopup> m_encounterPopup;

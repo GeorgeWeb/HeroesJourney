@@ -1,5 +1,5 @@
-#ifndef STATE_MACHINE_H
-#define STATE_MACHINE_H
+#ifndef SCENE_MANAGER_H
+#define SCENE_MANAGER_H
 
 #include "State.hpp"
 
@@ -8,13 +8,13 @@
 
 namespace Engine { namespace SM {
 
-	using StateRef = std::unique_ptr<State>;
+	using StateRef = std::shared_ptr<State>;
 
 	class StateMachine final
 	{
 		public:
 			StateMachine() = default;
-			~StateMachine() = default;
+			~StateMachine();
 
 			void AddState(StateRef t_state, bool t_replacing = true);
 			void RemoveState();
@@ -33,4 +33,4 @@ namespace Engine { namespace SM {
 	};
 
 } }
-#endif // !STATE_MACHINE_H
+#endif // !SCENE_MANAGER_H

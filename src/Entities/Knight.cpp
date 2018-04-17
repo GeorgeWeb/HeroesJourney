@@ -2,18 +2,22 @@
 
 namespace HJ { namespace Entities {
 
-	Knight::Knight(const std::string & t_sprite, const std::string & t_animator) :
-		Hero(t_sprite, t_animator)
-	{ 
-		m_health = 150;
-		m_mana = 75;
-		m_armour = 20;
-		m_damage = 50;
+	Knight::Knight(bool t_populate) : Hero(t_populate)
+	{
+		m_name = "Knight";
+		m_type = HERO_TYPE::GOOD;
 		m_alive = true;
-		m_dodgeChance = 2;
-		m_critChance = 3;
-		m_isFlaming = false;
-		m_isStunned = false;
+		if (t_populate)
+		{
+			m_health = 150;
+			m_maxHealth = 150;
+			m_mana = 75;
+			m_maxMana = 75;
+			m_armour = 20;
+			m_damage = 35;
+			m_dodgeChance = 5;
+			m_critChance = 30;
+		}
 	}
 
 	Knight* Knight::GetType()
@@ -24,6 +28,12 @@ namespace HJ { namespace Entities {
 	void Knight::Init()
 	{
 		Hero::Init();
+
+		// Add skills
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicAttack>());
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
+		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<HeroicStrike>());
+		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<ShieldThrow>());
 	}
 
 	void Knight::Update(float t_deltaTime)
@@ -34,31 +44,6 @@ namespace HJ { namespace Entities {
 	void Knight::Render()
 	{
 		Hero::Render();
-	}
-
-	void Knight::Attack()
-	{
-		// implement
-	}
-
-	void Knight::Skill(std::function<void()> t_func)
-	{
-		Hero::Skill(t_func);
-	}
-
-	void Knight::Defend()
-	{
-		// implement
-	}
-
-	void Knight::HeroSlash()
-	{
-		// implement
-	}
-
-	void Knight::ShoulderBash()
-	{
-		// implement
 	}
 
 } }

@@ -2,18 +2,22 @@
 
 namespace HJ {namespace Entities {
 
-	HJ::Entities::Sorceress::Sorceress(const std::string& t_sprite, const std::string& t_animatior):
-		Hero(t_sprite, t_animatior)
+	Sorceress::Sorceress(bool t_populate) : Hero(t_populate)
 	{
-		m_health = 75;
-		m_mana = 120;
-		m_armour = 5;
-		m_damage = 30;
+		m_name = "Sorceress";
+		m_type = HERO_TYPE::GOOD;
 		m_alive = true;
-		m_dodgeChance = 1;
-		m_critChance = 2;
-		m_isFlaming = false;
-		m_isStunned = false;
+		if (t_populate)
+		{
+			m_health = 75;
+			m_maxHealth = 75;
+			m_mana = 120;
+			m_maxMana = 120;
+			m_armour = 5;
+			m_damage = 45;
+			m_dodgeChance = 10;
+			m_critChance = 20;
+		}
 	}
 
 	Sorceress* Sorceress::GetType()
@@ -24,6 +28,12 @@ namespace HJ {namespace Entities {
 	void Sorceress::Init()
 	{
 		Hero::Init();
+
+		// Add skills
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_ATTACK, std::make_shared<BasicMagicAttack>());
+		m_skillComp->AddSkill(SKILL_NAME::BASIC_DEFENCE, std::make_shared<BasicDefence>());
+		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_1, std::make_shared<FireBolt>());
+		m_skillComp->AddSkill(SKILL_NAME::SPECIAL_SKILL_2, std::make_shared<FrostAura>());
 	}
 
 	void Sorceress::Update(float t_deltaTime)
@@ -34,27 +44,6 @@ namespace HJ {namespace Entities {
 	void Sorceress::Render()
 	{
 		Hero::Render();
-	}
-
-	void Sorceress::Attack()
-	{
-	}
-
-	void Sorceress::Skill(std::function<void()> t_func)
-	{
-		Hero::Skill(t_func);
-	}
-
-	void Sorceress::Defend()
-	{
-	}
-
-	void Sorceress::StreamOfFire()
-	{
-	}
-
-	void Sorceress::Ignite()
-	{
 	}
 
 } }

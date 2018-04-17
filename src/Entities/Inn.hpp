@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Inn final : public Building
 	{
 		public:
-			Inn(const std::string& t_sprite);
+			Inn(bool t_populate = true);
 			~Inn() = default;
 
 			Inn* GetType() override final;
@@ -19,6 +19,8 @@ namespace HJ { namespace Entities {
 			void Render() override final;
 
 			void Upgrade() override final;
+			void ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes) override final;
+
 	};
 
 } }

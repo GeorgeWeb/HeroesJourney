@@ -2,13 +2,13 @@
 
 namespace HJ { namespace Entities {
 
-	Blacksmith::Blacksmith(const std::string & t_sprite) :
-		Building(t_sprite)
+	Blacksmith::Blacksmith(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
-		isClicked = false;
-		unClick = false;
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 2;
+		}
 	}
 
 	Blacksmith* Blacksmith::GetType()
@@ -27,32 +27,7 @@ namespace HJ { namespace Entities {
 
 		auto blacksmithComp = m_spriteComp;
 
-		if (isClicked && !unClick)
-		{
-			blacksmithComp->GetSprite().setColor(sf::Color(blacksmithComp->GetSprite().getColor().r - 100,
-				blacksmithComp->GetSprite().getColor().g - 100,
-				blacksmithComp->GetSprite().getColor().b - 100,
-				blacksmithComp->GetSprite().getColor().a));
-			unClick = true;
-		}
-
-		if (unClick)
-		{
-			m_time -= t_deltaTime;
-		}
-		if (m_time <0.0f && unClick)
-		{
-			blacksmithComp->GetSprite().setColor(sf::Color(
-				blacksmithComp->GetSprite().getColor().r + 100,
-				blacksmithComp->GetSprite().getColor().g + 100,
-				blacksmithComp->GetSprite().getColor().b + 100,
-				blacksmithComp->GetSprite().getColor().a
-			));
-
-			m_time = 0.1f;
-			unClick = false;
-			isClicked = false;
-		}
+		
 	}
 
 	void Blacksmith::Render()
@@ -62,7 +37,16 @@ namespace HJ { namespace Entities {
 
 	void Blacksmith::Upgrade()
 	{
-		Building::Upgrade();
+		m_bonus = m_level * 2;
+		m_level += 1;
+	}
+
+	void Blacksmith::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			hero->SetDmg(hero->GetDmg() + m_bonus);
+		}
 	}
 
 } }

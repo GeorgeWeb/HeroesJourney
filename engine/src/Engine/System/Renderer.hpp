@@ -11,8 +11,6 @@ namespace Engine { namespace System {
 	{
 		void Initialize(sf::RenderWindow& t_rw);
 
-		sf::RenderWindow& GetWin();
-
 		void Shutdown();
 
 		void Render();

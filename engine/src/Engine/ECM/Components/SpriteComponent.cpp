@@ -17,16 +17,23 @@ namespace Engine { namespace Components {
 
 	void SpriteComponent::Update(float t_deltaTime)
 	{
+		// set pos to the parent's one for ONLY non-independent sprite components
 		if (m_parent->IsAlive())
 		{
-			m_sprite->setPosition(m_parent->GetPosition());
+			// set dependent (to parent Entity) position
+			if (!independent)
+				m_sprite->setPosition(m_parent->GetPosition());
+
+			// set smoothness to the textures applied to each sprite
+			if (m_sprite->getTexture() != nullptr && !m_sprite->getTexture()->isSmooth())
+				const_cast<sf::Texture*>(m_sprite->getTexture())->setSmooth(true);
 		}
 	}
 
 	void SpriteComponent::Render()
 	{
 		if (m_parent->IsVisible())
-			Engine::System::Renderer::Queue(&(*m_sprite));
+			System::Renderer::Queue(&(*m_sprite));
 	}
 
 	sf::Sprite& SpriteComponent::GetSprite()

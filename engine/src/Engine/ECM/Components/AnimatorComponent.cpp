@@ -39,7 +39,7 @@ namespace Engine { namespace Components {
 
 	sf::IntRect AnimatorComponent::GetAnimUVRect(const std::string& t_name)
 	{
-		return m_animations["Anim_HeroFull"]->uvRect;
+		return m_animations[t_name]->uvRect;
 	}
 
 	std::map<std::string, std::shared_ptr<Animation>> AnimatorComponent::GetAnims()

@@ -1,13 +1,24 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
+#include <random>
+#include <time.h>
+
 namespace Engine { namespace Utils {
 
-	class Random final
+	// TODO: C++11-ize
+	class Random
 	{
 		public:
-			Random() = default;
-			~Random() = default;
+			Random()
+			{
+				srand(time(0));
+			}
+
+			int NextInt(int high, int low)
+			{
+				return (rand() % (high - low)) + low;
+			}
 	};
 
 } }

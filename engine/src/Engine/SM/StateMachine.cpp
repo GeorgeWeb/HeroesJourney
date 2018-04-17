@@ -2,6 +2,8 @@
 
 namespace Engine { namespace SM {
 
+	StateMachine::~StateMachine() {}
+
 	void StateMachine::AddState(StateRef t_state, bool t_replacing)
 	{
 		m_isAdding = true;

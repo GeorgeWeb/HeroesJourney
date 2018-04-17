@@ -3,6 +3,7 @@
 
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/TextComponent.hpp>
+#include <Engine/ECM/Components/ClickableComponent.hpp>
 #include <Engine/Input/InputManager.hpp>
 
 #include <functional>
@@ -19,7 +20,11 @@ namespace HJ { namespace Entities {
 			std::shared_ptr<Engine::Components::SpriteComponent> m_storySprite;
 			std::shared_ptr<Engine::Components::TextComponent> m_titleText;
 
-			Engine::Input::InputManager m_encInput;
+			// input manager to handle input from the entity's update method.
+			Engine::Input::InputManager m_input;
+
+			std::shared_ptr<sf::SoundBuffer> m_clickBfr;
+			sf::Sound m_clickSnd;
 
 		public:
 			EncounterPopup();
@@ -31,7 +36,7 @@ namespace HJ { namespace Entities {
 			void Update(float t_deltaTime) override final;
 			void Render() override final;
 
-			void ToggleCloseBtnBehaviour();
+			void ToggleButtonsBehaviour();
 
 			void SetBackgroundImage(const sf::Texture& t_texture);
 			void SetCloseButtonImage(const sf::Texture& t_texture);
@@ -47,6 +52,8 @@ namespace HJ { namespace Entities {
 			void OnDisplay(std::function<void()> t_func);
 			// custom behaviour on closing
 			std::function<void()> OnClose;
+			// custom behaviour on play/enter battle
+			std::function<void()> OnPlay;
 	};
 
 } }

@@ -1,20 +1,24 @@
 #include "EncounterPopup.hpp"
 #include "../DEFINITIONS.hpp"
+#include "../Controls.hpp"
 
-#include <Engine/System/Renderer.hpp>
+#include <Engine/Engine.hpp>
 
 namespace HJ { namespace Entities {
 	
+	using namespace Engine;
 	using namespace Engine::System;
 	using namespace Engine::Input;
+	using namespace Engine::ECM;
+	using namespace Engine::Components;
 
 	EncounterPopup::EncounterPopup() :
-		m_bgSprite(AddComponent<Engine::Components::SpriteComponent>("C_zPopupBGSprite")),
-		m_closeBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupCloseBtnSprite")),
-		m_playBtnSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupPlayBtnSprite")),
-		m_opponentSprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupOpponentSprite")),
-		m_storySprite(AddComponent<Engine::Components::SpriteComponent>("C_xPopupStorySprite")),
-		m_titleText(AddComponent<Engine::Components::TextComponent>("C_aPopupTitleText"))
+		m_bgSprite(AddComponent<SpriteComponent>("C_zPopupBGSprite")),
+		m_closeBtnSprite(AddComponent<SpriteComponent>("C_xPopupCloseBtnSprite")),
+		m_playBtnSprite(AddComponent<SpriteComponent>("C_xPopupPlayBtnSprite")),
+		m_opponentSprite(AddComponent<SpriteComponent>("C_xPopupOpponentSprite")),
+		m_storySprite(AddComponent<SpriteComponent>("C_xPopupStorySprite")),
+		m_titleText(AddComponent<TextComponent>("C_aPopupTitleText"))
 	{ 
 		showOnCreate = false;
 	}
@@ -25,6 +29,14 @@ namespace HJ { namespace Entities {
 		SetAlive(false);
 		SetVisible(false);
 		m_closeBtnSprite->SetClickable(false); ///> true by default
+		m_playBtnSprite->SetClickable(false);
+
+		m_bgSprite->independent = true;
+		m_closeBtnSprite->independent = true;
+		m_playBtnSprite->independent = true;
+		m_opponentSprite->independent = true;
+		m_storySprite->independent = true;
+		m_titleText->independent = true;
 	}
 
 	EncounterPopup* EncounterPopup::GetType()
@@ -37,11 +49,23 @@ namespace HJ { namespace Entities {
 		Entity::Update(t_deltaTime);
 
 		// check for key press or click for closing
-		if (m_closeBtnSprite->IsClickable() && m_encInput.isClicked(m_closeBtnSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+		if (m_closeBtnSprite->IsClickable() && m_input.isClicked(m_closeBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 		{
 			SetAlive(false);
 			SetVisible(false);
+
+			// play click sound
+			static Asset::AssetManager assets;
+			m_clickBfr = assets.LoadBuffer(BUTTON_CLICK_SOUND);
+			m_clickSnd.setBuffer(*m_clickBfr);
+			m_clickSnd.play();
+
 			std::invoke(OnClose);
+		}
+
+		if (m_playBtnSprite->IsClickable() && m_input.isClicked(m_playBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
+		{
+			std::invoke(OnPlay);
 		}
 	}
 
@@ -50,9 +74,10 @@ namespace HJ { namespace Entities {
 		Entity::Render();
 	}
 
-	void EncounterPopup::ToggleCloseBtnBehaviour()
+	void EncounterPopup::ToggleButtonsBehaviour()
 	{
 		m_closeBtnSprite->SetClickable(!m_closeBtnSprite->IsClickable());
+		m_playBtnSprite->SetClickable(!m_playBtnSprite->IsClickable());
 	}
 
 	void EncounterPopup::SetBackgroundImage(const sf::Texture& t_texture)
@@ -75,7 +100,7 @@ namespace HJ { namespace Entities {
 
 	void EncounterPopup::SetOpponentImage(const sf::Texture& t_texture)
 	{
-		m_opponentSprite->GetSprite().setTexture(t_texture);
+		m_opponentSprite->GetSprite().setTexture(t_texture, true);
 		m_opponentSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 
@@ -89,7 +114,8 @@ namespace HJ { namespace Entities {
 	{
 		m_titleText->SetFont(t_font);
 		m_titleText->GetText().setString(t_text);
-		m_titleText->GetText().setCharacterSize(30);
+		m_titleText->GetText().setCharacterSize(22);
+		m_titleText->GetText().setStyle(sf::Text::Bold);
 	}
 
 	void EncounterPopup::OnDisplay(std::function<void()> t_func)
@@ -100,14 +126,17 @@ namespace HJ { namespace Entities {
 	void EncounterPopup::Assemble(sf::Vector2f t_position)
 	{
 		m_bgSprite->GetSprite().setPosition(t_position);
-		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f((t_position.x - m_playBtnSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(t_position.y - m_playBtnSprite->GetSprite().getGlobalBounds().height) * 0.8f));
-		m_opponentSprite->GetSprite().setPosition(sf::Vector2f((t_position.x - m_opponentSprite->GetSprite().getGlobalBounds().width) * 0.5f,
-			(t_position.y - m_opponentSprite->GetSprite().getGlobalBounds().height) * 0.5f));
-		m_storySprite->GetSprite().setPosition(sf::Vector2f((t_position.x - m_storySprite->GetSprite().getGlobalBounds().width) * 0.1f,
-			(t_position.y - m_storySprite->GetSprite().getGlobalBounds().height) * 0.1f));
-		m_titleText->GetText().setPosition(sf::Vector2f((t_position.x - m_titleText->GetText().getGlobalBounds().width) * 0.5f,
-			(t_position.y - m_titleText->GetText().getGlobalBounds().height) * 0.1f));
+
+		m_playBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.15f, t_position.y * 5.025f));
+
+		m_closeBtnSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.990f, t_position.y*1.1f));
+
+		m_opponentSprite->GetSprite().scale(2.8f, 2.8f);
+		m_opponentSprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 2.1f, t_position.y * 1.9f));
+
+		m_storySprite->GetSprite().setPosition(sf::Vector2f(t_position.x * 1.1f, t_position.y * 1.7f));
+
+		m_titleText->GetText().setPosition(sf::Vector2f(t_position.x * 1.65f, t_position.y * 1.25f));
 	}
 
 } }

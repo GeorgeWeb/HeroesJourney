@@ -20,7 +20,6 @@ namespace HJ { namespace Entities {
 		{
 			m_spriteComp->GetSprite().scale(sf::Vector2f(1.0f, 1.0f));
 			m_spriteComp->GetSprite().setColor(sf::Color(255, 255, 255, 255));
-
 			SetVisible(true);
 			SetAlive(true);
 		}

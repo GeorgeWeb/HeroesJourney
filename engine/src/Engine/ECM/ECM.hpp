@@ -45,10 +45,7 @@ namespace Engine { namespace ECM {
 
 			const sf::Vector2f& GetPosition() const;
 			void SetPosition(const sf::Vector2f& t_position);
-			
-			float GetRotation() const;
-			void SetRotation(float t_rotation);
-		
+					
 			void Move(const sf::Vector2f& t_position);
 
 			bool IsAlive() const;
@@ -59,6 +56,8 @@ namespace Engine { namespace ECM {
 
 			bool IsForDeletion() const;
 			void SetForDelete();
+
+			virtual const std::string className() const { return "Entity"; }
 
 			template<class T, class... Targs>
 			std::shared_ptr<T> AddComponent(const std::string& t_name, Targs... t_params)
@@ -76,6 +75,11 @@ namespace Engine { namespace ECM {
 				// ... checks
 				return dynamic_cast<T*>(m_components[t_name]->GetType());
 			}
+			
+			void DeleteComponent(const std::string t_name)
+			{
+				m_components.erase(t_name);
+			}
 	};
  
 	class Component
@@ -88,7 +92,11 @@ namespace Engine { namespace ECM {
 			explicit Component(Entity *const t_parent);
 
 		public:
+			bool independent = false;
+
+		public:
 			Component() = delete;
+			virtual ~Component();
 
 			virtual Component* GetType();
 
@@ -99,8 +107,6 @@ namespace Engine { namespace ECM {
 
 			virtual void Update(float t_deltaTime) = 0;
 			virtual void Render() = 0;
-
-			virtual ~Component();
 	};
 
 } }

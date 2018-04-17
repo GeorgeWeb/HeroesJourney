@@ -2,13 +2,13 @@
 
 namespace HJ { namespace Entities {
 
-	Inn::Inn(const std::string & t_sprite) :
-		Building(t_sprite)
+	Inn::Inn(bool t_populate) : Building(t_populate)
 	{
-		m_level = 1;
-		m_bonus = m_level * 10;
-		isClicked = false;
-		unClick = false;
+		if (t_populate)
+		{
+			m_level = 1;
+			m_bonus = m_level * 20;
+		}
 	}
 
 	Inn* Inn::GetType()
@@ -27,30 +27,7 @@ namespace HJ { namespace Entities {
 
 		auto innComp = m_spriteComp;
 
-		if (isClicked && !unClick)
-		{
-			innComp->GetSprite().setColor(sf::Color(innComp->GetSprite().getColor().r - 100,
-				innComp->GetSprite().getColor().g - 100,
-				innComp->GetSprite().getColor().b - 100,
-				innComp->GetSprite().getColor().a));
-			unClick = true;
-		}
-
-		if (unClick)
-		{
-			m_time -= t_deltaTime;
-		}
-		if (m_time <0.0f && unClick)
-		{
-			innComp->GetSprite().setColor(sf::Color(innComp->GetSprite().getColor().r + 100,
-				innComp->GetSprite().getColor().g + 100,
-				innComp->GetSprite().getColor().b + 100,
-				innComp->GetSprite().getColor().a));
-
-			m_time = 0.1f;
-			unClick = false;
-			isClicked = false;
-		}
+		
 	}
 
 	void Inn::Render()
@@ -60,7 +37,32 @@ namespace HJ { namespace Entities {
 
 	void Inn::Upgrade()
 	{
-		Building::Upgrade();
+		m_bonus = m_level * 20;
+		m_level += 1;
+	}
+
+	void Inn::ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes)
+	{
+		for (auto hero : t_heroes)
+		{
+			if (hero->GetHealth() + m_bonus > hero->GetMaxHealth())
+			{
+				hero->SetHealth(hero->GetMaxHealth());
+			}
+			else if (hero->GetHealth() + m_bonus <= hero->GetMaxHealth())
+			{
+				hero->SetHealth(hero->GetHealth() + m_bonus);
+			}
+
+			if (hero->GetMana() + m_bonus > hero->GetMaxMana())
+			{
+				hero->SetMana(hero->GetMaxMana());
+			}
+			else if (hero->GetMana() + m_bonus <= hero->GetMaxMana())
+			{
+				hero->SetMana(hero->GetMana() + m_bonus);
+			}
+		}
 	}
 
 } }

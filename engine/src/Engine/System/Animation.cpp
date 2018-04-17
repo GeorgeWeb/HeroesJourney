@@ -11,13 +11,14 @@ namespace Engine { namespace System {
 		m_loop(t_loop)
 	{
 		m_currentImage.x = 0;
-		uvRect.width  = t_texture->getSize().x / static_cast<float>(m_imageCount.x);
-		uvRect.height = t_texture->getSize().y / static_cast<float>(m_imageCount.y);
+		uvRect.width  = t_texture->getSize().x / m_imageCount.x;
+		uvRect.height = t_texture->getSize().y / m_imageCount.y;
 	}
 
 	void Animation::Update(float t_deltaTime)
 	{
 		m_currentImage.y = m_row;
+		m_incrementRows = m_loop;
 		m_totalTime += t_deltaTime;
 
 		if (m_totalTime >= m_switchTime)
@@ -33,18 +34,28 @@ namespace Engine { namespace System {
 				{
 					if (m_currentImage.y >= m_imageCount.y - 1)
 					{
-						m_currentImage.x = m_imageCount.x;
-						m_currentImage.y = m_imageCount.y;
-						m_play = false;
+						if (m_loop)
+						{
+							m_currentImage.x = 0;
+							m_currentImage.y = m_row = 0;
+						}
+						else
+						{
+							m_currentImage.x = m_imageCount.x;
+							m_currentImage.y = m_imageCount.y;
+						}
+						
+						m_play = m_loop;
 					}
 					else
 					{
-						m_row++;
+						m_row = (m_incrementRows) ? m_row + 1 : m_imageCount.y - 1;
 					}
 				}
 			}
 		}
 
+		// texture direction facing
 		if (m_play)
 		{
 			uvRect.top = m_currentImage.y * uvRect.height;

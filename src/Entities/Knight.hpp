@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Knight final : public Hero
 	{
 		public:
-			Knight(const std::string& t_sprite, const std::string& t_animator);
+			Knight(bool t_populate = true);
 			~Knight() = default;
 
 			Knight* GetType() override final;
@@ -16,14 +16,6 @@ namespace HJ { namespace Entities {
 			void Init() override final;
 			void Update(float t_deltaTime) override final;
 			void Render() override final;
-
-			void Attack() override final;
-			void Skill(std::function<void()> t_func) override final;
-			void Defend() override final;
-
-		private:
-			void HeroSlash();
-			void ShoulderBash();
 	};
 
 } }

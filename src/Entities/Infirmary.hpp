@@ -3,13 +3,12 @@
 
 #include "Building.hpp"
 
-namespace HJ {
-	namespace Entities {
+namespace HJ { namespace Entities {
 
-		class Infirmary final : public Building
-		{
+	class Infirmary final : public Building
+	{
 		public:
-			Infirmary(const std::string& t_sprite);
+			Infirmary(bool t_populate = true);
 			~Infirmary() = default;
 
 			Infirmary* GetType() override final;
@@ -19,9 +18,9 @@ namespace HJ {
 			void Render() override final;
 
 			void Upgrade() override final;
-		};
+			virtual void ApplyBonus(std::vector<std::shared_ptr <Hero>> t_heroes) override final;
+	};
 
-	}
-}
+} }
 
 #endif // !INFIRMARY_BUILDING_H

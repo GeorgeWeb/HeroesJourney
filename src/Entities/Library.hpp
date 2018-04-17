@@ -8,7 +8,7 @@ namespace HJ { namespace Entities {
 	class Library final : public Building
 	{
 		public:
-			Library(const std::string& t_sprite);
+			Library(bool t_populate = true);
 			~Library() = default;
 
 			Library* GetType() override final;
@@ -18,6 +18,8 @@ namespace HJ { namespace Entities {
 			void Render() override final;
 
 			void Upgrade() override final;
+			void ApplyBonus(std::vector<std::shared_ptr<Hero>> t_heroes) override final;
+
 	};
 } }
 

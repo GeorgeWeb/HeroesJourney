@@ -4,9 +4,9 @@
 #include <sstream>
 #include <iostream>
 
-#include <Engine/ECM/Components/ShapeComponent.hpp>
 #include <Engine/ECM/Components/SpriteComponent.hpp>
 #include <Engine/ECM/Components/AnimatorComponent.hpp>
+#include <Engine/ECM/Components/TextComponent.hpp>
 
 namespace HJ {
 
@@ -17,26 +17,26 @@ namespace HJ {
 	using namespace Engine::Components;
 	using namespace HJ::Entities;
 
-	SplashScene::SplashScene(GameDataRef t_data)
-		: m_data(t_data)
-	{
-		// Won't use for more initialization, hence I will use the Init() func
-	}
+	SplashScene::SplashScene(GameDataRef t_data) 
+		: m_data(t_data) 
+	{ }
 
 	void SplashScene::Init()
 	{
-		// Load resources
+		// Load Splash screen assets
+		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
 		m_data->assets.LoadTexture("Tex_SplashBG", SPLASH_SCENE_BACKGROUND);
 		m_data->assets.LoadTexture("Tex_LogoSheet", SPLASH_GAME_LOGO_SPRITESHEET);
-		m_data->assets.LoadFont("Font_Pixel", GAME_FONT);
+		// music
+		m_data->assets.LoadMusic("EpicTheme", EPIC_FANTASY_THEME);
 
-		// Create entities ...
+		// Splash screen entities
 		// Background
 		auto bg = std::make_shared<Entity>();
 		auto bgSprite = bg->AddComponent<SpriteComponent>("C_SplashBGSprite");
 		// define bg sprite
 		bgSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_SplashBG"));
-		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 155));
+		bgSprite->GetSprite().setColor(sf::Color(255, 255, 255, 200));
 		// set properties
 		bg->SetPosition(sf::Vector2f(0.0f, 0.0f));
 		bg->SetVisible(true);
@@ -47,48 +47,108 @@ namespace HJ {
 		// initialize data
 		m_logo->SetSprite(m_data->assets.GetTexture("Tex_LogoSheet"), sf::IntRect(0, 0, 550, 250));
 		// set more properties
-		m_logo->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 50.0f));
-		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.05f, true, false));
+		m_logo->SetPosition(sf::Vector2f((SCREEN_WIDTH - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().width) * 0.5f, 
+			(SCREEN_HEIGHT - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.5f));
+		m_logo->GetAnimatorComponent()->AddAnimation("Anim_GameLogo", Animation(&m_data->assets.GetTexture("Tex_LogoSheet"), sf::Vector2u(6, 7), 0.04f, true, true));
 		m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").SetRow(0);
 		m_logo->Init();
 
+		// Text
+		auto text = std::make_shared<Entity>();
+		auto splashTxt = text->AddComponent<TextComponent>("C_Text");
+		// define
+		splashTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		text->SetPosition(sf::Vector2f((SCREEN_WIDTH - splashTxt->GetText().getGlobalBounds().width) * 0.325f,
+			(SCREEN_HEIGHT - splashTxt->GetText().getGlobalBounds().height) * 0.55f));
+		splashTxt->SetFont(m_data->assets.GetFont("Font_Pixel"));
+		splashTxt->GetText().setCharacterSize(24);
+		splashTxt->GetText().setString("Press any key to continue ...");
+		// properties
+		text->showOnCreate = false;
+		text->SetVisible(false);
+		text->SetAlive(true);
+		text->Init();
+
+		// play theme
+		m_data->assets.GetMusic("EpicTheme").setLoop(false);
+		m_data->assets.GetMusic("EpicTheme").setVolume(35);
+		m_data->assets.GetMusic("EpicTheme").play();
+
 		// Add to ents (local) map
 		AddEntity("E_zSplashBG", bg);
+		AddEntity("E_xSplashText", text);
 		AddEntity("E_GameLogo", m_logo);
+
+		// allow proceeding to after-loading 'stop-frame' animation
+		// not async, thread-safe logic this way but will fix it in the 'future' ;)
+		m_canDelay = true;
 	}
 
 	void SplashScene::HandleInput()
 	{
 		sf::Event event;
-		while (Renderer::GetWin().pollEvent(event))
+		while (Engine2D::GetWin().pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				Renderer::GetWin().close();
+				Engine2D::GetWin().close();
 
-			// Keyboard input
-			auto bgSprite = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
-			// 'Press ANY key OR button to continue!' type of game
-			if (event.type == sf::Event::EventType::KeyPressed ||
-				m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Renderer::GetWin()))
+			if (event.type == sf::Event::Resized)
+				ResizeSceneView(event.size.width, event.size.height);
+
+			if (m_canInput)
 			{
-				m_shouldFade = true;
+				// Keyboard input
+				auto bgSprite = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
+				// 'Press ANY key OR button to continue!' type of game
+				if (event.type == sf::Event::EventType::KeyPressed ||
+					m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
+				{
+					m_shouldFade = true;
+				}
 			}
 		}
 	}
 
 	void SplashScene::Update(float t_delatTime)
 	{
+		if (m_canDelay)
+		{
+			if (m_pressDelay.getElapsedTime().asSeconds() > 1.0f) // 4.0f
+			{
+				m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").ExitLoop();
+				m_canMove = true;
+				m_canDelay = false;
+			}
+		}
+
+		if (m_canMove && m_logo->GetAnimatorComponent()->GetAnimation("Anim_GameLogo").GetRow() >= 6)
+			m_logo->Move(sf::Vector2f(0.0f, -1.0f));
+
+		if (m_logo->GetPosition().y <= (SCREEN_HEIGHT - m_logo->GetSpriteComponent()->GetSprite().getGlobalBounds().height) * 0.3f)
+		{
+			m_data->ents.Find<Entity>("E_xSplashText")->SetVisible(true);
+			m_canInput = true;
+			m_canMove = false;
+		}
+
 		auto bgSpriteComp = m_data->ents.Find<Entity>("E_zSplashBG")->GetComponent<SpriteComponent>("C_SplashBGSprite");
 		if (m_shouldFade)
 		{
-			auto fadedColor = sf::Color(bgSpriteComp->GetSprite().getColor().r,
+			m_data->ents.Find<Entity>("E_xSplashText")->SetVisible(false);
+			auto fadedColorBG = sf::Color(bgSpriteComp->GetSprite().getColor().r,
 				bgSpriteComp->GetSprite().getColor().g,
 				bgSpriteComp->GetSprite().getColor().b,
 				bgSpriteComp->GetSprite().getColor().a - t_delatTime * 100.0f);
 
-			bgSpriteComp->GetSprite().setColor(fadedColor);
+			auto fadedColorLogo = sf::Color(bgSpriteComp->GetSprite().getColor().r,
+				bgSpriteComp->GetSprite().getColor().g,
+				bgSpriteComp->GetSprite().getColor().b,
+				bgSpriteComp->GetSprite().getColor().a - t_delatTime * 0.01f);
 
-			if (bgSpriteComp->GetSprite().getColor().a == 0)
+			bgSpriteComp->GetSprite().setColor(fadedColorBG);
+			m_logo->GetSpriteComponent()->GetSprite().setColor(fadedColorLogo);
+
+			if (bgSpriteComp->GetSprite().getColor().a <= 0)
 			{
 				m_shouldFade = false;
 				

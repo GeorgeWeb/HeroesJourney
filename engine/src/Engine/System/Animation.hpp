@@ -29,8 +29,11 @@ namespace Engine { namespace System {
 
 			void Update(float t_deltaTime);
 
-			void SetRow(unsigned int t_row = 0) { m_row = t_row; m_play = true; }
-			void SetFaceRight(bool t_faceRight = false) { m_faceRight = t_faceRight; }
+			inline void ExitLoop() { m_loop = (m_loop) ? false : m_loop; }
+
+			inline unsigned int GetRow() const { return m_row; }
+			inline void SetRow(unsigned int t_row = 0) { m_row = t_row; m_play = true; }
+			inline void SetFaceRight(bool t_faceRight = false) { m_faceRight = t_faceRight; }
 
 		public:
 			sf::IntRect uvRect;
