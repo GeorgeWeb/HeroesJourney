@@ -108,7 +108,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_HeroicStrikeSkill";
 				soundRefName = SKILL_HEROIC_STRIKE_SOUND;
-				effectDesc = "Heroic Strike/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "Heroic Strike";
 				dmgBase = DAMAGE_BASE::MELEE;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -124,7 +124,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_ShieldBashSkill";
 				soundRefName = SKILL_SHIELD_BASH_SOUND;
-				effectDesc = "Shield Bash/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "Shield Bash";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -142,7 +142,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_OffAuraSkill";
 				soundRefName = SKILL_OFF_AURA_SOUND;
-				effectDesc = "DMG Aura/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "DMG Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -159,7 +159,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_DefAuraSkill";
 				soundRefName = SKILL_DEF_AURA_SOUND;
-				effectDesc = "DEF Aura/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "DEF Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ALLY;
@@ -177,7 +177,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_ArcherySkill";
 				soundRefName = SKILL_BOW_SOUND;
-				effectDesc = "Raven Bow/" + std::to_string(manaNeed) +"mp";
+				effectDesc = "Raven Bow";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -192,7 +192,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_RoASkill";
 				soundRefName = SKILL_ROA_SOUND;
-				effectDesc = "Rain Of Arrows/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "Rain Of Arrows";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::BASIC;
 				target = SKILL_TARGET::ENEMY;
@@ -209,7 +209,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_FireBoltSkill";
 				soundRefName = SKILL_FIRE_BOLT_SOUND;
-				effectDesc = "Fire Bolt/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "Fire Bolt";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FIRE;
 				target = SKILL_TARGET::ENEMY;
@@ -225,7 +225,7 @@ namespace HJ
 			{
 				textureRefName = "Tex_FireAuraSkill";
 				soundRefName = SKILL_FIRE_AURA_SOUND;
-				effectDesc = "Fire Aura/" + std::to_string(manaNeed) + "mp";
+				effectDesc = "Fire Aura";
 				dmgBase = DAMAGE_BASE::RANGED;
 				dmgType = DAMAGE_TYPE::FROST;
 				target = SKILL_TARGET::ALLY;
