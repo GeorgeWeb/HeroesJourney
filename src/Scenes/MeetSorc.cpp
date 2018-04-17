@@ -132,20 +132,17 @@ namespace HJ {
 			auto bgSprite = m_data->ents.Find<Entity>("E_zMeetSorcDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
 			if (bgSprite->IsClickable() && m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
-				std::cout << m_offset << std::endl;
 				// Conversation
 				if (m_dialog->GetTexts().size() > 2 + m_offset)
 				{
 					if (m_dialog->GetTexts()[m_offset] == "")
 					{
 						m_offset += 2;
-						std::cout << "empty /n";
 					}
 				}
 
 				m_dialog->DisplayConvo(0 + m_offset, 2 + m_offset, m_data->assets.GetFont("Font_Pixel"));
 				m_offset += 2;
-				std::cout << "not empty /n";
 				m_turn = (m_turn == DIALOG_TURN::LEFT) ? DIALOG_TURN::RIGHT : m_turn = DIALOG_TURN::LEFT;
 			}
 		}

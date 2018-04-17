@@ -186,7 +186,6 @@ namespace HJ {
 			auto setBtn = m_data->ents.Find<Button>("E_xPauseSettingsBtn")->GetClickableComponent();
 			if (m_data->input.isClicked(setComp->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
 			{
-				std::cout << "button has been clicked" << std::endl;
 				setBtn->SetClicked(true);
 			}
 

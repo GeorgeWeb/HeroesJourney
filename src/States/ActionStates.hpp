@@ -29,7 +29,6 @@ namespace HJ { namespace States {
 
 		private:
 			bool m_canChoose;
-			// HeuristicEvalComponent* m_heuristicEval;
 	};
 
 	class StepInState final : public State
@@ -86,7 +85,7 @@ namespace HJ { namespace States {
 	{
 		public:
 			FinishState() = default;
-			void EnterState(ECM::Entity* t_owner) override;
+			void EnterState(ECM::Entity* t_owner) override {}
 			void Execute(ECM::Entity* t_owner, float t_deltaTime) override {}
 	};
 

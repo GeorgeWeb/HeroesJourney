@@ -49,13 +49,21 @@ namespace HJ {
 		infTextFont->GetText().setCharacterSize(66);
 		if (m_data->gm.loot == 0)
 		{
-			// makes it a bit easier this way, cuz we thought of no reward initially...
-			m_data->gm.loot = 5;
+			// set lose text
 			infTextFont->GetText().setString("DEFEAT!");
+
+			// set lose sound
+			m_outBfr = m_data->assets.LoadBuffer(DEFEAT_SOUND);
+			m_outSnd.setBuffer(*m_outBfr);
 		}
 		else
 		{
+			// set win text
 			infTextFont->GetText().setString("VICTORY!");
+
+			// set win sound
+			m_outBfr = m_data->assets.LoadBuffer(VICTORY_SOUND);
+			m_outSnd.setBuffer(*m_outBfr);
 		}
 		victoryText->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.5f - infTextFont->GetText().getGlobalBounds().width * 0.5f, (SCREEN_HEIGHT * 0.5f) - (infTextFont->GetText().getGlobalBounds().height * 0.5f)));
 		// properties
@@ -91,6 +99,9 @@ namespace HJ {
 		coin->SetAlive(true);
 		coin->Init();
 
+		// play win/lose sound
+		m_outSnd.play();
+
 		// populate the entities container
 		AddEntity("E_zVictoryBG", bg);
 		AddEntity("E_VictoryText", victoryText);
@@ -115,7 +126,7 @@ namespace HJ {
 			{
 				m_data->gm.gold += m_data->gm.loot;
 
-				if (m_data->gm.nextEncounter == 0 || m_data->gm.loot <= 5)
+				if (m_data->gm.nextEncounter == 0 || m_data->gm.loot == 0)
 				{
 					m_data->gm.battlePassed = true;
 					auto map = std::make_shared<MapScene>(MapScene(m_data));
@@ -123,7 +134,6 @@ namespace HJ {
 					// reset loot
 					m_data->gm.loot = 0;
 				}
-
 
 				else if (m_data->gm.nextEncounter == 1)
 				{

@@ -37,8 +37,6 @@ namespace HJ { namespace Entities {
 			m_getHitSnd.play();
 		}
 
-		// play hurt animation
-
 		m_health -= t_damage;
 	}
 

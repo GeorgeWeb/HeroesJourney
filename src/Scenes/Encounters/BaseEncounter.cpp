@@ -322,6 +322,14 @@ namespace HJ { namespace Encounters {
 			{
 				pauseBtnBtn->SetClicked(true);
 			}
+
+			// check if pause button is clicked
+			auto concedeBtnSprite = m_data->ents.Find<Button>("E_aConcedeBtn")->GetSpriteComponent();
+			auto concedeBtnBtn = m_data->ents.Find<Button>("E_aConcedeBtn")->GetClickableComponent();
+			if (concedeBtnSprite->IsClickable() && m_data->input.isClicked(concedeBtnSprite->GetSprite(), Controls::GetButton("Select"), Engine2D::GetWin()))
+			{
+				concedeBtnBtn->SetClicked(true);
+			}
 #pragma endregion
 
 #pragma region BATTLE BUTTONS CLICKED CHECKS
@@ -389,6 +397,14 @@ namespace HJ { namespace Encounters {
 
 			pauseBtnBtn->SetResolve(false);
 		}
+
+		// resolve pause button click
+		auto concedeBtnBtn = m_data->ents.Find<Button>("E_aConcedeBtn")->GetClickableComponent();
+		if (concedeBtnBtn->CanResolve())
+		{
+			m_status = BATTLE_STATUS::LOST;
+			concedeBtnBtn->SetResolve(false);
+		}
 #pragma endregion
 
 #pragma region BATTLE BUTTONS
@@ -433,30 +449,27 @@ namespace HJ { namespace Encounters {
 			// Win condition logic
 			case BATTLE_STATUS::WON:
 			// Manage unlockables / campaign progreesion
-			if (m_activeBoss->className() == "Troll")
+			if (m_activeBoss->className() == "Troll"  && m_data->gm.trollPassed < 1)
 			{
 				m_data->gm.trollPassed++;
-				if (m_data->gm.trollPassed == 1)
-					m_data->gm.nextEncounter = 1;
+				m_data->gm.nextEncounter = 1;
 			}		
-			else if (m_activeBoss->className() == "Cyclop")
+			else if (m_activeBoss->className() == "Cyclop"  && m_data->gm.cyclopsPassed < 1)
 			{
 				m_data->gm.cyclopsPassed++;
-				if (m_data->gm.cyclopsPassed == 1)
-					m_data->gm.nextEncounter = 2;
+				m_data->gm.nextEncounter = 2;
 			}
-			else if (m_activeBoss->className() == "Harpy")
+			else if (m_activeBoss->className() == "Harpy" && m_data->gm.harpyPassed < 1)
 			{
 				m_data->gm.harpyPassed++;
-				if (m_data->gm.harpyPassed == 1)
-					m_data->gm.nextEncounter = 3;
+				m_data->gm.nextEncounter = 3;
 			}
-			else if (m_activeBoss->className() == "Frost Mage")
+			else if (m_activeBoss->className() == "Frost Mage" && m_data->gm.magePassed < 1)
 			{
 				m_data->gm.magePassed++;
-				if (m_data->gm.magePassed == 1)
-					m_data->gm.nextEncounter = 4;
+				m_data->gm.nextEncounter = 4;
 			}
+			
 			// reset all status effects
 			for (auto hero : m_activeHeroes)
 				for (auto eff : hero->GetStatusComponent()->GetEffects()) 
@@ -535,8 +548,6 @@ namespace HJ { namespace Encounters {
 					// resolve skill2 button click
 					if (skill2BtnBtn->CanResolve())
 					{
-						std::cout << "Hero using Skill 2!\n";
-
 						m_heroOnTurn->SetMana(m_heroOnTurn->GetMana() - m_heroOnTurn->GetSkillComponent()->FindSkill(SKILL_NAME::SPECIAL_SKILL_2)->manaNeed);
 
 						m_actionResolver->GetSMComponent()->endPos = evilBaseLine;
@@ -551,7 +562,6 @@ namespace HJ { namespace Encounters {
 				{
 					// clear status effects
 					ClearStatusEffects(m_heroOnTurn);
-					// std::cout << "SM Finished!\n";
 					m_turn = BATTLE_TURN::BETWEEN;
 					// evaluate the round & check win condition
 					Evaluate();
@@ -613,7 +623,6 @@ namespace HJ { namespace Encounters {
 		DisableUIButtons();
 		do
 		{
-			std::cout << m_hTurnCount << std::endl;
 			// Hero turn decider
 			if (m_hTurnCount == 0)
 			{
@@ -796,7 +805,6 @@ namespace HJ { namespace Encounters {
 
 	void BaseEncounterScene::Evaluate()
 	{
-		// std::cout << "Evaluating...\n";
 		m_heroDeathCount = 0;
 		m_evilDeathCount = 0;
 		if (m_activeBoss->GetHealth() <= 0)
@@ -814,7 +822,6 @@ namespace HJ { namespace Encounters {
 		m_status = (m_evilDeathCount == 1) ? BATTLE_STATUS::WON : (m_heroDeathCount == m_activeHeroes.size()) ? BATTLE_STATUS::LOST : BATTLE_STATUS::PLAYING;
 		// Evaluation completed
 		isEvalComplete = true;
-		// std::cout << "Evaluating finished\n";
 	}
 
 	void BaseEncounterScene::ClearStatusEffects(std::shared_ptr<Entities::Hero> t_hero)

@@ -56,8 +56,6 @@
 #define MAP_SCENE_MAGE_ICON "res/img/map/frostmageicon.png"
 #define MAP_SCENE_UI_FRAME "res/img/map/frame.png"
 
-
-
 // Castle screen state global definitions
 #define CASTLE_SCENE_BACKGROUD "res/img/castle_interior/castleinterior.png"
 #define CASTLE_SCENE_INFIRMARY "res/img/castle_interior/infirmary.png"
@@ -158,5 +156,6 @@
 #define SKILL_FIRE_BOLT_SOUND "res/music/sounds/skill-fire-bolt.wav"
 #define SKILL_FIRE_AURA_SOUND "res/music/sounds/skill-antifrost-aura.wav"
 #define	VICTORY_SOUND "res/music/sounds/victory-sound.wav"
+#define	DEFEAT_SOUND "res/music/sounds/defeat-sound.wav"
 #define	DODGE_SOUND "res/music/sounds/dodge-sound.wav"
 #endif // !DEFINITIONS_H

@@ -129,7 +129,6 @@ namespace HJ {
 			auto bgSprite = m_data->ents.Find<Entity>("E_zDialogBG")->GetComponent<SpriteComponent>("C_zDialogBGSprite");
 			if (bgSprite->IsClickable() && m_data->input.isClicked(bgSprite->GetSprite(), sf::Mouse::Left, Engine2D::GetWin()))
 			{
-				std::cout << m_offset << std::endl;
 				// Conversation
 				if (m_dialog->GetTexts().size() > 2 + m_offset)
 				{

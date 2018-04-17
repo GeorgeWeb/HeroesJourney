@@ -318,7 +318,7 @@ namespace HJ {
 		m_data->assets.GetMusic("CastleTheme").play();
 
 		// Load sounds
-		m_openDoorBfr = m_data->assets.LoadBuffer("res/music/sounds/castle-inside-building.wav");
+		m_openDoorBfr = m_data->assets.LoadBuffer(CASTLE_INSIDE_BUILDING_SOUND);
 		m_openDoorSnd.setBuffer(*m_openDoorBfr);
 
 		AddEntity("E_zCastleBG", bg);
@@ -355,10 +355,7 @@ namespace HJ {
 				Engine2D::GetWin().close();
 
 			if (event.type == sf::Event::Resized)
-			{
-				std::cout << event.size.width << std::endl;
 				ResizeSceneView(event.size.width, event.size.height);
-			}
 
 			if (sf::Keyboard::isKeyPressed(Controls::GetKey("Pause")))
 			{
@@ -470,7 +467,6 @@ namespace HJ {
 					{
 						m_data->gm.gold -= 10 * m_data->gm.infirmary->GetLevel();
 						m_data->gm.infirmary->Upgrade();
-						std::cout << "Infirmary found!" << std::endl;
 					
 						m_data->gm.infirmary->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
@@ -482,7 +478,7 @@ namespace HJ {
 					{
 						m_data->gm.gold -= 10 * m_data->gm.blacksmith->GetLevel();
 						m_data->gm.blacksmith->Upgrade();
-						std::cout << "Blacksmith found!" << std::endl;
+
 						m_data->gm.blacksmith->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
 				}
@@ -493,7 +489,6 @@ namespace HJ {
 					{
 						m_data->gm.gold -= 10 * m_data->gm.library->GetLevel();
 						m_data->gm.library->Upgrade();
-						std::cout << "Library found!" << std::endl;
 						m_data->gm.library->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
 				}
@@ -504,7 +499,6 @@ namespace HJ {
 					{
 						m_data->gm.gold -= 10 * m_data->gm.inn->GetLevel();
 						m_data->gm.inn->Upgrade();
-						std::cout << "Inn found!" << std::endl;
 						m_data->gm.inn->ApplyBonus({ m_data->gm.hKnight, m_data->gm.hBard, m_data->gm.hSorceress, m_data->gm.hRogue });
 					}
 				}

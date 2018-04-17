@@ -6,13 +6,12 @@ std::shared_ptr<HJ::Game> LinkStart(const std::string&);
 
 auto main(void) -> int
 {
-	/*
 	#ifdef NDEBUG
 	// Hide console
 	HWND hwnd = GetConsoleWindow();
 	ShowWindow(hwnd, SW_HIDE);
 	#endif
-	*/
+	
 	auto HeroesJourney = LinkStart("Heroes Journey");
     // Happy game playing! :)
 	return EXIT_SUCCESS;

@@ -29,9 +29,12 @@ namespace HJ {
 
 	private:
 		GameDataRef m_data;
-		
-
+	
 		int m_offset = 0;
+
+		// Sounds & Buffers
+		std::shared_ptr<sf::SoundBuffer> m_outBfr;
+		sf::Sound m_outSnd;
 	};
 }
 

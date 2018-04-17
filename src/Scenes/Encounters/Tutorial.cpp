@@ -212,19 +212,21 @@ namespace HJ { namespace Encounters {
 		auto concedeBtn = std::make_shared<Button>();
 		// sprite
 		auto concedeBtnSprite = concedeBtn->GetSpriteComponent();
-		concedeBtnSprite->GetSprite().setColor(sf::Color(169, 169, 169, 169));
+		concedeBtnSprite->GetSprite().setColor(sf::Color(200, 200, 200, 200));
 		concedeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		concedeBtnSprite->GetSprite().scale(0.75f, 0.75f);
 		// text
 		auto concedeBtnText = concedeBtn->GetTextComponent();
 		concedeBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		concedeBtnText->GetText().setColor(sf::Color(169, 169, 169, 169));
+		concedeBtnText->GetText().setColor(sf::Color(200, 200, 200, 200));
 		concedeBtnText->GetText().setString("Concede");
 		concedeBtnText->GetText().scale(0.75f, 0.75f);
 		concedeBtnText->GetText().setCharacterSize(24);
 		// general properties
 		concedeBtn->SetPosition(sf::Vector2f(SCREEN_WIDTH * 0.85f, SCREEN_HEIGHT * 0.845f));
 		concedeBtn->Init();
+		concedeBtn->GetClickableComponent()->SetClickable(false);
+		concedeBtn->GetSpriteComponent()->SetClickable(false);
 		// center text
 		concedeBtnText->GetText().setPosition(concedeBtn->GetPosition().x + concedeBtnText->GetText().getGlobalBounds().width * 0.375f,
 			concedeBtn->GetPosition().y + concedeBtnText->GetText().getGlobalBounds().height * 1.125f);
@@ -295,7 +297,6 @@ namespace HJ { namespace Encounters {
 		// begin the battle
 		m_status = BATTLE_STATUS::PLAYING;
 		// the main hero - Knight, always starts first
-		std::cout << "FIRST TURN\n";
 		NextTurn();
 
 		// set win/loose helpers

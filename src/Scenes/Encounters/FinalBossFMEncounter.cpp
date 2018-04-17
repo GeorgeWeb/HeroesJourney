@@ -235,13 +235,12 @@ namespace HJ { namespace Encounters {
 		auto concedeBtn = std::make_shared<Button>();
 		// sprite
 		auto concedeBtnSprite = concedeBtn->GetSpriteComponent();
-		concedeBtnSprite->GetSprite().setColor(sf::Color(169, 169, 169, 169));
+		concedeBtnSprite->GetSprite().setColor(sf::Color(255, 255, 255, 255));
 		concedeBtnSprite->GetSprite().setTexture(m_data->assets.GetTexture("Tex_StandardBtn"));
 		concedeBtnSprite->GetSprite().scale(0.75f, 0.75f);
 		// text
 		auto concedeBtnText = concedeBtn->GetTextComponent();
 		concedeBtnText->SetFont(m_data->assets.GetFont("Font_Pixel"));
-		concedeBtnText->GetText().setColor(sf::Color(169, 169, 169, 169));
 		concedeBtnText->GetText().setString("Concede");
 		concedeBtnText->GetText().scale(0.75f, 0.75f);
 		concedeBtnText->GetText().setCharacterSize(24);
