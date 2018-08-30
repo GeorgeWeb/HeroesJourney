@@ -2,11 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 # Require modern C++
 # For Visual Studio
 if(MSVC)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++14")
 endif(MSVC)
 # For the other compilers (e.g. Clang, GCC..)
-set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
