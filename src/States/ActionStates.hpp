@@ -1,5 +1,5 @@
-#ifndef FROST_GOLEM_AI_STATES
-#define FROST_GOLEM_AI_STATES
+#ifndef ACTION_STATES_H
+#define ACTION_STATES_H
 
 #include "../Components/StateMachineComponent.hpp"
 #include "../Components/HeuristicEvalComponent.hpp"
@@ -91,4 +91,4 @@ namespace HJ { namespace States {
 
 } }
 
-#endif // !FROST_GOLEM_AI_STATES
+#endif // !ACTION_STATES_H
